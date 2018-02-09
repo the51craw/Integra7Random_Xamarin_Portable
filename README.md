@@ -1,3 +1,5 @@
+# Roland INTEGRA-7 Librarian and Editor
+
 Roland INTEGRA-7 is a synthesizer module, read about it here:
 https://www.roland.com/global/products/integra-7/
 
