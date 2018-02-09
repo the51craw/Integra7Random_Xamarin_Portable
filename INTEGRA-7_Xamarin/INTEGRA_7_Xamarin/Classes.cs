@@ -16,19 +16,19 @@ namespace INTEGRA_7_Xamarin
         public Grid Row { get; set; }
         public Grid[] Columns { get; set; }
 
-        public GridRow(byte row, View[] controls = null, byte[] columnWiths = null, Boolean KeepAlignment = false)
+        public GridRow(byte row, View[] controls = null, byte[] columnWiths = null, Boolean KeepAlignment = false, Boolean AddMargins = true)
         {
             try
             {
                 Row = new Grid();
                 Grid.SetRow(Row, row);
-                Row.MinimumHeightRequest = 50;
+                //Row.MinimumHeightRequest = 40;
                 Row.SetValue(Grid.HorizontalOptionsProperty, LayoutOptions.FillAndExpand);
                 Row.SetValue(Grid.VerticalOptionsProperty, LayoutOptions.FillAndExpand);
                 Row.SetValue(Grid.ColumnSpacingProperty, 0);
                 Row.SetValue(Grid.RowSpacingProperty, 0);
-                Row.SetValue(Grid.PaddingProperty, 0);
-                Row.SetValue(Grid.MarginProperty, 0);
+                Row.SetValue(Grid.PaddingProperty, new Thickness(0, 0, 0, 0));
+                Row.SetValue(Grid.MarginProperty, new Thickness(0, 0, 0, 0));
                 ColumnDefinition[] columnDefinitions = new ColumnDefinition[controls.Length];
 
                 if (controls != null)
@@ -60,88 +60,144 @@ namespace INTEGRA_7_Xamarin
                             if (controls[i].GetType() == typeof(Button))
                             {
                                 controls[i].SetValue(Button.HorizontalOptionsProperty, LayoutOptions.FillAndExpand);
-                                controls[i].SetValue(Button.VerticalOptionsProperty, LayoutOptions.Start);
-                                //controls[i].Parent.SetValue(Grid.HeightProperty, controls[i].Height);
-                                controls[i].SetValue(Button.BorderWidthProperty, 1);
+                                controls[i].SetValue(Button.VerticalOptionsProperty, LayoutOptions.FillAndExpand);
+                                controls[i].SetValue(Button.BorderWidthProperty, new Thickness(0, 0, 0, 0));
                                 controls[i].SetValue(Button.BackgroundColorProperty, UIHandler.colorSettings.Background);
-                                controls[i].SetValue(Button.BorderColorProperty, UIHandler.colorSettings.Frame);
+                                controls[i].SetValue(Button.BorderColorProperty, UIHandler.colorSettings.Background);
+                                controls[i].SetValue(Button.MarginProperty, new Thickness(0, 0, 0, 0));
                                 controls[i].Parent.SetValue(Grid.VerticalOptionsProperty, controls[i].VerticalOptions);
                             }
                             else if (controls[i].GetType() == typeof(Switch))
                             {
                                 controls[i].SetValue(Switch.HorizontalOptionsProperty, LayoutOptions.FillAndExpand);
-                                controls[i].SetValue(Switch.VerticalOptionsProperty, LayoutOptions.Start);
+                                controls[i].SetValue(Switch.VerticalOptionsProperty, LayoutOptions.FillAndExpand);
                                 controls[i].SetValue(Switch.BackgroundColorProperty, UIHandler.colorSettings.Background);
+                                controls[i].SetValue(Switch.MarginProperty, new Thickness(0, 0, 0, 0));
                             }
                             else if (controls[i].GetType() == typeof(LabeledSwitch))
                             {
                                 controls[i].SetValue(LabeledSwitch.HorizontalOptionsProperty, LayoutOptions.FillAndExpand);
-                                controls[i].SetValue(LabeledSwitch.VerticalOptionsProperty, LayoutOptions.Start);
+                                controls[i].SetValue(LabeledSwitch.VerticalOptionsProperty, LayoutOptions.FillAndExpand);
                                 controls[i].SetValue(LabeledSwitch.BackgroundColorProperty, UIHandler.colorSettings.Background);
+                                controls[i].SetValue(LabeledSwitch.MarginProperty, new Thickness(0, 0, 0, 0));
+                                controls[i].SetValue(LabeledSwitch.PaddingProperty, new Thickness(0, 0, 0, 0));
                             }
                             else if (controls[i].GetType() == typeof(ListView))
                             {
                                 controls[i].SetValue(ListView.HorizontalOptionsProperty, LayoutOptions.FillAndExpand);
                                 controls[i].SetValue(ListView.VerticalOptionsProperty, LayoutOptions.FillAndExpand);
-                                controls[i].SetValue(ListView.MarginProperty, new Thickness(5));
                                 controls[i].SetValue(ListView.BackgroundColorProperty, UIHandler.colorSettings.Background);
+                                controls[i].SetValue(ListView.MarginProperty, new Thickness(0, 0, 0, 0));
                                 controls[i].Parent.SetValue(Grid.VerticalOptionsProperty, LayoutOptions.FillAndExpand);
-                                //Row.SetValue(Grid.PaddingProperty, new Thickness(2));
-                                //Row.SetValue(Grid.MarginProperty, new Thickness(1));
                                 Row.SetValue(Grid.BackgroundColorProperty, UIHandler.colorSettings.Frame);
                             }
                             else if (controls[i].GetType() == typeof(Picker))
                             {
                                 controls[i].SetValue(Picker.HorizontalOptionsProperty, LayoutOptions.FillAndExpand);
-                                controls[i].SetValue(Picker.VerticalOptionsProperty, LayoutOptions.Start);
+                                controls[i].SetValue(Picker.VerticalOptionsProperty, LayoutOptions.FillAndExpand);
                                 controls[i].SetValue(Picker.BackgroundColorProperty, UIHandler.colorSettings.Background);
+                                controls[i].SetValue(Picker.MarginProperty, new Thickness(0, 0, 0, 0));
                             }
                             else if (controls[i].GetType() == typeof(LabeledPicker))
                             {
-                                controls[i].SetValue(Picker.HorizontalOptionsProperty, LayoutOptions.FillAndExpand);
-                                controls[i].SetValue(Picker.VerticalOptionsProperty, LayoutOptions.Start);
-                                controls[i].SetValue(Picker.BackgroundColorProperty, UIHandler.colorSettings.Background);
+                                controls[i].SetValue(LabeledPicker.HorizontalOptionsProperty, LayoutOptions.FillAndExpand);
+                                controls[i].SetValue(LabeledPicker.VerticalOptionsProperty, LayoutOptions.FillAndExpand);
+                                controls[i].SetValue(LabeledPicker.BackgroundColorProperty, UIHandler.colorSettings.Background);
+                                controls[i].SetValue(LabeledPicker.MarginProperty, new Thickness(0, 0, 0, 0));
                             }
                             else if (controls[i].GetType() == typeof(Label))
                             {
-                                controls[i].SetValue(Label.HorizontalOptionsProperty, LayoutOptions.EndAndExpand);
-                                controls[i].SetValue(Label.VerticalOptionsProperty, LayoutOptions.Start);
-                                controls[i].SetValue(LabeledTextInput.BackgroundColorProperty, UIHandler.colorSettings.Background);
+                                controls[i].SetValue(Label.HorizontalOptionsProperty, LayoutOptions.FillAndExpand);
+                                controls[i].SetValue(Label.VerticalOptionsProperty, LayoutOptions.FillAndExpand);
+                                controls[i].SetValue(Label.HorizontalTextAlignmentProperty, LayoutAlignment.Center);
+                                controls[i].SetValue(Label.VerticalTextAlignmentProperty, LayoutAlignment.Center);
+                                controls[i].SetValue(Label.BackgroundColorProperty, UIHandler.colorSettings.Background);
+                                controls[i].SetValue(Label.MarginProperty, new Thickness(0, 0, 0, 0));
                             }
                             else if (controls[i].GetType() == typeof(Editor))
                             {
                                 controls[i].SetValue(Editor.HorizontalOptionsProperty, LayoutOptions.FillAndExpand);
                                 controls[i].SetValue(Editor.VerticalOptionsProperty, LayoutOptions.Start);
+                                controls[i].SetValue(Editor.MarginProperty, new Thickness(0, 0, 0, 0));
                             }
                             else if (controls[i].GetType() == typeof(Image))
                             {
                                 controls[i].SetValue(Image.HorizontalOptionsProperty, LayoutOptions.FillAndExpand);
                                 controls[i].SetValue(Image.VerticalOptionsProperty, LayoutOptions.FillAndExpand);
+                                controls[i].SetValue(Image.MarginProperty, new Thickness(0, 0, 0, 0));
                             }
                             else if (controls[i].GetType() == typeof(LabeledText))
                             {
                                 controls[i].SetValue(LabeledText.HorizontalOptionsProperty, LayoutOptions.FillAndExpand);
-                                controls[i].SetValue(LabeledText.VerticalOptionsProperty, LayoutOptions.Start);
+                                controls[i].SetValue(LabeledText.VerticalOptionsProperty, LayoutOptions.FillAndExpand);
                                 controls[i].SetValue(LabeledText.BackgroundColorProperty, UIHandler.colorSettings.Background);
+                                controls[i].SetValue(LabeledText.MarginProperty, new Thickness(0, 0, 0, 0));
+                                controls[i].SetValue(LabeledText.PaddingProperty, new Thickness(0, 0, 0, 0));
                             }
                             else if (controls[i].GetType() == typeof(LabeledTextInput))
                             {
                                 controls[i].SetValue(LabeledTextInput.HorizontalOptionsProperty, LayoutOptions.FillAndExpand);
-                                controls[i].SetValue(LabeledTextInput.VerticalOptionsProperty, LayoutOptions.Start);
+                                controls[i].SetValue(LabeledTextInput.VerticalOptionsProperty, LayoutOptions.FillAndExpand);
                                 controls[i].SetValue(LabeledTextInput.BackgroundColorProperty, UIHandler.colorSettings.Background);
+                                controls[i].SetValue(LabeledTextInput.MarginProperty, new Thickness(0, 0, 0, 0));
+                                controls[i].SetValue(LabeledTextInput.PaddingProperty, new Thickness(0, 0, 0, 0));
                             }
                             else if (controls[i].GetType() == typeof(Grid))
                             {
                                 controls[i].SetValue(Grid.HorizontalOptionsProperty, LayoutOptions.FillAndExpand);
-                                controls[i].SetValue(Grid.VerticalOptionsProperty, LayoutOptions.Start);
+                                controls[i].SetValue(Grid.VerticalOptionsProperty, LayoutOptions.FillAndExpand);
+                                controls[i].SetValue(Grid.MarginProperty, new Thickness(0, 0, 0, 0));
+                                controls[i].SetValue(Grid.PaddingProperty, new Thickness(0, 0, 0, 0));
+                                controls[i].SetValue(Grid.RowSpacingProperty, 0);
+                                controls[i].SetValue(Grid.ColumnSpacingProperty, 0);
                             }
-                            if (i == 0)
+
+                            // Set margins on all controls. Then the form background color will be seen as frames around controls.
+                            //if (/*AddMargins && */controls[i].GetType() != typeof(Grid))
+                            if (AddMargins)
                             {
-                                controls[i].SetValue(View.MarginProperty, new Thickness(1));
-                            }
-                            else
-                            {
-                                controls[i].SetValue(View.MarginProperty, new Thickness(0, 1, 1, 1));
+                                if (row == 0)
+                                {
+                                    if (i == 0)
+                                    {
+                                        // Top left control supplies all margins:
+                                        controls[i].SetValue(View.MarginProperty, new Thickness(
+                                            UIHandler.borderThicknesSettings.Size,      // Left
+                                            UIHandler.borderThicknesSettings.Size,      // Top
+                                            UIHandler.borderThicknesSettings.Size,      // Right
+                                            UIHandler.borderThicknesSettings.Size));    // Bottom
+                                    }
+                                    else
+                                    {
+                                        // Other top controls supplies all margins but left the one:
+                                        controls[i].SetValue(View.MarginProperty, new Thickness(
+                                            0,                                          // Left
+                                            UIHandler.borderThicknesSettings.Size,      // Top
+                                            UIHandler.borderThicknesSettings.Size,      // Right
+                                            UIHandler.borderThicknesSettings.Size));    // Bottom
+                                    }
+                                }
+                                else
+                                {
+                                    if (i == 0)
+                                    {
+                                        // Non-top left controls supplies all margins but the top one:
+                                        controls[i].SetValue(View.MarginProperty, new Thickness(
+                                            UIHandler.borderThicknesSettings.Size,      // Left
+                                            UIHandler.borderThicknesSettings.Size,      // Top
+                                            0,                                          // Right
+                                            UIHandler.borderThicknesSettings.Size));    // Bottom
+                                    }
+                                    else
+                                    {
+                                        // Non-top non-left controls supplies only right and bottom borders:
+                                        controls[i].SetValue(View.MarginProperty, new Thickness(
+                                            0,                                          // Left
+                                            UIHandler.borderThicknesSettings.Size,      // Top
+                                            0,                                          // Right
+                                            UIHandler.borderThicknesSettings.Size));    // Bottom
+                                    }
+                                }
                             }
                         }
                         controls[i].SetValue(Grid.ColumnProperty, i);

@@ -143,8 +143,8 @@ namespace INTEGRA_7_Xamarin.UWP
 
             // We need invisible ComboBoxes to hold settings from the
             // corresponding Pickers in the Xamarin code.
-            OutputSelector = mainPage.uIHandler.midiOutputDevice;
-            InputSelector = mainPage.uIHandler.midiInputDevice;
+            OutputSelector = mainPage.uIHandler.Librarian_midiOutputDevice;
+            InputSelector = mainPage.uIHandler.Librarian_midiInputDevice;
             midi = new MIDI(mainPage, this, OutputSelector, InputSelector, 0, 0);
             midi.Init("INTEGRA-7");
         }

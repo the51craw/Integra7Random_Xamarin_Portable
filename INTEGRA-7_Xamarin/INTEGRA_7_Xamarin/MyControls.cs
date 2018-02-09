@@ -41,6 +41,7 @@ namespace INTEGRA_7_Xamarin
         public Color Background { get; set; }
         public Color Frame { get; set; }
         public Color Text { get; set; }
+        public Color LabelBackground { get; set; }
 
         public ColorSettings(_colorSettings colorSettings)
         {
@@ -49,11 +50,56 @@ namespace INTEGRA_7_Xamarin
                 case _colorSettings.DARK:
                     break;
                 case _colorSettings.LIGHT:
-                    Background = Color.SeaShell;
-                    Frame = Color.Green;
+                    Background = Color.White;
+                    Frame = Color.White;
                     Text = Color.Black;
+                    LabelBackground = Color.White;
                     break;
             }
+        }
+    }
+
+    public class BorderThicknesSettings
+    {
+        public Int32 Size { get; set; }
+
+        public BorderThicknesSettings()
+        {
+            this.Size = 1;
+        }
+
+        public BorderThicknesSettings(Int32 Size)
+        {
+            this.Size = Size;
+        }
+    }
+
+    public class MyLabel : Grid
+    {
+        public String Text { get { return btn.Text; } set { btn.Text = value; } }
+        private Button btn;
+
+        public MyLabel()
+        {
+            myLabel("");
+        }
+
+        public MyLabel(String LabelText)
+        {
+            myLabel(LabelText);
+        }
+
+        private void myLabel(String text)
+        {
+            this.btn = new Button();
+            this.btn.IsEnabled = false;
+            this.btn.Text = text;
+            this.btn.Margin = new Thickness(0, 0, 0, 0);
+            this.btn.BorderWidth = 0;
+            this.btn.BackgroundColor = UIHandler.colorSettings.LabelBackground;
+            this.btn.BorderWidth = 0;
+            this.Children.Add((new GridRow(0, new View[] { this.btn })).Row);
+
         }
     }
 
@@ -62,8 +108,8 @@ namespace INTEGRA_7_Xamarin
         //public Grid TheGrid { get; set; }
         public _orientation Orientation { get; set; }
         public _labelPosition LabelPosition { get; set; }
-        public Label Label { get; set; }
-        public Label Text { get; set; }
+        public Button Label { get; set; }
+        public Button Text { get; set; }
 
         public LabeledText(String LabelText, String Text, byte[] Sizes = null)
         {
@@ -79,10 +125,18 @@ namespace INTEGRA_7_Xamarin
         {
             this.Orientation = Orientation;
             this.LabelPosition = LabelPosition;
-            this.Label = new Label();
+            this.Label = new Button();
+            this.Label.IsEnabled = false;
             this.Label.Text = LabelText;
-            this.Text = new Label();
+            this.Label.Margin = new Thickness(0, 0, 2, 0);
+            this.Label.BackgroundColor = UIHandler.colorSettings.LabelBackground;
+            this.Label.BorderWidth = 0;
+            this.Text = new Button();
+            this.Text.IsEnabled = false;
             this.Text.Text = Text;
+            this.Text.Margin = new Thickness(0, 0, 0, 0);
+            this.Text.BackgroundColor = UIHandler.colorSettings.LabelBackground;
+            this.Text.BorderWidth = 0;
             byte[] sizes;
             if (Sizes == null || Sizes.Count() != 2)
             {
@@ -95,6 +149,10 @@ namespace INTEGRA_7_Xamarin
 
             this.Text.VerticalOptions = LayoutOptions.FillAndExpand;
             this.Label.VerticalOptions = LayoutOptions.FillAndExpand;
+            this.VerticalOptions = LayoutOptions.FillAndExpand;
+            this.HorizontalOptions = LayoutOptions.FillAndExpand;
+            this.Margin = new Thickness(0);
+            this.Padding = new Thickness(0);
             if (Orientation == _orientation.HORIZONTAL)
             {
 
@@ -136,7 +194,7 @@ namespace INTEGRA_7_Xamarin
         //public Grid TheGrid { get; set; }
         public _orientation Orientation { get; set; }
         public _labelPosition LabelPosition { get; set; }
-        public Label Label { get; set; }
+        public Button Label { get; set; }
         public Editor Editor { get; set; }
 
         public LabeledTextInput(String LabelText, byte[] Sizes = null)
@@ -153,8 +211,12 @@ namespace INTEGRA_7_Xamarin
         {
             this.Orientation = Orientation;
             this.LabelPosition = LabelPosition;
-            this.Label = new Label();
+            this.Label = new Button();
             this.Label.Text = LabelText;
+            this.Label.IsEnabled = false;
+            this.Label.Margin = new Thickness(0, 0, 2, 0);
+            this.Label.BackgroundColor = UIHandler.colorSettings.LabelBackground;
+            this.Label.BorderWidth = 0;
             this.Editor = new Editor();
             this.Editor.Text = EditorText;
             byte[] sizes;
