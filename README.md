@@ -1,6 +1,3 @@
-# INTEGRA-7
-Roland INTEGRA-7 Librarian and Editor
-
 Roland INTEGRA-7 is a synthesizer module, read about it here:
 https://www.roland.com/global/products/integra-7/
 
@@ -12,7 +9,7 @@ now my plan is to re-write it using the Xamarin platform.
 All that possibly can be implemented in common code goes into the
 portable project.
 
-UI i handled in the file UIHandler.cs in the portable project, where
+UI is handled in the file UIHandler.cs in the portable project, where
 all controls are dynamically created. The original program was split
 up in a few pages, and xaml code was used in some pages, but it has
 an enging for creating UI controls, so that one is beeing adapted to
