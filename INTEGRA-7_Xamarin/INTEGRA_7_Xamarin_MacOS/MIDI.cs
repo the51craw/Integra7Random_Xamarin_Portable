@@ -3,13 +3,13 @@ using System.Collections.Generic;
 //using System.Timers;
 using Xamarin.Forms;
 using CoreMidi;
-using SysExLab;
+using INTEGRA_7_Xamarin;
 using Foundation;
 using System.Threading;
 
-namespace SysExLab_MacOS
+namespace INTEGRA_7_Xamarin_MacOS
 {
-    public class MIDI : IMidi
+    public class MIDI : INTEGRA_7_Xamarin.IMidi
     {
         public MidiPort midiOutPort;
         public MidiPort midiInPort;
@@ -22,8 +22,8 @@ namespace SysExLab_MacOS
         public byte MidiInPortChannel { get; set; }
         public Int32 MidiOutPortSelectedIndex { get; set; }
         public Int32 MidiInPortSelectedIndex { get; set; }
-        public SysExLab.MainPage mainPage;
-        public SysExLab_MacOS.AppDelegate mainPage_MacOS;
+        public INTEGRA_7_Xamarin.MainPage mainPage;
+        public INTEGRA_7_Xamarin_MacOS.AppDelegate mainPage_MacOS;
         public byte[][] rawData;  /* Packets are coming in in small chunks, so
                                      I need to have two buffers for incoming
                                      hex data, one under filling, and one
@@ -196,7 +196,7 @@ namespace SysExLab_MacOS
             Init(deviceName);
         }
 
-        public void Init(String deviceName, SysExLab.MainPage mainPage)
+        public void Init(String deviceName, INTEGRA_7_Xamarin.MainPage mainPage)
         {
             this.mainPage = mainPage;
             Init(deviceName);
@@ -285,6 +285,26 @@ namespace SysExLab_MacOS
             // In MacOS this is handled above, in midiClient.ObjectRemoved and ObjectAdded
             // The windows version needs this function, so it is in the interface, thus
             // must be present even if not used.
+        }
+
+        public byte GetMidiOutPortChannel()
+        {
+            return MidiOutPortChannel;
+        }
+
+        public void SetMidiOutPortChannel(byte OutPortChannel)
+        {
+            MidiOutPortChannel = OutPortChannel;
+        }
+
+        public byte GetMidiInPortChannel()
+        {
+            return MidiInPortChannel;
+        }
+
+        public void SetMidiInPortChannel(byte InPortChannel)
+        {
+            MidiInPortChannel = InPortChannel;
         }
 
         public void NoteOn(byte currentChannel, byte noteNumber, byte velocity)
