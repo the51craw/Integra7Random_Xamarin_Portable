@@ -45,7 +45,7 @@ namespace INTEGRA_7_Xamarin_MacOS
         {
             if (midiOutPort == null)
             {
-                mainPage_MacOS = DependencyService.Get<SysExLab_MacOS.AppDelegate>();
+                mainPage_MacOS = DependencyService.Get<INTEGRA_7_Xamarin_MacOS.AppDelegate>();
             }
         }
 
