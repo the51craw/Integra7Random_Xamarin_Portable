@@ -260,6 +260,27 @@ namespace INTEGRA_7_Xamarin.UWP
             catch { }
         }
 
+        public byte GetMidiOutPortChannel()
+        {
+            return MidiOutPortChannel;
+        }
+
+        public void SetMidiOutPortChannel(byte OutPortChannel)
+        {
+            MidiOutPortChannel = OutPortChannel;
+        }
+
+        public byte GetMidiInPortChannel()
+        {
+            return MidiInPortChannel;
+        }
+
+        public void SetMidiInPortChannel(byte InPortChannel)
+        {
+            MidiInPortChannel = InPortChannel;
+        }
+
+
         public void NoteOn(byte currentChannel, byte noteNumber, byte velocity)
         {
             if (midiOutPort != null)

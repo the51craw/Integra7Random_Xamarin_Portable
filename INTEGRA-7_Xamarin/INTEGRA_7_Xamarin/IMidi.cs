@@ -38,5 +38,13 @@ namespace INTEGRA_7_Xamarin
         void InputDeviceChanged(Picker DeviceSelector);
 
         //void MidiInPort_MessageReceived(MidiInPort sender, MidiMessageReceivedEventArgs args);
+
+        byte GetMidiOutPortChannel();
+
+        void SetMidiOutPortChannel(byte OutPortChannel);
+
+        byte GetMidiInPortChannel();
+
+        void SetMidiInPortChannel(byte InPortChannel);
     }
 }

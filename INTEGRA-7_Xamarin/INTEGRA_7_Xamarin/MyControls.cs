@@ -103,6 +103,43 @@ namespace INTEGRA_7_Xamarin
         }
     }
 
+    public class TextBox: Editor
+    {
+        Editor _editor = new Editor();
+
+        public new Boolean IsEnabled { get { return _editor.IsEnabled; } set { _editor.IsEnabled = value; } }
+        
+        public TextBox()
+        {
+            
+        }
+    }
+
+    public class CheckBox : Switch
+    {
+        Switch _switch = new Switch();
+
+        public new Boolean IsEnabled { get { return _switch.IsEnabled; } set { _switch.IsEnabled = value; } }
+        public Boolean IsChecked { get { return _switch.IsToggled; } set { _switch.IsToggled = value; } }
+
+        public CheckBox()
+        {
+
+        }
+    }
+
+    public class MyButton : Button
+    {
+        Button _button = new Button();
+
+        public new Boolean IsEnabled { get { return _button.IsEnabled; } set { _button.IsEnabled = value; } }
+
+        public MyButton()
+        {
+
+        }
+    }
+
     public class LabeledText : Grid
     {
         //public Grid TheGrid { get; set; }
