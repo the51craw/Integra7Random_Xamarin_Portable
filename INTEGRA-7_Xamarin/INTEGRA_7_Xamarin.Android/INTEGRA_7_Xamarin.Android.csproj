@@ -146,7 +146,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\INTEGRA_7_Xamarin\INTEGRA_7_Xamarin.csproj">
-      <Project>{9d5ff2de-9b76-4cdc-9061-864469c7d862}</Project>
+      <Project>{F83947B5-BBAE-4870-95B8-A69C372271E1}</Project>
       <Name>INTEGRA_7_Xamarin</Name>
     </ProjectReference>
   </ItemGroup>
