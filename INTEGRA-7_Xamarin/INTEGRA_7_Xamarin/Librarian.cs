@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using Xamarin.Forms;
 
@@ -7,23 +8,34 @@ namespace INTEGRA_7_Xamarin
 {
     public partial class UIHandler
     {
+        enum ToneNamesFilter
+        {
+            ALL = 0,
+            PRESET = 1,
+            USER = 2
+        }
+        ToneNamesFilter toneNamesFilter = ToneNamesFilter.ALL;
+
         // Librarian controls:
         public Picker Librarian_midiOutputDevice { get; set; }
         public Picker Librarian_midiInputDevice { get; set; }
         public Picker Librarian_midiOutputChannel { get; set; }
         public Picker Librarian_midiInputChannel { get; set; }
+
+        Boolean allowListViewUpdates = true;
+        Boolean previousAllowListViewUpdates = true;
         Grid Librarian_gridGroups;
         Button Librarian_lblGroups;
         ListView Librarian_lvGroups;
-        List<String> Librarian_Groups;
+        ObservableCollection<String> Librarian_Groups;
         Grid Librarian_gridCategories;
         Button Librarian_lblCategories;
         ListView Librarian_lvCategories;
-        List<String> Librarian_Categories;
+        ObservableCollection<String> Librarian_Categories;
         Grid Librarian_gridTones;
         Button Librarian_filterPresetAndUser;
         ListView Librarian_lvToneNames;
-        List<String> Librarian_ToneNames;
+        ObservableCollection<String> Librarian_ToneNames;
         Grid Librarian_gridToneData;
         LabeledTextInput Librarian_tbSearch;
         LabeledText Librarian_ltToneName;
@@ -95,14 +107,14 @@ namespace INTEGRA_7_Xamarin
             Librarian_lblGroups.Text = "Synth types & Expansion slots";
             Librarian_lblGroups.IsEnabled = false;
             Librarian_lvGroups = new ListView();
-            Librarian_Groups = new List<String>();
+            Librarian_Groups = new ObservableCollection<String>();
             Librarian_lvGroups.ItemsSource = Librarian_Groups;
 
             // Make a listview lvCategories for column 1:
             Librarian_lblCategories = new Button();
             Librarian_lblCategories.Text = "Sound categories";
             Librarian_lvCategories = new ListView();
-            Librarian_Categories = new List<String>();
+            Librarian_Categories = new ObservableCollection<String>();
             Librarian_lvCategories.ItemsSource = Librarian_Categories;
 
             // Make Grids for column 0 - 2:
@@ -118,7 +130,8 @@ namespace INTEGRA_7_Xamarin
             // Make a listview lvToneNames for column 2:
             Librarian_lvToneNames = new ListView();
             Librarian_lvToneNames.BackgroundColor = colorSettings.Background;
-            Librarian_ToneNames = new List<String>();
+            Librarian_Categories = new ObservableCollection<String>();
+            //commonState.toneList.Tones = new List<List<String>>();
             Librarian_lvToneNames.ItemsSource = Librarian_ToneNames;
             //Librarian_lvToneNames.Margin = new Thickness(0);
 
@@ -339,14 +352,14 @@ namespace INTEGRA_7_Xamarin
 
         private void Librarian_Editor_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (InitDone)
+            if (initDone)
             {
             }
         }
 
         private void Librarian_MidiOutputChannel_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (InitDone)
+            if (initDone)
             {
             }
 
@@ -354,7 +367,7 @@ namespace INTEGRA_7_Xamarin
 
         private void Librarian_MidiOutputDevice_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (InitDone)
+            if (initDone)
             {
             }
 
@@ -362,7 +375,7 @@ namespace INTEGRA_7_Xamarin
 
         private void Librarian_LvToneNames_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
-            if (InitDone)
+            if (initDone)
             {
             }
 
@@ -370,16 +383,20 @@ namespace INTEGRA_7_Xamarin
 
         private void Librarian_LvCategories_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
-            if (InitDone)
+            if (initDone && allowListViewUpdates)
             {
+                allowListViewUpdates = false;
+                PopulateToneNames(Librarian_lvCategories.SelectedItem.ToString());
+                allowListViewUpdates = true;
             }
 
         }
 
         private void Librarian_LvGroups_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
-            if (InitDone)
+            if (initDone)
             {
+                PopulateCategories(Librarian_lvGroups.SelectedItem.ToString());
             }
 
         }
@@ -392,6 +409,22 @@ namespace INTEGRA_7_Xamarin
 
         private void Librarian_FilterPresetAndUser_Clicked(object sender, EventArgs e)
         {
+            switch (toneNamesFilter)
+            {
+                case ToneNamesFilter.ALL:
+                    toneNamesFilter = ToneNamesFilter.PRESET;
+                    Librarian_filterPresetAndUser.Text = "Preset tones only";
+                    break;
+                case ToneNamesFilter.PRESET:
+                    toneNamesFilter = ToneNamesFilter.USER;
+                    Librarian_filterPresetAndUser.Text = "User tones only";
+                    break;
+                case ToneNamesFilter.USER:
+                    toneNamesFilter = ToneNamesFilter.ALL;
+                    Librarian_filterPresetAndUser.Text = "Presets and user tones";
+                    break;
+            }
+            PopulateToneNames(Librarian_lvCategories.SelectedItem.ToString());
         }
 
         private void Picker_SelectedIndexChanged(object sender, EventArgs e)
@@ -421,6 +454,7 @@ namespace INTEGRA_7_Xamarin
 
         private void PopulateGroups()
         {
+            allowListViewUpdates = false;
             foreach (List<String> tone in commonState.toneList.Tones)
             {
                 if (!Librarian_Groups.Contains(tone[0]))
@@ -428,33 +462,116 @@ namespace INTEGRA_7_Xamarin
                     Librarian_Groups.Add(tone[0]);
                 }
             }
+            allowListViewUpdates = true;
+            Librarian_lvGroups.SelectedItem = "SuperNATURAL Acoustic Tone";
         }
 
         private void PopulateCategories(String group)
         {
             t.Trace("private void PopulateCategories (" + "String" + group + ", " + ")");
-            commonState.currentTone.Group = group;
+            //commonState.currentTone.Group = group;
             String lastCategory = "";
-            //CategoriesSource.Clear();
-            //lvCategories.Items.Clear();
-            //foreach (List<String> line in commonState.toneList.Tones.OrderBy(o => o[1]))
-            //{
-            //    //if (line[0] == group && line[1] != lastCategory && !CategoriesSource.Contains(line[1]))
-            //    if (line[0] == group && line[1] != lastCategory && !lvCategories.Items.Contains(line[1]))
-            //    {
-            //        lvCategories.Items.Add(line[1]);
-            //        //CategoriesSource.Add(line[1]);
-            //        lastCategory = line[1];
-            //    }
-            //}
+            allowListViewUpdates = false;
+            Librarian_Categories.Clear();
+            foreach (List<String> line in commonState.toneList.Tones.OrderBy(o => o[1]))
+            {
+                if (line[0] == group && line[1] != lastCategory && !Librarian_Categories.Contains(line[1]))
+                {
+                    Librarian_Categories.Add(line[1]);
+                    lastCategory = line[1];
+                }
+            }
+            allowListViewUpdates = true;
+            Librarian_lvCategories.ItemsSource = Librarian_Categories;
+            Librarian_lvCategories.SelectedItem = Librarian_Categories[0];
             //if (!String.IsNullOrEmpty(commonState.currentTone.Category))
             //{
             //    try
             //    {
-            //        lvCategories.SelectedItem = commonState.currentTone.Category;
+            //        Librarian_lvCategories.SelectedItem = commonState.currentTone.Category;
             //    }
             //    catch { }
             //}
+            PopulateToneNames(Librarian_lvCategories.SelectedItem.ToString());
+        }
+
+        private void PopulateToneNames(String category)
+        {
+            t.Trace("private void PopulateToneNames (" + "String" + category + ", " + ")");
+            if (initDone || !scanning)
+            {
+                //commonState.currentTone.Category = category;
+
+                try
+                {
+                    //if (TonesSource.Count() > 0)
+                    if (Librarian_ToneNames == null)
+                    {
+                        try
+                        {
+                            Librarian_ToneNames = new ObservableCollection<String>();
+                        }
+                        catch (Exception e)
+                        {
+
+                        }
+                    }
+                    if (Librarian_ToneNames.Count() > 0)
+                    {
+                        try
+                        {
+                            Librarian_ToneNames.Clear();
+                        }
+                        catch (Exception e)
+                        {
+
+                        }
+                    }
+                    foreach (List<String> tone in commonState.toneList.Tones.OrderBy(o => o[3]))
+                    {
+                        if (commonState.currentTone == null && tone[1] == category)
+                        {
+                            Librarian_ToneNames.Add(tone[3]);
+                        }
+                        //else if (tone[0] == commonState.currentTone.Group && tone[1] == category
+                        //    //&& ((Boolean)cbMainPageFilterUser.IsChecked && tone[8] == "(User)"
+                        //    //|| (Boolean)cbMainPageFilterPreset.IsChecked && tone[8] != "(User)")
+                        //    )
+                        //{
+                        //    Librarian_ToneNames.Add(tone[3]);
+                        //}
+                    }
+                    if (!String.IsNullOrEmpty(commonState.currentTone.Name))
+                    {
+                        try
+                        {
+                            Librarian_lvToneNames.SelectedItem = commonState.currentTone.Name;
+                            //if (IsFavorite())
+                            //{
+                            //    btnShowFavorites.Background = green;
+                            //}
+                            //else
+                            //{
+                            //    btnShowFavorites.Background = gray;
+                            //}
+                        }
+                        catch
+                        {
+                            Librarian_lvToneNames.SelectedItem = "";
+                        }
+                    }
+                    //else if (lvToneNames.Items.Count > 0)
+                    //{
+                    //    lvToneNames.SelectedIndex = 0;
+                    //}
+                }
+                catch (Exception e)
+                {
+
+                }
+                //SetFavorite();
+                Librarian_lvToneNames.ItemsSource = Librarian_ToneNames;
+            }
         }
     }
 }

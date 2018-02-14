@@ -113,7 +113,6 @@ namespace INTEGRA_7_Xamarin
         public static ColorSettings colorSettings { get; set; }
         public static BorderThicknesSettings borderThicknesSettings { get; set; }
         _page page;
-        Boolean InitDone = false;
 
         // Edit tone controls:
         //...
@@ -134,6 +133,7 @@ namespace INTEGRA_7_Xamarin
             commonState = new CommonState(ref Librarian_btnPlay);
             commonState.midi = DependencyService.Get<IMidi>();
             commonState.midi.Init("INTEGRA-7", mainPage);
+            initDone = true;
         }
 
         public void Clear()
