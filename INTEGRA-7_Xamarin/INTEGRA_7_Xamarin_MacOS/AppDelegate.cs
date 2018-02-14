@@ -3,8 +3,9 @@ using Xamarin.Forms.Platform.MacOS;
 using AppKit;
 using Foundation;
 using INTEGRA_7_Xamarin;
+using CoreMidi;
 
-[assembly: Dependency(typeof(MIDI))]
+[assembly: Dependency(typeof(IMidi))]
 namespace INTEGRA_7_Xamarin_MacOS
 {
     [Register("AppDelegate")]
@@ -14,7 +15,7 @@ namespace INTEGRA_7_Xamarin_MacOS
         private Picker OutputSelector;
         private Picker InputSelector;
         public MIDI midi;
-        public SysExLab.MainPage mainPage = null;
+        public INTEGRA_7_Xamarin.MainPage mainPage = null;
 
         public AppDelegate()
         {
@@ -34,14 +35,14 @@ namespace INTEGRA_7_Xamarin_MacOS
         {
             // Insert code here to initialize your application
             Forms.Init();
-            LoadApplication(new SysExLab.App());
-            mainPage = SysExLab.MainPage.GetMainPage();
-            mainPage.uIHandler.DrawMain();
+            LoadApplication(new INTEGRA_7_Xamarin.App());
+            mainPage = INTEGRA_7_Xamarin.MainPage.GetMainPage();
+            mainPage.uIHandler.DrawPage();
  
             // We need invisible ComboBoxes to hold settings from the
             // corresponding Pickers in the Xamarin code.
-            OutputSelector = mainPage.uIHandler.midiOutputDevice;
-            InputSelector = mainPage.uIHandler.midiInputDevice;
+            OutputSelector = mainPage.uIHandler.Librarian_midiOutputDevice;
+            InputSelector = mainPage.uIHandler.Librarian_midiInputDevice;
             //midi = new MIDI(mainPage, OutputSelector, InputSelector, /*Dispatcher,*/ 0, 0);
             //midi.Init("INTEGRA-7");
 

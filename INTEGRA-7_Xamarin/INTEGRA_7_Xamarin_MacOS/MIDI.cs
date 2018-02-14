@@ -53,27 +53,6 @@ namespace INTEGRA_7_Xamarin_MacOS
         {
             if (MessageReceived)
             {
-                if (!(Boolean)mainPage.uIHandler.rcvKeepAlive.Switch.IsToggled && rawData[validIndata].Length == 1 && rawData[validIndata][0] == 0xfe)
-                {
-                    return;
-                }
-                String line = "";
-                Boolean lineWritten = false;
-                for (UInt16 i = 0; i < rawData[validIndata].Length; i++)
-                {
-                    line += ToHex(rawData[validIndata][i]);
-                    lineWritten = false;
-                    if (line.Length >= 16 * 5)
-                    {
-                        mainPage.uIHandler.receivedLines.Add(line);
-                        line = "";
-                        lineWritten = true;
-                    }
-                }
-                if (!lineWritten)
-                {
-                    mainPage.uIHandler.receivedLines.Add(line);
-                }
                 MessageReceived = false;
             }
         }
@@ -243,13 +222,13 @@ namespace INTEGRA_7_Xamarin_MacOS
                     for (Int32 e = 0; e < md.EntityCount; e++)
                     {
                         MidiEntity me = md.GetEntity(e);
-                        if (me.Destinations > 0)
+                        if (me.Sources > 0)
                         {
-                            mainPage.uIHandler.midiInputDevice.Items.Add(md.Name);
+                            mainPage.uIHandler.Librarian_midiInputDevice.Items.Add(md.Name);
                         }
                         if (me.Destinations > 0)
                         {
-                            mainPage.uIHandler.midiOutputDevice.Items.Add(md.Name);
+                            mainPage.uIHandler.Librarian_midiOutputDevice.Items.Add(md.Name);
                         }
                         if (md.Name.Contains("INTEGRA-7"))
                         {
@@ -258,8 +237,8 @@ namespace INTEGRA_7_Xamarin_MacOS
                             midiInPort.ConnectSource(midiEntity.GetSource(0));
                             midiOutPort.ConnectSource(midiEntity.GetDestination(0));
                             midiOutEndpoint = me.GetDestination(0);
-                            mainPage.uIHandler.midiOutputDevice.SelectedIndex = deviceIndex;
-                            mainPage.uIHandler.midiInputDevice.SelectedIndex = deviceIndex;
+                            mainPage.uIHandler.Librarian_midiOutputDevice.SelectedIndex = deviceIndex;
+                            mainPage.uIHandler.Librarian_midiInputDevice.SelectedIndex = deviceIndex;
                         }
                     }
                 }
