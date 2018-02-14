@@ -128,17 +128,18 @@ namespace INTEGRA_7_Xamarin
         }
     }
 
-    public class MyButton : Button
-    {
-        Button _button = new Button();
+    //public class MyButton : Button
+    //{
+    //    Button _button = new Button();
 
-        public new Boolean IsEnabled { get { return _button.IsEnabled; } set { _button.IsEnabled = value; } }
+    //    public new Boolean IsEnabled { get { return _button.IsEnabled; } set { _button.IsEnabled = value; } }
+    //    public new 
 
-        public MyButton()
-        {
+    //    public MyButton()
+    //    {
 
-        }
-    }
+    //    }
+    //}
 
     public class LabeledText : Grid
     {
