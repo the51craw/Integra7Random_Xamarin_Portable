@@ -49,6 +49,7 @@ namespace INTEGRA_7_Xamarin
             CURRENT_SELECTED_TONE,
         }
 
+        IMidi midi;
         Boolean scanAll = false;
         UInt16 emptySlots = 10;
 
@@ -131,8 +132,10 @@ namespace INTEGRA_7_Xamarin
             colorSettings = new ColorSettings(_colorSettings.LIGHT);
             borderThicknesSettings = new BorderThicknesSettings(1);
             commonState = new CommonState(ref Librarian_btnPlay);
-            commonState.midi = DependencyService.Get<IMidi>();
-            commonState.midi.Init("INTEGRA-7", mainPage);
+            //commonState.midi = DependencyService.Get<IMidi>();
+            midi = DependencyService.Get<IMidi>();
+            //commonState.midi.Init("INTEGRA-7", mainPage);
+            midi.Init("INTEGRA-7", mainPage);
             initDone = true;
         }
 

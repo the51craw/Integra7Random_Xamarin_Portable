@@ -9,7 +9,7 @@ using System.Threading;
 
 namespace INTEGRA_7_Xamarin_MacOS
 {
-    public class MIDI : INTEGRA_7_Xamarin.IMidi
+    public class MIDI : IMidi
     {
         public MidiPort midiOutPort;
         public MidiPort midiInPort;
@@ -40,6 +40,14 @@ namespace INTEGRA_7_Xamarin_MacOS
         public Timer timer;
         public Boolean MessageReceived = false;
         CoreMidi.MidiClient midiClient = null;
+
+        //public void IMidi()
+        //{
+        //    if (midiOutPort == null)
+        //    {
+        //        mainPage_MacOS = DependencyService.Get<INTEGRA_7_Xamarin_MacOS.AppDelegate>();
+        //    }
+        //}
 
         public MIDI()
         {

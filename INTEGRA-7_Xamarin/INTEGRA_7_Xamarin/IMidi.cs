@@ -9,6 +9,8 @@ namespace INTEGRA_7_Xamarin
 {
     public interface IMidi
     {
+        //void IMidi();
+
         void Init(String deviceName);
 
         void Init(String deviceName, INTEGRA_7_Xamarin.MainPage mainPage);
