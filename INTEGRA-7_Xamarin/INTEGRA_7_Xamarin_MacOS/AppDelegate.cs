@@ -2,10 +2,10 @@
 using Xamarin.Forms.Platform.MacOS;
 using AppKit;
 using Foundation;
-using INTEGRA_7_Xamarin;
+using INTEGRA_7_Xamarin_MacOS;
 using CoreMidi;
 
-[assembly: Dependency(typeof(IMidi))]
+[assembly: Dependency(typeof(MIDI))]
 namespace INTEGRA_7_Xamarin_MacOS
 {
     [Register("AppDelegate")]

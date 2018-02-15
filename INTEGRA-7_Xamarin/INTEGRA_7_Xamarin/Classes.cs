@@ -269,7 +269,7 @@ namespace INTEGRA_7_Xamarin
         }
 
         public String command { get; set; }
-        public IMidi midi;// { get; set; }
+        public IMidi midi { get; set; }
         public Tone currentTone { get; set; }
         public ToneList toneList { get; set; }
         public List<List<String>> toneNames { get; set; } // Will hold names of user tones.

@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -49,13 +49,12 @@ namespace INTEGRA_7_Xamarin
             CURRENT_SELECTED_TONE,
         }
 
-        IMidi midi;
         Boolean scanAll = false;
         UInt16 emptySlots = 10;
 
         //ApplicationDataContainer localSettings = null;
         CommonState commonState = null;
-        public List<List<String>> Lists = null;
+        public System.Collections.Generic.List<System.Collections.Generic.List<String>> Lists = null;
         private Boolean AutoUpdateChildLists = true;
         private Int32 currentGroupIndex = -1;
         private Int32 currentCategoryIndex = -1;
@@ -132,10 +131,6 @@ namespace INTEGRA_7_Xamarin
             colorSettings = new ColorSettings(_colorSettings.LIGHT);
             borderThicknesSettings = new BorderThicknesSettings(1);
             commonState = new CommonState(ref Librarian_btnPlay);
-            //commonState.midi = DependencyService.Get<IMidi>();
-            midi = DependencyService.Get<IMidi>();
-            //commonState.midi.Init("INTEGRA-7", mainPage);
-            midi.Init("INTEGRA-7", mainPage);
             initDone = true;
         }
 
@@ -155,6 +150,9 @@ namespace INTEGRA_7_Xamarin
             DrawMotionalSurroundPage();
             DrawStudioSetEditorPage();
             DrawFavoritesPage();
+
+            commonState.midi = DependencyService.Get<IMidi>();
+            commonState.midi.Init("INTEGRA-7", mainPage);
 
             // Always start by showing librarian:
             ShowLibrarianPage();

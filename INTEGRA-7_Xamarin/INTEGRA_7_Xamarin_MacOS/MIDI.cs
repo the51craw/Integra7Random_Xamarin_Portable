@@ -296,19 +296,19 @@ namespace INTEGRA_7_Xamarin_MacOS
 
         public void NoteOn(byte currentChannel, byte noteNumber, byte velocity)
         {
-            Byte[] bytes = new Byte[] { (byte)(0x90 & currentChannel), noteNumber, velocity };
+            Byte[] bytes = new Byte[] { (byte)(0x90 | currentChannel), noteNumber, velocity };
             SendPacket(bytes);
         }
 
         public void NoteOff(byte currentChannel, byte noteNumber)
         {
-            Byte[] bytes = new Byte[] { (byte)(0x80 & currentChannel), noteNumber, 0x00 };
+            Byte[] bytes = new Byte[] { (byte)(0x80 | currentChannel), noteNumber, 0x00 };
             SendPacket(bytes);
         }
 
         public void SendControlChange(byte channel, byte controller, byte value)
         {
-            Byte[] bytes = new Byte[] { (byte)(0xb0 & channel), controller, value };
+            Byte[] bytes = new Byte[] { (byte)(0xb0 | channel), controller, value };
             SendPacket(bytes);
         }
 
@@ -319,21 +319,21 @@ namespace INTEGRA_7_Xamarin_MacOS
 
         public void ProgramChange(byte channel, String smsb, String slsb, String spc)
         {
-            Byte[] bytes = new Byte[] { (byte)(0xb0 & channel), 0x00, (byte)(UInt16.Parse(smsb))};
+            Byte[] bytes = new Byte[] { (byte)(0xb0 | channel), 0x00, (byte)(UInt16.Parse(smsb))};
             SendPacket(bytes);
-            bytes = new Byte[] { (byte)(0xb0 & channel), 0x20, (byte)(UInt16.Parse(slsb))};
+            bytes = new Byte[] { (byte)(0xb0 | channel), 0x20, (byte)(UInt16.Parse(slsb))};
             SendPacket(bytes);
-            bytes = new Byte[] { (byte)(0xc0 & channel), (byte)(UInt16.Parse(spc) - 1) };
+            bytes = new Byte[] { (byte)(0xc0 | channel), (byte)(UInt16.Parse(spc) - 1) };
             SendPacket(bytes);
         }
 
         public void ProgramChange(byte channel, byte msb, byte lsb, byte pc)
         {
-            Byte[] bytes = new Byte[] { (byte)(0xb0 & channel), 0x00, msb };
+            Byte[] bytes = new Byte[] { (byte)(0xb0 | channel), 0x00, msb };
             SendPacket(bytes);
-            bytes = new Byte[] { (byte)(0xb0 & channel), 0x20, lsb };
+            bytes = new Byte[] { (byte)(0xb0 | channel), 0x20, lsb };
             SendPacket(bytes);
-            bytes = new Byte[] { (byte)(0xc0 & channel), (byte)(pc - 1) };
+            bytes = new Byte[] { (byte)(0xc0 | channel), (byte)(pc - 1) };
             SendPacket(bytes);
         }
 
