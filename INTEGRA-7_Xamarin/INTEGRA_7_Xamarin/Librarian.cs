@@ -41,9 +41,9 @@ namespace INTEGRA_7_Xamarin
         LabeledText Librarian_ltToneName;
         LabeledText Librarian_ltType;
         LabeledText Librarian_ltToneNumber;
-        LabeledText Librarian_ltBankNumber;
-        LabeledText Librarian_ltBankMSB;
-        LabeledText Librarian_ltBankLSB;
+        LabeledText Librarian_ltPatchNumber;
+        LabeledText Librarian_ltPatchMSB;
+        LabeledText Librarian_ltPatchLSB;
         LabeledText Librarian_ltProgramNumber;
         Button Librarian_btnEditTone;
         Button Librarian_btnEditStudioSet;
@@ -52,7 +52,7 @@ namespace INTEGRA_7_Xamarin
         Button Librarian_btnAddFavorite;
         Button Librarian_btnRemoveFavorite;
         Button Librarian_btnPlay;
-        Button Librarian_btnFavorites;
+        Button Librarian_btnShowFavorites;
         Button Librarian_btnResetHangingNotes;
         Button Librarian_btnPlus12keys;
         Button Librarian_btnMinus12keys;
@@ -160,13 +160,13 @@ namespace INTEGRA_7_Xamarin
 
             // Make labeled editor fields:
             Librarian_tbSearch = new LabeledTextInput("Search:", new byte[] { 1, 2 });
-            Librarian_ltToneName = new LabeledText("Tone Name:", "Full Grand 1", new byte[] { 1, 2 });
-            Librarian_ltType = new LabeledText("Type:", "(Preset)", new byte[] { 1, 2 });
-            Librarian_ltToneNumber = new LabeledText("Tone #:", "1", new byte[] { 1, 2 });
-            Librarian_ltBankNumber = new LabeledText("Bank #:", "11456", new byte[] { 1, 2 });
-            Librarian_ltBankMSB = new LabeledText("Bank MSB:", "89", new byte[] { 1, 2 });
-            Librarian_ltBankLSB = new LabeledText("Bank LSB:", "64", new byte[] { 1, 2 });
-            Librarian_ltProgramNumber = new LabeledText("Program #:", "1", new byte[] { 1, 2 });
+            Librarian_ltToneName = new LabeledText("Tone Name:", "", new byte[] { 1, 2 });
+            Librarian_ltType = new LabeledText("Type:", "", new byte[] { 1, 2 });
+            Librarian_ltToneNumber = new LabeledText("Tone #:", "", new byte[] { 1, 2 });
+            Librarian_ltPatchNumber = new LabeledText("Bank #:", "", new byte[] { 1, 2 });
+            Librarian_ltPatchMSB = new LabeledText("Bank MSB:", "", new byte[] { 1, 2 });
+            Librarian_ltPatchLSB = new LabeledText("Bank LSB:", "", new byte[] { 1, 2 });
+            Librarian_ltProgramNumber = new LabeledText("Program #:", "", new byte[] { 1, 2 });
 
             // Add the keyboard image:
             Librarian_Keyboard = new Image { Aspect = Aspect.Fill };
@@ -184,7 +184,7 @@ namespace INTEGRA_7_Xamarin
             Librarian_btnAddFavorite = new Button();
             Librarian_btnRemoveFavorite = new Button();
             Librarian_btnPlay = new Button();
-            Librarian_btnFavorites = new Button();
+            Librarian_btnShowFavorites = new Button();
             Librarian_btnResetHangingNotes = new Button();
             Librarian_btnPlus12keys = new Button();
             Librarian_btnMinus12keys = new Button();
@@ -197,7 +197,7 @@ namespace INTEGRA_7_Xamarin
             Librarian_btnAddFavorite.Text = "Add";
             Librarian_btnRemoveFavorite.Text = "Remove";
             Librarian_btnPlay.Text = "Play";
-            Librarian_btnFavorites.Text = "Favorites";
+            Librarian_btnShowFavorites.Text = "Favorites";
             Librarian_btnResetHangingNotes.Text = "Reset";
             Librarian_btnPlus12keys.Text = "+12";
             Librarian_btnMinus12keys.Text = "-12";
@@ -210,7 +210,7 @@ namespace INTEGRA_7_Xamarin
             Librarian_btnAddFavorite.BackgroundColor = colorSettings.Background;
             Librarian_btnRemoveFavorite.BackgroundColor = colorSettings.Background;
             Librarian_btnPlay.BackgroundColor = colorSettings.Background;
-            Librarian_btnFavorites.BackgroundColor = colorSettings.Background;
+            Librarian_btnShowFavorites.BackgroundColor = colorSettings.Background;
             Librarian_btnResetHangingNotes.BackgroundColor = colorSettings.Background;
             Librarian_btnPlus12keys.BackgroundColor = colorSettings.Background;
             Librarian_btnMinus12keys.BackgroundColor = colorSettings.Background;
@@ -232,7 +232,7 @@ namespace INTEGRA_7_Xamarin
             Librarian_btnAddFavorite.Clicked += Librarian_btnAddFavorite_Clicked;
             Librarian_btnRemoveFavorite.Clicked += Librarian_btnRemoveFavorite_Clicked;
             Librarian_btnPlay.Clicked += Librarian_btnPlay_Clicked;
-            Librarian_btnFavorites.Clicked += Librarian_btnFavorites_Clicked;
+            Librarian_btnShowFavorites.Clicked += Librarian_btnFavorites_Clicked;
             Librarian_btnResetHangingNotes.Clicked += Librarian_btnResetHangingNotes_Clicked;
             Librarian_btnPlus12keys.Clicked += Librarian_btnPlus12keys_Clicked;
             Librarian_btnMinus12keys.Clicked += Librarian_btnMinus12keys_Clicked;
@@ -272,13 +272,13 @@ namespace INTEGRA_7_Xamarin
             Librarian_gridToneData.Children.Add((new GridRow(2, new View[] { Librarian_ltToneName }, null, false)).Row);
             Librarian_gridToneData.Children.Add((new GridRow(3, new View[] { Librarian_ltType }, null, false)).Row);
             Librarian_gridToneData.Children.Add((new GridRow(4, new View[] { Librarian_ltToneNumber }, null, false)).Row);
-            Librarian_gridToneData.Children.Add((new GridRow(5, new View[] { Librarian_ltBankNumber }, null, false)).Row);
-            Librarian_gridToneData.Children.Add((new GridRow(6, new View[] { Librarian_ltBankMSB }, null, false)).Row);
-            Librarian_gridToneData.Children.Add((new GridRow(7, new View[] { Librarian_ltBankLSB }, null, false)).Row);
+            Librarian_gridToneData.Children.Add((new GridRow(5, new View[] { Librarian_ltPatchNumber }, null, false)).Row);
+            Librarian_gridToneData.Children.Add((new GridRow(6, new View[] { Librarian_ltPatchMSB }, null, false)).Row);
+            Librarian_gridToneData.Children.Add((new GridRow(7, new View[] { Librarian_ltPatchLSB }, null, false)).Row);
             Librarian_gridToneData.Children.Add((new GridRow(8, new View[] { Librarian_ltProgramNumber }, null, false)).Row);
             Librarian_gridToneData.Children.Add((new GridRow(9, new View[] { Librarian_btnEditTone, Librarian_btnEditStudioSet }, new byte[] { 1, 2 }, false)).Row);
             Librarian_gridToneData.Children.Add((new GridRow(10, new View[] { Librarian_btnResetVolume, Librarian_btnMotionalSurround }, new byte[] { 1, 2 }, false)).Row);
-            Librarian_gridToneData.Children.Add((new GridRow(11, new View[] { Librarian_btnFavorites, Librarian_btnAddFavorite, Librarian_btnRemoveFavorite }, new byte[] { 1, 1, 1 }, false)).Row);
+            Librarian_gridToneData.Children.Add((new GridRow(11, new View[] { Librarian_btnShowFavorites, Librarian_btnAddFavorite, Librarian_btnRemoveFavorite }, new byte[] { 1, 1, 1 }, false)).Row);
             Librarian_gridToneData.Children.Add((new GridRow(12, new View[] { Librarian_btnResetHangingNotes, Librarian_btnPlay }, new byte[] { 1, 2 }, false)).Row);
             Librarian_gridToneData.Children.Add((new GridRow(13, new View[] { Librarian_lblKeys, Librarian_btnMinus12keys, Librarian_btnPlus12keys }, new byte[] { 1, 1, 1 }, false)).Row);
 
@@ -298,85 +298,11 @@ namespace INTEGRA_7_Xamarin
         // Librarian handlers
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        private void Librarian_btnMinus12keys_Clicked(object sender, EventArgs e)
-        {
-            commonState.midi.NoteOff(0, 64);
-        }
-
-        private void Librarian_btnPlus12keys_Clicked(object sender, EventArgs e)
-        {
-            commonState.midi.NoteOn(0, 64, 64);
-        }
-
-        private void Librarian_btnResetHangingNotes_Clicked(object sender, EventArgs e)
-        {
-        }
-
-        private void Librarian_btnFavorites_Clicked(object sender, EventArgs e)
-        {
-            mainStackLayout.Children.RemoveAt(0);
-            ShowFavoritesPage(FavoriteAction.SHOW);
-        }
-
-        private void Librarian_btnPlay_Clicked(object sender, EventArgs e)
-        {
-        }
-
-        private void Librarian_btnRemoveFavorite_Clicked(object sender, EventArgs e)
-        {
-            mainStackLayout.Children.RemoveAt(0);
-            ShowFavoritesPage(FavoriteAction.REMOVE);
-        }
-
-        private void Librarian_btnAddFavorite_Clicked(object sender, EventArgs e)
-        {
-            mainStackLayout.Children.RemoveAt(0);
-            ShowFavoritesPage(FavoriteAction.ADD);
-        }
-
-        private void Librarian_btnMotionalSurround_Clicked(object sender, EventArgs e)
-        {
-            mainStackLayout.Children.RemoveAt(0);
-            ShowMotionalSurroundPage();
-        }
-
-        private void Librarian_btnResetVolume_Clicked(object sender, EventArgs e)
-        {
-        }
-
-        private void Librarian_btnEditStudioSet_Clicked(object sender, EventArgs e)
-        {
-            mainStackLayout.Children.RemoveAt(0);
-            ShowStudioSetEditorPage();
-        }
-
-        private void Librarian_Editor_TextChanged(object sender, TextChangedEventArgs e)
+        private void Librarian_LvGroups_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
             if (initDone)
             {
-            }
-        }
-
-        private void Librarian_MidiOutputChannel_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (initDone)
-            {
-            }
-
-        }
-
-        private void Librarian_MidiOutputDevice_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (initDone)
-            {
-            }
-
-        }
-
-        private void Librarian_LvToneNames_ItemSelected(object sender, SelectedItemChangedEventArgs e)
-        {
-            if (initDone)
-            {
+                PopulateCategories(Librarian_lvGroups.SelectedItem.ToString());
             }
 
         }
@@ -392,19 +318,55 @@ namespace INTEGRA_7_Xamarin
 
         }
 
-        private void Librarian_LvGroups_ItemSelected(object sender, SelectedItemChangedEventArgs e)
+        private void Librarian_LvToneNames_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
             if (initDone)
             {
-                PopulateCategories(Librarian_lvGroups.SelectedItem.ToString());
+                t.Trace("private void lvToneNames_SelectionChanged (" + "object" + sender + ", " + "SelectionChangedEventArgs" + e + ", " + ")");
+                if (initDone && !scanning)
+                {
+                    if (Librarian_lvToneNames.SelectedItem != null && Librarian_lvToneNames.SelectedItem.ToString() != "")
+                    {
+                        //localSettings.Values["Tone"] = lvToneNames.SelectedIndex;
+                        currentToneNameIndex = Librarian_ToneNames.IndexOf(Librarian_lvToneNames.SelectedItem.ToString());
+                        String toneName = (String)Librarian_lvToneNames.SelectedItem;
+                        commonState.currentTone = new Tone(
+                            Librarian_Groups.IndexOf(Librarian_lvGroups.SelectedItem.ToString()),
+                            Librarian_Categories.IndexOf(Librarian_lvCategories.SelectedItem.ToString()),
+                            Librarian_ToneNames.IndexOf(Librarian_lvToneNames.SelectedItem.ToString()), // currentGroupIndex, currentCategoryIndex, currentToneNameIndex,
+                            Librarian_lvGroups.SelectedItem.ToString(),
+                            Librarian_lvCategories.SelectedItem.ToString(), toneName);//,
+                            //Librarian_lvGroups.SelectedItem.ToString()),
+                            //Librarian_Categories.IndexOf(Librarian_lvCategories.SelectedItem.ToString()).ToString(), toneName);
+                        if (!String.IsNullOrEmpty(toneName))
+                        {
+                            commonState.currentTone.Name = toneName;
+                        }
+                        if (!String.IsNullOrEmpty(commonState.currentTone.Name))
+                        {
+                            try
+                            {
+                                if (commonState.currentTone.Index < 0)
+                                {
+                                    commonState.currentTone.Index = commonState.toneList.Get(commonState.currentTone);
+                                }
+                                PopulateToneData(commonState.currentTone.Index);
+                            }
+                            catch { }
+                            commonState.midi.SetVolume(commonState.CurrentPart, 127);
+                            UpdateDrumNames();
+                            if (commonState.player.Playing)
+                            {
+                                commonState.player.StopPlaying();
+                                commonState.player.StartPlaying();
+                                commonState.player.WasPlaying = true;
+                            }
+                        }
+                        //Librarian_lvGroups.SelectedItem = commonState.currentTone.Group;
+                    }
+                }
             }
 
-        }
-
-        private void Librarian_BtnEditTone_Clicked(object sender, EventArgs e)
-        {
-            mainStackLayout.Children.RemoveAt(0);
-            ShowToneEditorPage();
         }
 
         private void Librarian_FilterPresetAndUser_Clicked(object sender, EventArgs e)
@@ -427,9 +389,84 @@ namespace INTEGRA_7_Xamarin
             PopulateToneNames(Librarian_lvCategories.SelectedItem.ToString());
         }
 
-        private void Picker_SelectedIndexChanged(object sender, EventArgs e)
+        private void Librarian_MidiOutputChannel_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Librarian_ltToneName.Text.Text = (String)((Picker)(sender)).SelectedItem;
+            if (initDone)
+            {
+            }
+
+        }
+
+        private void Librarian_MidiOutputDevice_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (initDone)
+            {
+            }
+        }
+
+        private void Librarian_Editor_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (initDone)
+            {
+            }
+        }
+
+        private void Librarian_btnMinus12keys_Clicked(object sender, EventArgs e)
+        {
+            commonState.midi.NoteOff(0, 64);
+        }
+
+        private void Librarian_btnPlus12keys_Clicked(object sender, EventArgs e)
+        {
+            commonState.midi.NoteOn(0, 64, 64);
+        }
+
+        private void Librarian_BtnEditTone_Clicked(object sender, EventArgs e)
+        {
+            mainStackLayout.Children.RemoveAt(0);
+            ShowToneEditorPage();
+        }
+
+        private void Librarian_btnEditStudioSet_Clicked(object sender, EventArgs e)
+        {
+            mainStackLayout.Children.RemoveAt(0);
+            ShowStudioSetEditorPage();
+        }
+
+        private void Librarian_btnResetVolume_Clicked(object sender, EventArgs e)
+        {
+        }
+
+        private void Librarian_btnMotionalSurround_Clicked(object sender, EventArgs e)
+        {
+            mainStackLayout.Children.RemoveAt(0);
+            ShowMotionalSurroundPage();
+        }
+
+        private void Librarian_btnFavorites_Clicked(object sender, EventArgs e)
+        {
+            mainStackLayout.Children.RemoveAt(0);
+            ShowFavoritesPage(FavoriteAction.SHOW);
+        }
+
+        private void Librarian_btnAddFavorite_Clicked(object sender, EventArgs e)
+        {
+            mainStackLayout.Children.RemoveAt(0);
+            ShowFavoritesPage(FavoriteAction.ADD);
+        }
+
+        private void Librarian_btnRemoveFavorite_Clicked(object sender, EventArgs e)
+        {
+            mainStackLayout.Children.RemoveAt(0);
+            ShowFavoritesPage(FavoriteAction.REMOVE);
+        }
+
+        private void Librarian_btnResetHangingNotes_Clicked(object sender, EventArgs e)
+        {
+        }
+
+        private void Librarian_btnPlay_Clicked(object sender, EventArgs e)
+        {
         }
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -492,7 +529,7 @@ namespace INTEGRA_7_Xamarin
             //    }
             //    catch { }
             //}
-            PopulateToneNames(Librarian_lvCategories.SelectedItem.ToString());
+            //PopulateToneNames(Librarian_lvCategories.SelectedItem.ToString());
         }
 
         private void PopulateToneNames(String category)
@@ -527,19 +564,16 @@ namespace INTEGRA_7_Xamarin
 
                         }
                     }
+                    String group = Librarian_lvGroups.SelectedItem.ToString();
                     foreach (List<String> tone in commonState.toneList.Tones.OrderBy(o => o[3]))
                     {
-                        if (commonState.currentTone == null && tone[1] == category)
+                        if (tone[0] == group && tone[1] == category
+                            && (toneNamesFilter == ToneNamesFilter.USER && tone[8] == "(User)"
+                            || toneNamesFilter == ToneNamesFilter.PRESET && tone[8] != "(User)"
+                            || toneNamesFilter == ToneNamesFilter.ALL))
                         {
                             Librarian_ToneNames.Add(tone[3]);
                         }
-                        //else if (tone[0] == commonState.currentTone.Group && tone[1] == category
-                        //    //&& ((Boolean)cbMainPageFilterUser.IsChecked && tone[8] == "(User)"
-                        //    //|| (Boolean)cbMainPageFilterPreset.IsChecked && tone[8] != "(User)")
-                        //    )
-                        //{
-                        //    Librarian_ToneNames.Add(tone[3]);
-                        //}
                     }
                     if (!String.IsNullOrEmpty(commonState.currentTone.Name))
                     {
@@ -573,5 +607,393 @@ namespace INTEGRA_7_Xamarin
                 Librarian_lvToneNames.ItemsSource = Librarian_ToneNames;
             }
         }
+
+        private void PopulateToneData(Int32 Index)
+        {
+            t.Trace("private void PopulateToneData (" + "Int32" + Index + ", " + ")");
+            if (Index > -1)
+            {
+                List<String> tone = commonState.toneList.Tones[Index];
+                Librarian_ltToneName.Text = tone[3];
+                Librarian_ltType.Text = tone[8];
+                Librarian_ltToneNumber.Text = tone[2];
+                Librarian_ltPatchNumber.Text = tone[6];
+                Librarian_ltPatchMSB.Text = tone[4];
+                Librarian_ltPatchLSB.Text = tone[5];
+                Librarian_ltProgramNumber.Text = tone[7];
+                commonState.midi.ProgramChange(commonState.midi.GetMidiOutPortChannel(), tone[4], tone[5], tone[7]);
+                if (IsFavorite())
+                {
+                    Librarian_btnShowFavorites.BackgroundColor = colorSettings.IsFavorite;
+                }
+                else
+                {
+                    Librarian_btnShowFavorites.BackgroundColor = colorSettings.Background;
+                }
+                Librarian_btnAddFavorite.IsEnabled = true;
+            }
+        }
+
+        private void UpdateDrumNames()
+        {
+            t.Trace("private void UpdateDrumNames()");
+            //ClearKeyNames();
+            if (commonState.currentTone.Category == "Drum" && commonState.drumKeyAssignLists.KeyboardNameList(commonState.currentTone.Group, commonState.currentTone.Name) != null)
+            {
+                commonState.keyNames = new List<String>();
+                foreach (String keyName in commonState.drumKeyAssignLists.KeyboardNameList(commonState.currentTone.Group, commonState.currentTone.Name))
+                {
+                    commonState.keyNames.Add(keyName);
+                }
+
+                if (commonState.keyNames != null && commonState.keyNames.Count() > 0)
+                {
+                    for (Int32 i = 0; i < 61; i++)
+                    {
+                        if (i + lowKey - 22 > -1 && i + lowKey - 22 < commonState.keyNames.Count())
+                        {
+                            //SetKeyText(i, commonState.keyNames[i + lowKey - 22]);
+                        }
+                    }
+                }
+            }
+        }
+        private Boolean IsFavorite()
+        {
+            t.Trace("private Boolean IsFavorite()");
+            if (commonState.favoritesList != null)
+            {
+                foreach (FavoritesFolder folder in commonState.favoritesList.folders)
+                {
+                    foreach (Tone favorite in folder.FavoritesTones)
+                    {
+                        if (favorite.Group == commonState.currentTone.Group
+                            && favorite.Category == commonState.currentTone.Category
+                            && favorite.Name == commonState.currentTone.Name)
+                        {
+                            return true;
+                        }
+                    }
+                }
+            }
+            return false;
+        }
+
+        //private void ReadFavorites()
+        //{
+        //    try
+        //    {
+        //        if (localSettings.Values.ContainsKey("Favorites"))
+        //        {
+        //            if (commonState.favoritesList == null)
+        //            {
+        //                commonState.favoritesList = new FavoritesList();
+        //                commonState.favoritesList.folders = new List<FavoritesFolder>();
+        //            }
+        //            commonState.favoritesList.folders.Clear();
+        //            String foldersWithFavorites = ((String)localSettings.Values["Favorites"]).Trim('\n');
+        //            // Format: [Folder name\v[Group index\tCategory index\tTone index\tGroup\tCategory\tTone\b]\f...]...
+        //            // I.e. Split all by \f to get all folders with content.
+        //            // Split each folder by \v to get folder name and all favorites together.
+        //            // Split favorites by \b to get all favorites one by one.
+        //            // Split each favorite by \t to get the 6 parts (3 indexes, 3 names).
+        //            FavoritesFolder folder = null;
+        //            foreach (String foldersWithFavoritePart in foldersWithFavorites.Split('\f'))
+        //            {
+        //                String[] folderWithFavorites = foldersWithFavoritePart.Split('\v');
+        //                // Folder name:
+        //                folder = new FavoritesFolder(folderWithFavorites[0]);
+        //                commonState.favoritesList.folders.Add(folder);
+        //                if (folderWithFavorites.Length > 1)
+        //                {
+        //                    String[] favoritesList = folderWithFavorites[1].Split('\b');
+        //                    foreach (String favorite in favoritesList)
+        //                    {
+        //                        String[] favoriteParts = favorite.Split('\t');
+        //                        try
+        //                        {
+        //                            if (favoriteParts.Length == 6)
+        //                            {
+        //                                // Add strings for Group, Category and Tone name:
+        //                                // commonState.favoritesList.folders.Add(new String[] { favoriteParts[3], favoriteParts[4], favoriteParts[5] });
+        //                                folder.FavoritesTones.Add(new Tone(Int32.Parse(favoriteParts[0]), Int32.Parse(favoriteParts[1]),
+        //                                    Int32.Parse(favoriteParts[2]), favoriteParts[3], favoriteParts[4], favoriteParts[5]));
+        //                            }
+        //                        }
+        //                        catch { }
+        //                    }
+        //                }
+        //            }
+        //        }
+        //    }
+        //    catch { }
+        //}
+
+        //private Note NoteFromMousePosition(Double x, Double y)
+        //{
+        //    Note key = new Note();
+        //    key.NoteNumber = 255;
+        //    key.Velocity = 255;
+
+        //    Double keyBoardWidth = keyboard.ActualWidth;
+
+        //    Double keyWidthAll = keyboard.ActualWidth / 61.7;
+        //    Double keyWidthWhite = keyboard.ActualWidth / 36;
+        //    Int32 keyNumber = 0;
+        //    if (y > (0.56 * keyboard.ActualHeight))
+        //    {
+        //        // White key area
+        //        keyNumber = (byte)((double)x / keyWidthWhite);
+        //        if (keyNumber > 35)
+        //        {
+        //            keyNumber = 35;
+        //        }
+        //        key.NoteNumber = (byte)(whiteKeys[keyNumber] + transpose);
+        //        if (currentNote > 127)
+        //        {
+        //            currentNote = 127;
+        //        }
+        //        key.Velocity = (byte)(127 * (y - (0.56 * keyboard.ActualHeight)) / (0.44 * keyboard.ActualHeight));
+        //        if (key.Velocity > 127)
+        //        {
+        //            key.Velocity = 127;
+        //        }
+        //    }
+        //    else
+        //    {
+        //        // All keys area
+        //        keyNumber = (byte)((double)x / keyWidthAll);
+        //        if (keyNumber > 60)
+        //        {
+        //            keyNumber = 60;
+        //        }
+        //        key.NoteNumber = (byte)(keyNumber + 36 + transpose);
+        //        if (currentNote > 127)
+        //        {
+        //            currentNote = 127;
+        //        }
+        //        key.Velocity = (byte)(127 * (y / (0.56 * keyboard.ActualHeight)));
+        //        if (key.Velocity > 127)
+        //        {
+        //            key.Velocity = 127;
+        //        }
+        //    }
+        //    return key;
+        //}
+
+        //private void ClearKeyNames()
+        //{
+        //    t.Trace("private void ClearKeyNames()");
+        //    for (Int32 key = 0; key < 61; key++)
+        //    {
+        //        SetKeyText(key, "");
+        //    }
+        //}
+
+        //private void SetKeyText(Int32 Key, String Text)
+        //{
+        //    t.Trace("private void SetKeyText (" + "Int32" + Key + ", " + "String" + Text + ", " + ")");
+        //    switch (Key)
+        //    {
+        //        case 0:
+        //            K000.Text = Text;
+        //            break;
+        //        case 1:
+        //            K001.Text = Text;
+        //            break;
+        //        case 2:
+        //            K002.Text = Text;
+        //            break;
+        //        case 3:
+        //            K003.Text = Text;
+        //            break;
+        //        case 4:
+        //            K004.Text = Text;
+        //            break;
+        //        case 5:
+        //            K005.Text = Text;
+        //            break;
+        //        case 6:
+        //            K006.Text = Text;
+        //            break;
+        //        case 7:
+        //            K007.Text = Text;
+        //            break;
+        //        case 8:
+        //            K008.Text = Text;
+        //            break;
+        //        case 9:
+        //            K009.Text = Text;
+        //            break;
+        //        case 10:
+        //            K010.Text = Text;
+        //            break;
+        //        case 11:
+        //            K011.Text = Text;
+        //            break;
+        //        case 12:
+        //            K012.Text = Text;
+        //            break;
+        //        case 13:
+        //            K013.Text = Text;
+        //            break;
+        //        case 14:
+        //            K014.Text = Text;
+        //            break;
+        //        case 15:
+        //            K015.Text = Text;
+        //            break;
+        //        case 16:
+        //            K016.Text = Text;
+        //            break;
+        //        case 17:
+        //            K017.Text = Text;
+        //            break;
+        //        case 18:
+        //            K018.Text = Text;
+        //            break;
+        //        case 19:
+        //            K019.Text = Text;
+        //            break;
+        //        case 20:
+        //            K020.Text = Text;
+        //            break;
+        //        case 21:
+        //            K021.Text = Text;
+        //            break;
+        //        case 22:
+        //            K022.Text = Text;
+        //            break;
+        //        case 23:
+        //            K023.Text = Text;
+        //            break;
+        //        case 24:
+        //            K024.Text = Text;
+        //            break;
+        //        case 25:
+        //            K025.Text = Text;
+        //            break;
+        //        case 26:
+        //            K026.Text = Text;
+        //            break;
+        //        case 27:
+        //            K027.Text = Text;
+        //            break;
+        //        case 28:
+        //            K028.Text = Text;
+        //            break;
+        //        case 29:
+        //            K029.Text = Text;
+        //            break;
+        //        case 30:
+        //            K030.Text = Text;
+        //            break;
+        //        case 31:
+        //            K031.Text = Text;
+        //            break;
+        //        case 32:
+        //            K032.Text = Text;
+        //            break;
+        //        case 33:
+        //            K033.Text = Text;
+        //            break;
+        //        case 34:
+        //            K034.Text = Text;
+        //            break;
+        //        case 35:
+        //            K035.Text = Text;
+        //            break;
+        //        case 36:
+        //            K036.Text = Text;
+        //            break;
+        //        case 37:
+        //            K037.Text = Text;
+        //            break;
+        //        case 38:
+        //            K038.Text = Text;
+        //            break;
+        //        case 39:
+        //            K039.Text = Text;
+        //            break;
+        //        case 40:
+        //            K040.Text = Text;
+        //            break;
+        //        case 41:
+        //            K041.Text = Text;
+        //            break;
+        //        case 42:
+        //            K042.Text = Text;
+        //            break;
+        //        case 43:
+        //            K043.Text = Text;
+        //            break;
+        //        case 44:
+        //            K044.Text = Text;
+        //            break;
+        //        case 45:
+        //            K045.Text = Text;
+        //            break;
+        //        case 46:
+        //            K046.Text = Text;
+        //            break;
+        //        case 47:
+        //            K047.Text = Text;
+        //            break;
+        //        case 48:
+        //            K048.Text = Text;
+        //            break;
+        //        case 49:
+        //            K049.Text = Text;
+        //            break;
+        //        case 50:
+        //            K050.Text = Text;
+        //            break;
+        //        case 51:
+        //            K051.Text = Text;
+        //            break;
+        //        case 52:
+        //            K052.Text = Text;
+        //            break;
+        //        case 53:
+        //            K053.Text = Text;
+        //            break;
+        //        case 54:
+        //            K054.Text = Text;
+        //            break;
+        //        case 55:
+        //            K055.Text = Text;
+        //            break;
+        //        case 56:
+        //            K056.Text = Text;
+        //            break;
+        //        case 57:
+        //            K057.Text = Text;
+        //            break;
+        //        case 58:
+        //            K058.Text = Text;
+        //            break;
+        //        case 59:
+        //            K059.Text = Text;
+        //            break;
+        //        case 60:
+        //            K060.Text = Text;
+        //            break;
+        //    }
+        //}
+
+        //private void PlayNote(byte note, Int32 length)
+        //{
+        //    t.Trace("private void PlayNote (" + "byte" + note + ", " + "Int32" + length + ", " + ")");
+        //    commonState.midi.NoteOn(commonState.CurrentPart, note, 92);
+        //    Task.Delay(length).Wait();
+        //    commonState.midi.NoteOff(commonState.CurrentPart, note);
+        //}
+
+        //private void SetFavorite()
+        //{
+        //    t.Trace("private void SetFavorite()");
+        //    btnAddFavorite.IsEnabled = true;
+        //    btnRemoveFavorite.IsEnabled = true;
+        //}
     }
 }

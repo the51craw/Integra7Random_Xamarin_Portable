@@ -12,7 +12,7 @@ namespace INTEGRA_7_Xamarin
     {
         public TextBlock()
         {
-            this.IsEnabled = false;
+            //this.IsEnabled = false;
         }
     }
 
@@ -42,6 +42,7 @@ namespace INTEGRA_7_Xamarin
         public Color Frame { get; set; }
         public Color Text { get; set; }
         public Color LabelBackground { get; set; }
+        public Color IsFavorite { get; set; }
 
         public ColorSettings(_colorSettings colorSettings)
         {
@@ -54,6 +55,7 @@ namespace INTEGRA_7_Xamarin
                     Frame = Color.White;
                     Text = Color.Black;
                     LabelBackground = Color.White;
+                    IsFavorite = Color.LightGreen;
                     break;
             }
         }
@@ -92,7 +94,7 @@ namespace INTEGRA_7_Xamarin
         private void myLabel(String text)
         {
             this.btn = new Button();
-            this.btn.IsEnabled = false;
+            //this.btn.IsEnabled = false;
             this.btn.Text = text;
             this.btn.Margin = new Thickness(0, 0, 0, 0);
             this.btn.BorderWidth = 0;
@@ -147,7 +149,8 @@ namespace INTEGRA_7_Xamarin
         public _orientation Orientation { get; set; }
         public _labelPosition LabelPosition { get; set; }
         public Button Label { get; set; }
-        public Button Text { get; set; }
+        public Button text { get; set; }
+        public String Text { get { return text.Text; } set { text.Text = value; } }
 
         public LabeledText(String LabelText, String Text, byte[] Sizes = null)
         {
@@ -164,17 +167,18 @@ namespace INTEGRA_7_Xamarin
             this.Orientation = Orientation;
             this.LabelPosition = LabelPosition;
             this.Label = new Button();
-            this.Label.IsEnabled = false;
+            //this.Label.IsEnabled = false;
             this.Label.Text = LabelText;
             this.Label.Margin = new Thickness(0, 0, 2, 0);
             this.Label.BackgroundColor = UIHandler.colorSettings.LabelBackground;
             this.Label.BorderWidth = 0;
-            this.Text = new Button();
-            this.Text.IsEnabled = false;
-            this.Text.Text = Text;
-            this.Text.Margin = new Thickness(0, 0, 0, 0);
-            this.Text.BackgroundColor = UIHandler.colorSettings.LabelBackground;
-            this.Text.BorderWidth = 0;
+            this.text = new Button();
+            //this.Text.IsEnabled = false;
+            this.text.Text = Text;
+            this.Text = Text;
+            this.text.Margin = new Thickness(0, 0, 0, 0);
+            this.text.BackgroundColor = UIHandler.colorSettings.LabelBackground;
+            this.text.BorderWidth = 0;
             byte[] sizes;
             if (Sizes == null || Sizes.Count() != 2)
             {
@@ -185,7 +189,7 @@ namespace INTEGRA_7_Xamarin
                 sizes = Sizes;
             }
 
-            this.Text.VerticalOptions = LayoutOptions.FillAndExpand;
+            this.text.VerticalOptions = LayoutOptions.FillAndExpand;
             this.Label.VerticalOptions = LayoutOptions.FillAndExpand;
             this.VerticalOptions = LayoutOptions.FillAndExpand;
             this.HorizontalOptions = LayoutOptions.FillAndExpand;
@@ -197,14 +201,14 @@ namespace INTEGRA_7_Xamarin
                 if (LabelPosition == _labelPosition.BEFORE)
                 {
                     this.Label.HorizontalOptions = LayoutOptions.End;
-                    this.Text.HorizontalOptions = LayoutOptions.Start;
-                    this.Children.Add((new GridRow(0, new View[] { this.Label, this.Text }, sizes, true)).Row);
+                    this.text.HorizontalOptions = LayoutOptions.Start;
+                    this.Children.Add((new GridRow(0, new View[] { this.Label, this.text }, sizes, true)).Row);
                 }
                 else
                 {
                     this.Label.HorizontalOptions = LayoutOptions.Start;
-                    this.Text.HorizontalOptions = LayoutOptions.End;
-                    this.Children.Add((new GridRow(0, new View[] { this.Text, this.Label }, sizes, true)).Row);
+                    this.text.HorizontalOptions = LayoutOptions.End;
+                    this.Children.Add((new GridRow(0, new View[] { this.text, this.Label }, sizes, true)).Row);
                 }
             }
             else
@@ -212,15 +216,15 @@ namespace INTEGRA_7_Xamarin
                 if (LabelPosition == _labelPosition.BEFORE)
                 {
                     this.Label.HorizontalOptions = LayoutOptions.Start;
-                    this.Text.HorizontalOptions = LayoutOptions.End;
+                    this.text.HorizontalOptions = LayoutOptions.End;
                     this.Children.Add((new GridRow(0, new View[] { this.Label }, sizes, true)).Row);
-                    this.Children.Add((new GridRow(1, new View[] { this.Text }, sizes, true)).Row);
+                    this.Children.Add((new GridRow(1, new View[] { this.text }, sizes, true)).Row);
                 }
                 else
                 {
-                    this.Text.HorizontalOptions = LayoutOptions.Start;
+                    this.text.HorizontalOptions = LayoutOptions.Start;
                     this.Label.HorizontalOptions = LayoutOptions.End;
-                    this.Children.Add((new GridRow(0, new View[] { this.Text }, sizes, true)).Row);
+                    this.Children.Add((new GridRow(0, new View[] { this.text }, sizes, true)).Row);
                     this.Children.Add((new GridRow(1, new View[] { this.Label }, sizes, true)).Row);
                 }
             }
@@ -251,7 +255,7 @@ namespace INTEGRA_7_Xamarin
             this.LabelPosition = LabelPosition;
             this.Label = new Button();
             this.Label.Text = LabelText;
-            this.Label.IsEnabled = false;
+            //this.Label.IsEnabled = false;
             this.Label.Margin = new Thickness(0, 0, 2, 0);
             this.Label.BackgroundColor = UIHandler.colorSettings.LabelBackground;
             this.Label.BorderWidth = 0;
