@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.UI.Xaml;
 using Xamarin.Forms;
 
 namespace INTEGRA_7_Xamarin
@@ -28,9 +29,10 @@ namespace INTEGRA_7_Xamarin
         enum _page
         {
             LIBRARIAN,
-            SEARCH_RESULTS,
+            MOTIONAL_SURROUND,
             FAVORITES,
-            EDIT,
+            EDIT_TONE,
+            EDIT_STUDIO_SET,
         }
 
         enum QueryType
@@ -100,6 +102,8 @@ namespace INTEGRA_7_Xamarin
         ToneCategories toneCategories = new ToneCategories();
         Hex2Midi hex2Midi = new Hex2Midi();
         //SuperNATURALDrumKitInstrumentList superNATURALDrumKitInstrumentList = new SuperNATURALDrumKitInstrumentList();
+        public DispatcherTimer timer;
+        public byte[] rawData;
 
         INTEGRA_7_Xamarin.MainPage mainPage;
         StackLayout mainStackLayout { get; set; }
@@ -131,7 +135,20 @@ namespace INTEGRA_7_Xamarin
             colorSettings = new ColorSettings(_colorSettings.LIGHT);
             borderThicknesSettings = new BorderThicknesSettings(1);
             commonState = new CommonState(ref Librarian_btnPlay);
+            rawData = new byte[0];
+            timer = new DispatcherTimer();
+            timer.Interval = TimeSpan.FromMilliseconds(1);
+            timer.Tick += Timer_Tick; ;
+            timer.Start();
             initDone = true;
+        }
+
+        private void Timer_Tick(object sender, object e)
+        {
+            if (rawData.Length > 0)
+            {
+                rawData = new byte[0];
+            }
         }
 
         public void Clear()
@@ -155,7 +172,10 @@ namespace INTEGRA_7_Xamarin
             commonState.midi.Init("INTEGRA-7", mainPage);
 
             // Always start by showing librarian:
+            page = _page.LIBRARIAN;
             ShowLibrarianPage();
         }
+
+        
     }
 }

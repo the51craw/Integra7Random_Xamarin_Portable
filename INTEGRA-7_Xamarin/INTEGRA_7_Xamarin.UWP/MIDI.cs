@@ -51,27 +51,14 @@ namespace INTEGRA_7_Xamarin.UWP
         {
             if (MessageReceived)
             {
-                //if (!(Boolean)mainPage.uIHandler.rcvKeepAlive.Switch.IsToggled && rawData.Length == 1 && rawData[0] == 0xfe)
-                //{
-                //    return;
-                //}
-                //String line = "";
-                //Boolean lineWritten = false;
-                //for (UInt16 i = 0; i < rawData.Length; i++)
-                //{
-                //    line += ToHex(rawData[i]);
-                //    lineWritten = false;
-                //    if (line.Length >= 16 * 5)
-                //    {
-                //        mainPage.uIHandler.receivedLines.Add(line);
-                //        line = "";
-                //        lineWritten = true;
-                //    }
-                //}
-                //if (!lineWritten)
-                //{
-                //    mainPage.uIHandler.receivedLines.Add(line);
-                //}
+                // Just skip the keep-alive messages:
+                if (rawData.Length == 1 && rawData[0] == 0xfe)
+                {
+                    return;
+                }
+
+                // Alert mainPage
+                mainPage.uIHandler.rawData = rawData;
                 MessageReceived = false;
             }
         }
