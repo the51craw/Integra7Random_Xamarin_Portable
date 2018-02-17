@@ -3,7 +3,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Windows.UI.Xaml;
+//using Windows.UI.Xaml; // Forbidden in MacOS!!!
 using Xamarin.Forms;
 
 namespace INTEGRA_7_Xamarin
@@ -102,7 +102,8 @@ namespace INTEGRA_7_Xamarin
         ToneCategories toneCategories = new ToneCategories();
         Hex2Midi hex2Midi = new Hex2Midi();
         //SuperNATURALDrumKitInstrumentList superNATURALDrumKitInstrumentList = new SuperNATURALDrumKitInstrumentList();
-        public DispatcherTimer timer;
+        //public DispatcherTimer timer;
+        internal PortableTimer timer;
         public byte[] rawData;
 
         INTEGRA_7_Xamarin.MainPage mainPage;
@@ -136,14 +137,11 @@ namespace INTEGRA_7_Xamarin
             borderThicknesSettings = new BorderThicknesSettings(1);
             commonState = new CommonState(ref Librarian_btnPlay);
             rawData = new byte[0];
-            timer = new DispatcherTimer();
-            timer.Interval = TimeSpan.FromMilliseconds(1);
-            timer.Tick += Timer_Tick; ;
-            timer.Start();
+            timer = new PortableTimer(Timer_Tick, null, 1, 1);
             initDone = true;
         }
 
-        private void Timer_Tick(object sender, object e)
+        private void Timer_Tick(object state)
         {
             if (rawData.Length > 0)
             {
