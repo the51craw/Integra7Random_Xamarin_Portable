@@ -41,6 +41,14 @@ namespace INTEGRA_7_Xamarin_MacOS
         public Boolean MessageReceived = false;
         CoreMidi.MidiClient midiClient = null;
 
+        //public void IMidi()
+        //{
+        //    if (midiOutPort == null)
+        //    {
+        //        mainPage_MacOS = DependencyService.Get<INTEGRA_7_Xamarin_MacOS.AppDelegate>();
+        //    }
+        //}
+
         public MIDI()
         {
             if (midiOutPort == null)
@@ -52,7 +60,9 @@ namespace INTEGRA_7_Xamarin_MacOS
         private void Timer_Tick(object sender)
         {
             if (MessageReceived)
-            {
+            {       
+                mainPage.uIHandler.rawData = rawData[validIndata];
+                mainPage.uIHandler.MidiInPort_MessageRecceived();
                 MessageReceived = false;
             }
         }
