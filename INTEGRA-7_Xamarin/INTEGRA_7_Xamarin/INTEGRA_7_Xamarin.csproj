@@ -49,7 +49,6 @@
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="MyControls.cs" />
-    <Compile Include="PortableTimer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ToneList.cs" />
     <Compile Include="VoiceList.cs" />
