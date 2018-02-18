@@ -3220,2809 +3220,2809 @@ namespace INTEGRA_7_Xamarin
         }
     }
 
-    //class MFXNumberedParameters
-    //{
-    //    HBTrace t = new HBTrace("class MFXNumberedParameters");
-    //    public UInt16 Offset { get; set; }
-    //    public byte MFXType { get; set; }
-    //    public byte MFXLength { get; set; }
-    //    public NumberedParameters Parameters { get; set; }
-
-    //    private ParameterSets sets;
-
-    //    public MFXNumberedParameters(ReceivedData Data, UInt16 Offset)
-    //    {
-    //        t.Trace("public MFXNumberedParameters (" + "ReceivedData" + Data + ", " + "UInt16" + Offset + ", " + ")");
-    //        this.Offset = Offset;
-    //        sets = new ParameterSets();
-    //        Parameters = new NumberedParameters(0x11);
-    //        NumberedParametersContent content = new NumberedParametersContent();
-
-    //        MFXType = Data.GetByte(0);
-    //        //byte[]offsets = SetMFXTypeAndOffset(MFXType);
-
-    //        try
-    //        {
-    //            Parameters.Parameters = new NumberedParameter[content.ParameterTypes.Length];
-    //            MFXLength = (byte)content.ParameterNames[content.MFXIndexFromType[MFXType]].Length;
-    //            for (byte i = 0; i < content.ParameterNames[content.MFXIndexFromType[MFXType]].Length; i++)
-    //            {
-    //                Parameters.Name = content.ParameterNames[content.MFXIndexFromType[MFXType]][i];
-    //                Parameters.Parameters[i] = new NumberedParameter();
-    //                Parameters.Parameters[i].Type = content.ParameterTypes[content.MFXIndexFromType[MFXType]][i];
-    //                Parameters.Parameters[i].Name = content.ParameterNames[content.MFXIndexFromType[MFXType]][i];
-    //                if (i < content.ParameterTypes[content.MFXIndexFromType[MFXType]].Length)// && content.ParameterTypes[MFXType][i] != SETS.NOT_A_SET)
-    //                {
-    //                    Parameters.Parameters[i].Value.Text = sets.GetNumberedParameter(content.ParameterTypes[content.MFXIndexFromType[MFXType]][i]);
-    //                }
-    //                Parameters.Parameters[i].Value.Value = Data.Get2Of4Byte(Parameters.Offset + 4 * i); // This gets the value to set selected index.
-    //            }
-
-    //            // Now, handle any pages that belongs to the same MFXType (splitted pages)
-    //            if (content.MFXPageCount[content.MFXIndexFromType[MFXType]] > 1)
-    //            {
-    //                byte offset = (byte)(content.ParameterNames[content.MFXIndexFromType[MFXType]].Length);
-    //                for (byte page = 1; page < content.MFXPageCount[content.MFXIndexFromType[MFXType]]; page++)
-    //                {
-    //                    for (byte i = 0; i < content.ParameterNames[content.MFXIndexFromType[MFXType] + page].Length; i++)
-    //                    {
-    //                        Parameters.Name = content.ParameterNames[content.MFXIndexFromType[MFXType] + page][i];
-    //                        Parameters.Parameters[i + offset] = new NumberedParameter();
-    //                        Parameters.Parameters[i + offset].Type = content.ParameterTypes[content.MFXIndexFromType[MFXType] + page][i];
-    //                        Parameters.Parameters[i + offset].Name = content.ParameterNames[content.MFXIndexFromType[MFXType] + page][i];
-    //                        if (i < content.ParameterTypes[content.MFXIndexFromType[MFXType] + page].Length)// && content.ParameterSets[MFXType + page][i] != SETS.NOT_A_SET)
-    //                        {
-    //                            Parameters.Parameters[i + offset].Value.Text = sets.GetNumberedParameter(content.ParameterTypes[content.MFXIndexFromType[MFXType] + page][i]);
-    //                        }
-    //                        Parameters.Parameters[i + offset].Value.Value = Data.Get2Of4Byte(Parameters.Offset + 4 * (i + offset)); // This gets the value to set selected index.
-    //                    }
-    //                    offset += (byte)(content.ParameterNames[content.MFXIndexFromType[MFXType] + page].Length);
-    //                }
-    //            }
-    //        }
-    //        catch (Exception e)
-    //        {
-    //            String message = "Error in MFXNumberedParameters(): " + e.Message;
-    //            if (e.InnerException != null && e.InnerException.Message != null)
-    //            {
-    //                message += " InnerException: " + e.InnerException.Message;
-    //            }
-    //            t.Trace(message);
-    //        }
-    //    }
-    //}
-
-    //class Instrument
-    //{
-    //    public String InstrumentBank { get; set; }
-    //    public byte InstrumentNumber { get; set; }
-    //    public String InstrumentName { get; set; }
-    //    public String InstrumentGroup { get; set; }
-    //    public byte MaskIndex { get; set; }
-
-    //    public Instrument(String InstrumentBank, byte InstrumentNumber, String InstrumentName, String InstrumentGroup, byte MaskIndex)
-    //    {
-    //        this.InstrumentBank = InstrumentBank;
-    //        this.InstrumentNumber = InstrumentNumber;
-    //        this.InstrumentName = InstrumentName;
-    //        this.InstrumentGroup = InstrumentGroup;
-    //        this.MaskIndex = MaskIndex;
-    //    }
-    //}
-
-    //class SuperNATURALAcousticToneVariation
-    //{
-    //    public String Bank { get; set; }
-    //    public byte Number { get; set; }
-    //    public byte ComboBoxOffset { get; set; }
-    //    public String InstrumentName { get; set; }
-    //    public List<String> Variations { get; set; }
-
-    //    public SuperNATURALAcousticToneVariation(String Bank, byte Number, byte ComboBoxOffset, String InstrumentName, String Variation1, String Variation2, String Variation3, String Variation4)
-    //    {
-    //        this.Bank = Bank;
-    //        this.Number = Number;
-    //        this.ComboBoxOffset = (byte)(ComboBoxOffset + 1); // Because ComBox creation code will add an "Off" entry first.
-    //        this.InstrumentName = InstrumentName;
-    //        Variations = new List<String>();
-    //        if (Variation1 != "-") Variations.Add(Variation1);
-    //        if (Variation2 != "-") Variations.Add(Variation2);
-    //        if (Variation3 != "-") Variations.Add(Variation3);
-    //        if (Variation4 != "-") Variations.Add(Variation4);
-    //    }
-    //}
-
-    //class SuperNATURALAcousticToneVariations
-    //{
-    //    List<SuperNATURALAcousticToneVariation> SuperNATURALAcousticToneVariation;
-
-    //    public SuperNATURALAcousticToneVariations()
-    //    {
-    //        SuperNATURALAcousticToneVariation = new List<Integra_7_uwp.SuperNATURALAcousticToneVariation>();
-
-    //        SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("INT", 24, 0, "Glockenspiel", "Dead Stroke", "-", "-", "-"));
-    //        SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("INT", 25, 0, "Vibraphone", "Dead Stroke", "Tremolo Sw", "-", "-"));
-    //        SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("INT", 25, 0, "Vibes Hard", "Dead Stroke", "Tremolo Sw", "-", "-"));
-    //        SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("INT", 25, 0, "Vibes Soft", "Dead Stroke", "Tremolo Sw", "-", "-"));
-    //        SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("INT", 25, 0, "Vibes Trem", "Dead Stroke", "Tremolo Sw", "-", "-"));
-    //        SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("INT", 26, 0, "Marimba", "Dead Stroke", "-", "-", "-"));
-    //        SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("INT", 26, 0, "Marimba Hard", "Dead Stroke", "-", "-", "-"));
-    //        SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("INT", 26, 0, "Marimba Soft", "Dead Stroke", "-", "-", "-"));
-    //        SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("INT", 27, 0, "Xylophone", "Dead Stroke", "-", "-", "-"));
-    //        SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("INT", 27, 0, "Hard Xylo", "Dead Stroke", "-", "-", "-"));
-    //        SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("INT", 28, 0, "Tubular Bells", "Dead Stroke", "-", "-", "-"));
-    //        SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("INT", 28, 0, "TubulrBells1", "Dead Stroke", "-", "-", "-"));
-    //        SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("INT", 28, 0, "TubulrBells2", "Dead Stroke", "-", "-", "-"));
-    //        SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("INT", 34, 0, "Nylon Guitar", "Mute", "Harmonics", "-", "-"));
-    //        SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("INT", 34, 0, "Classic Gtr", "Mute", "Harmonics", "-", "-"));
-    //        SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("INT", 34, 0, "Gut Guitar", "Mute", "Harmonics", "-", "-"));
-    //        SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("INT", 34, 0, "Solid GutGt", "Mute", "Harmonics", "-", "-"));
-    //        SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("INT", 35, 0, "Flamenco Guitar", "Rasugueado", "Harmonics", "-", "-"));
-    //        SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("INT", 35, 0, "Flamenco Gtr", "Rasugueado", "Harmonics", "-", "-"));
-    //        SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("INT", 35, 0, "Warm Spanish", "Rasugueado", "Harmonics", "-", "-"));
-    //        SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("INT", 35, 0, "Rasugueado", "Rasugueado", "Harmonics", "-", "-"));
-    //        SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("INT", 36, 0, "SteelStr Guitar", "Mute", "Harmonics", "-", "-"));
-    //        SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("INT", 36, 0, "StrumSteelGt", "Mute", "Harmonics", "-", "-"));
-    //        SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("INT", 36, 0, "ArpegSteelGt", "Mute", "Harmonics", "-", "-"));
-    //        SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("INT", 37, 0, "Jazz Guitar", "FingerPicking", "Octave Tone", "-", "-"));
-    //        SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("INT", 38, 0, "ST Guitar Half", "Mute", "Harmonics", "-", "-"));
-    //        SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("INT", 39, 0, "ST Guitar Front", "Mute", "Harmonics", "-", "-"));
-    //        SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("INT", 40, 0, "TC Guitar Rear", "Mute", "Harmonics", "-", "-"));
-    //        SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("INT", 41, 0, "Acoustic Bass", "Staccato", "Harmonics", "-", "-"));
-    //        SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("INT", 42, 0, "Fingered Bass", "Slap", "Harmonics", "-", "-"));
-    //        SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("INT", 43, 0, "Picked Bass ", "Bridge Mute", "Harmonics", " - ", " - "));
-    //        SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("INT", 44, 0, "Fretless Bass", "Staccato", "Harmonics", "-", "-"));
-    //        SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("INT", 45, 0, "Violin", "Staccato", "Pizzicato", "Tremolo", "-"));
-    //        SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("INT", 46, 0, "Violin 2", "Staccato", "Pizzicato", "Tremolo", "-"));
-    //        SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("INT", 47, 0, "Viola", "Staccato", "Pizzicato", "Tremolo", "-"));
-    //        SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("INT", 48, 0, "Cello", "Staccato", "Pizzicato", "Tremolo", "-"));
-    //        SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("INT", 49, 0, "Cello 2", "Staccato", "Pizzicato", "Tremolo", "-"));
-    //        SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("INT", 50, 0, "Contrabass", "Staccato", "Pizzicato", "Tremolo", "-"));
-    //        SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("INT", 51, 0, "Harp", "Nail", "-", "-", "-"));
-    //        SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("INT", 52, 0, "Timpani", "Flam", "Accent Roll", "-", "-"));
-    //        SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("INT", 53, 0, "Strings", "Staccato", "Pizzicato", "Tremolo", "-"));
-    //        SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("INT", 54, 0, "Marcato Strings", "Staccato", "Pizzicato", "Tremolo", "-"));
-    //        SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("INT", 55, 0, "London Choir", "Voice Woo", "-", "-", "-"));
-    //        SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("INT", 56, 0, "Boys Choir", "Voice Woo", "-", "-", "-"));
-    //        SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("INT", 57, 0, "Trumpet", "Staccato", "Fall", "-", "-"));
-    //        SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("INT", 58, 0, "Trombone", "Staccato", "Fall", "-", "-"));
-    //        SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("INT", 59, 0, "Tb2 CupMute", "Staccato", "Fall", "-", "-"));
-    //        SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("INT", 60, 0, "Mute Trumpet", "Staccato", "Fall", "-", "-"));
-    //        SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("INT", 61, 0, "French Horn", "Staccato", "-", "-", "-"));
-    //        SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("INT", 62, 0, "Sop Sax 2", "Staccato", "Fall", "SubTone", "-"));
-    //        SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("INT", 63, 0, "Alto Sax 2", "Staccato", "Fall", "SubTone", "-"));
-    //        SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("INT", 64, 0, "T.Sax 2", "Staccato", "Fall", "SubTone", "-"));
-    //        SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("INT", 65, 0, "Bari Sax 2", "Staccato", "Fall", "SubTone", "-"));
-    //        SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("INT", 66, 0, "Oboe", "Staccato", "-", "-", "-"));
-    //        SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("INT", 67, 0, "Bassoon", "Staccato", "-", "-", "-"));
-    //        SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("INT", 68, 0, "Clarinet", "Staccato", "-", "-", "-"));
-    //        SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("INT", 69, 0, "Piccolo", "Staccato", "-", "-", "-"));
-    //        SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("INT", 70, 0, "Flute", "Staccato", "-", "-", "-"));
-    //        SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("INT", 71, 0, "Pan Flute", "Staccato", "Flutter", "-", "-"));
-    //        SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("INT", 72, 0, "Shakuhachi", "Staccato", "Ornament", "-", "-"));
-    //        SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("INT", 74, 1, "Uilleann Pipes", "-", "Ornament", "-", "-"));
-    //        SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("INT", 75, 1, "Bag Pipes", "-", "Ornament", "-", "-"));
-    //        SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("INT", 76, 0, "Erhu", "Staccato", "Ornament", "-", "-"));
-    //        SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("INT", 77, 0, "Steel Drums", "Mute", "-", "-", "-"));
-    //        SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("ExSN1", 1, 0, "Santoor", "Mute", "Tremolo", "-", "-"));
-    //        SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("ExSN1", 1, 0, "Santoor 1", "Mute", "Tremolo", "-", "-"));
-    //        SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("ExSN1", 1, 0, "Santoor 2", "Mute", "Tremolo", "-", "-"));
-    //        SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("ExSN1", 2, 0, "Yang Chin", "Mute", "Tremolo", "-", "-"));
-    //        SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("ExSN1", 2, 0, "Yang Chin 1", "Mute", "Tremolo", "-", "-"));
-    //        SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("ExSN1", 2, 0, "Yang Chin 2", "Mute", "Tremolo", "-", "-"));
-    //        SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("ExSN1", 2, 0, "Yang Chin 3", "Mute", "Tremolo", "-", "-"));
-    //        SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("ExSN1", 3, 0, "Tin Whistle", "Cut", "Ornament", "-", "-"));
-    //        SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("ExSN1", 4, 0, "Ryuteki", "Staccato", "Ornament", "-", "-"));
-    //        SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("ExSN1", 5, 0, "Tsugaru", "Strum", "Up Picking", "Auto Bend", "-"));
-    //        SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("ExSN1", 6, 0, "Sansin", "Strum", "Up Picking", "Auto Bend", "-"));
-    //        SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("ExSN1", 7, 0, "Koto", "Tremolo", "Ornament", "-", "-"));
-    //        SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("ExSN1", 9, 0, "Kalimba", "Buzz", "-", "-", "-"));
-    //        SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("ExSN2", 1, 0, "Sop Sax 1", "Staccato", "Fall", "SubTone", "-"));
-    //        SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("ExSN2", 1, 0, "SopSax1 Soft", "Staccato", "Fall", "SubTone", "-"));
-    //        SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("ExSN2", 2, 0, "A.Sax 1 Soft", "Staccato", "Fall", "SubTone", "-"));
-    //        SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("ExSN2", 2, 0, "Alto Sax 1", "Staccato", "Fall", "SubTone", "-"));
-    //        SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("ExSN2", 3, 0, "T.Sax 1 Soft", "Staccato", "Fall", "SubTone", "-"));
-    //        SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("ExSN2", 3, 0, "T.Sax Growl", "Staccato", "Fall", "SubTone", "-"));
-    //        SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("ExSN2", 3, 0, "TenorSax 1", "Staccato", "Fall", "SubTone", "-"));
-    //        SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("ExSN2", 4, 0, "B.Sax 1 Soft", "Staccato", "Fall", "SubTone", "-"));
-    //        SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("ExSN2", 4, 0, "Bari Sax 1", "Staccato", "Fall", "SubTone", "-"));
-    //        SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("ExSN2", 5, 0, "English Horn", "Staccato", "-", "-", "-"));
-    //        SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("ExSN2", 6, 0, "Bass Clarinet", "Staccato", "-", "-", "-"));
-    //        SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("ExSN2", 7, 0, "Flute2", "Staccato", "-", "-", "-"));
-    //        SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("ExSN2", 8, 0, "Soprano Recorder", "Staccato", "-", "-", "-"));
-    //        SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("ExSN2", 9, 0, "Alto Recorder", "Staccato", "-", "-", "-"));
-    //        SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("ExSN2", 10, 0, "Tenor Recorder", "Staccato", "-", "-", "-"));
-    //        SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("ExSN2", 11, 0, "Bass Recorder", "Staccato", "-", "-", "-"));
-    //        SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("ExSN2", 12, 0, "Ocarina SopC", "Staccato", "Ornament", "-", "-"));
-    //        SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("ExSN2", 13, 0, "Ocarina SopF", "Staccato", "Ornament", "-", "-"));
-    //        SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("ExSN2", 14, 0, "Ocarina Alto", "Staccato", "Ornament", "-", "-"));
-    //        SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("ExSN2", 15, 0, "Ocarina Bass", "Staccato", "Ornament", "-", "-"));
-    //        SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("ExSN3", 1, 0, "TC Guitar w/Fing", "FingerPicking", "Octave Tone", "-", "-"));
-    //        SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("ExSN3", 2, 0, "335Guitar w/Fing", "FingerPicking", "Octave Tone", "-", "-"));
-    //        SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("ExSN3", 3, 0, "LP Guitar Rear", "Mute", "Harmonics", "-", "-"));
-    //        SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("ExSN3", 4, 0, "LP Guitar Front", "Mute", "Harmonics", "-", "-"));
-    //        SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("ExSN3", 5, 0, "335 Guitar Half", "Mute", "Harmonics", "-", "-"));
-    //        SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("ExSN3", 6, 0, "Acoustic Bass 2", "Staccato", "Harmonics", "-", "-"));
-    //        SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("ExSN3", 7, 0, "Fingered Bass 2", "Slap", "Harmonics", "-", "-"));
-    //        SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("ExSN3", 8, 0, "Picked Bass 2 ", "Bridge Mute", "Harmonics", " - ", " - "));
-    //        SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("ExSN4", 2, 0, "Nylon Guitar 2", "Mute", "Harmonics", "-", "-"));
-    //        SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("ExSN4", 3, 0, "12th Steel Gtr", "Mute", "Harmonics", "-", "-"));
-    //        SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("ExSN4", 4, 0, "Mandolin", "Mute", "Harmonics", "-", "-"));
-    //        SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("ExSN4", 4, 0, "MandolinGt", "Mute", "Harmonics", "-", "-"));
-    //        SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("ExSN4", 4, 0, "MandolinStum", "Mute", "Harmonics", "-", "-"));
-    //        SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("ExSN4", 5, 0, "SteelFing Guitar", "FingerPicking", "Octave Tone", "-", "-"));
-    //        SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("ExSN4", 6, 0, "SteelStr Guitar2", "Mute", "Harmonics", "-", "-"));
-    //        SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("ExSN5", 1, 0, "Classical Trumpet", "Staccato", "Fall", "-", "-"));
-    //        SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("ExSN5", 2, 0, "Frugal Horn", "Staccato", "Fall", "-", "-"));
-    //        SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("ExSN5", 3, 0, "Trumpet 2", "Staccato", "Fall", "-", "-"));
-    //        SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("ExSN5", 4, 0, "Mariachi Tp", "Staccato", "Fall", "-", "-"));
-    //        SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("ExSN5", 5, 0, "Trombone 2", "Staccato", "Fall", "-", "-"));
-    //        SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("ExSN5", 6, 0, "Bass Trombone", "Staccato", "Fall", "-", "-"));
-    //        SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("ExSN5", 7, 0, "Tuba", "Staccato", "-", "-", "-"));
-    //        SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("ExSN5", 8, 0, "Straight Mute Tp", "Staccato", "Fall", "-", "-"));
-    //        SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("ExSN5", 9, 0, "Cup Mute Trumpet", "Staccato", "Fall", "-", "-"));
-    //        SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("ExSN5", 10, 0, "French Horn 2", "Staccato", "-", "-", "-"));
-    //        SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("ExSN5", 11, 0, "Mute French Horn", "Staccato", "-", "-", "-"));
-    //    }
-
-    //    public SuperNATURALAcousticToneVariation Get(String Bank, String Instrument)
-    //    {
-    //        UInt16 i = 0;
-    //        while (i < SuperNATURALAcousticToneVariation.Count())
-    //        {
-    //            if (Bank.StartsWith(SuperNATURALAcousticToneVariation[i].Bank) && Instrument.StartsWith(SuperNATURALAcousticToneVariation[i].InstrumentName.Trim()))
-    //            {
-    //                return SuperNATURALAcousticToneVariation[i];
-    //            }
-    //            i++;
-    //        }
-    //        return null;
-    //    }
-    //}
-
-    //class SuperNaturalAcousticInstrumentList
-    //{
-    //    public List<Instrument> Tones { get; set; }
-    //    public List<String> ToneGroups { get; set; }
-    //    public List<Instrument> Instruments { get; set; }
-    //    public List<String> Banks { get; set; }
-    //    public List<String> Groups { get; set; }
-    //    public List<List<byte[]>> Parameterlist1 { get; set; }
-    //    public List<List<byte[]>> Parameterlist2 { get; set; }
-    //    public byte[][] ParameterMask { get; set; }
-
-    //    public SuperNaturalAcousticInstrumentList()
-    //    {
-    //        Tones = new List<Instrument>();
-    //        ToneGroups = new List<String>();
-    //        Instruments = new List<Instrument>();
-    //        Banks = new List<String>();
-    //        Groups = new List<String>();
-    //        Parameterlist1 = new List<List<byte[]>>();
-    //        Parameterlist2 = new List<List<byte[]>>();
-    //        for (byte i = 0; i < 6; i++)
-    //        {
-    //            Parameterlist1.Add(new List<byte[]>());
-    //            Parameterlist2.Add(new List<byte[]>());
-    //        }
-
-    //        ToneList toneList = new ToneList();
-    //        foreach (List<String> strings in toneList.Tones)
-    //        {
-    //            if (strings[0] == "SuperNATURAL Acoustic Tone" && strings[1] != "Drums")
-    //            {
-    //                Instruments.Add(new Instrument("INT", (byte)(Int32.Parse(strings[2])), strings[3], strings[1], 0));
-    //                if (!Groups.Contains(strings[1]))
-    //                {
-    //                    Groups.Add(strings[1]);
-    //                }
-    //            }
-    //        }
-    //        foreach (List<String> strings in toneList.Tones)
-    //        {
-    //            if (strings[0].StartsWith("ExSN") && strings[1] != "Drums")
-    //            {
-    //                String[] parts = strings[0].Split(':');
-    //                Instruments.Add(new Instrument(parts[0], (byte)(Int32.Parse(strings[2])), strings[3], strings[1], 0));
-    //                if (!Groups.Contains(strings[1]))
-    //                {
-    //                    Groups.Add(strings[1]);
-    //                }
-    //            }
-    //        }
-
-    //        Banks.Add("INT");
-    //        Banks.Add("ExSN1");
-    //        Banks.Add("ExSN2");
-    //        Banks.Add("ExSN3");
-    //        Banks.Add("ExSN4");
-    //        Banks.Add("ExSN5");
-
-    //        ToneGroups.Add("Ac.Piano");
-    //        ToneGroups.Add("Ac.Guitar");
-    //        ToneGroups.Add("Ac.Bass");
-    //        ToneGroups.Add("Accordion/Harmonica");
-    //        ToneGroups.Add("Bell/Mallet");
-    //        ToneGroups.Add("Brass");
-    //        ToneGroups.Add("E.Bass");
-    //        ToneGroups.Add("E.Piano");
-    //        ToneGroups.Add("E.Guitar");
-    //        ToneGroups.Add("Flute");
-    //        ToneGroups.Add("Other Keyboards");
-    //        ToneGroups.Add("Organ");
-    //        ToneGroups.Add("Plucked/Stroke");
-    //        ToneGroups.Add("Recorder");
-    //        ToneGroups.Add("Sax");
-    //        ToneGroups.Add("Strings");
-    //        ToneGroups.Add("Vox/Choir");
-    //        ToneGroups.Add("Wind");
-
-    //        Tones.Add(new Instrument("INT", 1, "Concert Grand", "Ac.Piano", 0));
-    //        Tones.Add(new Instrument("INT", 2, "Grand Piano1", "Ac.Piano", 0));
-    //        Tones.Add(new Instrument("INT", 3, "Grand Piano2", "Ac.Piano", 0));
-    //        Tones.Add(new Instrument("INT", 4, "Grand Piano3", "Ac.Piano", 0));
-    //        Tones.Add(new Instrument("INT", 5, "Mellow Piano", "Ac.Piano", 0));
-    //        Tones.Add(new Instrument("INT", 6, "Bright Piano", "Ac.Piano", 0));
-    //        Tones.Add(new Instrument("INT", 7, "Upright Piano", "Ac.Piano", 0));
-    //        Tones.Add(new Instrument("INT", 8, "Concert Mono", "Ac.Piano", 0));
-    //        Tones.Add(new Instrument("INT", 9, "Honky-tonk", "Ac.Piano", 0));
-    //        Tones.Add(new Instrument("INT", 10, "Pure Vintage EP1", "E.Piano", 1));
-    //        Tones.Add(new Instrument("INT", 11, "Pure Vintage EP2", "E.Piano", 1));
-    //        Tones.Add(new Instrument("INT", 12, "Pure Wurly", "E.Piano", 1));
-    //        Tones.Add(new Instrument("INT", 13, "Pure Vintage EP3", "E.Piano", 1));
-    //        Tones.Add(new Instrument("INT", 14, "Old Hammer EP", "E.Piano", 1));
-    //        Tones.Add(new Instrument("INT", 15, "Dyno Piano", "E.Piano", 1));
-    //        Tones.Add(new Instrument("INT", 16, "Clav CB Flat", "Other Keyboards", 1));
-    //        Tones.Add(new Instrument("INT", 17, "Clav CA Flat", "Other Keyboards", 1));
-    //        Tones.Add(new Instrument("INT", 18, "Clav CB Medium", "Other Keyboards", 1));
-    //        Tones.Add(new Instrument("INT", 19, "Clav CA Medium", "Other Keyboards", 1));
-    //        Tones.Add(new Instrument("INT", 20, "Clav CB Brillia", "Other Keyboards", 1));
-    //        Tones.Add(new Instrument("INT", 21, "Clav CA Brillia", "Other Keyboards", 1));
-    //        Tones.Add(new Instrument("INT", 22, "Clav CB Combo", "Other Keyboards", 1));
-    //        Tones.Add(new Instrument("INT", 23, "Clav CA Combo", "Other Keyboards", 1));
-    //        Tones.Add(new Instrument("INT", 24, "Glockenspiel", "Bell/Mallet", 2));
-    //        Tones.Add(new Instrument("INT", 25, "Vibraphone", "Bell/Mallet", 2));
-    //        Tones.Add(new Instrument("INT", 26, "Marimba", "Bell/Mallet", 2));
-    //        Tones.Add(new Instrument("INT", 27, "Xylophone", "Bell/Mallet", 2));
-    //        Tones.Add(new Instrument("INT", 28, "Tubular Bells", "Bell/Mallet", 2));
-    //        Tones.Add(new Instrument("INT", 29, "TW Organ", "Organ", 3));
-    //        Tones.Add(new Instrument("INT", 30, "French Accordion", "Accordion/Harmonica", 1));
-    //        Tones.Add(new Instrument("INT", 31, "Italian Accordion", "Accordion/Harmonica", 1));
-    //        Tones.Add(new Instrument("INT", 32, "Harmonica", "Accordion/Harmonica", 4));
-    //        Tones.Add(new Instrument("INT", 33, "Bandoneon", "Accordion/Harmonica", 1));
-    //        Tones.Add(new Instrument("INT", 34, "Nylon Guitar", "Ac.Guitar", 5));
-    //        Tones.Add(new Instrument("INT", 35, "Flamenco Guitar", "Ac.Guitar", 5));
-    //        Tones.Add(new Instrument("INT", 36, "SteelStr Guitar", "Ac.Guitar", 5));
-    //        Tones.Add(new Instrument("INT", 37, "Jazz Guitar", "E.Guitar", 7));
-    //        Tones.Add(new Instrument("INT", 38, "ST Guitar Half", "E.Guitar", 7));
-    //        Tones.Add(new Instrument("INT", 39, "ST Guitar Front", "E.Guitar", 7));
-    //        Tones.Add(new Instrument("INT", 40, "TC Guitar Rear", "E.Guitar", 7));
-    //        Tones.Add(new Instrument("INT", 41, "Acoustic Bass", "Ac.Bass", 14));
-    //        Tones.Add(new Instrument("INT", 42, "Fingered Bass", "E.Bass", 14));
-    //        Tones.Add(new Instrument("INT", 43, "Picked Bass", "E.Bass", 14));
-    //        Tones.Add(new Instrument("INT", 44, "Fretless Bass", "E.Bass", 14));
-    //        Tones.Add(new Instrument("INT", 45, "Violin", "Strings", 14));
-    //        Tones.Add(new Instrument("INT", 46, "Violin 2", "Strings", 14));
-    //        Tones.Add(new Instrument("INT", 47, "Viola", "Strings", 14));
-    //        Tones.Add(new Instrument("INT", 48, "Cello", "Strings", 14));
-    //        Tones.Add(new Instrument("INT", 49, "Cello 2", "Strings", 14));
-    //        Tones.Add(new Instrument("INT", 50, "Contrabass", "Strings", 14));
-    //        Tones.Add(new Instrument("INT", 51, "Harp", "Plucked/Stroke", 8));
-    //        Tones.Add(new Instrument("INT", 52, "Timpani", "Percussion", 24));
-    //        Tones.Add(new Instrument("INT", 53, "Strings", "Strings", 15));
-    //        Tones.Add(new Instrument("INT", 54, "Marcato Strings", "Strings", 15));
-    //        Tones.Add(new Instrument("INT", 55, "London Choir", "Vox/Choir", 23));
-    //        Tones.Add(new Instrument("INT", 56, "Boys Choir", "Vox/Choir", 23));
-    //        Tones.Add(new Instrument("INT", 57, "Trumpet", "Brass", 17));
-    //        Tones.Add(new Instrument("INT", 58, "Trombone", "Brass", 17));
-    //        Tones.Add(new Instrument("INT", 59, "Tb2 CupMute", "Brass", 17));
-    //        Tones.Add(new Instrument("INT", 60, "Mute Trumpet", "Brass", 17));
-    //        Tones.Add(new Instrument("INT", 61, "French Horn", "Brass", 17));
-    //        Tones.Add(new Instrument("INT", 62, "Soprano Sax 2", "Sax", 22));
-    //        Tones.Add(new Instrument("INT", 63, "Alto Sax 2", "Sax", 22));
-    //        Tones.Add(new Instrument("INT", 64, "Tenor Sax 2", "Sax", 22));
-    //        Tones.Add(new Instrument("INT", 65, "Baritone Sax 2", "Sax", 22));
-    //        Tones.Add(new Instrument("INT", 66, "Oboe", "Wind", 18));
-    //        Tones.Add(new Instrument("INT", 67, "Bassoon", "Wind", 18));
-    //        Tones.Add(new Instrument("INT", 68, "Clarinet", "Wind", 18));
-    //        Tones.Add(new Instrument("INT", 69, "Piccolo", "Flute", 20));
-    //        Tones.Add(new Instrument("INT", 70, "Flute", "Flute", 20));
-    //        Tones.Add(new Instrument("INT", 71, "Pan Flute", "Flute", 20));
-    //        Tones.Add(new Instrument("INT", 72, "Shakuhachi", "Flute", 21));
-    //        Tones.Add(new Instrument("INT", 73, "Sitar", "Plucked/Stroke", 9));
-    //        Tones.Add(new Instrument("INT", 74, "Uilleann Pipes", "Wind", 19));
-    //        Tones.Add(new Instrument("INT", 75, "Bag Pipes", "Wind", 19));
-    //        Tones.Add(new Instrument("INT", 76, "Erhu", "Strings", 14));
-    //        Tones.Add(new Instrument("INT", 77, "Steel Drums", "Percussion", 25));
-    //        Tones.Add(new Instrument("ExSN1", 1, "Santoor", "Bell/Mallet", 2));
-    //        Tones.Add(new Instrument("ExSN1", 2, "Yang Chin", "Bell/Mallet", 2));
-    //        Tones.Add(new Instrument("ExSN1", 3, "Tin Whistle", "Flute", 21));
-    //        Tones.Add(new Instrument("ExSN1", 4, "Ryuteki", "Flute", 21));
-    //        Tones.Add(new Instrument("ExSN1", 5, "Tsugaru", "Plucked/Stroke", 10));
-    //        Tones.Add(new Instrument("ExSN1", 6, "Sansin", "Plucked/Stroke", 10));
-    //        Tones.Add(new Instrument("ExSN1", 7, "Koto", "Plucked/Stroke", 11));
-    //        Tones.Add(new Instrument("ExSN1", 8, "Taishou Koto", "Plucked/Stroke", 12));
-    //        Tones.Add(new Instrument("ExSN1", 9, "Kalimba", "Plucked/Stroke", 13));
-    //        Tones.Add(new Instrument("ExSN1", 10, "Sarangi", "Strings", 16));
-    //        Tones.Add(new Instrument("ExSN2", 1, "Soprano Sax", "Sax", 22));
-    //        Tones.Add(new Instrument("ExSN2", 2, "Alto Sax", "Sax", 22));
-    //        Tones.Add(new Instrument("ExSN2", 3, "Tenor Sax", "Sax", 22));
-    //        Tones.Add(new Instrument("ExSN2", 4, "Baritone Sax", "Sax", 22));
-    //        Tones.Add(new Instrument("ExSN2", 5, "English Horn", "Wind", 18));
-    //        Tones.Add(new Instrument("ExSN2", 6, "Bass Clarinet", "Wind", 18));
-    //        Tones.Add(new Instrument("ExSN2", 7, "Flute2", "Flute", 20));
-    //        Tones.Add(new Instrument("ExSN2", 8, "Soprano Recorder", "Recorder", 21));
-    //        Tones.Add(new Instrument("ExSN2", 9, "Alto Recorder", "Recorder", 21));
-    //        Tones.Add(new Instrument("ExSN2", 10, "Tenor Recorder", "Recorder", 21));
-    //        Tones.Add(new Instrument("ExSN2", 11, "Bass Recorder", "Recorder", 21));
-    //        Tones.Add(new Instrument("ExSN2", 12, "Ocarina SopC", "Recorder", 21));
-    //        Tones.Add(new Instrument("ExSN2", 13, "Ocarina SopF", "Recorder", 21));
-    //        Tones.Add(new Instrument("ExSN2", 14, "Ocarina Alto", "Recorder", 21));
-    //        Tones.Add(new Instrument("ExSN2", 15, "Ocarina Bass", "Recorder", 21));
-    //        Tones.Add(new Instrument("ExSN3", 1, "TC Guitar w/Fing", "Ac.Guitar", 5));
-    //        Tones.Add(new Instrument("ExSN3", 2, "335Guitar w/Fing", "Ac.Guitar", 5));
-    //        Tones.Add(new Instrument("ExSN3", 3, "LP Guitar Rear", "E.Guitar", 7));
-    //        Tones.Add(new Instrument("ExSN3", 4, "LP Guitar Front", "E.Guitar", 7));
-    //        Tones.Add(new Instrument("ExSN3", 5, "335 Guitar Half", "E.Guitar", 7));
-    //        Tones.Add(new Instrument("ExSN3", 6, "Acoustic Bass 2", "Ac.Bass", 14));
-    //        Tones.Add(new Instrument("ExSN3", 7, "Fingered Bass 2", "E.Bass", 14));
-    //        Tones.Add(new Instrument("ExSN3", 8, "Picked Bass 2", "E.Bass", 14));
-    //        Tones.Add(new Instrument("ExSN4", 1, "Ukulele", "Ac.Guitar", 5));
-    //        Tones.Add(new Instrument("ExSN4", 2, "Nylon Guitar 2", "Ac.Guitar", 5));
-    //        Tones.Add(new Instrument("ExSN4", 3, "12th Steel Gtr", "Ac.Guitar", 5));
-    //        Tones.Add(new Instrument("ExSN4", 4, "MandolinGt", "Ac.Guitar", 6));
-    //        Tones.Add(new Instrument("ExSN4", 5, "MandolinStum", "Ac.Guitar", 6));
-    //        Tones.Add(new Instrument("ExSN4", 6, "SteelFing Guitar", "Ac.Guitar", 5));
-    //        Tones.Add(new Instrument("ExSN4", 7, "SteelStr Guitar2", "Ac.Guitar", 5));
-    //        Tones.Add(new Instrument("ExSN5", 1, "Classical Trumpet", "Brass", 17));
-    //        Tones.Add(new Instrument("ExSN5", 2, "Frugal Horn", "Brass", 17));
-    //        Tones.Add(new Instrument("ExSN5", 3, "Trumpet 2", "Brass", 17));
-    //        Tones.Add(new Instrument("ExSN5", 4, "Mariachi Tp", "Brass", 17));
-    //        Tones.Add(new Instrument("ExSN5", 5, "Trombone 2", "Brass", 17));
-    //        Tones.Add(new Instrument("ExSN5", 6, "Bass Trombone", "Brass", 17));
-    //        Tones.Add(new Instrument("ExSN5", 7, "Tuba", "Brass", 17));
-    //        Tones.Add(new Instrument("ExSN5", 8, "Straight Mute Tp", "Brass", 17));
-    //        Tones.Add(new Instrument("ExSN5", 9, "Cup Mute Trumpet", "Brass", 17));
-    //        Tones.Add(new Instrument("ExSN5", 10, "French Horn 2", "Brass", 17));
-    //        Tones.Add(new Instrument("ExSN5", 11, "Mute French Horn", "Brass", 17));
-
-    //        Parameterlist1[0].Add(new byte[] { 0x01, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
-    //        Parameterlist1[0].Add(new byte[] { 0x01, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
-    //        Parameterlist1[0].Add(new byte[] { 0x01, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
-    //        Parameterlist1[0].Add(new byte[] { 0x01, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
-    //        Parameterlist1[0].Add(new byte[] { 0x01, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
-    //        Parameterlist1[0].Add(new byte[] { 0x01, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
-    //        Parameterlist1[0].Add(new byte[] { 0x01, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
-    //        Parameterlist1[0].Add(new byte[] { 0x01, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
-    //        Parameterlist1[0].Add(new byte[] { 0x01, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
-    //        Parameterlist1[0].Add(new byte[] { 0x01, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
-    //        Parameterlist1[0].Add(new byte[] { 0x01, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
-    //        Parameterlist1[0].Add(new byte[] { 0x01, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
-    //        Parameterlist1[0].Add(new byte[] { 0x01, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
-    //        Parameterlist1[0].Add(new byte[] { 0x01, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
-    //        Parameterlist1[0].Add(new byte[] { 0x01, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
-    //        Parameterlist1[0].Add(new byte[] { 0x01, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
-    //        Parameterlist1[0].Add(new byte[] { 0x01, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
-    //        Parameterlist1[0].Add(new byte[] { 0x01, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
-    //        Parameterlist1[0].Add(new byte[] { 0x01, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
-    //        Parameterlist1[0].Add(new byte[] { 0x01, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
-    //        Parameterlist1[0].Add(new byte[] { 0x01, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
-    //        Parameterlist1[0].Add(new byte[] { 0x01, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
-    //        Parameterlist1[0].Add(new byte[] { 0x01, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
-    //        Parameterlist1[0].Add(new byte[] { 0x01, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
-    //        Parameterlist1[0].Add(new byte[] { 0x01, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
-    //        Parameterlist1[0].Add(new byte[] { 0x01, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
-    //        Parameterlist1[0].Add(new byte[] { 0x01, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
-    //        Parameterlist1[0].Add(new byte[] { 0x01, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
-    //        Parameterlist1[0].Add(new byte[] { 0x01, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
-    //        Parameterlist1[0].Add(new byte[] { 0x01, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
-    //        Parameterlist1[0].Add(new byte[] { 0x01, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
-    //        Parameterlist1[0].Add(new byte[] { 0x01, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
-    //        Parameterlist1[0].Add(new byte[] { 0x01, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
-    //        Parameterlist1[0].Add(new byte[] { 0x01, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
-    //        Parameterlist1[0].Add(new byte[] { 0x01, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
-    //        Parameterlist1[0].Add(new byte[] { 0x01, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
-    //        Parameterlist1[0].Add(new byte[] { 0x01, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
-    //        Parameterlist1[0].Add(new byte[] { 0x01, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
-    //        Parameterlist1[0].Add(new byte[] { 0x01, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
-    //        Parameterlist1[0].Add(new byte[] { 0x01, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
-    //        Parameterlist1[0].Add(new byte[] { 0x00, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
-    //        Parameterlist1[0].Add(new byte[] { 0x00, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
-    //        Parameterlist1[0].Add(new byte[] { 0x00, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
-    //        Parameterlist1[0].Add(new byte[] { 0x00, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
-    //        Parameterlist1[0].Add(new byte[] { 0x00, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
-    //        Parameterlist1[0].Add(new byte[] { 0x00, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
-    //        Parameterlist1[0].Add(new byte[] { 0x00, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
-    //        Parameterlist1[0].Add(new byte[] { 0x00, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
-    //        Parameterlist1[0].Add(new byte[] { 0x00, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
-    //        Parameterlist1[0].Add(new byte[] { 0x00, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
-    //        Parameterlist1[0].Add(new byte[] { 0x01, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
-    //        Parameterlist1[0].Add(new byte[] { 0x01, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
-    //        Parameterlist1[0].Add(new byte[] { 0x01, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
-    //        Parameterlist1[0].Add(new byte[] { 0x01, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
-    //        Parameterlist1[0].Add(new byte[] { 0x01, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
-    //        Parameterlist1[0].Add(new byte[] { 0x01, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
-    //        Parameterlist1[0].Add(new byte[] { 0x00, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
-    //        Parameterlist1[0].Add(new byte[] { 0x00, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
-    //        Parameterlist1[0].Add(new byte[] { 0x00, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
-    //        Parameterlist1[0].Add(new byte[] { 0x00, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
-    //        Parameterlist1[0].Add(new byte[] { 0x00, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
-    //        Parameterlist1[0].Add(new byte[] { 0x00, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
-    //        Parameterlist1[0].Add(new byte[] { 0x00, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
-    //        Parameterlist1[0].Add(new byte[] { 0x00, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
-    //        Parameterlist1[0].Add(new byte[] { 0x00, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
-    //        Parameterlist1[0].Add(new byte[] { 0x00, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
-    //        Parameterlist1[0].Add(new byte[] { 0x00, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
-    //        Parameterlist1[0].Add(new byte[] { 0x00, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
-    //        Parameterlist1[0].Add(new byte[] { 0x00, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
-    //        Parameterlist1[0].Add(new byte[] { 0x00, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
-    //        Parameterlist1[0].Add(new byte[] { 0x00, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
-    //        Parameterlist1[0].Add(new byte[] { 0x00, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
-    //        Parameterlist1[0].Add(new byte[] { 0x01, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
-    //        Parameterlist1[0].Add(new byte[] { 0x00, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
-    //        Parameterlist1[0].Add(new byte[] { 0x00, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
-    //        Parameterlist1[0].Add(new byte[] { 0x00, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
-    //        Parameterlist1[0].Add(new byte[] { 0x01, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
-
-    //        Parameterlist2[0].Add(new byte[] { 0x40, 0x00, 0x40, 0x40, 0x40, 0x3f, 0x00, 0x40 });
-    //        Parameterlist2[0].Add(new byte[] { 0x40, 0x01, 0x40, 0x40, 0x40, 0x3f, 0x00, 0x40 });
-    //        Parameterlist2[0].Add(new byte[] { 0x40, 0x02, 0x40, 0x40, 0x40, 0x3f, 0x00, 0x40 });
-    //        Parameterlist2[0].Add(new byte[] { 0x40, 0x03, 0x40, 0x40, 0x40, 0x3f, 0x00, 0x40 });
-    //        Parameterlist2[0].Add(new byte[] { 0x40, 0x04, 0x40, 0x40, 0x40, 0x3f, 0x00, 0x40 });
-    //        Parameterlist2[0].Add(new byte[] { 0x40, 0x05, 0x40, 0x40, 0x40, 0x3f, 0x00, 0x40 });
-    //        Parameterlist2[0].Add(new byte[] { 0x40, 0x06, 0x40, 0x40, 0x40, 0x3f, 0x00, 0x40 });
-    //        Parameterlist2[0].Add(new byte[] { 0x40, 0x07, 0x40, 0x40, 0x40, 0x3f, 0x00, 0x40 });
-    //        Parameterlist2[0].Add(new byte[] { 0x40, 0x08, 0x40, 0x40, 0x40, 0x3f, 0x00, 0x40 });
-    //        Parameterlist2[0].Add(new byte[] { 0x00, 0x04, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
-    //        Parameterlist2[0].Add(new byte[] { 0x01, 0x04, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
-    //        Parameterlist2[0].Add(new byte[] { 0x02, 0x04, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
-    //        Parameterlist2[0].Add(new byte[] { 0x03, 0x04, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
-    //        Parameterlist2[0].Add(new byte[] { 0x06, 0x04, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
-    //        Parameterlist2[0].Add(new byte[] { 0x07, 0x04, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
-    //        Parameterlist2[0].Add(new byte[] { 0x00, 0x07, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
-    //        Parameterlist2[0].Add(new byte[] { 0x01, 0x07, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
-    //        Parameterlist2[0].Add(new byte[] { 0x02, 0x07, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
-    //        Parameterlist2[0].Add(new byte[] { 0x03, 0x07, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
-    //        Parameterlist2[0].Add(new byte[] { 0x04, 0x07, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
-    //        Parameterlist2[0].Add(new byte[] { 0x05, 0x07, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
-    //        Parameterlist2[0].Add(new byte[] { 0x06, 0x07, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
-    //        Parameterlist2[0].Add(new byte[] { 0x07, 0x07, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
-    //        Parameterlist2[0].Add(new byte[] { 0x00, 0x09, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
-    //        Parameterlist2[0].Add(new byte[] { 0x00, 0x0b, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
-    //        Parameterlist2[0].Add(new byte[] { 0x00, 0x0c, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
-    //        Parameterlist2[0].Add(new byte[] { 0x00, 0x0d, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
-    //        Parameterlist2[0].Add(new byte[] { 0x00, 0x0e, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
-    //        Parameterlist2[0].Add(new byte[] { 0x41, 0x00, 0x08, 0x08, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x01, 0x00, 0x05, 0x05, 0x03, 0x0a, 0x68, 0x2b, 0x05, 0x40, 0x00, 0x14 });
-    //        Parameterlist2[0].Add(new byte[] { 0x00, 0x15, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
-    //        Parameterlist2[0].Add(new byte[] { 0x01, 0x15, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
-    //        Parameterlist2[0].Add(new byte[] { 0x00, 0x16, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
-    //        Parameterlist2[0].Add(new byte[] { 0x00, 0x17, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
-    //        Parameterlist2[0].Add(new byte[] { 0x00, 0x18, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
-    //        Parameterlist2[0].Add(new byte[] { 0x01, 0x18, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
-    //        Parameterlist2[0].Add(new byte[] { 0x00, 0x19, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
-    //        Parameterlist2[0].Add(new byte[] { 0x00, 0x1a, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
-    //        Parameterlist2[0].Add(new byte[] { 0x00, 0x1b, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
-    //        Parameterlist2[0].Add(new byte[] { 0x01, 0x1b, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
-    //        Parameterlist2[0].Add(new byte[] { 0x02, 0x1b, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
-    //        Parameterlist2[0].Add(new byte[] { 0x00, 0x20, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
-    //        Parameterlist2[0].Add(new byte[] { 0x00, 0x21, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
-    //        Parameterlist2[0].Add(new byte[] { 0x00, 0x22, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
-    //        Parameterlist2[0].Add(new byte[] { 0x00, 0x23, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
-    //        Parameterlist2[0].Add(new byte[] { 0x00, 0x28, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
-    //        Parameterlist2[0].Add(new byte[] { 0x01, 0x28, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
-    //        Parameterlist2[0].Add(new byte[] { 0x00, 0x29, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
-    //        Parameterlist2[0].Add(new byte[] { 0x00, 0x2a, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
-    //        Parameterlist2[0].Add(new byte[] { 0x01, 0x2a, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
-    //        Parameterlist2[0].Add(new byte[] { 0x00, 0x2b, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
-    //        Parameterlist2[0].Add(new byte[] { 0x00, 0x2e, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
-    //        Parameterlist2[0].Add(new byte[] { 0x00, 0x2f, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
-    //        Parameterlist2[0].Add(new byte[] { 0x00, 0x30, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
-    //        Parameterlist2[0].Add(new byte[] { 0x01, 0x30, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
-    //        Parameterlist2[0].Add(new byte[] { 0x00, 0x34, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
-    //        Parameterlist2[0].Add(new byte[] { 0x01, 0x34, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
-    //        Parameterlist2[0].Add(new byte[] { 0x00, 0x38, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
-    //        Parameterlist2[0].Add(new byte[] { 0x00, 0x39, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
-    //        Parameterlist2[0].Add(new byte[] { 0x03, 0x39, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
-    //        Parameterlist2[0].Add(new byte[] { 0x00, 0x3b, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
-    //        Parameterlist2[0].Add(new byte[] { 0x00, 0x3c, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
-    //        Parameterlist2[0].Add(new byte[] { 0x01, 0x40, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
-    //        Parameterlist2[0].Add(new byte[] { 0x01, 0x41, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
-    //        Parameterlist2[0].Add(new byte[] { 0x02, 0x42, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
-    //        Parameterlist2[0].Add(new byte[] { 0x01, 0x43, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
-    //        Parameterlist2[0].Add(new byte[] { 0x00, 0x44, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
-    //        Parameterlist2[0].Add(new byte[] { 0x00, 0x46, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
-    //        Parameterlist2[0].Add(new byte[] { 0x00, 0x47, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
-    //        Parameterlist2[0].Add(new byte[] { 0x00, 0x48, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
-    //        Parameterlist2[0].Add(new byte[] { 0x00, 0x49, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
-    //        Parameterlist2[0].Add(new byte[] { 0x00, 0x4b, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
-    //        Parameterlist2[0].Add(new byte[] { 0x00, 0x4d, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
-    //        Parameterlist2[0].Add(new byte[] { 0x00, 0x68, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
-    //        Parameterlist2[0].Add(new byte[] { 0x00, 0x6d, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
-    //        Parameterlist2[0].Add(new byte[] { 0x01, 0x6d, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
-    //        Parameterlist2[0].Add(new byte[] { 0x01, 0x6e, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
-    //        Parameterlist2[0].Add(new byte[] { 0x00, 0x72, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
-
-    //        Parameterlist1[1].Add(new byte[] { 0x01, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
-    //        Parameterlist1[1].Add(new byte[] { 0x00, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
-    //        Parameterlist1[1].Add(new byte[] { 0x01, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
-    //        Parameterlist1[1].Add(new byte[] { 0x00, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
-    //        Parameterlist1[1].Add(new byte[] { 0x01, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
-    //        Parameterlist1[1].Add(new byte[] { 0x01, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
-    //        Parameterlist1[1].Add(new byte[] { 0x01, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
-    //        Parameterlist1[1].Add(new byte[] { 0x00, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
-    //        Parameterlist1[1].Add(new byte[] { 0x00, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
-    //        Parameterlist1[1].Add(new byte[] { 0x01, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
-
-    //        Parameterlist2[1].Add(new byte[] { 0x00, 0x0f, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
-    //        Parameterlist2[1].Add(new byte[] { 0x01, 0x2e, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
-    //        Parameterlist2[1].Add(new byte[] { 0x01, 0x4b, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
-    //        Parameterlist2[1].Add(new byte[] { 0x01, 0x4d, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
-    //        Parameterlist2[1].Add(new byte[] { 0x00, 0x6a, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
-    //        Parameterlist2[1].Add(new byte[] { 0x01, 0x6a, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
-    //        Parameterlist2[1].Add(new byte[] { 0x00, 0x6b, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
-    //        Parameterlist2[1].Add(new byte[] { 0x01, 0x6b, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
-    //        Parameterlist2[1].Add(new byte[] { 0x00, 0x6c, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
-    //        Parameterlist2[1].Add(new byte[] { 0x02, 0x6e, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
-
-    //        Parameterlist1[2].Add(new byte[] { 0x00, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
-    //        Parameterlist1[2].Add(new byte[] { 0x00, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
-    //        Parameterlist1[2].Add(new byte[] { 0x00, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
-    //        Parameterlist1[2].Add(new byte[] { 0x00, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
-    //        Parameterlist1[2].Add(new byte[] { 0x00, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
-    //        Parameterlist1[2].Add(new byte[] { 0x00, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
-    //        Parameterlist1[2].Add(new byte[] { 0x00, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
-    //        Parameterlist1[2].Add(new byte[] { 0x00, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
-    //        Parameterlist1[2].Add(new byte[] { 0x00, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
-    //        Parameterlist1[2].Add(new byte[] { 0x00, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
-    //        Parameterlist1[2].Add(new byte[] { 0x00, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
-    //        Parameterlist1[2].Add(new byte[] { 0x00, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
-    //        Parameterlist1[2].Add(new byte[] { 0x00, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
-    //        Parameterlist1[2].Add(new byte[] { 0x00, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
-    //        Parameterlist1[2].Add(new byte[] { 0x00, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
-
-    //        Parameterlist2[2].Add(new byte[] { 0x00, 0x40, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
-    //        Parameterlist2[2].Add(new byte[] { 0x00, 0x41, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
-    //        Parameterlist2[2].Add(new byte[] { 0x00, 0x42, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
-    //        Parameterlist2[2].Add(new byte[] { 0x00, 0x43, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
-    //        Parameterlist2[2].Add(new byte[] { 0x00, 0x45, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
-    //        Parameterlist2[2].Add(new byte[] { 0x01, 0x47, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
-    //        Parameterlist2[2].Add(new byte[] { 0x01, 0x49, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
-    //        Parameterlist2[2].Add(new byte[] { 0x00, 0x4a, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
-    //        Parameterlist2[2].Add(new byte[] { 0x01, 0x4a, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
-    //        Parameterlist2[2].Add(new byte[] { 0x02, 0x4a, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
-    //        Parameterlist2[2].Add(new byte[] { 0x03, 0x4a, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
-    //        Parameterlist2[2].Add(new byte[] { 0x00, 0x4f, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
-    //        Parameterlist2[2].Add(new byte[] { 0x01, 0x4f, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
-    //        Parameterlist2[2].Add(new byte[] { 0x02, 0x4f, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
-    //        Parameterlist2[2].Add(new byte[] { 0x03, 0x4f, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
-
-    //        Parameterlist1[3].Add(new byte[] { 0x01, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
-    //        Parameterlist1[3].Add(new byte[] { 0x01, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
-    //        Parameterlist1[3].Add(new byte[] { 0x01, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
-    //        Parameterlist1[3].Add(new byte[] { 0x01, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
-    //        Parameterlist1[3].Add(new byte[] { 0x01, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
-    //        Parameterlist1[3].Add(new byte[] { 0x00, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
-    //        Parameterlist1[3].Add(new byte[] { 0x00, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
-    //        Parameterlist1[3].Add(new byte[] { 0x00, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
-
-    //        Parameterlist2[3].Add(new byte[] { 0x01, 0x1a, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
-    //        Parameterlist2[3].Add(new byte[] { 0x02, 0x1a, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
-    //        Parameterlist2[3].Add(new byte[] { 0x03, 0x1b, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
-    //        Parameterlist2[3].Add(new byte[] { 0x04, 0x1b, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
-    //        Parameterlist2[3].Add(new byte[] { 0x05, 0x1b, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
-    //        Parameterlist2[3].Add(new byte[] { 0x01, 0x20, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
-    //        Parameterlist2[3].Add(new byte[] { 0x01, 0x21, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
-    //        Parameterlist2[3].Add(new byte[] { 0x01, 0x22, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
-
-    //        Parameterlist1[4].Add(new byte[] { 0x01, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
-    //        Parameterlist1[4].Add(new byte[] { 0x01, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
-    //        Parameterlist1[4].Add(new byte[] { 0x01, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
-    //        Parameterlist1[4].Add(new byte[] { 0x01, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
-    //        Parameterlist1[4].Add(new byte[] { 0x01, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
-    //        Parameterlist1[4].Add(new byte[] { 0x01, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
-
-    //        Parameterlist2[4].Add(new byte[] { 0x02, 0x18, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
-    //        Parameterlist2[4].Add(new byte[] { 0x03, 0x18, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
-    //        Parameterlist2[4].Add(new byte[] { 0x01, 0x19, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
-    //        Parameterlist2[4].Add(new byte[] { 0x02, 0x19, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
-    //        Parameterlist2[4].Add(new byte[] { 0x03, 0x19, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
-    //        Parameterlist2[4].Add(new byte[] { 0x04, 0x19, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
-
-    //        Parameterlist1[5].Add(new byte[] { 0x00, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
-    //        Parameterlist1[5].Add(new byte[] { 0x00, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
-    //        Parameterlist1[5].Add(new byte[] { 0x00, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
-    //        Parameterlist1[5].Add(new byte[] { 0x00, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
-    //        Parameterlist1[5].Add(new byte[] { 0x00, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
-    //        Parameterlist1[5].Add(new byte[] { 0x00, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
-    //        Parameterlist1[5].Add(new byte[] { 0x00, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
-    //        Parameterlist1[5].Add(new byte[] { 0x00, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
-    //        Parameterlist1[5].Add(new byte[] { 0x00, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
-    //        Parameterlist1[5].Add(new byte[] { 0x00, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
-    //        Parameterlist1[5].Add(new byte[] { 0x00, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
-
-    //        Parameterlist2[5].Add(new byte[] { 0x01, 0x38, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
-    //        Parameterlist2[5].Add(new byte[] { 0x02, 0x38, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
-    //        Parameterlist2[5].Add(new byte[] { 0x03, 0x38, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
-    //        Parameterlist2[5].Add(new byte[] { 0x04, 0x38, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
-    //        Parameterlist2[5].Add(new byte[] { 0x01, 0x39, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
-    //        Parameterlist2[5].Add(new byte[] { 0x02, 0x39, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
-    //        Parameterlist2[5].Add(new byte[] { 0x00, 0x3a, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
-    //        Parameterlist2[5].Add(new byte[] { 0x01, 0x3b, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
-    //        Parameterlist2[5].Add(new byte[] { 0x02, 0x3b, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
-    //        Parameterlist2[5].Add(new byte[] { 0x01, 0x3c, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
-    //        Parameterlist2[5].Add(new byte[] { 0x02, 0x3c, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
-
-
-    //        byte[] CategoryToMaskMap = new byte[30];
-    //        CategoryToMaskMap[0] = 0;
-
-    //        ParameterMask = new byte[49][];
-
-    //        for (byte i = 0; i < 49; i++)
-    //        {
-    //            ParameterMask[i] = new byte[51];
-    //        }
-
-    //        // First index is instrument settings group (see comments above each group).
-    //        // Second index is the parameter:
-    //        // 0 Slider for String Resonance
-    //        // 1 Key Off Resonance 0–127
-    //        // 2 Hammer Noise -2, -1, 0, +1, +2
-    //        // 3 StereoWidth 0–63
-    //        // 4 Nuance Type1, Type2, Type3
-    //        // 5 Tone Character -5, -4, -3, -2, -1, 0, +1, +2, +3, +4, +5
-    //        // 6 Noise Level (CC16) - 64–+63
-    //        // 7 Crescendo Depth(CC17) - 64–+63 (This applies only for ExSN5 004: Mariachi Tp)
-    //        // 8 Tremolo Speed(CC17) - 64–+63
-    //        // 9 Strum Speed(CC17) - 64–+63
-    //        // 10 Strum Mode(CC19) OFF, ON
-    //        // 11 Picking Harmonics OFF, ON
-    //        // 12 Sub String Tune - 64–+63 (This is valid only for ExSN4 003: 12th Steel Gtr.)
-    //        // 13 Growl Sens(CC18) 0–127
-    //        // 14 Harmonic Bar 16' 0–8
-    //        // 15 Harmonic Bar 5 - 1 / 3' 0–8
-    //        // 16 Harmonic Bar 8' 0–8
-    //        // 17 Harmonic Bar 4' 0–8
-    //        // 18 Harmonic Bar 2 - 2 / 3' 0–8
-    //        // 19 Harmonic Bar 2' 0–8
-    //        // 20 Harmonic Bar 1 - 3 / 5' 0–8
-    //        // 21 Harmonic Bar 1 - 1 / 3' 0–8
-    //        // 22 Harmonic Bar 1' 0–8
-    //        // 23 Leakage Level 0–127
-    //        // 24 Percussion Switch OFF, ON
-    //        // 25 Percussion Soft NORM, SOFT
-    //        // 26 Percussion Soft Level 0–15
-    //        // 27 Percussion Normal Level 0–15
-    //        // 28 Percussion Slow FAST, SLOW
-    //        // 29 Percussion Slow Time 0–127
-    //        // 30 Percussion Fast Time 0–127
-    //        // 31 Percussion Harmonic 2ND, 3RD
-    //        // 32 Percussion Recharge Time 0–15
-    //        // 33 Percussion Harmonic Bar Level 0–127
-    //        // 34 Key On Click Level 0–31
-    //        // 35 Key Off Click Level 0–31
-    //        // 36 Mallet Hardness(CC16) - 64–+63
-    //        // 37 Resonance Level(CC16) - 64–+63
-    //        // 38 Roll Speed(CC17) - 64–+63
-    //        // 39 Glissando Mode(CC19) OFF, ON
-    //        // 40 Play Scale
-    //        // 41 Scale Key C, Db, D, Eb, E, F, Gb, G, Ab, A, Bb, B
-    //        // 42 Bend Depth(CC17) - 64–+63
-    //        // 43 Buzz Key Switch OFF, ON
-    //        // 44 Tambura Level - 64–+63
-    //        // 45 Tambura Pitch - 12–+12
-    //        // 46 Hold Legato Mode(CC19) OFF, ON
-    //        // 47 Drone Level - 64–+63
-    //        // 48 Drone Pitch - 12–+12
-    //        // 49 Glide
-    //        // 50 Variation Refer to p. 28.
-
-    //        // A.Piano
-    //        ParameterMask[1][0] = 1; // Slider for String Resonance:
-    //        ParameterMask[1][1] = 1; // Key Off Resonance 0–127
-    //        ParameterMask[1][2] = 1; // Hammer Noise -2, -1, 0, +1, +2
-    //        ParameterMask[1][3] = 1; // StereoWidth 0–63
-    //        ParameterMask[1][4] = 1; // Nuance Type1, Type2, Type3
-    //        ParameterMask[1][5] = 1; // Tone Character -5, -4, -3, -2, -1, 0, +1, +2, +3, +4, +5
-
-    //        // E.Piano
-    //        ParameterMask[2][6] = 1; // Noise Level (CC16) - 64–+63
-
-    //        // Organ
-    //        ParameterMask[3][14] = 1;
-    //        ParameterMask[3][15] = 1;
-    //        ParameterMask[3][16] = 1;
-    //        ParameterMask[3][17] = 1;
-    //        ParameterMask[3][18] = 1;
-    //        ParameterMask[3][19] = 1;
-    //        ParameterMask[3][20] = 1;
-    //        ParameterMask[3][21] = 1;
-    //        ParameterMask[3][22] = 1;
-    //        ParameterMask[3][23] = 1;
-    //        ParameterMask[3][24] = 1;
-    //        ParameterMask[3][25] = 1;
-    //        ParameterMask[3][26] = 1;
-    //        ParameterMask[3][27] = 1;
-    //        ParameterMask[3][28] = 1;
-    //        ParameterMask[3][29] = 1;
-    //        ParameterMask[3][30] = 1;
-    //        ParameterMask[3][31] = 1;
-    //        ParameterMask[3][32] = 1;
-    //        ParameterMask[3][33] = 1;
-    //        ParameterMask[3][34] = 1;
-    //        ParameterMask[3][35] = 1;
-
-    //        // Other keyboards + Accordion
-    //        ParameterMask[4][6] = 1;
-
-    //        // Accordion
-    //        ParameterMask[5][6] = 1;
-
-    //        // Bell/Mallet
-    //        ParameterMask[6][36] = 1;
-    //        ParameterMask[6][38] = 1;
-    //        ParameterMask[6][50] = 1;
-
-    //        // Ac.Guitar
-    //        ParameterMask[7][6] = 1;
-    //        ParameterMask[7][9] = 1;
-    //        ParameterMask[7][10] = 1;
-    //        ParameterMask[7][12] = 1;
-    //        ParameterMask[7][50] = 1;
-
-    //        // E.Guitar
-    //        ParameterMask[8][6] = 1;
-    //        ParameterMask[8][9] = 1;
-    //        ParameterMask[8][10] = 1;
-    //        ParameterMask[8][11] = 1;
-    //        ParameterMask[8][50] = 1;
-
-    //        // Dist.Guitar
-    //        ParameterMask[9][6] = 1;
-    //        ParameterMask[9][9] = 1;
-    //        ParameterMask[9][10] = 1;
-    //        ParameterMask[9][11] = 1;
-    //        ParameterMask[9][50] = 1;
-
-    //        // Ac.Bass
-    //        ParameterMask[10][6] = 1;
-    //        ParameterMask[10][50] = 1;
-
-    //        // E.Bass
-    //        ParameterMask[11][6] = 1;
-    //        ParameterMask[11][50] = 1;
-
-    //        // Synth Bass
-    //        ParameterMask[12][6] = 1;
-    //        ParameterMask[12][50] = 1;
-
-    //        // Plucked/Stroke
-    //        ParameterMask[13][39] = 1;
-    //        ParameterMask[13][40] = 1;
-    //        ParameterMask[13][41] = 1;
-    //        ParameterMask[13][50] = 1;
-
-    //        // Strings
-    //        ParameterMask[14][6] = 1;
-    //        ParameterMask[14][50] = 1;
-
-    //        // Brass
-    //        ParameterMask[15][6] = 1;
-    //        ParameterMask[15][7] = 1;
-    //        ParameterMask[15][13] = 1;
-    //        ParameterMask[15][50] = 1;
-
-    //        // Wind
-    //        ParameterMask[16][6] = 1;
-    //        ParameterMask[16][13] = 1;
-    //        ParameterMask[16][40] = 1;
-    //        ParameterMask[16][41] = 1;
-    //        ParameterMask[16][50] = 1;
-
-    //        // Flute
-    //        ParameterMask[17][6] = 1;
-    //        ParameterMask[17][13] = 1;
-    //        ParameterMask[17][40] = 1;
-    //        ParameterMask[17][41] = 1;
-    //        ParameterMask[17][50] = 1;
-
-    //        // Sax
-    //        ParameterMask[18][6] = 1;  // Noise Level (CC16) - 64–+63
-    //        ParameterMask[18][13] = 1; // 13 Growl Sens(CC18) 0–127
-    //        ParameterMask[18][40] = 1; // 40 Play Scale
-    //        ParameterMask[18][41] = 1; // 41 Scale Key C, Db, D, Eb, E, F, Gb, G, Ab, A, Bb, B
-    //        ParameterMask[18][49] = 1; // 49 Glide
-    //        ParameterMask[18][50] = 1; // 50 Variation Refer to p. 28.
-
-    //        // Recorder
-    //        ParameterMask[19][6] = 1;
-    //        ParameterMask[19][13] = 1;
-    //        ParameterMask[19][50] = 1;
-
-    //        // Vox/Choir
-    //        ParameterMask[20][46] = 1;
-    //        ParameterMask[20][50] = 1;
-
-    //        // Synth Lead [21]
-
-    //        // Synth Brass [22]
-
-    //        // Synth Pad/Strings [23]
-
-    //        // Synth Bellpad [24]
-    //        // Synth PolyKey [25]
-    //        // FX [26]
-    //        // Synth Seq/Pop [27]
-    //        // Phrase [28]
-    //        // Pulsating [29]
-    //        // Beat &Groove [30]
-    //        // Hit [31]
-    //        // Sound FX [32]
-    //        // Drums [33]
-
-
-
-    //        // Percussion
-    //        ParameterMask[34][38] = 1;
-    //        ParameterMask[34][50] = 1;
-
-    //        // Combination [35]
-
-    //        // From here on we have exceptions
-
-    //        // Mandolin
-    //        ParameterMask[36][6] = 1;
-    //        ParameterMask[36][8] = 1;
-    //        ParameterMask[36][10] = 1;
-    //        ParameterMask[36][50] = 1;
-
-    //        // Sitar
-    //        ParameterMask[37][37] = 1;
-    //        ParameterMask[37][44] = 1;
-    //        ParameterMask[37][45] = 1;
-
-    //        // Tsugaru/Sansin
-    //        ParameterMask[38][37] = 1;
-    //        ParameterMask[38][42] = 1;
-    //        ParameterMask[38][43] = 1;
-    //        ParameterMask[38][50] = 1;
-
-    //        // Koto
-    //        ParameterMask[39][8] = 1;
-    //        ParameterMask[39][39] = 1;
-    //        ParameterMask[39][40] = 1;
-    //        ParameterMask[39][41] = 1;
-    //        ParameterMask[39][43] = 1;
-    //        ParameterMask[39][50] = 1;
-
-    //        // Taishou Koto
-    //        ParameterMask[40][6] = 1;
-    //        ParameterMask[40][8] = 1;
-
-    //        // Kalimba
-    //        ParameterMask[41][37] = 1;
-    //        ParameterMask[41][50] = 1;
-
-    //        // Erhu
-    //        ParameterMask[42][6] = 1;
-    //        ParameterMask[42][50] = 1;
-
-    //        // Marcato Strings
-    //        ParameterMask[43][46] = 1;
-    //        ParameterMask[43][50] = 1;
-
-    //        // Sarangi
-    //        ParameterMask[44][37] = 1;
-    //        ParameterMask[44][44] = 1;
-    //        ParameterMask[44][45] = 1;
-
-    //        // Pipes
-    //        ParameterMask[45][47] = 1;
-    //        ParameterMask[45][48] = 1;
-    //        ParameterMask[45][50] = 1;
-
-    //        // Shakuhachi + Recorder
-    //        ParameterMask[46][6] = 1;
-    //        ParameterMask[46][13] = 1;
-    //        ParameterMask[46][50] = 1;
-
-    //        // Steel Drums
-    //        ParameterMask[47][37] = 1;
-    //        ParameterMask[47][38] = 1;
-    //        ParameterMask[47][50] = 1;
-
-    //        // Harmonica
-    //        ParameterMask[48][6] = 1;
-    //        ParameterMask[48][13] = 1;
-    //    }
-
-    //    public List<Instrument> ListInstruments(String Bank)
-    //    {
-    //        List<Instrument> Result = new List<Instrument>();
-    //        foreach (Instrument instrument in Instruments)
-    //        {
-    //            if (instrument.InstrumentBank == Bank)
-    //            {
-    //                Result.Add(instrument);
-    //            }
-    //        }
-    //        return Result;
-    //    }
-
-    //    public Int16 GetInstrument(String InstrumentBank, Int32 InstrumentNumber)
-    //    {
-    //        Int16 result = -1;
-    //        Int16 i = 0;
-    //        while (result == -1 && i < Instruments.Count())
-    //        {
-    //            if (Instruments[i].InstrumentBank == InstrumentBank && Instruments[i].InstrumentNumber == InstrumentNumber)
-    //            {
-    //                result = i;
-    //                break;
-    //            }
-    //            i++;
-    //        }
-    //        return result;
-    //    }
-
-    //    public Instrument GetInstrument(String InstrumentBank, String Instrument)
-    //    {
-    //        Instrument result = null;
-    //        Int16 i = 0;
-    //        while (result == null && i < Instruments.Count())
-    //        {
-    //            if (Instruments[i].InstrumentBank == InstrumentBank && Instrument.EndsWith(Instruments[i].InstrumentName))
-    //            {
-    //                result = Instruments[i];
-    //                break;
-    //            }
-    //            i++;
-    //        }
-    //        return result;
-    //    }
-
-    //    public Instrument GetTone(String InstrumentBank, String Instrument)
-    //    {
-    //        Instrument result = null;
-    //        Int16 i = 0;
-    //        while (result == null && i < Tones.Count())
-    //        {
-    //            if (Tones[i].InstrumentBank == InstrumentBank && Instrument.EndsWith(Tones[i].InstrumentName))
-    //            {
-    //                result = Tones[i];
-    //                break;
-    //            }
-    //            i++;
-    //        }
-    //        return result;
-    //    }
-    //}
-
-    ///// <summary>
-    ///// PCM Synth Tone
-    ///// Read PCM Synth Tone Common from MIDI and create PCMSynthTone. PCMSynthTone and subclass PCMSynthToneCommon will be created and populated.
-    ///// Read subclasses one by one and create using read data.
-    ///// Note that PCMSynthTonePartial are read each from different addresses!
-    ///// </summary>
-    //class PCMSynthTone
-    //{
-    //    HBTrace t = new HBTrace("class PCMSynthTone");
-    //    public PCMSynthToneCommon pCMSynthToneCommon { get; set; }
-    //    //public PCMSynthToneCommonMFX PCMSynthToneCommonMFX { get; set; }
-    //    public PCMSynthTonePMT pCMSynthTonePMT { get; set; }
-    //    public PCMSynthTonePartial pCMSynthTonePartial { get; set; }
-    //    public PCMSynthToneCommon2 pCMSynthToneCommon2 { get; set; }
-
-    //    public PCMSynthTone(ReceivedData Data)
-    //    {
-    //        t.Trace("public PCMSynthTone (" + "ReceivedData" + Data + ", " + ")");
-    //        pCMSynthTonePartial = new PCMSynthTonePartial(Data);
-    //        pCMSynthToneCommon = new PCMSynthToneCommon(Data);
-    //    }
-    //}
-
-    ///// <summary>
-    ///// Same as above for all main classes
-    ///// </summary>
-    //class PCMDrumKit
-    //{
-    //    HBTrace t = new HBTrace("class PCMDrumKit");
-    //    public PCMDrumKitCommon pCMDrumKitCommon { get; set; }
-    //    //public PCMDrumKitCommonMFX PCMDrumKitCommonMFX { get; set; }
-    //    public PCMDrumKitCommonCompEQ pCMDrumKitCommonCompEQ { get; set; }
-    //    public PCMDrumKitPartial pCMDrumKitPartial { get; set; } // [88]
-    //    public PCMDrumKitCommon2 pCMDrumKitCommon2 { get; set; }
-
-    //    public PCMDrumKit(ReceivedData Data)
-    //    {
-    //        t.Trace("public PCMDrumKit (" + "ReceivedData" + Data + ", " + ")");
-    //        pCMDrumKitPartial = new PCMDrumKitPartial(Data);
-    //        pCMDrumKitCommon = new PCMDrumKitCommon(Data);
-    //    }
-    //}
-
-    //class SuperNATURALAcousticTone
-    //{
-    //    HBTrace t = new HBTrace("class SuperNATURALAcousticTone");
-    //    public SuperNATURALAcousticToneCommon superNATURALAcousticToneCommon { get; set; }
-    //    //public SuperNATURALAcousticToneMFX SuperNATURALAcousticToneMFX { get; set; }
-
-    //    public SuperNATURALAcousticTone(ReceivedData Data)
-    //    {
-    //        t.Trace("public SuperNATURALAcousticTone (" + "ReceivedData" + Data + ", " + ")");
-    //        superNATURALAcousticToneCommon = new SuperNATURALAcousticToneCommon(Data);
-    //    }
-    //}
-
-    //class SuperNATURALSynthTone
-    //{
-    //    HBTrace t = new HBTrace("class SuperNATURALSynthTone");
-    //    public SuperNATURALSynthToneCommon superNATURALSynthToneCommon { get; set; }
-    //    //public SuperNATURALSynthToneCommonMFX SuperNATURALSynthToneCommonMFX { get; set; }
-    //    public SuperNATURALSynthTonePartial superNATURALSynthTonePartial { get; set; }
-    //    public SuperNATURALSynthToneMisc superNATURALSynthToneMisc { get; set; }
-
-    //    public SuperNATURALSynthTone(ReceivedData Data)
-    //    {
-    //        t.Trace("public SuperNATURALSynthTone (" + "ReceivedData" + Data + ", " + ")");
-    //        superNATURALSynthToneCommon = new SuperNATURALSynthToneCommon(Data);
-    //    }
-    //}
-
-    //class DrumInstrument
-    //{
-    //    public String Bank { get; set; }
-    //    public byte Number { get; set; }
-    //    public String Name { get; set; }
-    //    public String Group { get; set; }
-    //    public Boolean StereoWidth { get; set; }
-    //    public Boolean AmbienceLevel { get; set; }
-    //    public String Variation { get; set; }
-
-    //    public DrumInstrument(String Bank, byte Number, String Name, String Group, Boolean StereoWidth, Boolean AmbienceLevel, String Variation)
-    //    {
-    //        this.Bank = Bank;
-    //        this.Number = Number;
-    //        this.Name = Name;
-    //        this.Group = Group;
-    //        this.StereoWidth = StereoWidth;
-    //        this.AmbienceLevel = AmbienceLevel;
-    //        this.Variation = Variation;
-    //    }
-
-    //    public List<String> Variations()
-    //    {
-    //        List<String> variations = new List<String>();
-
-    //        variations.Add("Off");
-    //        if (!String.IsNullOrEmpty(Variation))
-    //        {
-    //            if (Variation.Contains("Flam"))
-    //            {
-    //                variations.Add("Flam 1");
-    //                variations.Add("Flam 2");
-    //                variations.Add("Flam 3");
-    //            }
-    //            else
-    //            {
-    //                variations.Add("---");
-    //                variations.Add("---");
-    //                variations.Add("---");
-    //            }
-    //            if (Variation.Contains("Buzz"))
-    //            {
-    //                variations.Add("Buzz 1");
-    //                variations.Add("Buzz 2");
-    //                variations.Add("Buzz 3");
-    //            }
-    //            else
-    //            {
-    //                variations.Add("---");
-    //                variations.Add("---");
-    //                variations.Add("---");
-    //            }
-    //            if (Variation.Contains("Roll"))
-    //            {
-    //                variations.Add("Roll");
-    //            }
-    //            else
-    //            {
-    //                variations.Add("---");
-    //            }
-    //        }
-
-    //        return variations;
-    //    }
-    //}
-
-    //class SuperNATURALDrumKitInstrumentList
-    //{
-    //    public List<DrumInstrument> DrumInstruments = new List<DrumInstrument>();
-
-    //    public SuperNATURALDrumKitInstrumentList()
-    //    {
-    //        DrumInstruments.Add(new DrumInstrument("int", 0, "off", "", false, false, ""));
-    //        DrumInstruments.Add(new DrumInstrument("int", 1, "studio kick", "kick", true, true, "flam/buzz"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 2, "pop kick", "kick", true, true, "flam/buzz"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 3, "jazz kick", "kick", true, true, "flam/buzz"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 4, "rock kick", "kick", true, true, "flam/buzz"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 5, "studio kick 2", "kick", true, true, "flam/buzz"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 6, "rock kick 2", "kick", true, true, "flam/buzz"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 7, "orch bass drum", "kick", true, true, "flam/buzz"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 8, "studio sn", "snare", true, true, "flam/buzz/roll"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 9, "studio sn rim", "snare", true, true, "flam/buzz/roll"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 10, "studio sn xstk", "snare", true, true, "flam/buzz"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 11, "pop sn", "snare", true, true, "flam/buzz/roll"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 12, "pop sn rim", "snare", true, true, "flam/buzz/roll"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 13, "pop sn xstk", "snare", true, true, "flam/buzz"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 14, "jazz sn", "snare", true, true, "flam/buzz/roll"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 15, "jazz sn rim", "snare", true, true, "flam/buzz/roll"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 16, "jazz sn xstk", "snare", true, true, "flam/buzz"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 17, "rock sn", "snare", true, true, "flam/buzz/roll"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 18, "rock sn rim", "snare", true, true, "flam/buzz/roll"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 19, "rock sn xstk", "snare", true, true, "flam/buzz"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 20, "tight sn", "snare", true, true, "flam/buzz/roll"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 21, "tight sn rim", "snare", true, true, "flam/buzz/roll"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 22, "tight sn xstk", "snare", true, true, "flam/buzz"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 23, "studio sn 2", "snare", true, true, "flam/buzz/roll"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 24, "studio sn 2 rim", "snare", true, true, "flam/buzz/roll"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 25, "studio sn 2 xstk", "snare", true, true, "flambuzz"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 26, "rock sn 2", "snare", true, true, "flam/buzz/roll"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 27, "rock sn 2 rim", "snare", true, true, "flam/buzz/roll"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 28, "rock sn 2 xstk", "snare", true, true, "flam/buzz"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 29, "brush sn slap", "snare", true, true, "flam/buzz/roll"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 30, "brush sn tap", "snare", true, true, "flam/buzz/roll"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 31, "brush sn slide", "snare", true, true, "flam/buzz"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 32, "brush sn swirl 1", "snare", true, true, ""));
-    //        DrumInstruments.Add(new DrumInstrument("int", 33, "brush sn swirl 2", "snare", true, true, ""));
-    //        DrumInstruments.Add(new DrumInstrument("int", 34, "snare crossstk", "snare", true, true, "flam/buzz"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 35, "orch snare", "snare", true, true, "flam/buzz/roll"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 36, "orch snare xstk", "snare", true, true, "flam/buzz"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 37, "pop tom hi", "tom", true, true, "flam/buzz"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 38, "pop tom mid", "tom", true, true, "flam/buzz"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 39, "pop tom flr", "tom", true, true, "flam/buzz"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 40, "rock tom hi", "tom", true, true, "flam/buzz"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 41, "rock tom mid", "tom", true, true, "flam/buzz"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 42, "rock tom floor", "tom", true, true, "flam/buzz"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 43, "jazz tom hi", "tom", true, true, "flam/buzz"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 44, "jazz tom mid", "tom", true, true, "flam/buzz"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 45, "jazz tom floor", "tom", true, true, "flam/buzz"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 46, "brush tom hi", "tom", true, true, "flam/buzz"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 47, "brush tom mid", "tom", true, true, "flam/buzz"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 48, "brush tom floor", "tom", true, true, "flam/buzz"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 49, "med hh close", "hi-hat", true, true, "flam/buzz"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 50, "med hh open", "hi-hat", true, true, "flam/buzz"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 51, "med hh pedal", "hi-hat", true, true, "flam/buzz"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 52, "standard hh cl", "hi-hat", true, true, "flam/buzz"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 53, "standard hh op", "hi-hat", true, true, "flam/buzz"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 54, "standard hh pdl", "hi-hat", true, true, "flam/buzz"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 55, "jazz hh close", "hi-hat", true, true, "flam/buzz"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 56, "jazz hh open", "hi-hat", true, true, "flam/buzz"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 57, "jazz hh pedal", "hi-hat", true, true, "flam/buzz"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 58, "brush hh close", "hi-hat", true, true, "flam/buzz"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 59, "brush hh open", "hi-hat", true, true, "flam/buzz"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 60, "standard rd edge", "ride", true, false, "flam/buzz"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 61, "standard rd bell", "ride", true, false, "flam/buzz"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 62, "std rd edge/bell", "ride", true, false, "flam/buzz"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 63, "medium ride edge", "ride", true, false, "flam/buzz"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 64, "medium ride bell", "ride", true, false, "flam/buzz"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 65, "med rd edge/bell", "ride", true, false, "flam/buzz"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 66, "flat 18\"ride", "ride", true, false, "flam/buzz"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 67, "brush 18\"ride", "ride", true, false, "flam/buzz"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 68, "brush 20\"ride", "ride", true, false, "flam/buzz"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 69, "standard 16\"cr r", "crash", true, false, "flam/buzz/roll"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 70, "standard 16\"cr l", "crash", true, false, "flam/buzz/roll"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 71, "standard 18\"cr r", "crash", true, false, "flam/buzz/roll"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 72, "standard 18\"cr l", "crash", true, false, "flam/buzz/roll"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 73, "jazz 16\"cr r", "crash", true, false, "flam/buzz/roll"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 74, "jazz 16\"cr l", "crash", true, false, "flam/buzz/roll"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 75, "heavy 18\"cr r", "crash", true, false, "flam/buzz/roll"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 76, "heavy 18\"cr l", "crash", true, false, "flam/buzz/roll"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 77, "brush 16\"cr r", "crash", true, false, "flam/buzz"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 78, "brush 16\"cr l", "crash", true, false, "flam/buzz"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 79, "brush 18\"cr r", "crash", true, false, "flam/buzz"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 80, "brush 18\"cr l", "crash", true, false, "flam/buzz"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 81, "splash cymbal 1", "crash", true, false, "flam/buzz"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 82, "splash cymbal 2", "crash", true, false, "flam/buzz"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 83, "brush splash cym", "crash", true, false, "flam/buzz"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 84, "china cymbal", "crash", true, false, "flam/buzz"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 85, "orch cymbal", "crash", true, false, "flam/buzz"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 86, "orch mallet cym", "crash", true, false, "flam/buzz/roll"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 87, "gong", "crash", true, false, "flam/buzz"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 88, "timpani f2", "percussion", true, false, "flam/buzz"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 89, "timpani f#2", "percussion", true, false, "flam/buzz"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 90, "timpani g2", "percussion", true, false, "flam/buzz"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 91, "timpani g#2", "percussion", true, false, "flam/buzz"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 92, "timpani a2", "percussion", true, false, "flam/buzz"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 93, "timpani a#2", "percussion", true, false, "flam/buzz"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 94, "timpani b2", "percussion", true, false, "flam/buzz"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 95, "timpani c3", "percussion", true, false, "flam/buzz"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 96, "timpani c#3", "percussion", true, false, "flam/buzz"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 97, "timpani d3", "percussion", true, false, "flam/buzz"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 98, "timpani d#3", "percussion", true, false, "flam/buzz"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 99, "timpani e3", "percussion", true, false, "flam/buzz"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 100, "timpani f3", "percussion", true, false, "flam/buzz"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 101, "tambourine 1", "percussion", true, false, "flam/buzz/roll"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 102, "tambourine 2", "percussion", false, false, "flam/buzz"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 103, "cowbell 1", "percussion", true, false, "flam/buzz"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 104, "cowbell 2", "percussion", false, false, "flam/buzz"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 105, "vibra-slap", "percussion", false, false, "flam/buzz"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 106, "high bongo 1", "percussion", true, false, "flam/buzz/roll"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 107, "low bongo 1", "percussion", true, false, "flam/buzz"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 108, "high bongo 2", "percussion", false, false, "flam/buzz"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 109, "low bongo 2", "percussion", false, false, "flam/buzz"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 110, "mutehi conga 1", "percussion", true, false, "flam/buzz"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 111, "openhi conga 1", "percussion", true, false, "flam/buzz/roll"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 112, "low conga 1", "percussion", true, false, "flam/buzz/roll"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 113, "mutehi conga 2", "percussion", false, false, "flam/buzz"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 114, "openhi conga 2", "percussion", false, false, "flam/buzz"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 115, "low conga 2", "percussion", false, false, "flam/buzz"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 116, "high timbale", "percussion", true, false, "flam/buzz"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 117, "low timbale", "percussion", true, false, "flam/buzz"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 118, "high agogo 1", "percussion", true, false, "flam/buzz"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 119, "low agogo 1", "percussion", true, false, "flam/buzz"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 120, "high agogo 2", "percussion", false, false, "flam/buzz"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 121, "low agogo 2", "percussion", false, false, "flam/buzz"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 122, "cabasa 1", "percussion", true, false, "flam/buzz"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 123, "cabasa 2", "percussion", false, false, "flam/buzz"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 124, "maracas 1", "percussion", true, false, "flam/buzz"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 125, "maracas 2", "percussion", false, false, "flam/buzz"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 126, "short whistle", "percussion", false, false, "flam/buzz"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 127, "long whistle", "percussion", false, false, "flam/buzz"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 128, "short guiro", "percussion", false, false, "flam/buzz"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 129, "long guiro", "percussion", false, false, "flam/buzz"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 130, "claves 1", "percussion", true, false, "flam/buzz"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 131, "claves 2", "percussion", false, false, "flam/buzz"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 132, "hi woodblock 1", "percussion", true, false, "flam/buzz"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 133, "low woodblock 1", "percussion", true, false, "flam/buzz"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 134, "hi woodblock 2", "percussion", false, false, "flam/buzz"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 135, "low woodblock 2", "percussion", false, false, "flam/buzz"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 136, "mute cuica 1", "percussion", true, false, "flam/buzz"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 137, "open cuica 1", "percussion", true, false, "flam/buzz"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 138, "mute cuica 2", "percussion", false, false, "flam/buzz"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 139, "open cuica 2", "percussion", false, false, "flam/buzz"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 140, "mute triangle 1", "percussion", false, false, "flam/buzz/roll"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 141, "open triangle 1", "percussion", false, false, "flam/buzz/roll"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 142, "mute triangle 2", "percussion", false, false, "flam/buzz"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 143, "open triangle 2", "percussion", false, false, "flam/buzz"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 144, "shaker", "percussion", false, false, "flam/buzz"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 145, "sleigh bell 1", "percussion", true, false, "flam/buzz"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 146, "sleigh bell 2", "percussion", false, false, "flam/buzz"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 147, "wind chimes", "percussion", true, false, "flam/buzz"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 148, "castanets 1", "percussion", true, false, "flam/buzz/roll"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 149, "castanets 2", "percussion", false, false, "flam/buzz"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 150, "mute surdo 1", "percussion", true, false, "flam/buzz"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 151, "open surdo 1", "percussion", true, false, "flam/buzz"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 152, "mute surdo 2", "percussion", false, false, "flam/buzz"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 153, "open surdo 2", "percussion", false, false, "flam/buzz"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 154, "sticks", "other", false, false, "flam/buzz"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 155, "square click", "other", false, false, "flam/buzz"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 156, "metro click", "other", false, false, "flam/buzz"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 157, "metro bell", "other", false, false, "flam/buzz"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 158, "hand clap", "other", false, false, "flam/buzz"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 159, "highq", "sfx", false, false, "flam/buzz"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 160, "slap", "sfx", false, false, "flam/buzz"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 161, "scratch push", "sfx", false, false, "flam/buzz"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 162, "scratch pull", "sfx", false, false, "flam/buzz"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 163, "gt fret noise", "sfx", false, false, "flam/buzz"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 164, "gt cutting up nz", "sfx", false, false, "flam/buzz"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 165, "gt cutting dw nz", "sfx", false, false, "flam/buzz"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 166, "acbass noise", "sfx", false, false, "flam/buzz"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 167, "flute key click", "sfx", false, false, "flam/buzz"));
-    //        DrumInstruments.Add(new DrumInstrument("int", 168, "applause", "sfx", true, false, ""));
-    //        DrumInstruments.Add(new DrumInstrument("exsn6", 1, "laughing 1", "sfx", true, false, ""));
-    //        DrumInstruments.Add(new DrumInstrument("exsn6", 2, "laughing 2", "sfx", true, false, ""));
-    //        DrumInstruments.Add(new DrumInstrument("exsn6", 3, "laughing 3", "sfx", true, false, ""));
-    //        DrumInstruments.Add(new DrumInstrument("exsn6", 4, "scream 1", "sfx", true, false, ""));
-    //        DrumInstruments.Add(new DrumInstrument("exsn6", 5, "scream 2", "sfx", true, false, ""));
-    //        DrumInstruments.Add(new DrumInstrument("exsn6", 6, "scream 3", "sfx", true, false, ""));
-    //        DrumInstruments.Add(new DrumInstrument("exsn6", 7, "punch 1", "sfx", true, false, ""));
-    //        DrumInstruments.Add(new DrumInstrument("exsn6", 8, "punch 2", "sfx", true, false, ""));
-    //        DrumInstruments.Add(new DrumInstrument("exsn6", 9, "punch 3", "sfx", true, false, ""));
-    //        DrumInstruments.Add(new DrumInstrument("exsn6", 10, "heart beat 1", "sfx", true, false, ""));
-    //        DrumInstruments.Add(new DrumInstrument("exsn6", 11, "heart beat 2", "sfx", true, false, ""));
-    //        DrumInstruments.Add(new DrumInstrument("exsn6", 12, "heart beat 3", "sfx", true, false, ""));
-    //        DrumInstruments.Add(new DrumInstrument("exsn6", 13, "foot steps 1", "sfx", true, false, ""));
-    //        DrumInstruments.Add(new DrumInstrument("exsn6", 14, "foot steps 2", "sfx", true, false, ""));
-    //        DrumInstruments.Add(new DrumInstrument("exsn6", 15, "foot steps 3", "sfx", true, false, ""));
-    //        DrumInstruments.Add(new DrumInstrument("exsn6", 16, "foot step 1 a", "sfx", true, false, ""));
-    //        DrumInstruments.Add(new DrumInstrument("exsn6", 17, "foot step 1 b", "sfx", true, false, ""));
-    //        DrumInstruments.Add(new DrumInstrument("exsn6", 18, "foot step 2 a", "sfx", true, false, ""));
-    //        DrumInstruments.Add(new DrumInstrument("exsn6", 19, "foot step 2 b", "sfx", true, false, ""));
-    //        DrumInstruments.Add(new DrumInstrument("exsn6", 20, "foot step 3 a", "sfx", true, false, ""));
-    //        DrumInstruments.Add(new DrumInstrument("exsn6", 21, "foot step 3 b", "sfx", true, false, ""));
-    //        DrumInstruments.Add(new DrumInstrument("exsn6", 22, "door creaking 1", "sfx", true, false, ""));
-    //        DrumInstruments.Add(new DrumInstrument("exsn6", 23, "door creaking 2", "sfx", true, false, ""));
-    //        DrumInstruments.Add(new DrumInstrument("exsn6", 24, "door creaking 3", "sfx", true, false, ""));
-    //        DrumInstruments.Add(new DrumInstrument("exsn6", 25, "door slam 1", "sfx", true, false, ""));
-    //        DrumInstruments.Add(new DrumInstrument("exsn6", 26, "door slam 2", "sfx", true, false, ""));
-    //        DrumInstruments.Add(new DrumInstrument("exsn6", 27, "door slam 3", "sfx", true, false, ""));
-    //        DrumInstruments.Add(new DrumInstrument("exsn6", 28, "scratch", "sfx", true, false, ""));
-    //        DrumInstruments.Add(new DrumInstrument("exsn6", 29, "metalscratch", "sfx", true, false, ""));
-    //        DrumInstruments.Add(new DrumInstrument("exsn6", 30, "matches", "sfx", true, false, ""));
-    //        DrumInstruments.Add(new DrumInstrument("exsn6", 31, "car engine 1", "sfx", true, false, ""));
-    //        DrumInstruments.Add(new DrumInstrument("exsn6", 32, "car engine 2", "sfx", true, false, ""));
-    //        DrumInstruments.Add(new DrumInstrument("exsn6", 33, "car engine 3", "sfx", true, false, ""));
-    //        DrumInstruments.Add(new DrumInstrument("exsn6", 34, "car stop 1 l>r", "sfx", true, false, ""));
-    //        DrumInstruments.Add(new DrumInstrument("exsn6", 35, "car stop 1 r>l", "sfx", true, false, ""));
-    //        DrumInstruments.Add(new DrumInstrument("exsn6", 36, "car stop 2 l>r", "sfx", true, false, ""));
-    //        DrumInstruments.Add(new DrumInstrument("exsn6", 37, "car stop 2 r>l", "sfx", true, false, ""));
-    //        DrumInstruments.Add(new DrumInstrument("exsn6", 38, "car stop 3 l>r", "sfx", true, false, ""));
-    //        DrumInstruments.Add(new DrumInstrument("exsn6", 39, "car stop 3 r>l", "sfx", true, false, ""));
-    //        DrumInstruments.Add(new DrumInstrument("exsn6", 40, "carpassing 1 l>r", "sfx", true, false, ""));
-    //        DrumInstruments.Add(new DrumInstrument("exsn6", 41, "carpassing 1 r>l", "sfx", true, false, ""));
-    //        DrumInstruments.Add(new DrumInstrument("exsn6", 42, "carpassing 2 l>r", "sfx", true, false, ""));
-    //        DrumInstruments.Add(new DrumInstrument("exsn6", 43, "carpassing 2 r>l", "sfx", true, false, ""));
-    //        DrumInstruments.Add(new DrumInstrument("exsn6", 44, "carpassing 3 l>r", "sfx", true, false, ""));
-    //        DrumInstruments.Add(new DrumInstrument("exsn6", 45, "carpassing 3 r>l", "sfx", true, false, ""));
-    //        DrumInstruments.Add(new DrumInstrument("exsn6", 46, "carpassing 4", "sfx", false, false, ""));
-    //        DrumInstruments.Add(new DrumInstrument("exsn6", 47, "carpassing 5", "sfx", false, false, ""));
-    //        DrumInstruments.Add(new DrumInstrument("exsn6", 48, "carpassing 6", "sfx", false, false, ""));
-    //        DrumInstruments.Add(new DrumInstrument("exsn6", 49, "car crash 1 l>r", "sfx", true, false, ""));
-    //        DrumInstruments.Add(new DrumInstrument("exsn6", 50, "car crash 1 r>l", "sfx", true, false, ""));
-    //        DrumInstruments.Add(new DrumInstrument("exsn6", 51, "car crash 2 l>r", "sfx", true, false, ""));
-    //        DrumInstruments.Add(new DrumInstrument("exsn6", 52, "car crash 2 r>l", "sfx", true, false, ""));
-    //        DrumInstruments.Add(new DrumInstrument("exsn6", 53, "car crash 3 l>r", "sfx", true, false, ""));
-    //        DrumInstruments.Add(new DrumInstrument("exsn6", 54, "car crash 3 r>l", "sfx", true, false, ""));
-    //        DrumInstruments.Add(new DrumInstrument("exsn6", 55, "crash 1", "sfx", true, false, ""));
-    //        DrumInstruments.Add(new DrumInstrument("exsn6", 56, "crash 2", "sfx", true, false, ""));
-    //        DrumInstruments.Add(new DrumInstrument("exsn6", 57, "crash 3", "sfx", true, false, ""));
-    //        DrumInstruments.Add(new DrumInstrument("exsn6", 58, "siren 1", "sfx", true, false, ""));
-    //        DrumInstruments.Add(new DrumInstrument("exsn6", 59, "siren 2 l>r", "sfx", true, false, ""));
-    //        DrumInstruments.Add(new DrumInstrument("exsn6", 60, "siren 2 r>l", "sfx", true, false, ""));
-    //        DrumInstruments.Add(new DrumInstrument("exsn6", 61, "siren 3", "sfx", true, false, ""));
-    //        DrumInstruments.Add(new DrumInstrument("exsn6", 62, "train 1", "sfx", true, false, ""));
-    //        DrumInstruments.Add(new DrumInstrument("exsn6", 63, "train 2", "sfx", true, false, ""));
-    //        DrumInstruments.Add(new DrumInstrument("exsn6", 64, "jetplane 1 l>r", "sfx", true, false, ""));
-    //        DrumInstruments.Add(new DrumInstrument("exsn6", 65, "jetplane 1 r>l", "sfx", true, false, ""));
-    //        DrumInstruments.Add(new DrumInstrument("exsn6", 66, "jetplane 2 l>r", "sfx", true, false, ""));
-    //        DrumInstruments.Add(new DrumInstrument("exsn6", 67, "jetplane 2 r>l", "sfx", true, false, ""));
-    //        DrumInstruments.Add(new DrumInstrument("exsn6", 68, "jetplane 3 l>r", "sfx", true, false, ""));
-    //        DrumInstruments.Add(new DrumInstrument("exsn6", 69, "jetplane 3 r>l", "sfx", true, false, ""));
-    //        DrumInstruments.Add(new DrumInstrument("exsn6", 70, "helicopter 1 l", "sfx", true, false, ""));
-    //        DrumInstruments.Add(new DrumInstrument("exsn6", 71, "helicopter 1 r", "sfx", true, false, ""));
-    //        DrumInstruments.Add(new DrumInstrument("exsn6", 72, "helicopter 2 l", "sfx", true, false, ""));
-    //        DrumInstruments.Add(new DrumInstrument("exsn6", 73, "helicopter 2 r", "sfx", true, false, ""));
-    //        DrumInstruments.Add(new DrumInstrument("exsn6", 74, "helicopter 3 l", "sfx", true, false, ""));
-    //        DrumInstruments.Add(new DrumInstrument("exsn6", 75, "helicopter 3 r", "sfx", true, false, ""));
-    //        DrumInstruments.Add(new DrumInstrument("exsn6", 76, "starship 1 l>r", "sfx", true, false, ""));
-    //        DrumInstruments.Add(new DrumInstrument("exsn6", 77, "starship 1 r>l", "sfx", true, false, ""));
-    //        DrumInstruments.Add(new DrumInstrument("exsn6", 78, "starship 2 l>r", "sfx", true, false, ""));
-    //        DrumInstruments.Add(new DrumInstrument("exsn6", 79, "starsmhip 2 r>l", "sfx", true, false, ""));
-    //        DrumInstruments.Add(new DrumInstrument("exsn6", 80, "starship 3 l>r", "sfx", true, false, ""));
-    //        DrumInstruments.Add(new DrumInstrument("exsn6", 81, "starship 3 r>l", "sfx", true, false, ""));
-    //        DrumInstruments.Add(new DrumInstrument("exsn6", 82, "gun shot 1", "sfx", true, false, ""));
-    //        DrumInstruments.Add(new DrumInstrument("exsn6", 83, "gun shot 2", "sfx", true, false, ""));
-    //        DrumInstruments.Add(new DrumInstrument("exsn6", 84, "gun shot 3", "sfx", true, false, ""));
-    //        DrumInstruments.Add(new DrumInstrument("exsn6", 85, "machine gun 1", "sfx", true, false, ""));
-    //        DrumInstruments.Add(new DrumInstrument("exsn6", 86, "machine gun 2", "sfx", true, false, ""));
-    //        DrumInstruments.Add(new DrumInstrument("exsn6", 87, "machine gun 3", "sfx", true, false, ""));
-    //        DrumInstruments.Add(new DrumInstrument("exsn6", 88, "laser gun 1", "sfx", true, false, ""));
-    //        DrumInstruments.Add(new DrumInstrument("exsn6", 89, "laser gun 2", "sfx", true, false, ""));
-    //        DrumInstruments.Add(new DrumInstrument("exsn6", 90, "laser gun 3", "sfx", true, false, ""));
-    //        DrumInstruments.Add(new DrumInstrument("exsn6", 91, "explosion 1", "sfx", true, false, ""));
-    //        DrumInstruments.Add(new DrumInstrument("exsn6", 92, "explosion 2", "sfx", true, false, ""));
-    //        DrumInstruments.Add(new DrumInstrument("exsn6", 93, "explosion 3", "sfx", true, false, ""));
-    //        DrumInstruments.Add(new DrumInstrument("exsn6", 94, "dog 1", "sfx", true, false, ""));
-    //        DrumInstruments.Add(new DrumInstrument("exsn6", 95, "dog 2", "sfx", true, false, ""));
-    //        DrumInstruments.Add(new DrumInstrument("exsn6", 96, "dog 3", "sfx", true, false, ""));
-    //        DrumInstruments.Add(new DrumInstrument("exsn6", 97, "dog 4", "sfx", true, false, ""));
-    //        DrumInstruments.Add(new DrumInstrument("exsn6", 98, "horse 1 l>r", "sfx", true, false, ""));
-    //        DrumInstruments.Add(new DrumInstrument("exsn6", 99, "horse 1 r>l", "sfx", true, false, ""));
-    //        DrumInstruments.Add(new DrumInstrument("exsn6", 100, "horse 2 l>r", "sfx", true, false, ""));
-    //        DrumInstruments.Add(new DrumInstrument("exsn6", 101, "horse 2 r>l", "sfx", true, false, ""));
-    //        DrumInstruments.Add(new DrumInstrument("exsn6", 102, "horse 3 l>r", "sfx", true, false, ""));
-    //        DrumInstruments.Add(new DrumInstrument("exsn6", 103, "horse 3 r>l", "sfx", true, false, ""));
-    //        DrumInstruments.Add(new DrumInstrument("exsn6", 104, "birds 1", "sfx", true, false, ""));
-    //        DrumInstruments.Add(new DrumInstrument("exsn6", 105, "birds 2", "sfx", true, false, ""));
-    //        DrumInstruments.Add(new DrumInstrument("exsn6", 106, "rain 1", "sfx", true, false, ""));
-    //        DrumInstruments.Add(new DrumInstrument("exsn6", 107, "rain 2", "sfx", true, false, ""));
-    //        DrumInstruments.Add(new DrumInstrument("exsn6", 108, "thunder 1", "sfx", true, false, ""));
-    //        DrumInstruments.Add(new DrumInstrument("exsn6", 109, "thunder 2", "sfx", true, false, ""));
-    //        DrumInstruments.Add(new DrumInstrument("exsn6", 110, "thunder 3", "sfx", true, false, ""));
-    //        DrumInstruments.Add(new DrumInstrument("exsn6", 111, "wind", "sfx", true, false, ""));
-    //        DrumInstruments.Add(new DrumInstrument("exsn6", 112, "seashore", "sfx", true, false, ""));
-    //        DrumInstruments.Add(new DrumInstrument("exsn6", 113, "stream 1", "sfx", true, false, ""));
-    //        DrumInstruments.Add(new DrumInstrument("exsn6", 114, "stream 2", "sfx", true, false, ""));
-    //        DrumInstruments.Add(new DrumInstrument("exsn6", 115, "bubbles 1", "sfx", true, false, ""));
-    //        DrumInstruments.Add(new DrumInstrument("exsn6", 116, "bubbles 2", "sfx", true, false, ""));
-    //        DrumInstruments.Add(new DrumInstrument("exsn6", 117, "burst 1", "sfx", true, false, ""));
-    //        DrumInstruments.Add(new DrumInstrument("exsn6", 118, "burst 2", "sfx", true, false, ""));
-    //        DrumInstruments.Add(new DrumInstrument("exsn6", 119, "burst 3", "sfx", true, false, ""));
-    //        DrumInstruments.Add(new DrumInstrument("exsn6", 120, "burst 4", "sfx", false, false, ""));
-    //        DrumInstruments.Add(new DrumInstrument("exsn6", 121, "glass burst 1", "sfx", true, false, ""));
-    //        DrumInstruments.Add(new DrumInstrument("exsn6", 122, "glassm burst 2", "sfx", true, false, ""));
-    //        DrumInstruments.Add(new DrumInstrument("exsn6", 123, "glass burst 3", "sfx", true, false, ""));
-    //        DrumInstruments.Add(new DrumInstrument("exsn6", 124, "telephone 1", "sfx", true, false, ""));
-    //        DrumInstruments.Add(new DrumInstrument("exsn6", 125, "telephone 2", "sfx", true, false, ""));
-    //        DrumInstruments.Add(new DrumInstrument("exsn6", 126, "telephone 3", "sfx", true, false, ""));
-    //    }
-
-    //    public DrumInstrument Get(String Bank, String Instrument)
-    //    {
-    //        UInt16 i = 0;
-    //        while (i < DrumInstruments.Count())
-    //        {
-    //            if (Bank.StartsWith(DrumInstruments[i].Bank) && Instrument.StartsWith(DrumInstruments[i].Name.Trim()))
-    //            {
-    //                return DrumInstruments[i];
-    //            }
-    //            i++;
-    //        }
-    //        return null;
-    //    }
-    //}
-
-    //class supernaturaldrumkit
-    //{
-    //    HBTrace t = new HBTrace("class supernaturaldrumkit");
-    //    public SuperNATURALDrumKitCommon SuperNATURALDrumKitCommon { get; set; }
-    //    public SuperNATURALDrumKitCommonCompEQ SuperNATURALDrumKitCommonCompEQ { get; set; }
-    //    public supernaturaldrumkitkey supernaturaldrumkitkey { get; set; }
-
-    //    public supernaturaldrumkit(receiveddata data)
-    //    {
-    //        t.trace("public supernaturaldrumkit (" + "receiveddata" + data + ", " + ")");
-    //        SuperNATURALDrumKitCommon = new SuperNATURALDrumKitCommon(data);
-    //    }
-    //}
-
-    ///// <summary>
-    ///// subclasses
-    ///// </summary>
-
-    //class phrases
-    //{
-    //    public string[] names;
-    //    public phrases()
-    //    {
-    //        names = new string[] { "no assign", "piano 01", "piano 02", "piano 03", "piano 04", "piano 05", "piano 06", "piano 07", "piano 08", "piano 09", "piano 10",
-    //            "e.piano 01", "e.piano 02", "e.piano 03", "e.piano 04", "e.piano 05", "e.piano 06", "e.organ 01", "e.organ 02", "e.organ 03", "e.organ 04",
-    //            "e.organ 05", "e.organ 06", "e.organ 07", "e.organ 08", "e.organ 09", "e.organ 10", "pipe organ 01", "pipe organ 02", "reed organ", "harpsicord 01",
-    //            "harpsicord 02", "clav 01", "clav 02", "celesta", "accordion 01", "accordion 02", "harmonica", "bell 01", "music box", "vibraphone 01", "vibraphone 02", "vibraphone 03", "vibraphone 04",
-    //            "marimba 01", "marimba 02", "glockenspiel", "xylophon 01", "xylophone 02", "xylophone 03", "yangqin", "santur 01", "santur 02", "steeldrums",
-    //            "ac.guitar 01", "ac.guitar 02", "ac.guitar 03", "ac.guitar 04", "ac.guitar 05", "mandolin 01", "mandolin 02", "ukulele", "jazz guitar 01", "jazz guitar 02", "jazz guitar 03",
-    //            "e.guitar", "muted guitar", "pedal steel", "dist.guitar 01", "ac.bass 01", "ac.bass 02", "e.bass 01", "e.bass 02", "fretless bass 01", "fretless bass 02", "fretless bass 03",
-    //            "slap bass 01", "slap bass 02", "synth bass 01", "synth bass 02", "synth bass 03", "synth bass 04", "synth bass 05", "synth bass 06",
-    //            "plucked/stroke", "banjo", "harp", "koto", "shamisen", "sitar", "violin 01", "violin 02", "fiddle", "cello 01", " cello 02", "contrabass 01", "contrabass 02",
-    //            "enssemble strings 01", "enssemble strings 02", "enssemble strings 03", "tremolo strings", "pizzicato strings 01", "pizzicato strings 02",
-    //            "orchestra 01", "orchestra 02", "solo brass", "trumpet 01", "trumpet 02", "mute trumpet", "trombone", "french horn", "tuba", "ensemble brass 01",
-    //            "french horn section", "wind", "oboe", "clarinett", "bassoon", "bagpipe 01", "bagpipe 02", "shanai", "shakuhachi", "flute", "soprano sax 01", "soprano sax 02",
-    //            "alto sax 01", "alto sax 02", "tenor sax 01", "baritone sax", "recorder", "vox/choirs 01", "vox/choirs 02", "scat 01", "scat 02",
-    //            "synth lead 01", "synth lead 02", "synth lead 03", "synth lead 04", "synth lead 05", "synth lead 06", "synth lead 07", "synth brass 01", "synth brass 02", "synth brass 03",
-    //            "synth brass 04", "synth pad/strings 01", "synth pad/strings 02", "synth pad/strings 03", "synth bellpad 01", "synth bellpad 02", "synth bellpad 03", "synth polykey 01",
-    //            "synth polykey 02", "synth polykey 03", "synth seqpop 01", "synth seqpop 02", "timpani 01", "timpani 02", "percussion", "sound fx 01", "sound fx 02", "sound fx 03",
-    //            "bibraphone 05", "dist.guitar 02", "dist.guitar 03", "e.bass 03", "e.bass 04", "synth bass 07", "synth bass 08", "synth bass 09", "synth bass 10", "synth bass 11", "synth bass 12",
-    //            "santur 03", "ensemble brass 02", "tenor sax 02", "tenor sax 03", "pan pipe", "vox/choirs 03", "vox/choirs 04", "vox/choirs 05", "vox/choirs 06", "vox/choirs 07", "vox/choirs 08",
-    //            "sunth pad/strings 04", "synth pad/strings 05", "synth bell 01", "synth bell 02", "synth bell 03", "synth bell 04", "synth bell 05", "synth polykey 04", "synth polykey 05",
-    //            "synth polykey 06", "synth polykey 07", "synth polykey 08", "synth polykey 09", "synth polykey 10", "bell 02", "bell 03", "synth polykey 11", "synth pad/strings 06",
-    //            "synth pad/strings 07", "synth pad/strings 08", "sound fx 04", "sound fx 05", "xv/ac.piano", "xv/el.piano", "xv/keyboards", "xv/bell", "xv/mallet", "xv/organ",
-    //            "xv/accordion", "xv/harmonica", "xv/ac.guitar", "xv/elguitar", "xv/dist.guitar", "xv/bass", "xv/synth bass", "xv/strings", "xv/orchestra", "xv/hit&stab", "xv/wind", "xv/flute",
-    //            "xv/ac.brass", "xv/synth brass", "xv/sax", "xv/hard lead", "xv/soft lead", "xv/techno synth", "xv/pulsating", "xv/synth fx", "xv/other synth", "xv/bright pad", "soft pad", "xv/vox",
-    //            "xv/plucked", "xv/ethnic", "xv/fretted", "xv/percussion", "xv/sound fx", "xv/beat&groove", "xv/drums", "xv/combination" };
-    //    }
-    //}
-
-    //class CommonMFX
-    //{
-    //    HBTrace t = new HBTrace("class CommonMFX");
-    //    public byte MFXType { get; set; }
-    //    public byte Reserve1 { get; set; }
-    //    public byte MFXChorusSendLevel { get; set; }
-    //    public byte MFXReverbSendLevel { get; set; }
-    //    public byte Reserve2 { get; set; }
-    //    public byte[] MFXControlSource { get; set; } // [4]
-    //    public byte[] MFXControlSens { get; set; }   // [4]
-    //    public byte[] MFXControlAssign { get; set; } // [4]
-    //    public MFXNumberedParameters MFXNumberedParameters { get; set; }
-
-    //    private ParameterSets sets;
-
-    //    public CommonMFX(ReceivedData Data)
-    //    {
-    //        t.Trace("public CommonMFX (" + "ReceivedData" + Data + ", " + ")");
-    //        sets = new ParameterSets();
-    //        MFXControlSource = new byte[4];
-    //        MFXControlSens = new byte[4];
-    //        MFXControlAssign = new byte[4];
-    //        MFXNumberedParameters = new MFXNumberedParameters(Data, 0x11);
-
-    //        MFXType = Data.GetByte(0);
-    //        Reserve1 = Data.GetByte(1);
-    //        MFXChorusSendLevel = Data.GetByte(2);
-    //        MFXReverbSendLevel = Data.GetByte(3);
-    //        Reserve1 = Data.GetByte(4);
-
-    //        for (byte i = 0; i < 4; i++)
-    //        {
-    //            MFXControlSource[i] = Data.GetByte((byte)(5 + 2 * i));
-    //            MFXControlSens[i] = Data.GetByte((byte)(6 + 2 * i));
-    //            MFXControlAssign[i] = Data.GetByte((byte)(13 + i));
-    //        }
-    //    }
-    //}
-
-    ///// <summary>
-    ///// Some parameters are not documented
-    ///// Address is 0x19, 0x01, 0x50, 0x00
-    ///// Length is 0x25 (37) bytes
-    ///// Given the address, this probably belongs to SuperNATURAL Synth Tone.
-    ///// Read it only for SuperNATURAL Synth Tone since it does not answer otherwise.
-    ///// Fill out info on any other parameters found, if ever.
-    ///// </summary>
-    //class Undocumented_Parameters
-    //{
-    //    public byte Data_00 { get; set; }
-    //    public byte Data_01 { get; set; }
-    //    public byte Data_02 { get; set; }
-    //    public byte Data_03 { get; set; }
-    //    public byte Data_04 { get; set; }
-    //    public byte Data_05 { get; set; } // Envelope Loop Sync Note
-    //    public byte Data_06 { get; set; }
-    //    public byte Data_07 { get; set; }
-    //    public byte Data_08 { get; set; }
-    //    public byte Data_09 { get; set; }
-    //    public byte Data_10 { get; set; }
-    //    public byte Data_11 { get; set; }
-    //    public byte Data_12 { get; set; }
-    //    public byte Data_13 { get; set; }
-    //    public byte Data_14 { get; set; }
-    //    public byte Data_15 { get; set; }
-    //    public byte Data_16 { get; set; }
-    //    public byte Data_17 { get; set; }
-    //    public byte Data_18 { get; set; }
-    //    public byte Data_19 { get; set; }
-    //    public byte Data_20 { get; set; }
-    //    public byte Data_21 { get; set; }
-    //    public byte Data_22 { get; set; }
-    //    public byte Data_23 { get; set; }
-    //    public byte Data_24 { get; set; }
-    //    public byte Data_25 { get; set; }
-    //    public byte Data_26 { get; set; }
-    //    public byte Data_27 { get; set; }
-    //    public byte Data_28 { get; set; }
-    //    public byte Data_29 { get; set; }
-    //    public byte Data_30 { get; set; }
-    //    public byte Data_31 { get; set; }
-    //    public byte Data_32 { get; set; }
-    //    public byte Data_33 { get; set; }
-    //    public byte Data_34 { get; set; }
-    //    public byte Data_35 { get; set; }
-    //    public byte Data_36 { get; set; }
-
-    //    public Undocumented_Parameters(ReceivedData Data)
-    //    {
-    //        Data_00 = Data.GetByte(00);
-    //        Data_01 = Data.GetByte(01);
-    //        Data_02 = Data.GetByte(02);
-    //        Data_03 = Data.GetByte(03);
-    //        Data_04 = Data.GetByte(04);
-    //        Data_05 = Data.GetByte(05);
-    //        Data_06 = Data.GetByte(06);
-    //        Data_07 = Data.GetByte(07);
-    //        Data_08 = Data.GetByte(08);
-    //        Data_09 = Data.GetByte(09);
-    //        Data_10 = Data.GetByte(10);
-    //        Data_11 = Data.GetByte(11);
-    //        Data_12 = Data.GetByte(12);
-    //        Data_13 = Data.GetByte(13);
-    //        Data_14 = Data.GetByte(14);
-    //        Data_15 = Data.GetByte(15);
-    //        Data_16 = Data.GetByte(16);
-    //        Data_17 = Data.GetByte(17);
-    //        Data_18 = Data.GetByte(18);
-    //        Data_19 = Data.GetByte(19);
-    //        Data_20 = Data.GetByte(20);
-    //        Data_21 = Data.GetByte(21);
-    //        Data_22 = Data.GetByte(22);
-    //        Data_23 = Data.GetByte(23);
-    //        Data_24 = Data.GetByte(24);
-    //        Data_25 = Data.GetByte(25);
-    //        Data_26 = Data.GetByte(26);
-    //        Data_27 = Data.GetByte(27);
-    //        Data_28 = Data.GetByte(28);
-    //        Data_29 = Data.GetByte(29);
-    //        Data_30 = Data.GetByte(30);
-    //        Data_31 = Data.GetByte(31);
-    //        Data_32 = Data.GetByte(32);
-    //        Data_33 = Data.GetByte(33);
-    //        Data_34 = Data.GetByte(34);
-    //        Data_35 = Data.GetByte(35);
-    //        Data_36 = Data.GetByte(36);
-    //    }
-    //}
-
-    ///// <summary>
-    ///// Some commands are not documented
-    ///// </summary>
-    //class Undocumented_Commands
-    //{
-    //    // Addresses:
-    //    public byte[] Play { get; set; } // 0 = Stop Current part number (1-based!) = Play part.
-
-    //    public Undocumented_Commands()
-    //    {
-    //        Play = new byte[] { 0x0f, 0x00, 0x20, 0x00 };
-    //    }
-
-    //}
-
-    //class PCMSynthToneCommon
-    //{
-    //    HBTrace t = new HBTrace("class PCMSynthToneCommon");
-    //    public String Name { get; set; }
-    //    public byte Level { get; set; }
-    //    public byte Pan { get; set; }
-    //    public byte Priority { get; set; }
-    //    public byte CoarseTune { get; set; }
-    //    public byte FineTune { get; set; }
-    //    public byte OctaveShift { get; set; }
-    //    public byte TuneDepth { get; set; }
-    //    public byte AnalogFeel { get; set; }
-    //    public byte MonoPoly { get; set; }
-    //    public Boolean LegatoSwitch { get; set; }
-    //    public Boolean LegatoRetrigger { get; set; }
-    //    public Boolean PortamentoSwitch { get; set; }
-    //    public byte PortamentoMode { get; set; }
-    //    public byte PortamentoType { get; set; }
-    //    public byte PortamentoStart { get; set; }
-    //    public byte PortamentoTime { get; set; }
-    //    public byte CutoffOffset { get; set; }
-    //    public byte ResonanceOffset { get; set; }
-    //    public byte AttackTimeOffset { get; set; }
-    //    public byte ReleaseTimeOffset { get; set; }
-    //    public byte VelocitySenseOffset { get; set; }
-    //    public Boolean PMTControlSwitch { get; set; }
-    //    public byte PitchBendRangeUp { get; set; }
-    //    public byte PitchBendRangeDown { get; set; }
-    //    public byte[] MatrixControlSource { get; set; }        // [4]
-    //    public byte[][] MatrixControlDestination { get; set; } // [4][4]
-    //    public byte[][] MatrixControlSens { get; set; }       // [4][4]
-
-    //    public PCMSynthToneCommon(ReceivedData Data)
-    //    {
-    //        t.Trace("public PCMSynthToneCommon (" + "ReceivedData" + Data + ", " + ")");
-    //        MatrixControlSource = new byte[4];
-    //        MatrixControlDestination = new byte[4][];
-    //        MatrixControlSens = new byte[4][];
-    //        for (byte i = 0; i < 4; i++)
-    //        {
-    //            MatrixControlDestination[i] = new byte[4];
-    //            MatrixControlSens[i] = new byte[4];
-    //        }
-
-    //        Name = "";
-    //        for (byte i = 0x00; i < 0x0c; i++)
-    //        {
-    //            Name += (char)Data.GetByte(i);
-    //        }
-    //        Level = Data.GetByte(0x0e);
-    //        Pan = Data.GetByte(0x0f);
-    //        Priority = Data.GetByte(0x10);
-    //        CoarseTune = Data.GetByte(0x11);
-    //        FineTune = Data.GetByte(0x12);
-    //        OctaveShift = Data.GetByte(0x13);
-    //        TuneDepth = Data.GetByte(0x14);
-    //        AnalogFeel = Data.GetByte(0x15);
-    //        MonoPoly = Data.GetByte(0x16);
-    //        LegatoSwitch = Data.GetByte(0x17) > 0;
-    //        LegatoRetrigger = Data.GetByte(0x18) > 0;
-    //        PortamentoSwitch = Data.GetByte(0x19) > 0;
-    //        PortamentoMode = Data.GetByte(0x1a);
-    //        PortamentoType = Data.GetByte(0x1b);
-    //        PortamentoStart = Data.GetByte(0x1c);
-    //        PortamentoTime = Data.GetByte(0x1d);
-    //        CutoffOffset = Data.GetByte(0x22);
-    //        ResonanceOffset = Data.GetByte(0x23);
-    //        AttackTimeOffset = Data.GetByte(0x24);
-    //        ReleaseTimeOffset = Data.GetByte(0x25);
-    //        VelocitySenseOffset = Data.GetByte(0x26);
-    //        PMTControlSwitch = Data.GetByte(0x28) > 0;
-    //        PitchBendRangeUp = Data.GetByte(0x29);
-    //        PitchBendRangeDown = Data.GetByte(0x2a);
-    //        for (byte i = 0; i < 4; i++)
-    //        {
-    //            MatrixControlSource[i] = Data.GetByte(0x2b + (9 * i));
-    //            for (byte j = 0; j < 4; j++)
-    //            {
-    //                MatrixControlDestination[i][j] = Data.GetByte(0x2c + (9 * i) + (j * 2));
-    //                MatrixControlSens[i][j] = Data.GetByte(0x2d + (9 * i) + (j * 2));
-    //            }
-    //        }
-    //    }
-
-    //}
-
-    //class PCMSynthTonePMT // Partial Mapping Table
-    //{
-    //    HBTrace t = new HBTrace("class PCMSynthTonePMT // Partial Mapping Table");
-    //    public byte StructureType1_2 { get; set; }
-    //    public byte Booster1_2 { get; set; }
-    //    public byte StructureType3_4 { get; set; }
-    //    public byte Booster3_4 { get; set; }
-    //    public byte PMTVelocityControl { get; set; }
-    //    public Boolean[] PMTPartialSwitch { get; set; }       // [4]
-    //    public byte[] PMTKeyboardRangeLower { get; set; }     // [4]
-    //    public byte[] PMTKeyboardRangeUpper { get; set; }     // [4]
-    //    public byte[] PMTKeyboardFadeWidthLower { get; set; } // [4]
-    //    public byte[] PMTKeyboardFadeWidthUpper { get; set; } // [4]
-    //    public byte[] PMTVelocityRangeLower { get; set; }     // [4]
-    //    public byte[] PMTVelocityRangeUpper { get; set; }     // [4]
-    //    public byte[] PMTVelocityFadeWidthLower { get; set; } // [4]
-    //    public byte[] PMTVelocityFadeWidthUpper { get; set; } // [4]
-
-    //    public PCMSynthTonePMT(ReceivedData Data)
-    //    {
-    //        t.Trace("public PCMSynthTonePMT (" + "ReceivedData" + Data + ", " + ")");
-    //        PMTPartialSwitch = new Boolean[4];
-    //        PMTKeyboardRangeLower = new byte[4];
-    //        PMTKeyboardRangeUpper = new byte[4];
-    //        PMTKeyboardFadeWidthLower = new byte[4];
-    //        PMTKeyboardFadeWidthUpper = new byte[4];
-    //        PMTVelocityRangeLower = new byte[4];
-    //        PMTVelocityRangeUpper = new byte[4];
-    //        PMTVelocityFadeWidthLower = new byte[4];
-    //        PMTVelocityFadeWidthUpper = new byte[4];
-
-    //        StructureType1_2 = Data.GetByte(0x00);
-    //        Booster1_2 = Data.GetByte(0x01);
-    //        StructureType3_4 = Data.GetByte(0x02);
-    //        Booster3_4 = Data.GetByte(0x03);
-    //        PMTVelocityControl = Data.GetByte(0x04);
-    //        for (byte i = 0; i < 4; i++)
-    //        {
-    //            PMTPartialSwitch[i] = Data.GetByte(0x05 + 9 * i) > 0;
-    //            PMTKeyboardRangeLower[i] = Data.GetByte(0x06 + 9 * i);
-    //            PMTKeyboardRangeUpper[i] = Data.GetByte(0x07 + 9 * i);
-    //            PMTKeyboardFadeWidthLower[i] = Data.GetByte(0x08 + 9 * i);
-    //            PMTKeyboardFadeWidthUpper[i] = Data.GetByte(0x09 + 9 * i);
-    //            PMTVelocityRangeLower[i] = Data.GetByte(0x0a + 9 * i);
-    //            PMTVelocityRangeUpper[i] = Data.GetByte(0x0b + 9 * i);
-    //            PMTVelocityFadeWidthLower[i] = Data.GetByte(0x0c + 9 * i);
-    //            PMTVelocityFadeWidthUpper[i] = Data.GetByte(0x0d + 9 * i);
-    //        }
-    //    }
-    //}
-
-    //class LFO
-    //{
-    //    HBTrace t = new HBTrace("class LFO");
-    //    public byte LFOWaveform { get; set; }
-    //    public byte LFORate { get; set; }
-    //    public byte LFOOffset { get; set; }
-    //    public byte LFORateDetune { get; set; }
-    //    public byte LFODelayTime { get; set; }
-    //    public byte LFODelayTimeKeyfollow { get; set; }
-    //    public byte LFOFadeMode { get; set; }
-    //    public byte LFOFadeTime { get; set; }
-    //    public Boolean LFOKeyTrigger { get; set; }
-    //    public byte LFOPitchDepth { get; set; }
-    //    public byte LFOTVFDepth { get; set; }
-    //    public byte LFOTVADepth { get; set; }
-    //    public byte LFOPanDepth { get; set; }
-
-    //    public LFO(ReceivedData Data, byte msb, byte lsb)
-    //    {
-    //        t.Trace("public LFO (" + "ReceivedData" + Data + ", " + "byte" + msb + ", " + "byte" + lsb + ", " + ")");
-    //        LFOWaveform = Data.GetByte(256 * msb + lsb + 0x00);
-    //        LFORate = (byte)(16 * Data.GetByte(256 * msb + lsb + 0x01) + Data.GetByte(256 * msb + lsb + 0x02));
-    //        LFOOffset = Data.GetByte(256 * msb + lsb + 0x03);
-    //        LFORateDetune = Data.GetByte(256 * msb + lsb + 0x04);
-    //        LFODelayTime = Data.GetByte(256 * msb + lsb + 0x05);
-    //        LFODelayTimeKeyfollow = Data.GetByte(256 * msb + lsb + 0x06);
-    //        LFOFadeMode = Data.GetByte(256 * msb + lsb + 0x07);
-    //        LFOFadeTime = Data.GetByte(256 * msb + lsb + 0x08);
-    //        LFOKeyTrigger = Data.GetByte(256 * msb + lsb + 0x09) > 0;
-    //        LFOPitchDepth = Data.GetByte(256 * msb + lsb + 0x0a);
-    //        LFOTVFDepth = Data.GetByte(256 * msb + lsb + 0x0b);
-    //        LFOTVADepth = Data.GetByte(256 * msb + lsb + 0x0c);
-    //        LFOPanDepth = Data.GetByte(256 * msb + lsb + 0x0d);
-    //    }
-    //}
-
-    //class TVA
-    //{
-    //    HBTrace t = new HBTrace("class TVA");
-    //    public byte TVALevelVelocityCurve { get; set; }
-    //    public byte TVALevelVelocitySens { get; set; }
-    //    public byte TVAEnvTime1VelocitySens { get; set; }
-    //    public byte TVAEnvTime4VelocitySens { get; set; }
-    //    public byte TVAEnvTimeKeyfollow { get; set; }
-    //    public byte[] TVAEnvTime { get; set; } // [4]
-    //    public byte[] TVAEnvLevel { get; set; } // [3]
-
-    //    public TVA(ReceivedData Data, byte msb, byte lsb, Boolean keyFollow)
-    //    {
-    //        t.Trace("public TVA (" + "ReceivedData" + Data + ", " + "byte" + msb + ", " + "byte" + lsb + ", " + ")");
-    //        TVAEnvTime = new byte[4];
-    //        TVAEnvLevel = new byte[3];
-
-    //        TVALevelVelocityCurve = Data.GetByte(msb, lsb, 0x00);
-    //        TVALevelVelocitySens = Data.GetByte(msb, lsb, 0x01);
-    //        TVAEnvTime1VelocitySens = Data.GetByte(msb, lsb, 0x02);
-    //        TVAEnvTime4VelocitySens = Data.GetByte(msb, lsb, 0x03);
-    //        byte offset = 0;
-    //        if (keyFollow)
-    //        {
-    //            TVAEnvTimeKeyfollow = Data.GetByte(msb, lsb, 0x04);
-    //            offset = 1;
-    //        }
-    //        for (byte i = 0; i < 4; i++)
-    //        {
-    //            TVAEnvTime[i] = Data.GetByte(msb, lsb, (byte)(0x04 + i + offset));
-    //        }
-    //        for (byte i = 0; i < 3; i++)
-    //        {
-    //            TVAEnvLevel[i] = Data.GetByte(msb, lsb, (byte)(0x08 + i + offset));
-    //        }
-    //    }
-    //}
-
-    //class TVF
-    //{
-    //    HBTrace t = new HBTrace("class TVF");
-    //    public byte TVFFilterType { get; set; }
-    //    public byte TVFCutoffFrequency { get; set; }
-    //    public byte TVFCutoffKeyfollow { get; set; }
-    //    public byte TVFCutoffVelocityCurve { get; set; }
-    //    public byte TVFCutoffVelocitySens { get; set; }
-    //    public byte TVFResonance { get; set; }
-    //    public byte TVFResonanceVelocitySens { get; set; }
-    //    public byte TVFEnvDepth { get; set; }
-    //    public byte TVFEnvVelocityCurve { get; set; }
-    //    public byte TVFEnvVelocitySens { get; set; }
-    //    public byte TVFEnvTime1VelocitySens { get; set; }
-    //    public byte TVFEnvTime4VelocitySens { get; set; }
-    //    public byte TVFEnvTimeKeyfollow { get; set; }
-    //    public byte[] TVFEnvTime { get; set; } // [4]
-    //    public byte[] TVFEnvLevel { get; set; } // [5]
-
-    //    public TVF(ReceivedData Data, byte msb, byte lsb, Boolean keyFollow)
-    //    {
-    //        t.Trace("public TVF (" + "ReceivedData" + Data + ", " + "byte" + msb + ", " + "byte" + lsb + ", " + ")");
-    //        TVFEnvTime = new byte[4];
-    //        TVFEnvLevel = new byte[5];
-
-    //        TVFFilterType = Data.GetByte(msb, lsb, 0x00);
-    //        TVFCutoffFrequency = Data.GetByte(msb, lsb, 0x01);
-    //        byte offset = 0;
-    //        if (keyFollow)
-    //        {
-    //            TVFCutoffKeyfollow = Data.GetByte(msb, lsb, 0x02);
-    //            TVFEnvTimeKeyfollow = Data.GetByte(msb, lsb, 0x0c);
-    //            offset = 1;
-    //        }
-    //        TVFCutoffVelocityCurve = Data.GetByte(msb, lsb, (byte)(0x02 + offset));
-    //        TVFCutoffVelocitySens = Data.GetByte(msb, lsb, (byte)(0x03 + offset));
-    //        TVFResonance = Data.GetByte(msb, lsb, (byte)(0x04 + offset));
-    //        TVFResonanceVelocitySens = Data.GetByte(msb, lsb, (byte)(0x05 + offset));
-    //        TVFEnvDepth = Data.GetByte(msb, lsb, (byte)(0x06 + offset));
-    //        TVFEnvVelocityCurve = Data.GetByte(msb, lsb, (byte)(0x07 + offset));
-    //        TVFEnvVelocitySens = Data.GetByte(msb, lsb, (byte)(0x08 + offset));
-    //        TVFEnvTime1VelocitySens = Data.GetByte(msb, lsb, (byte)(0x09 + offset));
-    //        TVFEnvTime4VelocitySens = Data.GetByte(msb, lsb, (byte)(0x0a + offset));
-    //        if (keyFollow)
-    //        {
-    //            offset = 2;
-    //        }
-    //        for (byte i = 0; i < 4; i++)
-    //        {
-    //            TVFEnvTime[i] = Data.GetByte(msb, lsb, (byte)(0x0b + i + offset));
-    //        }
-    //        for (byte i = 0; i < 5; i++)
-    //        {
-    //            TVFEnvLevel[i] = Data.GetByte(msb, lsb, (byte)(0x0f + i + offset));
-    //        }
-    //    }
-    //}
-
-    //class WMT
-    //{
-    //    HBTrace t = new HBTrace("class WMT");
-    //    public Boolean WMTWaveSwitch { get; set; }
-    //    public byte WMTWaveGroupType { get; set; }
-    //    public UInt16 WMTWaveGroupID { get; set; }
-    //    public UInt16 WMTWaveNumberL { get; set; }
-    //    public UInt16 WMTWaveNumberR { get; set; }
-    //    public byte WMTWaveGain { get; set; }
-    //    public Boolean WMTWaveFXMSwitch { get; set; }
-    //    public byte WMTWaveFXMColor { get; set; }
-    //    public byte WMTWaveFXMDepth { get; set; }
-    //    public Boolean WMTWaveTempoSync { get; set; }
-    //    public byte WMTWaveCoarseTune { get; set; }
-    //    public byte WMTWaveFineTune { get; set; }
-    //    public byte WMTWavePan { get; set; }
-    //    public Boolean WMTWaveRandomPanSwitch { get; set; }
-    //    public byte WMTWaveAlternatePanSwitch { get; set; }
-    //    public byte WMTWaveLevel { get; set; }
-    //    public byte WMTVelocityRangeLower { get; set; }
-    //    public byte WMTVelocityRangeUpper { get; set; }
-    //    public byte WMTVelocityFadeWidthLower { get; set; }
-    //    public byte WMTVelocityFadeWidthUpper { get; set; }
-
-    //    public WMT(ReceivedData Data, byte msb, byte lsb, byte index)
-    //    {
-    //        t.Trace("public WMT (" + "ReceivedData" + Data + ", " + "byte" + msb + ", " + "byte" + lsb + ", " + "byte" + index + ", " + ")");
-    //        UInt16 offset = (UInt16)(msb * 16 + lsb + 29 * index);
-    //        WMTWaveSwitch = Data.GetByte(offset + 0x00) > 0;
-    //        WMTWaveGroupType = Data.GetByte(offset + 0x01);
-    //        WMTWaveGroupID = Data.Get4Byte(offset + 0x02);
-    //        WMTWaveNumberL = Data.Get4Byte(offset + 0x06);
-    //        WMTWaveNumberR = Data.Get4Byte(offset + 0x0a);
-    //        WMTWaveGain = Data.GetByte(offset + 0x0e);
-    //        WMTWaveFXMSwitch = Data.GetByte(offset + 0x0f) > 0;
-    //        WMTWaveFXMColor = Data.GetByte(offset + 0x10);
-    //        WMTWaveFXMDepth = Data.GetByte(offset + 0x11);
-    //        WMTWaveTempoSync = Data.GetByte(offset + 0x12) > 0;
-    //        WMTWaveCoarseTune = Data.GetByte(offset + 0x13);
-    //        WMTWaveFineTune = Data.GetByte(offset + 0x14);
-    //        WMTWavePan = Data.GetByte(offset + 0x15);
-    //        WMTWaveRandomPanSwitch = Data.GetByte(offset + 0x16) > 0;
-    //        WMTWaveAlternatePanSwitch = Data.GetByte(offset + 0x17);
-    //        WMTWaveLevel = Data.GetByte(offset + 0x18);
-    //        WMTVelocityRangeLower = Data.GetByte(offset + 0x19);
-    //        WMTVelocityRangeUpper = Data.GetByte(offset + 0x1a);
-    //        WMTVelocityFadeWidthLower = Data.GetByte(offset + 0x1b);
-    //        WMTVelocityFadeWidthUpper = Data.GetByte(offset + 0x1c);
-    //    }
-    //}
-
-    //class PitchEnv
-    //{
-    //    HBTrace t = new HBTrace("class PitchEnv");
-    //    public byte PitchEnvDepth { get; set; }
-    //    public byte PitchEnvVelocitySens { get; set; }
-    //    public byte PitchEnvTime1VelocitySens { get; set; }
-    //    public byte PitchEnvTime4VelocitySens { get; set; }
-    //    public byte PitchEnvTimeKeyfollow { get; set; }
-    //    public byte[] PitchEnvTime { get; set; }  // [4]
-    //    public byte[] PitchEnvLevel { get; set; } // [5]
-
-    //    public PitchEnv(ReceivedData Data, byte msb, byte lsb, Boolean keyFollow)
-    //    {
-    //        t.Trace("public PitchEnv (" + "ReceivedData" + Data + ", " + "byte" + msb + ", " + "byte" + lsb + ", " + ")");
-    //        PitchEnvTime = new byte[4];
-    //        PitchEnvLevel = new byte[5];
-
-    //        PitchEnvDepth = Data.GetByte(msb, lsb, 0);
-    //        PitchEnvVelocitySens = Data.GetByte(msb, lsb, 1);
-    //        PitchEnvTime1VelocitySens = Data.GetByte(msb, lsb, 2);
-    //        PitchEnvTime4VelocitySens = Data.GetByte(msb, lsb, 3);
-    //        byte offset = 0;
-    //        if (keyFollow)
-    //        {
-    //            PitchEnvTimeKeyfollow = Data.GetByte(msb, lsb, 4);
-    //            offset = 1;
-    //        }
-    //        for (byte i = 0; i < 4; i++)
-    //        {
-    //            PitchEnvTime[i] = Data.GetByte(msb, lsb, (byte)(4 + i + offset));
-    //        }
-    //        for (byte i = 0; i < 5; i++)
-    //        {
-    //            PitchEnvLevel[i] = Data.GetByte(msb, lsb, (byte)(8 + i + offset));
-    //        }
-    //    }
-    //}
-
-    //class PCMSynthTonePartial
-    //{
-    //    HBTrace t = new HBTrace("class PCMSynthTonePartial");
-    //    public TVA TVA { get; set; }
-    //    public TVF TVF { get; set; }
-    //    public LFO LFO1 { get; set; }
-    //    public LFO LFO2 { get; set; }
-    //    public PitchEnv PitchEnv { get; set; }
-
-    //    public byte PartialLevel { get; set; }
-    //    public byte PartialCoarseTune { get; set; }
-    //    public byte PartialFineTune { get; set; }
-    //    public byte PartialRandomPitchDepth { get; set; }
-    //    public byte PartialPan { get; set; }
-    //    public byte PartialPanKeyfollow { get; set; }
-    //    public byte PartialRandomPanDepth { get; set; }
-    //    public byte PartialAlternatePanDepth { get; set; }
-    //    public byte PartialEnvMode { get; set; }
-    //    public byte PartialDelayMode { get; set; }
-    //    public byte PartialDelayTime { get; set; }
-    //    public byte PartialOutputLevel { get; set; }
-    //    public byte PartialChorusSendLevel { get; set; }
-    //    public byte PartialReverbSendLevel { get; set; }
-    //    public Boolean PartialReceiveBender { get; set; }
-    //    public Boolean PartialReceiveExpression { get; set; }
-    //    public Boolean PartialReceiveHold_1 { get; set; }
-    //    public Boolean PartialRedamperSwitch { get; set; }
-    //    public byte[][] PartialControlSwitch { get; set; } // [4][4]
-    //    public byte WaveGroupType { get; set; }
-    //    public UInt16 WaveGroupID { get; set; }
-    //    public UInt16 WaveNumberL { get; set; }
-    //    public UInt16 WaveNumberR { get; set; }
-    //    public byte WaveGain { get; set; }
-    //    public Boolean WaveFXMSwitch { get; set; }
-    //    public byte WaveFXMColor { get; set; }
-    //    public byte WaveFXMDepth { get; set; }
-    //    public Boolean WaveTempoSync { get; set; }
-    //    public byte WavePitchKeyfollow { get; set; }
-    //    public byte BiasLevel { get; set; }
-    //    public byte BiasPosition { get; set; }
-    //    public byte BiasDirection { get; set; }
-    //    public byte LFOStepType { get; set; }
-    //    public byte[] LFOStep { get; set; }       // [16]
-
-    //    public PCMSynthTonePartial(ReceivedData Data)
-    //    {
-    //        t.Trace("public PCMSynthTonePartial (" + "ReceivedData" + Data + ", " + ")");
-
-    //        TVA = new TVA(Data, 0x00, 0x61, true);
-    //        TVF = new TVF(Data, 0x00, 0x48, true);
-    //        LFO1 = new LFO(Data, 0x00, 0x6d);
-    //        LFO2 = new LFO(Data, 0x00, 0x7b);
-    //        PitchEnv = new PitchEnv(Data, 0x00, 0x3a, true);
-    //        PartialControlSwitch = new byte[4][];
-    //        LFOStep = new byte[16];
-
-    //        PartialLevel = Data.GetByte(0x00);
-    //        PartialCoarseTune = Data.GetByte(0x01);
-    //        PartialFineTune = Data.GetByte(0x02);
-    //        PartialRandomPitchDepth = Data.GetByte(0x03);
-    //        PartialPan = Data.GetByte(0x04);
-    //        PartialPanKeyfollow = Data.GetByte(0x05);
-    //        PartialRandomPanDepth = Data.GetByte(0x06);
-    //        PartialAlternatePanDepth = Data.GetByte(0x07);
-    //        PartialEnvMode = Data.GetByte(0x08);
-    //        PartialDelayMode = Data.GetByte(0x09);
-    //        PartialDelayTime = (byte)(16 * Data.GetByte(0x0a) + Data.GetByte(0x0b));
-    //        PartialOutputLevel = Data.GetByte(0x0c);
-    //        PartialChorusSendLevel = Data.GetByte(0x0f);
-    //        PartialReverbSendLevel = Data.GetByte(0x10);
-    //        PartialReceiveBender = Data.GetByte(0x12) > 0;
-    //        PartialReceiveExpression = Data.GetByte(0x13) > 0;
-    //        PartialReceiveHold_1 = Data.GetByte(0x14) > 0;
-    //        PartialRedamperSwitch = Data.GetByte(0x16) > 0;
-    //        for (byte i = 0; i < 4; i++)
-    //        {
-    //            PartialControlSwitch[i] = new byte[4];
-    //            for (byte j = 0; j < 4; j++)
-    //            {
-    //                PartialControlSwitch[i][j] = Data.GetByte(0x17 + 4 * i + j);
-    //            }
-    //        }
-    //        WaveGroupType = Data.GetByte(0x27);
-    //        WaveGroupID = (UInt16)(16 * 16 * 16 * Data.GetByte(0x28) + 16 * 16 * Data.GetByte(0x29) + 16 * Data.GetByte(0x2a) + Data.GetByte(0x2b));
-    //        WaveNumberL = (UInt16)(16 * 16 * 16 * Data.GetByte(0x2c) + 16 * 16 * Data.GetByte(0x2d) + 16 * Data.GetByte(0x2e) + Data.GetByte(0x2f));
-    //        WaveNumberR = (UInt16)(16 * 16 * 16 * Data.GetByte(0x30) + 16 * 16 * Data.GetByte(0x31) + 16 * Data.GetByte(0x32) + Data.GetByte(0x33));
-    //        WaveGain = Data.GetByte(0x34);
-    //        WaveFXMSwitch = Data.GetByte(0x35) > 0;
-    //        WaveFXMColor = Data.GetByte(0x36);
-    //        WaveFXMDepth = Data.GetByte(0x37);
-    //        WaveTempoSync = Data.GetByte(0x38) > 0;
-    //        WavePitchKeyfollow = Data.GetByte(0x39);
-    //        BiasLevel = Data.GetByte(0x5e);
-    //        BiasPosition = Data.GetByte(0x5f);
-    //        BiasDirection = Data.GetByte(0x60);
-    //        LFOStepType = Data.GetByte(0x89);
-    //        for (byte i = 0; i < 16; i++)
-    //        {
-    //            LFOStep[i] = Data.GetByte(0x8a + i);
-    //        }
-    //    }
-    //}
-
-    //class PCMSynthToneCommon2
-    //{
-    //    HBTrace t = new HBTrace("class PCMSynthToneCommon2");
-    //    public byte ToneCategory { get; set; }
-    //    public byte MissingInDocs { get; set; }
-    //    public byte PhraseOctaveShift { get; set; }
-    //    public Boolean TFXSwitch { get; set; }
-    //    public UInt16 PhraseNumber { get; set; }
-
-    //    public PCMSynthToneCommon2(ReceivedData Data)
-    //    {
-    //        t.Trace("public PCMSynthToneCommon2 (" + "ReceivedData" + Data + ", " + ")");
-    //        ToneCategory = Data.GetByte(0x10);
-    //        MissingInDocs = (byte)(16 * Data.GetByte(0x11) + Data.GetByte(0x12));
-    //        PhraseOctaveShift = Data.GetByte(0x13);
-    //        TFXSwitch = Data.GetByte(0x33) > 0;
-    //        PhraseNumber = (UInt16)(16 * Data.GetByte(0x3a) + Data.GetByte(0x3b));
-    //    }
-    //}
-
-    //class PCMDrumKitCommon
-    //{
-    //    HBTrace t = new HBTrace("class PCMDrumKitCommon");
-    //    public String Name { get; set; }
-    //    public byte DrumKitLevel { get; set; }
-    //    public PCMDrumKitCommon(ReceivedData Data)
-    //    {
-    //        t.Trace("public PCMDrumKitCommon (" + "ReceivedData" + Data + ", " + ")");
-    //        Name = "";
-    //        for (Int32 i = 0x00; i < 0x0c; i++)
-    //        {
-    //            Name += (char)Data.GetByte(i);
-    //        }
-    //        DrumKitLevel = Data.GetByte(0x0c);
-    //    }
-    //}
-
-    //class CompEq
-    //{
-    //    HBTrace t = new HBTrace("class CompEq");
-    //    public Boolean CompSwitch { get; set; }
-    //    public byte CompAttackTime { get; set; }
-    //    public byte CompReleaseTime { get; set; }
-    //    public byte CompThreshold { get; set; }
-    //    public byte CompRatio { get; set; }
-    //    public byte CompOutputGain { get; set; }
-    //    public Boolean EQSwitch { get; set; }
-    //    public byte EQLowFreq { get; set; }
-    //    public byte EQLowGain { get; set; }
-    //    public byte EQMidFreq { get; set; }
-    //    public byte EQMidGain { get; set; }
-    //    public byte EQMidQ { get; set; }
-    //    public byte EQHighFreq { get; set; }
-    //    public byte EQHighGain { get; set; }
-
-    //    public void SetContent(byte i, ReceivedData Data)
-    //    {
-    //        t.Trace("public void SetContent (" + "byte" + i + ", " + "ReceivedData" + Data + ", " + ")");
-    //        byte address = (byte)(i * 0x0e);
-    //        CompSwitch = Data.GetByte(address + 0) > 0;
-    //        CompAttackTime = Data.GetByte(address + 1);
-    //        CompReleaseTime = Data.GetByte(address + 2);
-    //        CompThreshold = Data.GetByte(address + 3);
-    //        CompRatio = Data.GetByte(address + 4);
-    //        CompOutputGain = Data.GetByte(address + 5);
-    //        EQSwitch = Data.GetByte(address + 6) > 0;
-    //        EQLowFreq = Data.GetByte(address + 7);
-    //        EQLowGain = Data.GetByte(address + 8);
-    //        EQMidFreq = Data.GetByte(address + 9);
-    //        EQMidGain = Data.GetByte(address + 10);
-    //        EQMidQ = Data.GetByte(address + 11);
-    //        EQHighFreq = Data.GetByte(address + 12);
-    //        EQHighGain = Data.GetByte(address + 13);
-    //    }
-    //}
-
-    //class PCMDrumKitCommonCompEQ
-    //{
-    //    HBTrace t = new HBTrace("class PCMDrumKitCommonCompEQ");
-    //    public CompEq[] CompEq { get; set; } // [6]
-
-    //    public PCMDrumKitCommonCompEQ(ReceivedData Data)
-    //    {
-    //        t.Trace("public PCMDrumKitCommonCompEQ (" + "ReceivedData" + Data + ", " + ")");
-    //        CompEq = new CompEq[6];
-    //        for (byte i = 0; i < 6; i++)
-    //        {
-    //            CompEq[i] = new CompEq();
-    //            CompEq[i].SetContent(i, Data);
-    //        }
-    //    }
-    //}
-
-    //class PCMDrumKitPartial
-    //{
-    //    HBTrace t = new HBTrace("class PCMDrumKitPartial");
-    //    public TVF TVF { get; set; }
-    //    public TVA TVA { get; set; }
-    //    public WMT[] WMT { get; set; } // [4]
-    //    public PitchEnv PitchEnv { get; set; }
-
-    //    public String Name { get; set; }
-    //    public byte AssignType { get; set; }
-    //    public byte MuteGroup { get; set; }
-    //    public byte PartialLevel { get; set; }
-    //    public byte PartialCoarseTune { get; set; }
-    //    public byte PartialFineTune { get; set; }
-    //    public byte PartialRandomPitchDepth { get; set; }
-    //    public byte PartialPan { get; set; }
-    //    public byte PartialRandomPanDepth { get; set; }
-    //    public byte PartialAlternatePanDepth { get; set; }
-    //    public byte PartialEnvMode { get; set; }
-    //    public byte PartialOutputLevel { get; set; }
-    //    public byte PartialChorusSendLevel { get; set; }
-    //    public byte PartialReverbSendLevel { get; set; }
-    //    public byte PartialOutputAssign { get; set; }
-    //    public byte PartialPitchBendRange { get; set; }
-    //    public Boolean PartialReceiveExpression { get; set; }
-    //    public Boolean PartialReceiveHold_1 { get; set; }
-    //    public byte WMTVelocityControl { get; set; }
-    //    public Boolean OneShotMode { get; set; }
-    //    public byte RelativeLevel { get; set; }
-
-    //    public PCMDrumKitPartial(ReceivedData Data)
-    //    {
-    //        t.Trace("public PCMDrumKitPartial (" + "ReceivedData" + Data + ", " + ")");
-    //        TVF = new TVF(Data, 0x01, 0x22, false);
-    //        TVA = new TVA(Data, 0x01, 0x36, false);
-    //        WMT = new WMT[4];
-    //        for (byte i = 0; i < 4; i++)
-    //        {
-    //            WMT[i] = new WMT(Data, 0x00, 0x21, i);
-    //        }
-    //        PitchEnv = new PitchEnv(Data, 0x01, 0x15, false);
-
-    //        Name = "";
-    //        for (byte i = 0; i < 0x0c; i++)
-    //        {
-    //            Name += (char)Data.GetByte(i);
-    //        }
-    //        AssignType = Data.GetByte(0x0c);
-    //        MuteGroup = Data.GetByte(0x0d);
-    //        PartialLevel = Data.GetByte(0x0e);
-    //        PartialCoarseTune = Data.GetByte(0x0f);
-    //        PartialFineTune = Data.GetByte(0x10);
-    //        PartialRandomPitchDepth = Data.GetByte(0x11);
-    //        PartialPan = Data.GetByte(0x12);
-    //        PartialRandomPanDepth = Data.GetByte(0x13);
-    //        PartialAlternatePanDepth = Data.GetByte(0x14);
-    //        PartialEnvMode = Data.GetByte(0x15);
-    //        PartialOutputLevel = Data.GetByte(0x16);
-    //        PartialChorusSendLevel = Data.GetByte(0x19);
-    //        PartialReverbSendLevel = Data.GetByte(0x1a);
-    //        PartialOutputAssign = Data.GetByte(0x1b);
-    //        PartialPitchBendRange = Data.GetByte(0x1c);
-    //        PartialReceiveExpression = Data.GetByte(0x1d) > 0;
-    //        PartialReceiveHold_1 = Data.GetByte(0x1e) > 0;
-    //        WMTVelocityControl = Data.GetByte(0x20);
-    //        OneShotMode = Data.GetByte(0x141) > 1;
-    //        RelativeLevel = Data.GetByte(0x142);
-    //    }
-    //}
-
-    //class PCMDrumKitCommon2
-    //{
-    //    HBTrace t = new HBTrace("class PCMDrumKitCommon2");
-    //    public byte PhraseNumber { get; set; }
-    //    public byte TFXSwitch { get; set; }
-
-    //    public PCMDrumKitCommon2(ReceivedData Data)
-    //    {
-    //        t.Trace("public PCMDrumKitCommon2 (" + "ReceivedData" + Data + ", " + ")");
-    //        PhraseNumber = Data.Get2Byte(16);
-    //        TFXSwitch = Data.GetByte(18);
-    //    }
-    //}
-
-    //class SuperNATURALSynthToneCommon
-    //{
-    //    HBTrace t = new HBTrace("class SuperNATURALSynthToneCommon");
-    //    public String Name { get; set; }
-    //    public byte ToneLevel { get; set; }
-    //    public Boolean PortamentoSwitch { get; set; }
-    //    public byte PortamentoTime { get; set; }
-    //    public byte MonoPoly { get; set; }
-    //    public byte OctaveShift { get; set; }
-    //    public byte PitchBendRangeUp { get; set; }
-    //    public byte PitchBendRangeDown { get; set; }
-    //    public Boolean Partial1Switch { get; set; }
-    //    public byte Partial1Select { get; set; }
-    //    public Boolean Partial2Switch { get; set; }
-    //    public byte Partial2Select { get; set; }
-    //    public Boolean Partial3Switch { get; set; }
-    //    public byte Partial3Select { get; set; }
-    //    public Boolean RINGSwitch { get; set; } // 0 - 2!
-    //    public Boolean TFXSwitch { get; set; }
-    //    public Boolean UnisonSwitch { get; set; }
-    //    public byte PortamentoMode { get; set; }
-    //    public Boolean LegatoSwitch { get; set; }
-    //    public byte AnalogFeel { get; set; }
-    //    public byte WaveShape { get; set; }
-    //    public byte Category { get; set; }
-    //    public UInt16 PhraseNumber { get; set; }
-    //    public byte PhraseOctaveShift { get; set; }
-    //    public byte UnisonSize { get; set; }
-
-    //    public SuperNATURALSynthToneCommon(ReceivedData Data)
-    //    {
-    //        t.Trace("public SuperNATURALSynthToneCommon (" + "ReceivedData" + Data + ", " + ")");
-    //        Name = "";
-    //        for (byte i = 0; i < 0x0c; i++)
-    //        {
-    //            Name += (char)Data.GetByte(i);
-    //        }
-    //        ToneLevel = Data.GetByte(0x0c);
-    //        PortamentoSwitch = Data.GetByte(0x12) > 0;
-    //        PortamentoTime = Data.GetByte(0x13);
-    //        MonoPoly = Data.GetByte(0x14);
-    //        OctaveShift = Data.GetByte(0x15);
-    //        PitchBendRangeUp = Data.GetByte(0x16);
-    //        PitchBendRangeDown = Data.GetByte(0x17);
-    //        Partial1Switch = Data.GetByte(0x19) > 0;
-    //        Partial1Select = Data.GetByte(0x1a);
-    //        Partial2Switch = Data.GetByte(0x1b) > 0;
-    //        Partial2Select = Data.GetByte(0x1c);
-    //        Partial3Switch = Data.GetByte(0x1d) > 0;
-    //        Partial3Select = Data.GetByte(0x1e);
-    //        RINGSwitch = Data.GetByte(0x1f) > 0;
-    //        TFXSwitch = Data.GetByte(0x20) > 0;
-    //        UnisonSwitch = Data.GetByte(0x2e) > 0;
-    //        PortamentoMode = Data.GetByte(0x31);
-    //        LegatoSwitch = Data.GetByte(0x32) > 0;
-    //        AnalogFeel = Data.GetByte(0x34);
-    //        WaveShape = Data.GetByte(0x35);
-    //        Category = Data.GetByte(0x36);
-    //        PhraseNumber = Data.Get4Byte(0x37);
-    //        PhraseOctaveShift = Data.GetByte(0x3b);
-    //        UnisonSize = Data.GetByte(0x3c);
-    //    }
-    //}
-
-    //class SuperNATURALSynthTonePartial
-    //{
-    //    HBTrace t = new HBTrace("class SuperNATURALSynthTonePartial");
-    //    public byte OSCWave { get; set; }
-    //    public byte OSCWaveVariation { get; set; }
-    //    public byte OSCPitch { get; set; }
-    //    public byte OSCDetune { get; set; }
-    //    public byte OSCPulseWidthModDepth { get; set; }
-    //    public byte OSCPulseWidth { get; set; }
-    //    public byte OSCPitchEnvAttackTime { get; set; }
-    //    public byte OSCPitchEnvDecay { get; set; }
-    //    public byte OSCPitchEnvDepth { get; set; }
-    //    public byte FILTERMode { get; set; }
-    //    public byte FILTERSlope { get; set; }
-    //    public byte FILTERCutoff { get; set; }
-    //    public byte FILTERCutoffKeyfollow { get; set; }
-    //    public byte FILTEREnvVelocitySens { get; set; }
-    //    public byte FILTERResonance { get; set; }
-    //    public byte FILTEREnvAttackTime { get; set; }
-    //    public byte FILTEREnvDecayTime { get; set; }
-    //    public byte FILTEREnvSustainLevel { get; set; }
-    //    public byte FILTEREnvReleaseTime { get; set; }
-    //    public byte FILTEREnvDepth { get; set; }
-    //    public byte AMPLevel { get; set; }
-    //    public byte AMPLevelVelocitySens { get; set; }
-    //    public byte AMPEnvAttackTime { get; set; }
-    //    public byte AMPEnvDecayTime { get; set; }
-    //    public byte AMPEnvSustainLevel { get; set; }
-    //    public byte AMPEnvReleaseTime { get; set; }
-    //    public byte AMPPan { get; set; }
-    //    public byte LFOShape { get; set; }
-    //    public byte LFORate { get; set; }
-    //    public Boolean LFOTempoSyncSwitch { get; set; }
-    //    public byte LFOTempoSyncNote { get; set; }
-    //    public byte LFOFadeTime { get; set; }
-    //    public Boolean LFOKeyTrigger { get; set; }
-    //    public byte LFOPitchDepth { get; set; }
-    //    public byte LFOFilterDepth { get; set; }
-    //    public byte LFOAmpDepth { get; set; }
-    //    public byte LFOPanDepth { get; set; }
-    //    public byte ModulationLFOShape { get; set; }
-    //    public byte ModulationLFORate { get; set; }
-    //    public Boolean ModulationLFOTempoSyncSwitch { get; set; }
-    //    public byte ModulationLFOTempoSyncNote { get; set; }
-    //    public byte OSCPulseWidthShift { get; set; }
-    //    public byte ModulationLFOPitchDepth { get; set; }
-    //    public byte ModulationLFOFilterDepth { get; set; }
-    //    public byte ModulationLFOAmpDepth { get; set; }
-    //    public byte ModulationLFOPanDepth { get; set; }
-    //    public byte CutoffAftertouchSens { get; set; }
-    //    public byte LevelAftertouchSens { get; set; }
-    //    public byte WaveGain { get; set; }
-    //    public UInt16 WaveNumber { get; set; }
-    //    public byte HPFCutoff { get; set; }
-    //    public byte SuperSawDetune { get; set; }
-    //    public byte ModulationLFORateControl { get; set; }
-    //    public byte AMPLevelKeyfollow { get; set; }
-
-    //    public SuperNATURALSynthTonePartial(ReceivedData Data)
-    //    {
-    //        t.Trace("public SuperNATURALSynthTonePartial (" + "ReceivedData" + Data + ", " + ")");
-    //        OSCWave = Data.GetByte(0x00);
-    //        OSCWaveVariation = Data.GetByte(0x01);
-    //        OSCPitch = Data.GetByte(0x03);
-    //        OSCDetune = Data.GetByte(0x04);
-    //        OSCPulseWidthModDepth = Data.GetByte(0x05);
-    //        OSCPulseWidth = Data.GetByte(0x06);
-    //        OSCPitchEnvAttackTime = Data.GetByte(0x07);
-    //        OSCPitchEnvDecay = Data.GetByte(0x08);
-    //        OSCPitchEnvDepth = Data.GetByte(0x09);
-    //        FILTERMode = Data.GetByte(0x0a);
-    //        FILTERSlope = Data.GetByte(0x0b);
-    //        FILTERCutoff = Data.GetByte(0x0c);
-    //        FILTERCutoffKeyfollow = Data.GetByte(0x0d);
-    //        FILTEREnvVelocitySens = Data.GetByte(0x0e);
-    //        FILTERResonance = Data.GetByte(0x0f);
-    //        FILTEREnvAttackTime = Data.GetByte(0x10);
-    //        FILTEREnvDecayTime = Data.GetByte(0x11);
-    //        FILTEREnvSustainLevel = Data.GetByte(0x12);
-    //        FILTEREnvReleaseTime = Data.GetByte(0x13);
-    //        FILTEREnvDepth = Data.GetByte(0x14);
-    //        AMPLevel = Data.GetByte(0x15);
-    //        AMPLevelVelocitySens = Data.GetByte(0x16);
-    //        AMPEnvAttackTime = Data.GetByte(0x17);
-    //        AMPEnvDecayTime = Data.GetByte(0x18);
-    //        AMPEnvSustainLevel = Data.GetByte(0x19);
-    //        AMPEnvReleaseTime = Data.GetByte(0x1a);
-    //        AMPPan = Data.GetByte(0x1b);
-    //        LFOShape = Data.GetByte(0x1c);
-    //        LFORate = Data.GetByte(0x1d);
-    //        LFOTempoSyncSwitch = Data.GetByte(0x1e) > 0;
-    //        LFOTempoSyncNote = Data.GetByte(0x1f);
-    //        LFOFadeTime = Data.GetByte(0x20);
-    //        LFOKeyTrigger = Data.GetByte(0x21) > 0;
-    //        LFOPitchDepth = Data.GetByte(0x22);
-    //        LFOFilterDepth = Data.GetByte(0x23);
-    //        LFOAmpDepth = Data.GetByte(0x24);
-    //        LFOPanDepth = Data.GetByte(0x25);
-    //        ModulationLFOShape = Data.GetByte(0x26);
-    //        ModulationLFORate = Data.GetByte(0x27);
-    //        ModulationLFOTempoSyncSwitch = Data.GetByte(0x28) > 0;
-    //        ModulationLFOTempoSyncNote = Data.GetByte(0x29);
-    //        OSCPulseWidthShift = Data.GetByte(0x2a);
-    //        ModulationLFOPitchDepth = Data.GetByte(0x2c);
-    //        ModulationLFOFilterDepth = Data.GetByte(0x2d);
-    //        ModulationLFOAmpDepth = Data.GetByte(0x2e);
-    //        ModulationLFOPanDepth = Data.GetByte(0x2f);
-    //        CutoffAftertouchSens = Data.GetByte(0x30);
-    //        LevelAftertouchSens = Data.GetByte(0x31);
-    //        WaveGain = Data.GetByte(0x34);
-    //        WaveNumber = Data.Get4Byte(0x35);
-    //        HPFCutoff = Data.GetByte(0x39);
-    //        SuperSawDetune = Data.GetByte(0x3a);
-    //        ModulationLFORateControl = Data.GetByte(0x3b);
-    //        AMPLevelKeyfollow = Data.GetByte(0x3c);
-    //    }
-    //}
-
-    //class SuperNATURALSynthToneMisc
-    //{
-    //    public byte AttackTimeIntervalSens { get; set; }
-    //    public byte ReleaseTimeIntervalSens { get; set; }
-    //    public byte PortamentoTimeIntervalSens { get; set; }
-    //    public byte EnvelopeLoopMode { get; set; }
-    //    public byte EnvelopeLoopSyncNote { get; set; }
-    //    public Boolean ChromaticPortamento { get; set; }
-
-    //    public SuperNATURALSynthToneMisc(ReceivedData Data)
-    //    {
-    //        AttackTimeIntervalSens = Data.GetByte(0x01);
-    //        ReleaseTimeIntervalSens = Data.GetByte(0x02);
-    //        PortamentoTimeIntervalSens = Data.GetByte(0x03);
-    //        EnvelopeLoopMode = Data.GetByte(0x04);
-    //        EnvelopeLoopSyncNote = Data.GetByte(0x05);
-    //        ChromaticPortamento = Data.GetByte(0x06) > 0;
-    //    }
-    //}
-
-    //class SuperNATURALAcousticToneCommon
-    //{
-    //    HBTrace t = new HBTrace("class SuperNATURALAcousticToneCommon");
-    //    public String Name { get; set; }
-    //    public byte ToneLevel { get; set; }
-    //    public byte MonoPoly { get; set; }
-    //    public byte PortamentoTimeOffset { get; set; }
-    //    public byte CutoffOffset { get; set; }
-    //    public byte ResonanceOffset { get; set; }
-    //    public byte AttackTimeOffset { get; set; }
-    //    public byte ReleaseTimeOffset { get; set; }
-    //    public byte VibratoRate { get; set; }
-    //    public byte VibratoDepth { get; set; }
-    //    public byte VibratoDelay { get; set; }
-    //    public byte OctaveShift { get; set; }
-    //    public byte Category { get; set; }
-    //    public byte PhraseNumber { get; set; }
-    //    public byte PhraseOctaveShift { get; set; }
-    //    public Boolean TFXSwitch { get; set; }
-    //    public byte InstVariation { get; set; }
-    //    public byte InstNumber { get; set; }
-    //    public byte ModifyParameter1 { get; set; }
-    //    public byte ModifyParameter2 { get; set; }
-    //    public byte ModifyParameter3 { get; set; }
-    //    public byte ModifyParameter4 { get; set; }
-    //    public byte ModifyParameter5 { get; set; }
-    //    public byte ModifyParameter6 { get; set; }
-    //    public byte ModifyParameter7 { get; set; }
-    //    public byte ModifyParameter8 { get; set; }
-    //    public byte ModifyParameter9 { get; set; }
-    //    public byte ModifyParameter10 { get; set; }
-    //    public byte ModifyParameter11 { get; set; }
-    //    public byte ModifyParameter12 { get; set; }
-    //    public byte ModifyParameter13 { get; set; }
-    //    public byte ModifyParameter14 { get; set; }
-    //    public byte ModifyParameter15 { get; set; }
-    //    public byte ModifyParameter16 { get; set; }
-    //    public byte ModifyParameter17 { get; set; }
-    //    public byte ModifyParameter18 { get; set; }
-    //    public byte ModifyParameter19 { get; set; }
-    //    public byte ModifyParameter20 { get; set; }
-    //    public byte ModifyParameter21 { get; set; }
-    //    public byte ModifyParameter22 { get; set; }
-    //    public byte ModifyParameter23 { get; set; }
-    //    public byte ModifyParameter24 { get; set; }
-    //    public byte ModifyParameter25 { get; set; }
-    //    public byte ModifyParameter26 { get; set; }
-    //    public byte ModifyParameter27 { get; set; }
-    //    public byte ModifyParameter28 { get; set; }
-    //    public byte ModifyParameter29 { get; set; }
-    //    public byte ModifyParameter30 { get; set; }
-    //    public byte ModifyParameter31 { get; set; }
-    //    public byte ModifyParameter32 { get; set; }
-
-    //    public SuperNATURALAcousticToneCommon(ReceivedData Data)
-    //    {
-    //        t.Trace("public SuperNATURALAcousticToneCommon (" + "ReceivedData" + Data + ", " + ")");
-    //        Name = "";
-    //        for (byte i = 0; i < 0x0c; i++)
-    //        {
-    //            Name += (char)Data.GetByte(i);
-    //        }
-    //        ToneLevel = Data.GetByte(0x10);
-    //        MonoPoly = Data.GetByte(0x11);
-    //        PortamentoTimeOffset = Data.GetByte(0x12);
-    //        CutoffOffset = Data.GetByte(0x13);
-    //        ResonanceOffset = Data.GetByte(0x14);
-    //        AttackTimeOffset = Data.GetByte(0x15);
-    //        ReleaseTimeOffset = Data.GetByte(0x16);
-    //        VibratoRate = Data.GetByte(0x17);
-    //        VibratoDepth = Data.GetByte(0x18);
-    //        VibratoDelay = Data.GetByte(0x19);
-    //        OctaveShift = Data.GetByte(0x1a);
-    //        Category = Data.GetByte(0x1b);
-    //        PhraseNumber = Data.Get2Byte(0x1c);
-    //        PhraseOctaveShift = Data.GetByte(0x1e);
-    //        TFXSwitch = Data.GetByte(0x1f) > 0;
-    //        InstVariation = Data.GetByte(0x20);
-    //        InstNumber = Data.GetByte(0x21);
-    //        ModifyParameter1 = Data.GetByte(0x22);
-    //        ModifyParameter2 = Data.GetByte(0x23);
-    //        ModifyParameter3 = Data.GetByte(0x24);
-    //        ModifyParameter4 = Data.GetByte(0x25);
-    //        ModifyParameter5 = Data.GetByte(0x26);
-    //        ModifyParameter6 = Data.GetByte(0x27);
-    //        ModifyParameter7 = Data.GetByte(0x28);
-    //        ModifyParameter8 = Data.GetByte(0x29);
-    //        ModifyParameter9 = Data.GetByte(0x2a);
-    //        ModifyParameter10 = Data.GetByte(0x2b);
-    //        ModifyParameter11 = Data.GetByte(0x2c);
-    //        ModifyParameter12 = Data.GetByte(0x2d);
-    //        ModifyParameter13 = Data.GetByte(0x2e);
-    //        ModifyParameter14 = Data.GetByte(0x2f);
-    //        ModifyParameter15 = Data.GetByte(0x30);
-    //        ModifyParameter16 = Data.GetByte(0x31);
-    //        ModifyParameter17 = Data.GetByte(0x32);
-    //        ModifyParameter18 = Data.GetByte(0x33);
-    //        ModifyParameter19 = Data.GetByte(0x34);
-    //        ModifyParameter20 = Data.GetByte(0x35);
-    //        ModifyParameter21 = Data.GetByte(0x36);
-    //        ModifyParameter22 = Data.GetByte(0x37);
-    //        ModifyParameter23 = Data.GetByte(0x38);
-    //        ModifyParameter24 = Data.GetByte(0x39);
-    //        ModifyParameter25 = Data.GetByte(0x3a);
-    //        ModifyParameter26 = Data.GetByte(0x3b);
-    //        ModifyParameter27 = Data.GetByte(0x3c);
-    //        ModifyParameter28 = Data.GetByte(0x3d);
-    //        ModifyParameter29 = Data.GetByte(0x3e);
-    //        ModifyParameter30 = Data.GetByte(0x3f);
-    //        ModifyParameter31 = Data.GetByte(0x40);
-    //        ModifyParameter32 = Data.GetByte(0x41);
-    //    }
-    //}
-
-    //class SuperNATURALDrumKitCommon
-    //{
-    //    HBTrace t = new HBTrace("class SuperNATURALDrumKitCommon");
-    //    public String Name { get; set; }
-    //    public byte KitLevel { get; set; }
-    //    public byte AmbienceLevel { get; set; }
-    //    public byte PhraseNumber { get; set; }
-    //    public Boolean TFXSwitch { get; set; }
-
-    //    public SuperNATURALDrumKitCommon(ReceivedData Data)
-    //    {
-    //        t.Trace("public SuperNATURALDrumKitCommon (" + "ReceivedData" + Data + ", " + ")");
-    //        Name = "";
-    //        for (byte i = 0; i < 0x0c; i++)
-    //        {
-    //            Name += (char)Data.GetByte(i);
-    //        }
-    //        KitLevel = Data.GetByte(0x10);
-    //        AmbienceLevel = Data.GetByte(0x11);
-    //        PhraseNumber = Data.GetByte(0x12);
-    //        TFXSwitch = Data.GetByte(0x13) > 0;
-    //    }
-    //}
-
-    //class SuperNATURALDrumKitMFX
-    //{
-    //    HBTrace t = new HBTrace("class SuperNATURALDrumKitMFX");
-    //    public byte MFXType { get; set; }
-    //    public byte MFXChorusSendLevel { get; set; }
-    //    public byte MFXReverbSendLevel { get; set; }
-    //    public byte[] MFXControlSource { get; set; } // [4]
-    //    public byte[] MFXControlSens { get; set; }   // [4]
-    //    public byte[] MFXControlAssign { get; set; } // [4]
-    //    public byte[] MFXParameter { get; set; } // [32] Kolla Ã¤ven dessa!
-    //    public MFXNumberedParameters MFXNumberedParameters { get; set; }
-
-    //    public SuperNATURALDrumKitMFX(ReceivedData Data)
-    //    {
-    //        t.Trace("public SuperNATURALDrumKitMFX (" + "ReceivedData" + Data + ", " + ")");
-    //        MFXControlSource = new byte[4];
-    //        MFXControlSens = new byte[4];
-    //        MFXControlAssign = new byte[4];
-
-    //        MFXType = Data.GetByte(0x00);
-    //        MFXChorusSendLevel = Data.GetByte(0x02);
-    //        MFXReverbSendLevel = Data.GetByte(0x03);
-    //        for (byte i = 0; i < 4; i++)
-    //        {
-    //            MFXControlSource[i] = Data.GetByte(0x05 + 2 * i);
-    //            MFXControlSens[i] = Data.GetByte(0x06 + 2 * i);
-    //            MFXControlAssign[i] = Data.GetByte(0x0d + i);
-    //        }
-    //        MFXNumberedParameters = new MFXNumberedParameters(Data, 0x11);
-    //    }
-    //}
-
-    //class SuperNATURALDrumKitCommonCompEQ
-    //{
-    //    HBTrace t = new HBTrace("class SuperNATURALDrumKitCommonCompEQ");
-    //    public CompEq[] CompEQ; // [6]
-
-    //    public SuperNATURALDrumKitCommonCompEQ(ReceivedData Data)
-    //    {
-    //        t.Trace("public SuperNATURALDrumKitCommonCompEQ (" + "ReceivedData" + Data + ", " + ")");
-    //        CompEQ = new CompEq[6];
-    //        for (byte i = 0; i < 6; i++)
-    //        {
-    //            CompEQ[i] = new CompEq();
-    //            CompEQ[i].SetContent(i, Data);
-    //        }
-    //    }
-    //}
-
-    //class SuperNATURALDrumKitKey
-    //{
-    //    HBTrace t = new HBTrace("class SuperNATURALDrumKitKey");
-    //    public byte BankNumber { get; set; } // This is 0 for Internal and 1 for ExSN6. Read more in MakeDynamicControls.cs AddSupernaturalDrumKitDruminstrumentControls()
-    //    public byte[] InstNumber { get; set; } // [2] 0 = iternal sound, 1 = ExSN6 sound
-    //    public byte Level { get; set; }
-    //    public byte Pan { get; set; }
-    //    public byte ChorusSendLevel { get; set; }
-    //    public byte ReverbSendLevel { get; set; }
-    //    public byte Tune { get; set; }
-    //    public byte Attack { get; set; }
-    //    public byte Decay { get; set; }
-    //    public byte Brilliance { get; set; }
-    //    public byte Variation { get; set; }
-    //    public byte DynamicRange { get; set; }
-    //    public byte StereoWidth { get; set; }
-    //    public byte OutputAssign { get; set; }
-
-    //    public SuperNATURALDrumKitKey(ReceivedData Data)
-    //    {
-    //        t.Trace("public SuperNATURALDrumKitNote (" + "ReceivedData" + Data + ", " + ")");
-    //        InstNumber = new byte[2];
-    //        UInt16 temp = Data.Get3Of4Byte(0);
-    //        if (temp > 168)
-    //        {
-    //            BankNumber = 0x01; // This is 0 for Internal and 1 for ExSN6. Read more in MakeDynamicControls.cs AddSupernaturalDrumKitDruminstrumentControls()
-    //            InstNumber[0] = 0; // Because we do not know yet
-    //            InstNumber[1] = (byte)(temp - 169);
-    //        }
-    //        else
-    //        {
-    //            BankNumber = 0x00; // Because we do not know yet
-    //            InstNumber[0] = (byte)temp;
-    //            InstNumber[1] = 0;
-    //        }
-    //        Level = Data.GetByte(4);
-    //        Pan = Data.GetByte(5);
-    //        ChorusSendLevel = Data.GetByte(6);
-    //        ReverbSendLevel = Data.GetByte(7);
-    //        Tune = Data.Get2Of4Byte(0x08);
-    //        Attack = Data.GetByte(0x0c);
-    //        Decay = Data.GetByte(0x0d);
-    //        Brilliance = Data.GetByte(0x0e);
-    //        Variation = Data.GetByte(0x0f);
-    //        DynamicRange = Data.GetByte(0x10);
-    //        StereoWidth = Data.GetByte(0x11);
-    //        OutputAssign = Data.GetByte(0x12);
-    //    }
-    //}
+    class MFXNumberedParameters
+    {
+        HBTrace t = new HBTrace("class MFXNumberedParameters");
+        public UInt16 Offset { get; set; }
+        public byte MFXType { get; set; }
+        public byte MFXLength { get; set; }
+        public NumberedParameters Parameters { get; set; }
+
+        private ParameterSets sets;
+
+        public MFXNumberedParameters(ReceivedData Data, UInt16 Offset)
+        {
+            t.Trace("public MFXNumberedParameters (" + "ReceivedData" + Data + ", " + "UInt16" + Offset + ", " + ")");
+            this.Offset = Offset;
+            sets = new ParameterSets();
+            Parameters = new NumberedParameters(0x11);
+            NumberedParametersContent content = new NumberedParametersContent();
+
+            MFXType = Data.GetByte(0);
+            //byte[]offsets = SetMFXTypeAndOffset(MFXType);
+
+            try
+            {
+                Parameters.Parameters = new NumberedParameter[content.ParameterTypes.Length];
+                MFXLength = (byte)content.ParameterNames[content.MFXIndexFromType[MFXType]].Length;
+                for (byte i = 0; i < content.ParameterNames[content.MFXIndexFromType[MFXType]].Length; i++)
+                {
+                    Parameters.Name = content.ParameterNames[content.MFXIndexFromType[MFXType]][i];
+                    Parameters.Parameters[i] = new NumberedParameter();
+                    Parameters.Parameters[i].Type = content.ParameterTypes[content.MFXIndexFromType[MFXType]][i];
+                    Parameters.Parameters[i].Name = content.ParameterNames[content.MFXIndexFromType[MFXType]][i];
+                    if (i < content.ParameterTypes[content.MFXIndexFromType[MFXType]].Length)// && content.ParameterTypes[MFXType][i] != SETS.NOT_A_SET)
+                    {
+                        Parameters.Parameters[i].Value.Text = sets.GetNumberedParameter(content.ParameterTypes[content.MFXIndexFromType[MFXType]][i]);
+                    }
+                    Parameters.Parameters[i].Value.Value = Data.Get2Of4Byte(Parameters.Offset + 4 * i); // This gets the value to set selected index.
+                }
+
+                // Now, handle any pages that belongs to the same MFXType (splitted pages)
+                if (content.MFXPageCount[content.MFXIndexFromType[MFXType]] > 1)
+                {
+                    byte offset = (byte)(content.ParameterNames[content.MFXIndexFromType[MFXType]].Length);
+                    for (byte page = 1; page < content.MFXPageCount[content.MFXIndexFromType[MFXType]]; page++)
+                    {
+                        for (byte i = 0; i < content.ParameterNames[content.MFXIndexFromType[MFXType] + page].Length; i++)
+                        {
+                            Parameters.Name = content.ParameterNames[content.MFXIndexFromType[MFXType] + page][i];
+                            Parameters.Parameters[i + offset] = new NumberedParameter();
+                            Parameters.Parameters[i + offset].Type = content.ParameterTypes[content.MFXIndexFromType[MFXType] + page][i];
+                            Parameters.Parameters[i + offset].Name = content.ParameterNames[content.MFXIndexFromType[MFXType] + page][i];
+                            if (i < content.ParameterTypes[content.MFXIndexFromType[MFXType] + page].Length)// && content.ParameterSets[MFXType + page][i] != SETS.NOT_A_SET)
+                            {
+                                Parameters.Parameters[i + offset].Value.Text = sets.GetNumberedParameter(content.ParameterTypes[content.MFXIndexFromType[MFXType] + page][i]);
+                            }
+                            Parameters.Parameters[i + offset].Value.Value = Data.Get2Of4Byte(Parameters.Offset + 4 * (i + offset)); // This gets the value to set selected index.
+                        }
+                        offset += (byte)(content.ParameterNames[content.MFXIndexFromType[MFXType] + page].Length);
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                String message = "Error in MFXNumberedParameters(): " + e.Message;
+                if (e.InnerException != null && e.InnerException.Message != null)
+                {
+                    message += " InnerException: " + e.InnerException.Message;
+                }
+                t.Trace(message);
+            }
+        }
+    }
+
+    class Instrument
+    {
+        public String InstrumentBank { get; set; }
+        public byte InstrumentNumber { get; set; }
+        public String InstrumentName { get; set; }
+        public String InstrumentGroup { get; set; }
+        public byte MaskIndex { get; set; }
+
+        public Instrument(String InstrumentBank, byte InstrumentNumber, String InstrumentName, String InstrumentGroup, byte MaskIndex)
+        {
+            this.InstrumentBank = InstrumentBank;
+            this.InstrumentNumber = InstrumentNumber;
+            this.InstrumentName = InstrumentName;
+            this.InstrumentGroup = InstrumentGroup;
+            this.MaskIndex = MaskIndex;
+        }
+    }
+
+    class SuperNATURALAcousticToneVariation
+    {
+        public String Bank { get; set; }
+        public byte Number { get; set; }
+        public byte ComboBoxOffset { get; set; }
+        public String InstrumentName { get; set; }
+        public List<String> Variations { get; set; }
+
+        public SuperNATURALAcousticToneVariation(String Bank, byte Number, byte ComboBoxOffset, String InstrumentName, String Variation1, String Variation2, String Variation3, String Variation4)
+        {
+            this.Bank = Bank;
+            this.Number = Number;
+            this.ComboBoxOffset = (byte)(ComboBoxOffset + 1); // Because ComBox creation code will add an "Off" entry first.
+            this.InstrumentName = InstrumentName;
+            Variations = new List<String>();
+            if (Variation1 != "-") Variations.Add(Variation1);
+            if (Variation2 != "-") Variations.Add(Variation2);
+            if (Variation3 != "-") Variations.Add(Variation3);
+            if (Variation4 != "-") Variations.Add(Variation4);
+        }
+    }
+
+    class SuperNATURALAcousticToneVariations
+    {
+        List<SuperNATURALAcousticToneVariation> SuperNATURALAcousticToneVariation;
+
+        public SuperNATURALAcousticToneVariations()
+        {
+            SuperNATURALAcousticToneVariation = new List<SuperNATURALAcousticToneVariation>();
+
+            SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("INT", 24, 0, "Glockenspiel", "Dead Stroke", "-", "-", "-"));
+            SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("INT", 25, 0, "Vibraphone", "Dead Stroke", "Tremolo Sw", "-", "-"));
+            SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("INT", 25, 0, "Vibes Hard", "Dead Stroke", "Tremolo Sw", "-", "-"));
+            SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("INT", 25, 0, "Vibes Soft", "Dead Stroke", "Tremolo Sw", "-", "-"));
+            SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("INT", 25, 0, "Vibes Trem", "Dead Stroke", "Tremolo Sw", "-", "-"));
+            SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("INT", 26, 0, "Marimba", "Dead Stroke", "-", "-", "-"));
+            SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("INT", 26, 0, "Marimba Hard", "Dead Stroke", "-", "-", "-"));
+            SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("INT", 26, 0, "Marimba Soft", "Dead Stroke", "-", "-", "-"));
+            SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("INT", 27, 0, "Xylophone", "Dead Stroke", "-", "-", "-"));
+            SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("INT", 27, 0, "Hard Xylo", "Dead Stroke", "-", "-", "-"));
+            SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("INT", 28, 0, "Tubular Bells", "Dead Stroke", "-", "-", "-"));
+            SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("INT", 28, 0, "TubulrBells1", "Dead Stroke", "-", "-", "-"));
+            SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("INT", 28, 0, "TubulrBells2", "Dead Stroke", "-", "-", "-"));
+            SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("INT", 34, 0, "Nylon Guitar", "Mute", "Harmonics", "-", "-"));
+            SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("INT", 34, 0, "Classic Gtr", "Mute", "Harmonics", "-", "-"));
+            SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("INT", 34, 0, "Gut Guitar", "Mute", "Harmonics", "-", "-"));
+            SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("INT", 34, 0, "Solid GutGt", "Mute", "Harmonics", "-", "-"));
+            SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("INT", 35, 0, "Flamenco Guitar", "Rasugueado", "Harmonics", "-", "-"));
+            SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("INT", 35, 0, "Flamenco Gtr", "Rasugueado", "Harmonics", "-", "-"));
+            SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("INT", 35, 0, "Warm Spanish", "Rasugueado", "Harmonics", "-", "-"));
+            SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("INT", 35, 0, "Rasugueado", "Rasugueado", "Harmonics", "-", "-"));
+            SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("INT", 36, 0, "SteelStr Guitar", "Mute", "Harmonics", "-", "-"));
+            SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("INT", 36, 0, "StrumSteelGt", "Mute", "Harmonics", "-", "-"));
+            SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("INT", 36, 0, "ArpegSteelGt", "Mute", "Harmonics", "-", "-"));
+            SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("INT", 37, 0, "Jazz Guitar", "FingerPicking", "Octave Tone", "-", "-"));
+            SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("INT", 38, 0, "ST Guitar Half", "Mute", "Harmonics", "-", "-"));
+            SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("INT", 39, 0, "ST Guitar Front", "Mute", "Harmonics", "-", "-"));
+            SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("INT", 40, 0, "TC Guitar Rear", "Mute", "Harmonics", "-", "-"));
+            SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("INT", 41, 0, "Acoustic Bass", "Staccato", "Harmonics", "-", "-"));
+            SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("INT", 42, 0, "Fingered Bass", "Slap", "Harmonics", "-", "-"));
+            SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("INT", 43, 0, "Picked Bass ", "Bridge Mute", "Harmonics", " - ", " - "));
+            SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("INT", 44, 0, "Fretless Bass", "Staccato", "Harmonics", "-", "-"));
+            SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("INT", 45, 0, "Violin", "Staccato", "Pizzicato", "Tremolo", "-"));
+            SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("INT", 46, 0, "Violin 2", "Staccato", "Pizzicato", "Tremolo", "-"));
+            SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("INT", 47, 0, "Viola", "Staccato", "Pizzicato", "Tremolo", "-"));
+            SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("INT", 48, 0, "Cello", "Staccato", "Pizzicato", "Tremolo", "-"));
+            SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("INT", 49, 0, "Cello 2", "Staccato", "Pizzicato", "Tremolo", "-"));
+            SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("INT", 50, 0, "Contrabass", "Staccato", "Pizzicato", "Tremolo", "-"));
+            SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("INT", 51, 0, "Harp", "Nail", "-", "-", "-"));
+            SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("INT", 52, 0, "Timpani", "Flam", "Accent Roll", "-", "-"));
+            SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("INT", 53, 0, "Strings", "Staccato", "Pizzicato", "Tremolo", "-"));
+            SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("INT", 54, 0, "Marcato Strings", "Staccato", "Pizzicato", "Tremolo", "-"));
+            SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("INT", 55, 0, "London Choir", "Voice Woo", "-", "-", "-"));
+            SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("INT", 56, 0, "Boys Choir", "Voice Woo", "-", "-", "-"));
+            SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("INT", 57, 0, "Trumpet", "Staccato", "Fall", "-", "-"));
+            SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("INT", 58, 0, "Trombone", "Staccato", "Fall", "-", "-"));
+            SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("INT", 59, 0, "Tb2 CupMute", "Staccato", "Fall", "-", "-"));
+            SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("INT", 60, 0, "Mute Trumpet", "Staccato", "Fall", "-", "-"));
+            SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("INT", 61, 0, "French Horn", "Staccato", "-", "-", "-"));
+            SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("INT", 62, 0, "Sop Sax 2", "Staccato", "Fall", "SubTone", "-"));
+            SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("INT", 63, 0, "Alto Sax 2", "Staccato", "Fall", "SubTone", "-"));
+            SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("INT", 64, 0, "T.Sax 2", "Staccato", "Fall", "SubTone", "-"));
+            SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("INT", 65, 0, "Bari Sax 2", "Staccato", "Fall", "SubTone", "-"));
+            SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("INT", 66, 0, "Oboe", "Staccato", "-", "-", "-"));
+            SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("INT", 67, 0, "Bassoon", "Staccato", "-", "-", "-"));
+            SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("INT", 68, 0, "Clarinet", "Staccato", "-", "-", "-"));
+            SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("INT", 69, 0, "Piccolo", "Staccato", "-", "-", "-"));
+            SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("INT", 70, 0, "Flute", "Staccato", "-", "-", "-"));
+            SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("INT", 71, 0, "Pan Flute", "Staccato", "Flutter", "-", "-"));
+            SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("INT", 72, 0, "Shakuhachi", "Staccato", "Ornament", "-", "-"));
+            SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("INT", 74, 1, "Uilleann Pipes", "-", "Ornament", "-", "-"));
+            SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("INT", 75, 1, "Bag Pipes", "-", "Ornament", "-", "-"));
+            SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("INT", 76, 0, "Erhu", "Staccato", "Ornament", "-", "-"));
+            SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("INT", 77, 0, "Steel Drums", "Mute", "-", "-", "-"));
+            SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("ExSN1", 1, 0, "Santoor", "Mute", "Tremolo", "-", "-"));
+            SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("ExSN1", 1, 0, "Santoor 1", "Mute", "Tremolo", "-", "-"));
+            SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("ExSN1", 1, 0, "Santoor 2", "Mute", "Tremolo", "-", "-"));
+            SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("ExSN1", 2, 0, "Yang Chin", "Mute", "Tremolo", "-", "-"));
+            SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("ExSN1", 2, 0, "Yang Chin 1", "Mute", "Tremolo", "-", "-"));
+            SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("ExSN1", 2, 0, "Yang Chin 2", "Mute", "Tremolo", "-", "-"));
+            SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("ExSN1", 2, 0, "Yang Chin 3", "Mute", "Tremolo", "-", "-"));
+            SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("ExSN1", 3, 0, "Tin Whistle", "Cut", "Ornament", "-", "-"));
+            SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("ExSN1", 4, 0, "Ryuteki", "Staccato", "Ornament", "-", "-"));
+            SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("ExSN1", 5, 0, "Tsugaru", "Strum", "Up Picking", "Auto Bend", "-"));
+            SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("ExSN1", 6, 0, "Sansin", "Strum", "Up Picking", "Auto Bend", "-"));
+            SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("ExSN1", 7, 0, "Koto", "Tremolo", "Ornament", "-", "-"));
+            SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("ExSN1", 9, 0, "Kalimba", "Buzz", "-", "-", "-"));
+            SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("ExSN2", 1, 0, "Sop Sax 1", "Staccato", "Fall", "SubTone", "-"));
+            SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("ExSN2", 1, 0, "SopSax1 Soft", "Staccato", "Fall", "SubTone", "-"));
+            SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("ExSN2", 2, 0, "A.Sax 1 Soft", "Staccato", "Fall", "SubTone", "-"));
+            SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("ExSN2", 2, 0, "Alto Sax 1", "Staccato", "Fall", "SubTone", "-"));
+            SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("ExSN2", 3, 0, "T.Sax 1 Soft", "Staccato", "Fall", "SubTone", "-"));
+            SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("ExSN2", 3, 0, "T.Sax Growl", "Staccato", "Fall", "SubTone", "-"));
+            SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("ExSN2", 3, 0, "TenorSax 1", "Staccato", "Fall", "SubTone", "-"));
+            SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("ExSN2", 4, 0, "B.Sax 1 Soft", "Staccato", "Fall", "SubTone", "-"));
+            SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("ExSN2", 4, 0, "Bari Sax 1", "Staccato", "Fall", "SubTone", "-"));
+            SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("ExSN2", 5, 0, "English Horn", "Staccato", "-", "-", "-"));
+            SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("ExSN2", 6, 0, "Bass Clarinet", "Staccato", "-", "-", "-"));
+            SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("ExSN2", 7, 0, "Flute2", "Staccato", "-", "-", "-"));
+            SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("ExSN2", 8, 0, "Soprano Recorder", "Staccato", "-", "-", "-"));
+            SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("ExSN2", 9, 0, "Alto Recorder", "Staccato", "-", "-", "-"));
+            SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("ExSN2", 10, 0, "Tenor Recorder", "Staccato", "-", "-", "-"));
+            SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("ExSN2", 11, 0, "Bass Recorder", "Staccato", "-", "-", "-"));
+            SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("ExSN2", 12, 0, "Ocarina SopC", "Staccato", "Ornament", "-", "-"));
+            SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("ExSN2", 13, 0, "Ocarina SopF", "Staccato", "Ornament", "-", "-"));
+            SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("ExSN2", 14, 0, "Ocarina Alto", "Staccato", "Ornament", "-", "-"));
+            SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("ExSN2", 15, 0, "Ocarina Bass", "Staccato", "Ornament", "-", "-"));
+            SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("ExSN3", 1, 0, "TC Guitar w/Fing", "FingerPicking", "Octave Tone", "-", "-"));
+            SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("ExSN3", 2, 0, "335Guitar w/Fing", "FingerPicking", "Octave Tone", "-", "-"));
+            SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("ExSN3", 3, 0, "LP Guitar Rear", "Mute", "Harmonics", "-", "-"));
+            SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("ExSN3", 4, 0, "LP Guitar Front", "Mute", "Harmonics", "-", "-"));
+            SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("ExSN3", 5, 0, "335 Guitar Half", "Mute", "Harmonics", "-", "-"));
+            SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("ExSN3", 6, 0, "Acoustic Bass 2", "Staccato", "Harmonics", "-", "-"));
+            SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("ExSN3", 7, 0, "Fingered Bass 2", "Slap", "Harmonics", "-", "-"));
+            SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("ExSN3", 8, 0, "Picked Bass 2 ", "Bridge Mute", "Harmonics", " - ", " - "));
+            SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("ExSN4", 2, 0, "Nylon Guitar 2", "Mute", "Harmonics", "-", "-"));
+            SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("ExSN4", 3, 0, "12th Steel Gtr", "Mute", "Harmonics", "-", "-"));
+            SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("ExSN4", 4, 0, "Mandolin", "Mute", "Harmonics", "-", "-"));
+            SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("ExSN4", 4, 0, "MandolinGt", "Mute", "Harmonics", "-", "-"));
+            SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("ExSN4", 4, 0, "MandolinStum", "Mute", "Harmonics", "-", "-"));
+            SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("ExSN4", 5, 0, "SteelFing Guitar", "FingerPicking", "Octave Tone", "-", "-"));
+            SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("ExSN4", 6, 0, "SteelStr Guitar2", "Mute", "Harmonics", "-", "-"));
+            SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("ExSN5", 1, 0, "Classical Trumpet", "Staccato", "Fall", "-", "-"));
+            SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("ExSN5", 2, 0, "Frugal Horn", "Staccato", "Fall", "-", "-"));
+            SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("ExSN5", 3, 0, "Trumpet 2", "Staccato", "Fall", "-", "-"));
+            SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("ExSN5", 4, 0, "Mariachi Tp", "Staccato", "Fall", "-", "-"));
+            SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("ExSN5", 5, 0, "Trombone 2", "Staccato", "Fall", "-", "-"));
+            SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("ExSN5", 6, 0, "Bass Trombone", "Staccato", "Fall", "-", "-"));
+            SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("ExSN5", 7, 0, "Tuba", "Staccato", "-", "-", "-"));
+            SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("ExSN5", 8, 0, "Straight Mute Tp", "Staccato", "Fall", "-", "-"));
+            SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("ExSN5", 9, 0, "Cup Mute Trumpet", "Staccato", "Fall", "-", "-"));
+            SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("ExSN5", 10, 0, "French Horn 2", "Staccato", "-", "-", "-"));
+            SuperNATURALAcousticToneVariation.Add(new SuperNATURALAcousticToneVariation("ExSN5", 11, 0, "Mute French Horn", "Staccato", "-", "-", "-"));
+        }
+
+        public SuperNATURALAcousticToneVariation Get(String Bank, String Instrument)
+        {
+            UInt16 i = 0;
+            while (i < SuperNATURALAcousticToneVariation.Count())
+            {
+                if (Bank.StartsWith(SuperNATURALAcousticToneVariation[i].Bank) && Instrument.StartsWith(SuperNATURALAcousticToneVariation[i].InstrumentName.Trim()))
+                {
+                    return SuperNATURALAcousticToneVariation[i];
+                }
+                i++;
+            }
+            return null;
+        }
+    }
+
+    class SuperNaturalAcousticInstrumentList
+    {
+        public List<Instrument> Tones { get; set; }
+        public List<String> ToneGroups { get; set; }
+        public List<Instrument> Instruments { get; set; }
+        public List<String> Banks { get; set; }
+        public List<String> Groups { get; set; }
+        public List<List<byte[]>> Parameterlist1 { get; set; }
+        public List<List<byte[]>> Parameterlist2 { get; set; }
+        public byte[][] ParameterMask { get; set; }
+
+        public SuperNaturalAcousticInstrumentList()
+        {
+            Tones = new List<Instrument>();
+            ToneGroups = new List<String>();
+            Instruments = new List<Instrument>();
+            Banks = new List<String>();
+            Groups = new List<String>();
+            Parameterlist1 = new List<List<byte[]>>();
+            Parameterlist2 = new List<List<byte[]>>();
+            for (byte i = 0; i < 6; i++)
+            {
+                Parameterlist1.Add(new List<byte[]>());
+                Parameterlist2.Add(new List<byte[]>());
+            }
+
+            ToneList toneList = new ToneList();
+            foreach (List<String> strings in toneList.Tones)
+            {
+                if (strings[0] == "SuperNATURAL Acoustic Tone" && strings[1] != "Drums")
+                {
+                    Instruments.Add(new Instrument("INT", (byte)(Int32.Parse(strings[2])), strings[3], strings[1], 0));
+                    if (!Groups.Contains(strings[1]))
+                    {
+                        Groups.Add(strings[1]);
+                    }
+                }
+            }
+            foreach (List<String> strings in toneList.Tones)
+            {
+                if (strings[0].StartsWith("ExSN") && strings[1] != "Drums")
+                {
+                    String[] parts = strings[0].Split(':');
+                    Instruments.Add(new Instrument(parts[0], (byte)(Int32.Parse(strings[2])), strings[3], strings[1], 0));
+                    if (!Groups.Contains(strings[1]))
+                    {
+                        Groups.Add(strings[1]);
+                    }
+                }
+            }
+
+            Banks.Add("INT");
+            Banks.Add("ExSN1");
+            Banks.Add("ExSN2");
+            Banks.Add("ExSN3");
+            Banks.Add("ExSN4");
+            Banks.Add("ExSN5");
+
+            ToneGroups.Add("Ac.Piano");
+            ToneGroups.Add("Ac.Guitar");
+            ToneGroups.Add("Ac.Bass");
+            ToneGroups.Add("Accordion/Harmonica");
+            ToneGroups.Add("Bell/Mallet");
+            ToneGroups.Add("Brass");
+            ToneGroups.Add("E.Bass");
+            ToneGroups.Add("E.Piano");
+            ToneGroups.Add("E.Guitar");
+            ToneGroups.Add("Flute");
+            ToneGroups.Add("Other Keyboards");
+            ToneGroups.Add("Organ");
+            ToneGroups.Add("Plucked/Stroke");
+            ToneGroups.Add("Recorder");
+            ToneGroups.Add("Sax");
+            ToneGroups.Add("Strings");
+            ToneGroups.Add("Vox/Choir");
+            ToneGroups.Add("Wind");
+
+            Tones.Add(new Instrument("INT", 1, "Concert Grand", "Ac.Piano", 0));
+            Tones.Add(new Instrument("INT", 2, "Grand Piano1", "Ac.Piano", 0));
+            Tones.Add(new Instrument("INT", 3, "Grand Piano2", "Ac.Piano", 0));
+            Tones.Add(new Instrument("INT", 4, "Grand Piano3", "Ac.Piano", 0));
+            Tones.Add(new Instrument("INT", 5, "Mellow Piano", "Ac.Piano", 0));
+            Tones.Add(new Instrument("INT", 6, "Bright Piano", "Ac.Piano", 0));
+            Tones.Add(new Instrument("INT", 7, "Upright Piano", "Ac.Piano", 0));
+            Tones.Add(new Instrument("INT", 8, "Concert Mono", "Ac.Piano", 0));
+            Tones.Add(new Instrument("INT", 9, "Honky-tonk", "Ac.Piano", 0));
+            Tones.Add(new Instrument("INT", 10, "Pure Vintage EP1", "E.Piano", 1));
+            Tones.Add(new Instrument("INT", 11, "Pure Vintage EP2", "E.Piano", 1));
+            Tones.Add(new Instrument("INT", 12, "Pure Wurly", "E.Piano", 1));
+            Tones.Add(new Instrument("INT", 13, "Pure Vintage EP3", "E.Piano", 1));
+            Tones.Add(new Instrument("INT", 14, "Old Hammer EP", "E.Piano", 1));
+            Tones.Add(new Instrument("INT", 15, "Dyno Piano", "E.Piano", 1));
+            Tones.Add(new Instrument("INT", 16, "Clav CB Flat", "Other Keyboards", 1));
+            Tones.Add(new Instrument("INT", 17, "Clav CA Flat", "Other Keyboards", 1));
+            Tones.Add(new Instrument("INT", 18, "Clav CB Medium", "Other Keyboards", 1));
+            Tones.Add(new Instrument("INT", 19, "Clav CA Medium", "Other Keyboards", 1));
+            Tones.Add(new Instrument("INT", 20, "Clav CB Brillia", "Other Keyboards", 1));
+            Tones.Add(new Instrument("INT", 21, "Clav CA Brillia", "Other Keyboards", 1));
+            Tones.Add(new Instrument("INT", 22, "Clav CB Combo", "Other Keyboards", 1));
+            Tones.Add(new Instrument("INT", 23, "Clav CA Combo", "Other Keyboards", 1));
+            Tones.Add(new Instrument("INT", 24, "Glockenspiel", "Bell/Mallet", 2));
+            Tones.Add(new Instrument("INT", 25, "Vibraphone", "Bell/Mallet", 2));
+            Tones.Add(new Instrument("INT", 26, "Marimba", "Bell/Mallet", 2));
+            Tones.Add(new Instrument("INT", 27, "Xylophone", "Bell/Mallet", 2));
+            Tones.Add(new Instrument("INT", 28, "Tubular Bells", "Bell/Mallet", 2));
+            Tones.Add(new Instrument("INT", 29, "TW Organ", "Organ", 3));
+            Tones.Add(new Instrument("INT", 30, "French Accordion", "Accordion/Harmonica", 1));
+            Tones.Add(new Instrument("INT", 31, "Italian Accordion", "Accordion/Harmonica", 1));
+            Tones.Add(new Instrument("INT", 32, "Harmonica", "Accordion/Harmonica", 4));
+            Tones.Add(new Instrument("INT", 33, "Bandoneon", "Accordion/Harmonica", 1));
+            Tones.Add(new Instrument("INT", 34, "Nylon Guitar", "Ac.Guitar", 5));
+            Tones.Add(new Instrument("INT", 35, "Flamenco Guitar", "Ac.Guitar", 5));
+            Tones.Add(new Instrument("INT", 36, "SteelStr Guitar", "Ac.Guitar", 5));
+            Tones.Add(new Instrument("INT", 37, "Jazz Guitar", "E.Guitar", 7));
+            Tones.Add(new Instrument("INT", 38, "ST Guitar Half", "E.Guitar", 7));
+            Tones.Add(new Instrument("INT", 39, "ST Guitar Front", "E.Guitar", 7));
+            Tones.Add(new Instrument("INT", 40, "TC Guitar Rear", "E.Guitar", 7));
+            Tones.Add(new Instrument("INT", 41, "Acoustic Bass", "Ac.Bass", 14));
+            Tones.Add(new Instrument("INT", 42, "Fingered Bass", "E.Bass", 14));
+            Tones.Add(new Instrument("INT", 43, "Picked Bass", "E.Bass", 14));
+            Tones.Add(new Instrument("INT", 44, "Fretless Bass", "E.Bass", 14));
+            Tones.Add(new Instrument("INT", 45, "Violin", "Strings", 14));
+            Tones.Add(new Instrument("INT", 46, "Violin 2", "Strings", 14));
+            Tones.Add(new Instrument("INT", 47, "Viola", "Strings", 14));
+            Tones.Add(new Instrument("INT", 48, "Cello", "Strings", 14));
+            Tones.Add(new Instrument("INT", 49, "Cello 2", "Strings", 14));
+            Tones.Add(new Instrument("INT", 50, "Contrabass", "Strings", 14));
+            Tones.Add(new Instrument("INT", 51, "Harp", "Plucked/Stroke", 8));
+            Tones.Add(new Instrument("INT", 52, "Timpani", "Percussion", 24));
+            Tones.Add(new Instrument("INT", 53, "Strings", "Strings", 15));
+            Tones.Add(new Instrument("INT", 54, "Marcato Strings", "Strings", 15));
+            Tones.Add(new Instrument("INT", 55, "London Choir", "Vox/Choir", 23));
+            Tones.Add(new Instrument("INT", 56, "Boys Choir", "Vox/Choir", 23));
+            Tones.Add(new Instrument("INT", 57, "Trumpet", "Brass", 17));
+            Tones.Add(new Instrument("INT", 58, "Trombone", "Brass", 17));
+            Tones.Add(new Instrument("INT", 59, "Tb2 CupMute", "Brass", 17));
+            Tones.Add(new Instrument("INT", 60, "Mute Trumpet", "Brass", 17));
+            Tones.Add(new Instrument("INT", 61, "French Horn", "Brass", 17));
+            Tones.Add(new Instrument("INT", 62, "Soprano Sax 2", "Sax", 22));
+            Tones.Add(new Instrument("INT", 63, "Alto Sax 2", "Sax", 22));
+            Tones.Add(new Instrument("INT", 64, "Tenor Sax 2", "Sax", 22));
+            Tones.Add(new Instrument("INT", 65, "Baritone Sax 2", "Sax", 22));
+            Tones.Add(new Instrument("INT", 66, "Oboe", "Wind", 18));
+            Tones.Add(new Instrument("INT", 67, "Bassoon", "Wind", 18));
+            Tones.Add(new Instrument("INT", 68, "Clarinet", "Wind", 18));
+            Tones.Add(new Instrument("INT", 69, "Piccolo", "Flute", 20));
+            Tones.Add(new Instrument("INT", 70, "Flute", "Flute", 20));
+            Tones.Add(new Instrument("INT", 71, "Pan Flute", "Flute", 20));
+            Tones.Add(new Instrument("INT", 72, "Shakuhachi", "Flute", 21));
+            Tones.Add(new Instrument("INT", 73, "Sitar", "Plucked/Stroke", 9));
+            Tones.Add(new Instrument("INT", 74, "Uilleann Pipes", "Wind", 19));
+            Tones.Add(new Instrument("INT", 75, "Bag Pipes", "Wind", 19));
+            Tones.Add(new Instrument("INT", 76, "Erhu", "Strings", 14));
+            Tones.Add(new Instrument("INT", 77, "Steel Drums", "Percussion", 25));
+            Tones.Add(new Instrument("ExSN1", 1, "Santoor", "Bell/Mallet", 2));
+            Tones.Add(new Instrument("ExSN1", 2, "Yang Chin", "Bell/Mallet", 2));
+            Tones.Add(new Instrument("ExSN1", 3, "Tin Whistle", "Flute", 21));
+            Tones.Add(new Instrument("ExSN1", 4, "Ryuteki", "Flute", 21));
+            Tones.Add(new Instrument("ExSN1", 5, "Tsugaru", "Plucked/Stroke", 10));
+            Tones.Add(new Instrument("ExSN1", 6, "Sansin", "Plucked/Stroke", 10));
+            Tones.Add(new Instrument("ExSN1", 7, "Koto", "Plucked/Stroke", 11));
+            Tones.Add(new Instrument("ExSN1", 8, "Taishou Koto", "Plucked/Stroke", 12));
+            Tones.Add(new Instrument("ExSN1", 9, "Kalimba", "Plucked/Stroke", 13));
+            Tones.Add(new Instrument("ExSN1", 10, "Sarangi", "Strings", 16));
+            Tones.Add(new Instrument("ExSN2", 1, "Soprano Sax", "Sax", 22));
+            Tones.Add(new Instrument("ExSN2", 2, "Alto Sax", "Sax", 22));
+            Tones.Add(new Instrument("ExSN2", 3, "Tenor Sax", "Sax", 22));
+            Tones.Add(new Instrument("ExSN2", 4, "Baritone Sax", "Sax", 22));
+            Tones.Add(new Instrument("ExSN2", 5, "English Horn", "Wind", 18));
+            Tones.Add(new Instrument("ExSN2", 6, "Bass Clarinet", "Wind", 18));
+            Tones.Add(new Instrument("ExSN2", 7, "Flute2", "Flute", 20));
+            Tones.Add(new Instrument("ExSN2", 8, "Soprano Recorder", "Recorder", 21));
+            Tones.Add(new Instrument("ExSN2", 9, "Alto Recorder", "Recorder", 21));
+            Tones.Add(new Instrument("ExSN2", 10, "Tenor Recorder", "Recorder", 21));
+            Tones.Add(new Instrument("ExSN2", 11, "Bass Recorder", "Recorder", 21));
+            Tones.Add(new Instrument("ExSN2", 12, "Ocarina SopC", "Recorder", 21));
+            Tones.Add(new Instrument("ExSN2", 13, "Ocarina SopF", "Recorder", 21));
+            Tones.Add(new Instrument("ExSN2", 14, "Ocarina Alto", "Recorder", 21));
+            Tones.Add(new Instrument("ExSN2", 15, "Ocarina Bass", "Recorder", 21));
+            Tones.Add(new Instrument("ExSN3", 1, "TC Guitar w/Fing", "Ac.Guitar", 5));
+            Tones.Add(new Instrument("ExSN3", 2, "335Guitar w/Fing", "Ac.Guitar", 5));
+            Tones.Add(new Instrument("ExSN3", 3, "LP Guitar Rear", "E.Guitar", 7));
+            Tones.Add(new Instrument("ExSN3", 4, "LP Guitar Front", "E.Guitar", 7));
+            Tones.Add(new Instrument("ExSN3", 5, "335 Guitar Half", "E.Guitar", 7));
+            Tones.Add(new Instrument("ExSN3", 6, "Acoustic Bass 2", "Ac.Bass", 14));
+            Tones.Add(new Instrument("ExSN3", 7, "Fingered Bass 2", "E.Bass", 14));
+            Tones.Add(new Instrument("ExSN3", 8, "Picked Bass 2", "E.Bass", 14));
+            Tones.Add(new Instrument("ExSN4", 1, "Ukulele", "Ac.Guitar", 5));
+            Tones.Add(new Instrument("ExSN4", 2, "Nylon Guitar 2", "Ac.Guitar", 5));
+            Tones.Add(new Instrument("ExSN4", 3, "12th Steel Gtr", "Ac.Guitar", 5));
+            Tones.Add(new Instrument("ExSN4", 4, "MandolinGt", "Ac.Guitar", 6));
+            Tones.Add(new Instrument("ExSN4", 5, "MandolinStum", "Ac.Guitar", 6));
+            Tones.Add(new Instrument("ExSN4", 6, "SteelFing Guitar", "Ac.Guitar", 5));
+            Tones.Add(new Instrument("ExSN4", 7, "SteelStr Guitar2", "Ac.Guitar", 5));
+            Tones.Add(new Instrument("ExSN5", 1, "Classical Trumpet", "Brass", 17));
+            Tones.Add(new Instrument("ExSN5", 2, "Frugal Horn", "Brass", 17));
+            Tones.Add(new Instrument("ExSN5", 3, "Trumpet 2", "Brass", 17));
+            Tones.Add(new Instrument("ExSN5", 4, "Mariachi Tp", "Brass", 17));
+            Tones.Add(new Instrument("ExSN5", 5, "Trombone 2", "Brass", 17));
+            Tones.Add(new Instrument("ExSN5", 6, "Bass Trombone", "Brass", 17));
+            Tones.Add(new Instrument("ExSN5", 7, "Tuba", "Brass", 17));
+            Tones.Add(new Instrument("ExSN5", 8, "Straight Mute Tp", "Brass", 17));
+            Tones.Add(new Instrument("ExSN5", 9, "Cup Mute Trumpet", "Brass", 17));
+            Tones.Add(new Instrument("ExSN5", 10, "French Horn 2", "Brass", 17));
+            Tones.Add(new Instrument("ExSN5", 11, "Mute French Horn", "Brass", 17));
+
+            Parameterlist1[0].Add(new byte[] { 0x01, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
+            Parameterlist1[0].Add(new byte[] { 0x01, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
+            Parameterlist1[0].Add(new byte[] { 0x01, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
+            Parameterlist1[0].Add(new byte[] { 0x01, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
+            Parameterlist1[0].Add(new byte[] { 0x01, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
+            Parameterlist1[0].Add(new byte[] { 0x01, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
+            Parameterlist1[0].Add(new byte[] { 0x01, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
+            Parameterlist1[0].Add(new byte[] { 0x01, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
+            Parameterlist1[0].Add(new byte[] { 0x01, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
+            Parameterlist1[0].Add(new byte[] { 0x01, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
+            Parameterlist1[0].Add(new byte[] { 0x01, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
+            Parameterlist1[0].Add(new byte[] { 0x01, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
+            Parameterlist1[0].Add(new byte[] { 0x01, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
+            Parameterlist1[0].Add(new byte[] { 0x01, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
+            Parameterlist1[0].Add(new byte[] { 0x01, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
+            Parameterlist1[0].Add(new byte[] { 0x01, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
+            Parameterlist1[0].Add(new byte[] { 0x01, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
+            Parameterlist1[0].Add(new byte[] { 0x01, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
+            Parameterlist1[0].Add(new byte[] { 0x01, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
+            Parameterlist1[0].Add(new byte[] { 0x01, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
+            Parameterlist1[0].Add(new byte[] { 0x01, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
+            Parameterlist1[0].Add(new byte[] { 0x01, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
+            Parameterlist1[0].Add(new byte[] { 0x01, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
+            Parameterlist1[0].Add(new byte[] { 0x01, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
+            Parameterlist1[0].Add(new byte[] { 0x01, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
+            Parameterlist1[0].Add(new byte[] { 0x01, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
+            Parameterlist1[0].Add(new byte[] { 0x01, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
+            Parameterlist1[0].Add(new byte[] { 0x01, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
+            Parameterlist1[0].Add(new byte[] { 0x01, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
+            Parameterlist1[0].Add(new byte[] { 0x01, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
+            Parameterlist1[0].Add(new byte[] { 0x01, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
+            Parameterlist1[0].Add(new byte[] { 0x01, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
+            Parameterlist1[0].Add(new byte[] { 0x01, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
+            Parameterlist1[0].Add(new byte[] { 0x01, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
+            Parameterlist1[0].Add(new byte[] { 0x01, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
+            Parameterlist1[0].Add(new byte[] { 0x01, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
+            Parameterlist1[0].Add(new byte[] { 0x01, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
+            Parameterlist1[0].Add(new byte[] { 0x01, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
+            Parameterlist1[0].Add(new byte[] { 0x01, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
+            Parameterlist1[0].Add(new byte[] { 0x01, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
+            Parameterlist1[0].Add(new byte[] { 0x00, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
+            Parameterlist1[0].Add(new byte[] { 0x00, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
+            Parameterlist1[0].Add(new byte[] { 0x00, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
+            Parameterlist1[0].Add(new byte[] { 0x00, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
+            Parameterlist1[0].Add(new byte[] { 0x00, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
+            Parameterlist1[0].Add(new byte[] { 0x00, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
+            Parameterlist1[0].Add(new byte[] { 0x00, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
+            Parameterlist1[0].Add(new byte[] { 0x00, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
+            Parameterlist1[0].Add(new byte[] { 0x00, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
+            Parameterlist1[0].Add(new byte[] { 0x00, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
+            Parameterlist1[0].Add(new byte[] { 0x01, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
+            Parameterlist1[0].Add(new byte[] { 0x01, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
+            Parameterlist1[0].Add(new byte[] { 0x01, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
+            Parameterlist1[0].Add(new byte[] { 0x01, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
+            Parameterlist1[0].Add(new byte[] { 0x01, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
+            Parameterlist1[0].Add(new byte[] { 0x01, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
+            Parameterlist1[0].Add(new byte[] { 0x00, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
+            Parameterlist1[0].Add(new byte[] { 0x00, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
+            Parameterlist1[0].Add(new byte[] { 0x00, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
+            Parameterlist1[0].Add(new byte[] { 0x00, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
+            Parameterlist1[0].Add(new byte[] { 0x00, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
+            Parameterlist1[0].Add(new byte[] { 0x00, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
+            Parameterlist1[0].Add(new byte[] { 0x00, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
+            Parameterlist1[0].Add(new byte[] { 0x00, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
+            Parameterlist1[0].Add(new byte[] { 0x00, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
+            Parameterlist1[0].Add(new byte[] { 0x00, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
+            Parameterlist1[0].Add(new byte[] { 0x00, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
+            Parameterlist1[0].Add(new byte[] { 0x00, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
+            Parameterlist1[0].Add(new byte[] { 0x00, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
+            Parameterlist1[0].Add(new byte[] { 0x00, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
+            Parameterlist1[0].Add(new byte[] { 0x00, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
+            Parameterlist1[0].Add(new byte[] { 0x00, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
+            Parameterlist1[0].Add(new byte[] { 0x01, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
+            Parameterlist1[0].Add(new byte[] { 0x00, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
+            Parameterlist1[0].Add(new byte[] { 0x00, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
+            Parameterlist1[0].Add(new byte[] { 0x00, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
+            Parameterlist1[0].Add(new byte[] { 0x01, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
+
+            Parameterlist2[0].Add(new byte[] { 0x40, 0x00, 0x40, 0x40, 0x40, 0x3f, 0x00, 0x40 });
+            Parameterlist2[0].Add(new byte[] { 0x40, 0x01, 0x40, 0x40, 0x40, 0x3f, 0x00, 0x40 });
+            Parameterlist2[0].Add(new byte[] { 0x40, 0x02, 0x40, 0x40, 0x40, 0x3f, 0x00, 0x40 });
+            Parameterlist2[0].Add(new byte[] { 0x40, 0x03, 0x40, 0x40, 0x40, 0x3f, 0x00, 0x40 });
+            Parameterlist2[0].Add(new byte[] { 0x40, 0x04, 0x40, 0x40, 0x40, 0x3f, 0x00, 0x40 });
+            Parameterlist2[0].Add(new byte[] { 0x40, 0x05, 0x40, 0x40, 0x40, 0x3f, 0x00, 0x40 });
+            Parameterlist2[0].Add(new byte[] { 0x40, 0x06, 0x40, 0x40, 0x40, 0x3f, 0x00, 0x40 });
+            Parameterlist2[0].Add(new byte[] { 0x40, 0x07, 0x40, 0x40, 0x40, 0x3f, 0x00, 0x40 });
+            Parameterlist2[0].Add(new byte[] { 0x40, 0x08, 0x40, 0x40, 0x40, 0x3f, 0x00, 0x40 });
+            Parameterlist2[0].Add(new byte[] { 0x00, 0x04, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
+            Parameterlist2[0].Add(new byte[] { 0x01, 0x04, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
+            Parameterlist2[0].Add(new byte[] { 0x02, 0x04, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
+            Parameterlist2[0].Add(new byte[] { 0x03, 0x04, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
+            Parameterlist2[0].Add(new byte[] { 0x06, 0x04, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
+            Parameterlist2[0].Add(new byte[] { 0x07, 0x04, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
+            Parameterlist2[0].Add(new byte[] { 0x00, 0x07, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
+            Parameterlist2[0].Add(new byte[] { 0x01, 0x07, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
+            Parameterlist2[0].Add(new byte[] { 0x02, 0x07, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
+            Parameterlist2[0].Add(new byte[] { 0x03, 0x07, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
+            Parameterlist2[0].Add(new byte[] { 0x04, 0x07, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
+            Parameterlist2[0].Add(new byte[] { 0x05, 0x07, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
+            Parameterlist2[0].Add(new byte[] { 0x06, 0x07, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
+            Parameterlist2[0].Add(new byte[] { 0x07, 0x07, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
+            Parameterlist2[0].Add(new byte[] { 0x00, 0x09, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
+            Parameterlist2[0].Add(new byte[] { 0x00, 0x0b, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
+            Parameterlist2[0].Add(new byte[] { 0x00, 0x0c, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
+            Parameterlist2[0].Add(new byte[] { 0x00, 0x0d, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
+            Parameterlist2[0].Add(new byte[] { 0x00, 0x0e, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
+            Parameterlist2[0].Add(new byte[] { 0x41, 0x00, 0x08, 0x08, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x01, 0x00, 0x05, 0x05, 0x03, 0x0a, 0x68, 0x2b, 0x05, 0x40, 0x00, 0x14 });
+            Parameterlist2[0].Add(new byte[] { 0x00, 0x15, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
+            Parameterlist2[0].Add(new byte[] { 0x01, 0x15, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
+            Parameterlist2[0].Add(new byte[] { 0x00, 0x16, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
+            Parameterlist2[0].Add(new byte[] { 0x00, 0x17, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
+            Parameterlist2[0].Add(new byte[] { 0x00, 0x18, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
+            Parameterlist2[0].Add(new byte[] { 0x01, 0x18, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
+            Parameterlist2[0].Add(new byte[] { 0x00, 0x19, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
+            Parameterlist2[0].Add(new byte[] { 0x00, 0x1a, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
+            Parameterlist2[0].Add(new byte[] { 0x00, 0x1b, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
+            Parameterlist2[0].Add(new byte[] { 0x01, 0x1b, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
+            Parameterlist2[0].Add(new byte[] { 0x02, 0x1b, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
+            Parameterlist2[0].Add(new byte[] { 0x00, 0x20, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
+            Parameterlist2[0].Add(new byte[] { 0x00, 0x21, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
+            Parameterlist2[0].Add(new byte[] { 0x00, 0x22, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
+            Parameterlist2[0].Add(new byte[] { 0x00, 0x23, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
+            Parameterlist2[0].Add(new byte[] { 0x00, 0x28, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
+            Parameterlist2[0].Add(new byte[] { 0x01, 0x28, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
+            Parameterlist2[0].Add(new byte[] { 0x00, 0x29, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
+            Parameterlist2[0].Add(new byte[] { 0x00, 0x2a, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
+            Parameterlist2[0].Add(new byte[] { 0x01, 0x2a, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
+            Parameterlist2[0].Add(new byte[] { 0x00, 0x2b, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
+            Parameterlist2[0].Add(new byte[] { 0x00, 0x2e, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
+            Parameterlist2[0].Add(new byte[] { 0x00, 0x2f, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
+            Parameterlist2[0].Add(new byte[] { 0x00, 0x30, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
+            Parameterlist2[0].Add(new byte[] { 0x01, 0x30, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
+            Parameterlist2[0].Add(new byte[] { 0x00, 0x34, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
+            Parameterlist2[0].Add(new byte[] { 0x01, 0x34, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
+            Parameterlist2[0].Add(new byte[] { 0x00, 0x38, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
+            Parameterlist2[0].Add(new byte[] { 0x00, 0x39, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
+            Parameterlist2[0].Add(new byte[] { 0x03, 0x39, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
+            Parameterlist2[0].Add(new byte[] { 0x00, 0x3b, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
+            Parameterlist2[0].Add(new byte[] { 0x00, 0x3c, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
+            Parameterlist2[0].Add(new byte[] { 0x01, 0x40, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
+            Parameterlist2[0].Add(new byte[] { 0x01, 0x41, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
+            Parameterlist2[0].Add(new byte[] { 0x02, 0x42, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
+            Parameterlist2[0].Add(new byte[] { 0x01, 0x43, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
+            Parameterlist2[0].Add(new byte[] { 0x00, 0x44, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
+            Parameterlist2[0].Add(new byte[] { 0x00, 0x46, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
+            Parameterlist2[0].Add(new byte[] { 0x00, 0x47, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
+            Parameterlist2[0].Add(new byte[] { 0x00, 0x48, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
+            Parameterlist2[0].Add(new byte[] { 0x00, 0x49, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
+            Parameterlist2[0].Add(new byte[] { 0x00, 0x4b, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
+            Parameterlist2[0].Add(new byte[] { 0x00, 0x4d, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
+            Parameterlist2[0].Add(new byte[] { 0x00, 0x68, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
+            Parameterlist2[0].Add(new byte[] { 0x00, 0x6d, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
+            Parameterlist2[0].Add(new byte[] { 0x01, 0x6d, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
+            Parameterlist2[0].Add(new byte[] { 0x01, 0x6e, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
+            Parameterlist2[0].Add(new byte[] { 0x00, 0x72, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
+
+            Parameterlist1[1].Add(new byte[] { 0x01, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
+            Parameterlist1[1].Add(new byte[] { 0x00, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
+            Parameterlist1[1].Add(new byte[] { 0x01, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
+            Parameterlist1[1].Add(new byte[] { 0x00, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
+            Parameterlist1[1].Add(new byte[] { 0x01, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
+            Parameterlist1[1].Add(new byte[] { 0x01, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
+            Parameterlist1[1].Add(new byte[] { 0x01, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
+            Parameterlist1[1].Add(new byte[] { 0x00, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
+            Parameterlist1[1].Add(new byte[] { 0x00, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
+            Parameterlist1[1].Add(new byte[] { 0x01, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
+
+            Parameterlist2[1].Add(new byte[] { 0x00, 0x0f, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
+            Parameterlist2[1].Add(new byte[] { 0x01, 0x2e, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
+            Parameterlist2[1].Add(new byte[] { 0x01, 0x4b, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
+            Parameterlist2[1].Add(new byte[] { 0x01, 0x4d, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
+            Parameterlist2[1].Add(new byte[] { 0x00, 0x6a, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
+            Parameterlist2[1].Add(new byte[] { 0x01, 0x6a, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
+            Parameterlist2[1].Add(new byte[] { 0x00, 0x6b, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
+            Parameterlist2[1].Add(new byte[] { 0x01, 0x6b, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
+            Parameterlist2[1].Add(new byte[] { 0x00, 0x6c, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
+            Parameterlist2[1].Add(new byte[] { 0x02, 0x6e, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
+
+            Parameterlist1[2].Add(new byte[] { 0x00, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
+            Parameterlist1[2].Add(new byte[] { 0x00, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
+            Parameterlist1[2].Add(new byte[] { 0x00, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
+            Parameterlist1[2].Add(new byte[] { 0x00, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
+            Parameterlist1[2].Add(new byte[] { 0x00, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
+            Parameterlist1[2].Add(new byte[] { 0x00, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
+            Parameterlist1[2].Add(new byte[] { 0x00, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
+            Parameterlist1[2].Add(new byte[] { 0x00, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
+            Parameterlist1[2].Add(new byte[] { 0x00, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
+            Parameterlist1[2].Add(new byte[] { 0x00, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
+            Parameterlist1[2].Add(new byte[] { 0x00, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
+            Parameterlist1[2].Add(new byte[] { 0x00, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
+            Parameterlist1[2].Add(new byte[] { 0x00, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
+            Parameterlist1[2].Add(new byte[] { 0x00, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
+            Parameterlist1[2].Add(new byte[] { 0x00, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
+
+            Parameterlist2[2].Add(new byte[] { 0x00, 0x40, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
+            Parameterlist2[2].Add(new byte[] { 0x00, 0x41, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
+            Parameterlist2[2].Add(new byte[] { 0x00, 0x42, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
+            Parameterlist2[2].Add(new byte[] { 0x00, 0x43, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
+            Parameterlist2[2].Add(new byte[] { 0x00, 0x45, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
+            Parameterlist2[2].Add(new byte[] { 0x01, 0x47, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
+            Parameterlist2[2].Add(new byte[] { 0x01, 0x49, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
+            Parameterlist2[2].Add(new byte[] { 0x00, 0x4a, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
+            Parameterlist2[2].Add(new byte[] { 0x01, 0x4a, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
+            Parameterlist2[2].Add(new byte[] { 0x02, 0x4a, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
+            Parameterlist2[2].Add(new byte[] { 0x03, 0x4a, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
+            Parameterlist2[2].Add(new byte[] { 0x00, 0x4f, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
+            Parameterlist2[2].Add(new byte[] { 0x01, 0x4f, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
+            Parameterlist2[2].Add(new byte[] { 0x02, 0x4f, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
+            Parameterlist2[2].Add(new byte[] { 0x03, 0x4f, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
+
+            Parameterlist1[3].Add(new byte[] { 0x01, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
+            Parameterlist1[3].Add(new byte[] { 0x01, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
+            Parameterlist1[3].Add(new byte[] { 0x01, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
+            Parameterlist1[3].Add(new byte[] { 0x01, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
+            Parameterlist1[3].Add(new byte[] { 0x01, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
+            Parameterlist1[3].Add(new byte[] { 0x00, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
+            Parameterlist1[3].Add(new byte[] { 0x00, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
+            Parameterlist1[3].Add(new byte[] { 0x00, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
+
+            Parameterlist2[3].Add(new byte[] { 0x01, 0x1a, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
+            Parameterlist2[3].Add(new byte[] { 0x02, 0x1a, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
+            Parameterlist2[3].Add(new byte[] { 0x03, 0x1b, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
+            Parameterlist2[3].Add(new byte[] { 0x04, 0x1b, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
+            Parameterlist2[3].Add(new byte[] { 0x05, 0x1b, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
+            Parameterlist2[3].Add(new byte[] { 0x01, 0x20, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
+            Parameterlist2[3].Add(new byte[] { 0x01, 0x21, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
+            Parameterlist2[3].Add(new byte[] { 0x01, 0x22, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
+
+            Parameterlist1[4].Add(new byte[] { 0x01, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
+            Parameterlist1[4].Add(new byte[] { 0x01, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
+            Parameterlist1[4].Add(new byte[] { 0x01, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
+            Parameterlist1[4].Add(new byte[] { 0x01, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
+            Parameterlist1[4].Add(new byte[] { 0x01, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
+            Parameterlist1[4].Add(new byte[] { 0x01, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
+
+            Parameterlist2[4].Add(new byte[] { 0x02, 0x18, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
+            Parameterlist2[4].Add(new byte[] { 0x03, 0x18, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
+            Parameterlist2[4].Add(new byte[] { 0x01, 0x19, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
+            Parameterlist2[4].Add(new byte[] { 0x02, 0x19, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
+            Parameterlist2[4].Add(new byte[] { 0x03, 0x19, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
+            Parameterlist2[4].Add(new byte[] { 0x04, 0x19, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
+
+            Parameterlist1[5].Add(new byte[] { 0x00, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
+            Parameterlist1[5].Add(new byte[] { 0x00, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
+            Parameterlist1[5].Add(new byte[] { 0x00, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
+            Parameterlist1[5].Add(new byte[] { 0x00, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
+            Parameterlist1[5].Add(new byte[] { 0x00, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
+            Parameterlist1[5].Add(new byte[] { 0x00, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
+            Parameterlist1[5].Add(new byte[] { 0x00, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
+            Parameterlist1[5].Add(new byte[] { 0x00, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
+            Parameterlist1[5].Add(new byte[] { 0x00, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
+            Parameterlist1[5].Add(new byte[] { 0x00, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
+            Parameterlist1[5].Add(new byte[] { 0x00, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 });
+
+            Parameterlist2[5].Add(new byte[] { 0x01, 0x38, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
+            Parameterlist2[5].Add(new byte[] { 0x02, 0x38, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
+            Parameterlist2[5].Add(new byte[] { 0x03, 0x38, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
+            Parameterlist2[5].Add(new byte[] { 0x04, 0x38, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
+            Parameterlist2[5].Add(new byte[] { 0x01, 0x39, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
+            Parameterlist2[5].Add(new byte[] { 0x02, 0x39, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
+            Parameterlist2[5].Add(new byte[] { 0x00, 0x3a, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
+            Parameterlist2[5].Add(new byte[] { 0x01, 0x3b, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
+            Parameterlist2[5].Add(new byte[] { 0x02, 0x3b, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
+            Parameterlist2[5].Add(new byte[] { 0x01, 0x3c, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
+            Parameterlist2[5].Add(new byte[] { 0x02, 0x3c, 0x40, 0x40, 0x00, 0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00 });
+
+
+            byte[] CategoryToMaskMap = new byte[30];
+            CategoryToMaskMap[0] = 0;
+
+            ParameterMask = new byte[49][];
+
+            for (byte i = 0; i < 49; i++)
+            {
+                ParameterMask[i] = new byte[51];
+            }
+
+            // First index is instrument settings group (see comments above each group).
+            // Second index is the parameter:
+            // 0 Slider for String Resonance
+            // 1 Key Off Resonance 0–127
+            // 2 Hammer Noise -2, -1, 0, +1, +2
+            // 3 StereoWidth 0–63
+            // 4 Nuance Type1, Type2, Type3
+            // 5 Tone Character -5, -4, -3, -2, -1, 0, +1, +2, +3, +4, +5
+            // 6 Noise Level (CC16) - 64–+63
+            // 7 Crescendo Depth(CC17) - 64–+63 (This applies only for ExSN5 004: Mariachi Tp)
+            // 8 Tremolo Speed(CC17) - 64–+63
+            // 9 Strum Speed(CC17) - 64–+63
+            // 10 Strum Mode(CC19) OFF, ON
+            // 11 Picking Harmonics OFF, ON
+            // 12 Sub String Tune - 64–+63 (This is valid only for ExSN4 003: 12th Steel Gtr.)
+            // 13 Growl Sens(CC18) 0–127
+            // 14 Harmonic Bar 16' 0–8
+            // 15 Harmonic Bar 5 - 1 / 3' 0–8
+            // 16 Harmonic Bar 8' 0–8
+            // 17 Harmonic Bar 4' 0–8
+            // 18 Harmonic Bar 2 - 2 / 3' 0–8
+            // 19 Harmonic Bar 2' 0–8
+            // 20 Harmonic Bar 1 - 3 / 5' 0–8
+            // 21 Harmonic Bar 1 - 1 / 3' 0–8
+            // 22 Harmonic Bar 1' 0–8
+            // 23 Leakage Level 0–127
+            // 24 Percussion Switch OFF, ON
+            // 25 Percussion Soft NORM, SOFT
+            // 26 Percussion Soft Level 0–15
+            // 27 Percussion Normal Level 0–15
+            // 28 Percussion Slow FAST, SLOW
+            // 29 Percussion Slow Time 0–127
+            // 30 Percussion Fast Time 0–127
+            // 31 Percussion Harmonic 2ND, 3RD
+            // 32 Percussion Recharge Time 0–15
+            // 33 Percussion Harmonic Bar Level 0–127
+            // 34 Key On Click Level 0–31
+            // 35 Key Off Click Level 0–31
+            // 36 Mallet Hardness(CC16) - 64–+63
+            // 37 Resonance Level(CC16) - 64–+63
+            // 38 Roll Speed(CC17) - 64–+63
+            // 39 Glissando Mode(CC19) OFF, ON
+            // 40 Play Scale
+            // 41 Scale Key C, Db, D, Eb, E, F, Gb, G, Ab, A, Bb, B
+            // 42 Bend Depth(CC17) - 64–+63
+            // 43 Buzz Key Switch OFF, ON
+            // 44 Tambura Level - 64–+63
+            // 45 Tambura Pitch - 12–+12
+            // 46 Hold Legato Mode(CC19) OFF, ON
+            // 47 Drone Level - 64–+63
+            // 48 Drone Pitch - 12–+12
+            // 49 Glide
+            // 50 Variation Refer to p. 28.
+
+            // A.Piano
+            ParameterMask[1][0] = 1; // Slider for String Resonance:
+            ParameterMask[1][1] = 1; // Key Off Resonance 0–127
+            ParameterMask[1][2] = 1; // Hammer Noise -2, -1, 0, +1, +2
+            ParameterMask[1][3] = 1; // StereoWidth 0–63
+            ParameterMask[1][4] = 1; // Nuance Type1, Type2, Type3
+            ParameterMask[1][5] = 1; // Tone Character -5, -4, -3, -2, -1, 0, +1, +2, +3, +4, +5
+
+            // E.Piano
+            ParameterMask[2][6] = 1; // Noise Level (CC16) - 64–+63
+
+            // Organ
+            ParameterMask[3][14] = 1;
+            ParameterMask[3][15] = 1;
+            ParameterMask[3][16] = 1;
+            ParameterMask[3][17] = 1;
+            ParameterMask[3][18] = 1;
+            ParameterMask[3][19] = 1;
+            ParameterMask[3][20] = 1;
+            ParameterMask[3][21] = 1;
+            ParameterMask[3][22] = 1;
+            ParameterMask[3][23] = 1;
+            ParameterMask[3][24] = 1;
+            ParameterMask[3][25] = 1;
+            ParameterMask[3][26] = 1;
+            ParameterMask[3][27] = 1;
+            ParameterMask[3][28] = 1;
+            ParameterMask[3][29] = 1;
+            ParameterMask[3][30] = 1;
+            ParameterMask[3][31] = 1;
+            ParameterMask[3][32] = 1;
+            ParameterMask[3][33] = 1;
+            ParameterMask[3][34] = 1;
+            ParameterMask[3][35] = 1;
+
+            // Other keyboards + Accordion
+            ParameterMask[4][6] = 1;
+
+            // Accordion
+            ParameterMask[5][6] = 1;
+
+            // Bell/Mallet
+            ParameterMask[6][36] = 1;
+            ParameterMask[6][38] = 1;
+            ParameterMask[6][50] = 1;
+
+            // Ac.Guitar
+            ParameterMask[7][6] = 1;
+            ParameterMask[7][9] = 1;
+            ParameterMask[7][10] = 1;
+            ParameterMask[7][12] = 1;
+            ParameterMask[7][50] = 1;
+
+            // E.Guitar
+            ParameterMask[8][6] = 1;
+            ParameterMask[8][9] = 1;
+            ParameterMask[8][10] = 1;
+            ParameterMask[8][11] = 1;
+            ParameterMask[8][50] = 1;
+
+            // Dist.Guitar
+            ParameterMask[9][6] = 1;
+            ParameterMask[9][9] = 1;
+            ParameterMask[9][10] = 1;
+            ParameterMask[9][11] = 1;
+            ParameterMask[9][50] = 1;
+
+            // Ac.Bass
+            ParameterMask[10][6] = 1;
+            ParameterMask[10][50] = 1;
+
+            // E.Bass
+            ParameterMask[11][6] = 1;
+            ParameterMask[11][50] = 1;
+
+            // Synth Bass
+            ParameterMask[12][6] = 1;
+            ParameterMask[12][50] = 1;
+
+            // Plucked/Stroke
+            ParameterMask[13][39] = 1;
+            ParameterMask[13][40] = 1;
+            ParameterMask[13][41] = 1;
+            ParameterMask[13][50] = 1;
+
+            // Strings
+            ParameterMask[14][6] = 1;
+            ParameterMask[14][50] = 1;
+
+            // Brass
+            ParameterMask[15][6] = 1;
+            ParameterMask[15][7] = 1;
+            ParameterMask[15][13] = 1;
+            ParameterMask[15][50] = 1;
+
+            // Wind
+            ParameterMask[16][6] = 1;
+            ParameterMask[16][13] = 1;
+            ParameterMask[16][40] = 1;
+            ParameterMask[16][41] = 1;
+            ParameterMask[16][50] = 1;
+
+            // Flute
+            ParameterMask[17][6] = 1;
+            ParameterMask[17][13] = 1;
+            ParameterMask[17][40] = 1;
+            ParameterMask[17][41] = 1;
+            ParameterMask[17][50] = 1;
+
+            // Sax
+            ParameterMask[18][6] = 1;  // Noise Level (CC16) - 64–+63
+            ParameterMask[18][13] = 1; // 13 Growl Sens(CC18) 0–127
+            ParameterMask[18][40] = 1; // 40 Play Scale
+            ParameterMask[18][41] = 1; // 41 Scale Key C, Db, D, Eb, E, F, Gb, G, Ab, A, Bb, B
+            ParameterMask[18][49] = 1; // 49 Glide
+            ParameterMask[18][50] = 1; // 50 Variation Refer to p. 28.
+
+            // Recorder
+            ParameterMask[19][6] = 1;
+            ParameterMask[19][13] = 1;
+            ParameterMask[19][50] = 1;
+
+            // Vox/Choir
+            ParameterMask[20][46] = 1;
+            ParameterMask[20][50] = 1;
+
+            // Synth Lead [21]
+
+            // Synth Brass [22]
+
+            // Synth Pad/Strings [23]
+
+            // Synth Bellpad [24]
+            // Synth PolyKey [25]
+            // FX [26]
+            // Synth Seq/Pop [27]
+            // Phrase [28]
+            // Pulsating [29]
+            // Beat &Groove [30]
+            // Hit [31]
+            // Sound FX [32]
+            // Drums [33]
+
+
+
+            // Percussion
+            ParameterMask[34][38] = 1;
+            ParameterMask[34][50] = 1;
+
+            // Combination [35]
+
+            // From here on we have exceptions
+
+            // Mandolin
+            ParameterMask[36][6] = 1;
+            ParameterMask[36][8] = 1;
+            ParameterMask[36][10] = 1;
+            ParameterMask[36][50] = 1;
+
+            // Sitar
+            ParameterMask[37][37] = 1;
+            ParameterMask[37][44] = 1;
+            ParameterMask[37][45] = 1;
+
+            // Tsugaru/Sansin
+            ParameterMask[38][37] = 1;
+            ParameterMask[38][42] = 1;
+            ParameterMask[38][43] = 1;
+            ParameterMask[38][50] = 1;
+
+            // Koto
+            ParameterMask[39][8] = 1;
+            ParameterMask[39][39] = 1;
+            ParameterMask[39][40] = 1;
+            ParameterMask[39][41] = 1;
+            ParameterMask[39][43] = 1;
+            ParameterMask[39][50] = 1;
+
+            // Taishou Koto
+            ParameterMask[40][6] = 1;
+            ParameterMask[40][8] = 1;
+
+            // Kalimba
+            ParameterMask[41][37] = 1;
+            ParameterMask[41][50] = 1;
+
+            // Erhu
+            ParameterMask[42][6] = 1;
+            ParameterMask[42][50] = 1;
+
+            // Marcato Strings
+            ParameterMask[43][46] = 1;
+            ParameterMask[43][50] = 1;
+
+            // Sarangi
+            ParameterMask[44][37] = 1;
+            ParameterMask[44][44] = 1;
+            ParameterMask[44][45] = 1;
+
+            // Pipes
+            ParameterMask[45][47] = 1;
+            ParameterMask[45][48] = 1;
+            ParameterMask[45][50] = 1;
+
+            // Shakuhachi + Recorder
+            ParameterMask[46][6] = 1;
+            ParameterMask[46][13] = 1;
+            ParameterMask[46][50] = 1;
+
+            // Steel Drums
+            ParameterMask[47][37] = 1;
+            ParameterMask[47][38] = 1;
+            ParameterMask[47][50] = 1;
+
+            // Harmonica
+            ParameterMask[48][6] = 1;
+            ParameterMask[48][13] = 1;
+        }
+
+        public List<Instrument> ListInstruments(String Bank)
+        {
+            List<Instrument> Result = new List<Instrument>();
+            foreach (Instrument instrument in Instruments)
+            {
+                if (instrument.InstrumentBank == Bank)
+                {
+                    Result.Add(instrument);
+                }
+            }
+            return Result;
+        }
+
+        public Int16 GetInstrument(String InstrumentBank, Int32 InstrumentNumber)
+        {
+            Int16 result = -1;
+            Int16 i = 0;
+            while (result == -1 && i < Instruments.Count())
+            {
+                if (Instruments[i].InstrumentBank == InstrumentBank && Instruments[i].InstrumentNumber == InstrumentNumber)
+                {
+                    result = i;
+                    break;
+                }
+                i++;
+            }
+            return result;
+        }
+
+        public Instrument GetInstrument(String InstrumentBank, String Instrument)
+        {
+            Instrument result = null;
+            Int16 i = 0;
+            while (result == null && i < Instruments.Count())
+            {
+                if (Instruments[i].InstrumentBank == InstrumentBank && Instrument.EndsWith(Instruments[i].InstrumentName))
+                {
+                    result = Instruments[i];
+                    break;
+                }
+                i++;
+            }
+            return result;
+        }
+
+        public Instrument GetTone(String InstrumentBank, String Instrument)
+        {
+            Instrument result = null;
+            Int16 i = 0;
+            while (result == null && i < Tones.Count())
+            {
+                if (Tones[i].InstrumentBank == InstrumentBank && Instrument.EndsWith(Tones[i].InstrumentName))
+                {
+                    result = Tones[i];
+                    break;
+                }
+                i++;
+            }
+            return result;
+        }
+    }
+
+    /// <summary>
+    /// PCM Synth Tone
+    /// Read PCM Synth Tone Common from MIDI and create PCMSynthTone. PCMSynthTone and subclass PCMSynthToneCommon will be created and populated.
+    /// Read subclasses one by one and create using read data.
+    /// Note that PCMSynthTonePartial are read each from different addresses!
+    /// </summary>
+    class PCMSynthTone
+    {
+        HBTrace t = new HBTrace("class PCMSynthTone");
+        public PCMSynthToneCommon pCMSynthToneCommon { get; set; }
+        //public PCMSynthToneCommonMFX PCMSynthToneCommonMFX { get; set; }
+        public PCMSynthTonePMT pCMSynthTonePMT { get; set; }
+        public PCMSynthTonePartial pCMSynthTonePartial { get; set; }
+        public PCMSynthToneCommon2 pCMSynthToneCommon2 { get; set; }
+
+        public PCMSynthTone(ReceivedData Data)
+        {
+            t.Trace("public PCMSynthTone (" + "ReceivedData" + Data + ", " + ")");
+            pCMSynthTonePartial = new PCMSynthTonePartial(Data);
+            pCMSynthToneCommon = new PCMSynthToneCommon(Data);
+        }
+    }
+
+    /// <summary>
+    /// Same as above for all main classes
+    /// </summary>
+    class PCMDrumKit
+    {
+        HBTrace t = new HBTrace("class PCMDrumKit");
+        public PCMDrumKitCommon pCMDrumKitCommon { get; set; }
+        //public PCMDrumKitCommonMFX PCMDrumKitCommonMFX { get; set; }
+        public PCMDrumKitCommonCompEQ pCMDrumKitCommonCompEQ { get; set; }
+        public PCMDrumKitPartial pCMDrumKitPartial { get; set; } // [88]
+        public PCMDrumKitCommon2 pCMDrumKitCommon2 { get; set; }
+
+        public PCMDrumKit(ReceivedData Data)
+        {
+            t.Trace("public PCMDrumKit (" + "ReceivedData" + Data + ", " + ")");
+            pCMDrumKitPartial = new PCMDrumKitPartial(Data);
+            pCMDrumKitCommon = new PCMDrumKitCommon(Data);
+        }
+    }
+
+    class SuperNATURALAcousticTone
+    {
+        HBTrace t = new HBTrace("class SuperNATURALAcousticTone");
+        public SuperNATURALAcousticToneCommon superNATURALAcousticToneCommon { get; set; }
+        //public SuperNATURALAcousticToneMFX SuperNATURALAcousticToneMFX { get; set; }
+
+        public SuperNATURALAcousticTone(ReceivedData Data)
+        {
+            t.Trace("public SuperNATURALAcousticTone (" + "ReceivedData" + Data + ", " + ")");
+            superNATURALAcousticToneCommon = new SuperNATURALAcousticToneCommon(Data);
+        }
+    }
+
+    class SuperNATURALSynthTone
+    {
+        HBTrace t = new HBTrace("class SuperNATURALSynthTone");
+        public SuperNATURALSynthToneCommon superNATURALSynthToneCommon { get; set; }
+        //public SuperNATURALSynthToneCommonMFX SuperNATURALSynthToneCommonMFX { get; set; }
+        public SuperNATURALSynthTonePartial superNATURALSynthTonePartial { get; set; }
+        public SuperNATURALSynthToneMisc superNATURALSynthToneMisc { get; set; }
+
+        public SuperNATURALSynthTone(ReceivedData Data)
+        {
+            t.Trace("public SuperNATURALSynthTone (" + "ReceivedData" + Data + ", " + ")");
+            superNATURALSynthToneCommon = new SuperNATURALSynthToneCommon(Data);
+        }
+    }
+
+    class DrumInstrument
+    {
+        public String Bank { get; set; }
+        public byte Number { get; set; }
+        public String Name { get; set; }
+        public String Group { get; set; }
+        public Boolean StereoWidth { get; set; }
+        public Boolean AmbienceLevel { get; set; }
+        public String Variation { get; set; }
+
+        public DrumInstrument(String Bank, byte Number, String Name, String Group, Boolean StereoWidth, Boolean AmbienceLevel, String Variation)
+        {
+            this.Bank = Bank;
+            this.Number = Number;
+            this.Name = Name;
+            this.Group = Group;
+            this.StereoWidth = StereoWidth;
+            this.AmbienceLevel = AmbienceLevel;
+            this.Variation = Variation;
+        }
+
+        public List<String> Variations()
+        {
+            List<String> variations = new List<String>();
+
+            variations.Add("Off");
+            if (!String.IsNullOrEmpty(Variation))
+            {
+                if (Variation.Contains("Flam"))
+                {
+                    variations.Add("Flam 1");
+                    variations.Add("Flam 2");
+                    variations.Add("Flam 3");
+                }
+                else
+                {
+                    variations.Add("---");
+                    variations.Add("---");
+                    variations.Add("---");
+                }
+                if (Variation.Contains("Buzz"))
+                {
+                    variations.Add("Buzz 1");
+                    variations.Add("Buzz 2");
+                    variations.Add("Buzz 3");
+                }
+                else
+                {
+                    variations.Add("---");
+                    variations.Add("---");
+                    variations.Add("---");
+                }
+                if (Variation.Contains("Roll"))
+                {
+                    variations.Add("Roll");
+                }
+                else
+                {
+                    variations.Add("---");
+                }
+            }
+
+            return variations;
+        }
+    }
+
+    class SuperNATURALDrumKitInstrumentList
+    {
+        public List<DrumInstrument> DrumInstruments = new List<DrumInstrument>();
+
+        public SuperNATURALDrumKitInstrumentList()
+        {
+            DrumInstruments.Add(new DrumInstrument("int", 0, "off", "", false, false, ""));
+            DrumInstruments.Add(new DrumInstrument("int", 1, "studio kick", "kick", true, true, "flam/buzz"));
+            DrumInstruments.Add(new DrumInstrument("int", 2, "pop kick", "kick", true, true, "flam/buzz"));
+            DrumInstruments.Add(new DrumInstrument("int", 3, "jazz kick", "kick", true, true, "flam/buzz"));
+            DrumInstruments.Add(new DrumInstrument("int", 4, "rock kick", "kick", true, true, "flam/buzz"));
+            DrumInstruments.Add(new DrumInstrument("int", 5, "studio kick 2", "kick", true, true, "flam/buzz"));
+            DrumInstruments.Add(new DrumInstrument("int", 6, "rock kick 2", "kick", true, true, "flam/buzz"));
+            DrumInstruments.Add(new DrumInstrument("int", 7, "orch bass drum", "kick", true, true, "flam/buzz"));
+            DrumInstruments.Add(new DrumInstrument("int", 8, "studio sn", "snare", true, true, "flam/buzz/roll"));
+            DrumInstruments.Add(new DrumInstrument("int", 9, "studio sn rim", "snare", true, true, "flam/buzz/roll"));
+            DrumInstruments.Add(new DrumInstrument("int", 10, "studio sn xstk", "snare", true, true, "flam/buzz"));
+            DrumInstruments.Add(new DrumInstrument("int", 11, "pop sn", "snare", true, true, "flam/buzz/roll"));
+            DrumInstruments.Add(new DrumInstrument("int", 12, "pop sn rim", "snare", true, true, "flam/buzz/roll"));
+            DrumInstruments.Add(new DrumInstrument("int", 13, "pop sn xstk", "snare", true, true, "flam/buzz"));
+            DrumInstruments.Add(new DrumInstrument("int", 14, "jazz sn", "snare", true, true, "flam/buzz/roll"));
+            DrumInstruments.Add(new DrumInstrument("int", 15, "jazz sn rim", "snare", true, true, "flam/buzz/roll"));
+            DrumInstruments.Add(new DrumInstrument("int", 16, "jazz sn xstk", "snare", true, true, "flam/buzz"));
+            DrumInstruments.Add(new DrumInstrument("int", 17, "rock sn", "snare", true, true, "flam/buzz/roll"));
+            DrumInstruments.Add(new DrumInstrument("int", 18, "rock sn rim", "snare", true, true, "flam/buzz/roll"));
+            DrumInstruments.Add(new DrumInstrument("int", 19, "rock sn xstk", "snare", true, true, "flam/buzz"));
+            DrumInstruments.Add(new DrumInstrument("int", 20, "tight sn", "snare", true, true, "flam/buzz/roll"));
+            DrumInstruments.Add(new DrumInstrument("int", 21, "tight sn rim", "snare", true, true, "flam/buzz/roll"));
+            DrumInstruments.Add(new DrumInstrument("int", 22, "tight sn xstk", "snare", true, true, "flam/buzz"));
+            DrumInstruments.Add(new DrumInstrument("int", 23, "studio sn 2", "snare", true, true, "flam/buzz/roll"));
+            DrumInstruments.Add(new DrumInstrument("int", 24, "studio sn 2 rim", "snare", true, true, "flam/buzz/roll"));
+            DrumInstruments.Add(new DrumInstrument("int", 25, "studio sn 2 xstk", "snare", true, true, "flambuzz"));
+            DrumInstruments.Add(new DrumInstrument("int", 26, "rock sn 2", "snare", true, true, "flam/buzz/roll"));
+            DrumInstruments.Add(new DrumInstrument("int", 27, "rock sn 2 rim", "snare", true, true, "flam/buzz/roll"));
+            DrumInstruments.Add(new DrumInstrument("int", 28, "rock sn 2 xstk", "snare", true, true, "flam/buzz"));
+            DrumInstruments.Add(new DrumInstrument("int", 29, "brush sn slap", "snare", true, true, "flam/buzz/roll"));
+            DrumInstruments.Add(new DrumInstrument("int", 30, "brush sn tap", "snare", true, true, "flam/buzz/roll"));
+            DrumInstruments.Add(new DrumInstrument("int", 31, "brush sn slide", "snare", true, true, "flam/buzz"));
+            DrumInstruments.Add(new DrumInstrument("int", 32, "brush sn swirl 1", "snare", true, true, ""));
+            DrumInstruments.Add(new DrumInstrument("int", 33, "brush sn swirl 2", "snare", true, true, ""));
+            DrumInstruments.Add(new DrumInstrument("int", 34, "snare crossstk", "snare", true, true, "flam/buzz"));
+            DrumInstruments.Add(new DrumInstrument("int", 35, "orch snare", "snare", true, true, "flam/buzz/roll"));
+            DrumInstruments.Add(new DrumInstrument("int", 36, "orch snare xstk", "snare", true, true, "flam/buzz"));
+            DrumInstruments.Add(new DrumInstrument("int", 37, "pop tom hi", "tom", true, true, "flam/buzz"));
+            DrumInstruments.Add(new DrumInstrument("int", 38, "pop tom mid", "tom", true, true, "flam/buzz"));
+            DrumInstruments.Add(new DrumInstrument("int", 39, "pop tom flr", "tom", true, true, "flam/buzz"));
+            DrumInstruments.Add(new DrumInstrument("int", 40, "rock tom hi", "tom", true, true, "flam/buzz"));
+            DrumInstruments.Add(new DrumInstrument("int", 41, "rock tom mid", "tom", true, true, "flam/buzz"));
+            DrumInstruments.Add(new DrumInstrument("int", 42, "rock tom floor", "tom", true, true, "flam/buzz"));
+            DrumInstruments.Add(new DrumInstrument("int", 43, "jazz tom hi", "tom", true, true, "flam/buzz"));
+            DrumInstruments.Add(new DrumInstrument("int", 44, "jazz tom mid", "tom", true, true, "flam/buzz"));
+            DrumInstruments.Add(new DrumInstrument("int", 45, "jazz tom floor", "tom", true, true, "flam/buzz"));
+            DrumInstruments.Add(new DrumInstrument("int", 46, "brush tom hi", "tom", true, true, "flam/buzz"));
+            DrumInstruments.Add(new DrumInstrument("int", 47, "brush tom mid", "tom", true, true, "flam/buzz"));
+            DrumInstruments.Add(new DrumInstrument("int", 48, "brush tom floor", "tom", true, true, "flam/buzz"));
+            DrumInstruments.Add(new DrumInstrument("int", 49, "med hh close", "hi-hat", true, true, "flam/buzz"));
+            DrumInstruments.Add(new DrumInstrument("int", 50, "med hh open", "hi-hat", true, true, "flam/buzz"));
+            DrumInstruments.Add(new DrumInstrument("int", 51, "med hh pedal", "hi-hat", true, true, "flam/buzz"));
+            DrumInstruments.Add(new DrumInstrument("int", 52, "standard hh cl", "hi-hat", true, true, "flam/buzz"));
+            DrumInstruments.Add(new DrumInstrument("int", 53, "standard hh op", "hi-hat", true, true, "flam/buzz"));
+            DrumInstruments.Add(new DrumInstrument("int", 54, "standard hh pdl", "hi-hat", true, true, "flam/buzz"));
+            DrumInstruments.Add(new DrumInstrument("int", 55, "jazz hh close", "hi-hat", true, true, "flam/buzz"));
+            DrumInstruments.Add(new DrumInstrument("int", 56, "jazz hh open", "hi-hat", true, true, "flam/buzz"));
+            DrumInstruments.Add(new DrumInstrument("int", 57, "jazz hh pedal", "hi-hat", true, true, "flam/buzz"));
+            DrumInstruments.Add(new DrumInstrument("int", 58, "brush hh close", "hi-hat", true, true, "flam/buzz"));
+            DrumInstruments.Add(new DrumInstrument("int", 59, "brush hh open", "hi-hat", true, true, "flam/buzz"));
+            DrumInstruments.Add(new DrumInstrument("int", 60, "standard rd edge", "ride", true, false, "flam/buzz"));
+            DrumInstruments.Add(new DrumInstrument("int", 61, "standard rd bell", "ride", true, false, "flam/buzz"));
+            DrumInstruments.Add(new DrumInstrument("int", 62, "std rd edge/bell", "ride", true, false, "flam/buzz"));
+            DrumInstruments.Add(new DrumInstrument("int", 63, "medium ride edge", "ride", true, false, "flam/buzz"));
+            DrumInstruments.Add(new DrumInstrument("int", 64, "medium ride bell", "ride", true, false, "flam/buzz"));
+            DrumInstruments.Add(new DrumInstrument("int", 65, "med rd edge/bell", "ride", true, false, "flam/buzz"));
+            DrumInstruments.Add(new DrumInstrument("int", 66, "flat 18\"ride", "ride", true, false, "flam/buzz"));
+            DrumInstruments.Add(new DrumInstrument("int", 67, "brush 18\"ride", "ride", true, false, "flam/buzz"));
+            DrumInstruments.Add(new DrumInstrument("int", 68, "brush 20\"ride", "ride", true, false, "flam/buzz"));
+            DrumInstruments.Add(new DrumInstrument("int", 69, "standard 16\"cr r", "crash", true, false, "flam/buzz/roll"));
+            DrumInstruments.Add(new DrumInstrument("int", 70, "standard 16\"cr l", "crash", true, false, "flam/buzz/roll"));
+            DrumInstruments.Add(new DrumInstrument("int", 71, "standard 18\"cr r", "crash", true, false, "flam/buzz/roll"));
+            DrumInstruments.Add(new DrumInstrument("int", 72, "standard 18\"cr l", "crash", true, false, "flam/buzz/roll"));
+            DrumInstruments.Add(new DrumInstrument("int", 73, "jazz 16\"cr r", "crash", true, false, "flam/buzz/roll"));
+            DrumInstruments.Add(new DrumInstrument("int", 74, "jazz 16\"cr l", "crash", true, false, "flam/buzz/roll"));
+            DrumInstruments.Add(new DrumInstrument("int", 75, "heavy 18\"cr r", "crash", true, false, "flam/buzz/roll"));
+            DrumInstruments.Add(new DrumInstrument("int", 76, "heavy 18\"cr l", "crash", true, false, "flam/buzz/roll"));
+            DrumInstruments.Add(new DrumInstrument("int", 77, "brush 16\"cr r", "crash", true, false, "flam/buzz"));
+            DrumInstruments.Add(new DrumInstrument("int", 78, "brush 16\"cr l", "crash", true, false, "flam/buzz"));
+            DrumInstruments.Add(new DrumInstrument("int", 79, "brush 18\"cr r", "crash", true, false, "flam/buzz"));
+            DrumInstruments.Add(new DrumInstrument("int", 80, "brush 18\"cr l", "crash", true, false, "flam/buzz"));
+            DrumInstruments.Add(new DrumInstrument("int", 81, "splash cymbal 1", "crash", true, false, "flam/buzz"));
+            DrumInstruments.Add(new DrumInstrument("int", 82, "splash cymbal 2", "crash", true, false, "flam/buzz"));
+            DrumInstruments.Add(new DrumInstrument("int", 83, "brush splash cym", "crash", true, false, "flam/buzz"));
+            DrumInstruments.Add(new DrumInstrument("int", 84, "china cymbal", "crash", true, false, "flam/buzz"));
+            DrumInstruments.Add(new DrumInstrument("int", 85, "orch cymbal", "crash", true, false, "flam/buzz"));
+            DrumInstruments.Add(new DrumInstrument("int", 86, "orch mallet cym", "crash", true, false, "flam/buzz/roll"));
+            DrumInstruments.Add(new DrumInstrument("int", 87, "gong", "crash", true, false, "flam/buzz"));
+            DrumInstruments.Add(new DrumInstrument("int", 88, "timpani f2", "percussion", true, false, "flam/buzz"));
+            DrumInstruments.Add(new DrumInstrument("int", 89, "timpani f#2", "percussion", true, false, "flam/buzz"));
+            DrumInstruments.Add(new DrumInstrument("int", 90, "timpani g2", "percussion", true, false, "flam/buzz"));
+            DrumInstruments.Add(new DrumInstrument("int", 91, "timpani g#2", "percussion", true, false, "flam/buzz"));
+            DrumInstruments.Add(new DrumInstrument("int", 92, "timpani a2", "percussion", true, false, "flam/buzz"));
+            DrumInstruments.Add(new DrumInstrument("int", 93, "timpani a#2", "percussion", true, false, "flam/buzz"));
+            DrumInstruments.Add(new DrumInstrument("int", 94, "timpani b2", "percussion", true, false, "flam/buzz"));
+            DrumInstruments.Add(new DrumInstrument("int", 95, "timpani c3", "percussion", true, false, "flam/buzz"));
+            DrumInstruments.Add(new DrumInstrument("int", 96, "timpani c#3", "percussion", true, false, "flam/buzz"));
+            DrumInstruments.Add(new DrumInstrument("int", 97, "timpani d3", "percussion", true, false, "flam/buzz"));
+            DrumInstruments.Add(new DrumInstrument("int", 98, "timpani d#3", "percussion", true, false, "flam/buzz"));
+            DrumInstruments.Add(new DrumInstrument("int", 99, "timpani e3", "percussion", true, false, "flam/buzz"));
+            DrumInstruments.Add(new DrumInstrument("int", 100, "timpani f3", "percussion", true, false, "flam/buzz"));
+            DrumInstruments.Add(new DrumInstrument("int", 101, "tambourine 1", "percussion", true, false, "flam/buzz/roll"));
+            DrumInstruments.Add(new DrumInstrument("int", 102, "tambourine 2", "percussion", false, false, "flam/buzz"));
+            DrumInstruments.Add(new DrumInstrument("int", 103, "cowbell 1", "percussion", true, false, "flam/buzz"));
+            DrumInstruments.Add(new DrumInstrument("int", 104, "cowbell 2", "percussion", false, false, "flam/buzz"));
+            DrumInstruments.Add(new DrumInstrument("int", 105, "vibra-slap", "percussion", false, false, "flam/buzz"));
+            DrumInstruments.Add(new DrumInstrument("int", 106, "high bongo 1", "percussion", true, false, "flam/buzz/roll"));
+            DrumInstruments.Add(new DrumInstrument("int", 107, "low bongo 1", "percussion", true, false, "flam/buzz"));
+            DrumInstruments.Add(new DrumInstrument("int", 108, "high bongo 2", "percussion", false, false, "flam/buzz"));
+            DrumInstruments.Add(new DrumInstrument("int", 109, "low bongo 2", "percussion", false, false, "flam/buzz"));
+            DrumInstruments.Add(new DrumInstrument("int", 110, "mutehi conga 1", "percussion", true, false, "flam/buzz"));
+            DrumInstruments.Add(new DrumInstrument("int", 111, "openhi conga 1", "percussion", true, false, "flam/buzz/roll"));
+            DrumInstruments.Add(new DrumInstrument("int", 112, "low conga 1", "percussion", true, false, "flam/buzz/roll"));
+            DrumInstruments.Add(new DrumInstrument("int", 113, "mutehi conga 2", "percussion", false, false, "flam/buzz"));
+            DrumInstruments.Add(new DrumInstrument("int", 114, "openhi conga 2", "percussion", false, false, "flam/buzz"));
+            DrumInstruments.Add(new DrumInstrument("int", 115, "low conga 2", "percussion", false, false, "flam/buzz"));
+            DrumInstruments.Add(new DrumInstrument("int", 116, "high timbale", "percussion", true, false, "flam/buzz"));
+            DrumInstruments.Add(new DrumInstrument("int", 117, "low timbale", "percussion", true, false, "flam/buzz"));
+            DrumInstruments.Add(new DrumInstrument("int", 118, "high agogo 1", "percussion", true, false, "flam/buzz"));
+            DrumInstruments.Add(new DrumInstrument("int", 119, "low agogo 1", "percussion", true, false, "flam/buzz"));
+            DrumInstruments.Add(new DrumInstrument("int", 120, "high agogo 2", "percussion", false, false, "flam/buzz"));
+            DrumInstruments.Add(new DrumInstrument("int", 121, "low agogo 2", "percussion", false, false, "flam/buzz"));
+            DrumInstruments.Add(new DrumInstrument("int", 122, "cabasa 1", "percussion", true, false, "flam/buzz"));
+            DrumInstruments.Add(new DrumInstrument("int", 123, "cabasa 2", "percussion", false, false, "flam/buzz"));
+            DrumInstruments.Add(new DrumInstrument("int", 124, "maracas 1", "percussion", true, false, "flam/buzz"));
+            DrumInstruments.Add(new DrumInstrument("int", 125, "maracas 2", "percussion", false, false, "flam/buzz"));
+            DrumInstruments.Add(new DrumInstrument("int", 126, "short whistle", "percussion", false, false, "flam/buzz"));
+            DrumInstruments.Add(new DrumInstrument("int", 127, "long whistle", "percussion", false, false, "flam/buzz"));
+            DrumInstruments.Add(new DrumInstrument("int", 128, "short guiro", "percussion", false, false, "flam/buzz"));
+            DrumInstruments.Add(new DrumInstrument("int", 129, "long guiro", "percussion", false, false, "flam/buzz"));
+            DrumInstruments.Add(new DrumInstrument("int", 130, "claves 1", "percussion", true, false, "flam/buzz"));
+            DrumInstruments.Add(new DrumInstrument("int", 131, "claves 2", "percussion", false, false, "flam/buzz"));
+            DrumInstruments.Add(new DrumInstrument("int", 132, "hi woodblock 1", "percussion", true, false, "flam/buzz"));
+            DrumInstruments.Add(new DrumInstrument("int", 133, "low woodblock 1", "percussion", true, false, "flam/buzz"));
+            DrumInstruments.Add(new DrumInstrument("int", 134, "hi woodblock 2", "percussion", false, false, "flam/buzz"));
+            DrumInstruments.Add(new DrumInstrument("int", 135, "low woodblock 2", "percussion", false, false, "flam/buzz"));
+            DrumInstruments.Add(new DrumInstrument("int", 136, "mute cuica 1", "percussion", true, false, "flam/buzz"));
+            DrumInstruments.Add(new DrumInstrument("int", 137, "open cuica 1", "percussion", true, false, "flam/buzz"));
+            DrumInstruments.Add(new DrumInstrument("int", 138, "mute cuica 2", "percussion", false, false, "flam/buzz"));
+            DrumInstruments.Add(new DrumInstrument("int", 139, "open cuica 2", "percussion", false, false, "flam/buzz"));
+            DrumInstruments.Add(new DrumInstrument("int", 140, "mute triangle 1", "percussion", false, false, "flam/buzz/roll"));
+            DrumInstruments.Add(new DrumInstrument("int", 141, "open triangle 1", "percussion", false, false, "flam/buzz/roll"));
+            DrumInstruments.Add(new DrumInstrument("int", 142, "mute triangle 2", "percussion", false, false, "flam/buzz"));
+            DrumInstruments.Add(new DrumInstrument("int", 143, "open triangle 2", "percussion", false, false, "flam/buzz"));
+            DrumInstruments.Add(new DrumInstrument("int", 144, "shaker", "percussion", false, false, "flam/buzz"));
+            DrumInstruments.Add(new DrumInstrument("int", 145, "sleigh bell 1", "percussion", true, false, "flam/buzz"));
+            DrumInstruments.Add(new DrumInstrument("int", 146, "sleigh bell 2", "percussion", false, false, "flam/buzz"));
+            DrumInstruments.Add(new DrumInstrument("int", 147, "wind chimes", "percussion", true, false, "flam/buzz"));
+            DrumInstruments.Add(new DrumInstrument("int", 148, "castanets 1", "percussion", true, false, "flam/buzz/roll"));
+            DrumInstruments.Add(new DrumInstrument("int", 149, "castanets 2", "percussion", false, false, "flam/buzz"));
+            DrumInstruments.Add(new DrumInstrument("int", 150, "mute surdo 1", "percussion", true, false, "flam/buzz"));
+            DrumInstruments.Add(new DrumInstrument("int", 151, "open surdo 1", "percussion", true, false, "flam/buzz"));
+            DrumInstruments.Add(new DrumInstrument("int", 152, "mute surdo 2", "percussion", false, false, "flam/buzz"));
+            DrumInstruments.Add(new DrumInstrument("int", 153, "open surdo 2", "percussion", false, false, "flam/buzz"));
+            DrumInstruments.Add(new DrumInstrument("int", 154, "sticks", "other", false, false, "flam/buzz"));
+            DrumInstruments.Add(new DrumInstrument("int", 155, "square click", "other", false, false, "flam/buzz"));
+            DrumInstruments.Add(new DrumInstrument("int", 156, "metro click", "other", false, false, "flam/buzz"));
+            DrumInstruments.Add(new DrumInstrument("int", 157, "metro bell", "other", false, false, "flam/buzz"));
+            DrumInstruments.Add(new DrumInstrument("int", 158, "hand clap", "other", false, false, "flam/buzz"));
+            DrumInstruments.Add(new DrumInstrument("int", 159, "highq", "sfx", false, false, "flam/buzz"));
+            DrumInstruments.Add(new DrumInstrument("int", 160, "slap", "sfx", false, false, "flam/buzz"));
+            DrumInstruments.Add(new DrumInstrument("int", 161, "scratch push", "sfx", false, false, "flam/buzz"));
+            DrumInstruments.Add(new DrumInstrument("int", 162, "scratch pull", "sfx", false, false, "flam/buzz"));
+            DrumInstruments.Add(new DrumInstrument("int", 163, "gt fret noise", "sfx", false, false, "flam/buzz"));
+            DrumInstruments.Add(new DrumInstrument("int", 164, "gt cutting up nz", "sfx", false, false, "flam/buzz"));
+            DrumInstruments.Add(new DrumInstrument("int", 165, "gt cutting dw nz", "sfx", false, false, "flam/buzz"));
+            DrumInstruments.Add(new DrumInstrument("int", 166, "acbass noise", "sfx", false, false, "flam/buzz"));
+            DrumInstruments.Add(new DrumInstrument("int", 167, "flute key click", "sfx", false, false, "flam/buzz"));
+            DrumInstruments.Add(new DrumInstrument("int", 168, "applause", "sfx", true, false, ""));
+            DrumInstruments.Add(new DrumInstrument("exsn6", 1, "laughing 1", "sfx", true, false, ""));
+            DrumInstruments.Add(new DrumInstrument("exsn6", 2, "laughing 2", "sfx", true, false, ""));
+            DrumInstruments.Add(new DrumInstrument("exsn6", 3, "laughing 3", "sfx", true, false, ""));
+            DrumInstruments.Add(new DrumInstrument("exsn6", 4, "scream 1", "sfx", true, false, ""));
+            DrumInstruments.Add(new DrumInstrument("exsn6", 5, "scream 2", "sfx", true, false, ""));
+            DrumInstruments.Add(new DrumInstrument("exsn6", 6, "scream 3", "sfx", true, false, ""));
+            DrumInstruments.Add(new DrumInstrument("exsn6", 7, "punch 1", "sfx", true, false, ""));
+            DrumInstruments.Add(new DrumInstrument("exsn6", 8, "punch 2", "sfx", true, false, ""));
+            DrumInstruments.Add(new DrumInstrument("exsn6", 9, "punch 3", "sfx", true, false, ""));
+            DrumInstruments.Add(new DrumInstrument("exsn6", 10, "heart beat 1", "sfx", true, false, ""));
+            DrumInstruments.Add(new DrumInstrument("exsn6", 11, "heart beat 2", "sfx", true, false, ""));
+            DrumInstruments.Add(new DrumInstrument("exsn6", 12, "heart beat 3", "sfx", true, false, ""));
+            DrumInstruments.Add(new DrumInstrument("exsn6", 13, "foot steps 1", "sfx", true, false, ""));
+            DrumInstruments.Add(new DrumInstrument("exsn6", 14, "foot steps 2", "sfx", true, false, ""));
+            DrumInstruments.Add(new DrumInstrument("exsn6", 15, "foot steps 3", "sfx", true, false, ""));
+            DrumInstruments.Add(new DrumInstrument("exsn6", 16, "foot step 1 a", "sfx", true, false, ""));
+            DrumInstruments.Add(new DrumInstrument("exsn6", 17, "foot step 1 b", "sfx", true, false, ""));
+            DrumInstruments.Add(new DrumInstrument("exsn6", 18, "foot step 2 a", "sfx", true, false, ""));
+            DrumInstruments.Add(new DrumInstrument("exsn6", 19, "foot step 2 b", "sfx", true, false, ""));
+            DrumInstruments.Add(new DrumInstrument("exsn6", 20, "foot step 3 a", "sfx", true, false, ""));
+            DrumInstruments.Add(new DrumInstrument("exsn6", 21, "foot step 3 b", "sfx", true, false, ""));
+            DrumInstruments.Add(new DrumInstrument("exsn6", 22, "door creaking 1", "sfx", true, false, ""));
+            DrumInstruments.Add(new DrumInstrument("exsn6", 23, "door creaking 2", "sfx", true, false, ""));
+            DrumInstruments.Add(new DrumInstrument("exsn6", 24, "door creaking 3", "sfx", true, false, ""));
+            DrumInstruments.Add(new DrumInstrument("exsn6", 25, "door slam 1", "sfx", true, false, ""));
+            DrumInstruments.Add(new DrumInstrument("exsn6", 26, "door slam 2", "sfx", true, false, ""));
+            DrumInstruments.Add(new DrumInstrument("exsn6", 27, "door slam 3", "sfx", true, false, ""));
+            DrumInstruments.Add(new DrumInstrument("exsn6", 28, "scratch", "sfx", true, false, ""));
+            DrumInstruments.Add(new DrumInstrument("exsn6", 29, "metalscratch", "sfx", true, false, ""));
+            DrumInstruments.Add(new DrumInstrument("exsn6", 30, "matches", "sfx", true, false, ""));
+            DrumInstruments.Add(new DrumInstrument("exsn6", 31, "car engine 1", "sfx", true, false, ""));
+            DrumInstruments.Add(new DrumInstrument("exsn6", 32, "car engine 2", "sfx", true, false, ""));
+            DrumInstruments.Add(new DrumInstrument("exsn6", 33, "car engine 3", "sfx", true, false, ""));
+            DrumInstruments.Add(new DrumInstrument("exsn6", 34, "car stop 1 l>r", "sfx", true, false, ""));
+            DrumInstruments.Add(new DrumInstrument("exsn6", 35, "car stop 1 r>l", "sfx", true, false, ""));
+            DrumInstruments.Add(new DrumInstrument("exsn6", 36, "car stop 2 l>r", "sfx", true, false, ""));
+            DrumInstruments.Add(new DrumInstrument("exsn6", 37, "car stop 2 r>l", "sfx", true, false, ""));
+            DrumInstruments.Add(new DrumInstrument("exsn6", 38, "car stop 3 l>r", "sfx", true, false, ""));
+            DrumInstruments.Add(new DrumInstrument("exsn6", 39, "car stop 3 r>l", "sfx", true, false, ""));
+            DrumInstruments.Add(new DrumInstrument("exsn6", 40, "carpassing 1 l>r", "sfx", true, false, ""));
+            DrumInstruments.Add(new DrumInstrument("exsn6", 41, "carpassing 1 r>l", "sfx", true, false, ""));
+            DrumInstruments.Add(new DrumInstrument("exsn6", 42, "carpassing 2 l>r", "sfx", true, false, ""));
+            DrumInstruments.Add(new DrumInstrument("exsn6", 43, "carpassing 2 r>l", "sfx", true, false, ""));
+            DrumInstruments.Add(new DrumInstrument("exsn6", 44, "carpassing 3 l>r", "sfx", true, false, ""));
+            DrumInstruments.Add(new DrumInstrument("exsn6", 45, "carpassing 3 r>l", "sfx", true, false, ""));
+            DrumInstruments.Add(new DrumInstrument("exsn6", 46, "carpassing 4", "sfx", false, false, ""));
+            DrumInstruments.Add(new DrumInstrument("exsn6", 47, "carpassing 5", "sfx", false, false, ""));
+            DrumInstruments.Add(new DrumInstrument("exsn6", 48, "carpassing 6", "sfx", false, false, ""));
+            DrumInstruments.Add(new DrumInstrument("exsn6", 49, "car crash 1 l>r", "sfx", true, false, ""));
+            DrumInstruments.Add(new DrumInstrument("exsn6", 50, "car crash 1 r>l", "sfx", true, false, ""));
+            DrumInstruments.Add(new DrumInstrument("exsn6", 51, "car crash 2 l>r", "sfx", true, false, ""));
+            DrumInstruments.Add(new DrumInstrument("exsn6", 52, "car crash 2 r>l", "sfx", true, false, ""));
+            DrumInstruments.Add(new DrumInstrument("exsn6", 53, "car crash 3 l>r", "sfx", true, false, ""));
+            DrumInstruments.Add(new DrumInstrument("exsn6", 54, "car crash 3 r>l", "sfx", true, false, ""));
+            DrumInstruments.Add(new DrumInstrument("exsn6", 55, "crash 1", "sfx", true, false, ""));
+            DrumInstruments.Add(new DrumInstrument("exsn6", 56, "crash 2", "sfx", true, false, ""));
+            DrumInstruments.Add(new DrumInstrument("exsn6", 57, "crash 3", "sfx", true, false, ""));
+            DrumInstruments.Add(new DrumInstrument("exsn6", 58, "siren 1", "sfx", true, false, ""));
+            DrumInstruments.Add(new DrumInstrument("exsn6", 59, "siren 2 l>r", "sfx", true, false, ""));
+            DrumInstruments.Add(new DrumInstrument("exsn6", 60, "siren 2 r>l", "sfx", true, false, ""));
+            DrumInstruments.Add(new DrumInstrument("exsn6", 61, "siren 3", "sfx", true, false, ""));
+            DrumInstruments.Add(new DrumInstrument("exsn6", 62, "train 1", "sfx", true, false, ""));
+            DrumInstruments.Add(new DrumInstrument("exsn6", 63, "train 2", "sfx", true, false, ""));
+            DrumInstruments.Add(new DrumInstrument("exsn6", 64, "jetplane 1 l>r", "sfx", true, false, ""));
+            DrumInstruments.Add(new DrumInstrument("exsn6", 65, "jetplane 1 r>l", "sfx", true, false, ""));
+            DrumInstruments.Add(new DrumInstrument("exsn6", 66, "jetplane 2 l>r", "sfx", true, false, ""));
+            DrumInstruments.Add(new DrumInstrument("exsn6", 67, "jetplane 2 r>l", "sfx", true, false, ""));
+            DrumInstruments.Add(new DrumInstrument("exsn6", 68, "jetplane 3 l>r", "sfx", true, false, ""));
+            DrumInstruments.Add(new DrumInstrument("exsn6", 69, "jetplane 3 r>l", "sfx", true, false, ""));
+            DrumInstruments.Add(new DrumInstrument("exsn6", 70, "helicopter 1 l", "sfx", true, false, ""));
+            DrumInstruments.Add(new DrumInstrument("exsn6", 71, "helicopter 1 r", "sfx", true, false, ""));
+            DrumInstruments.Add(new DrumInstrument("exsn6", 72, "helicopter 2 l", "sfx", true, false, ""));
+            DrumInstruments.Add(new DrumInstrument("exsn6", 73, "helicopter 2 r", "sfx", true, false, ""));
+            DrumInstruments.Add(new DrumInstrument("exsn6", 74, "helicopter 3 l", "sfx", true, false, ""));
+            DrumInstruments.Add(new DrumInstrument("exsn6", 75, "helicopter 3 r", "sfx", true, false, ""));
+            DrumInstruments.Add(new DrumInstrument("exsn6", 76, "starship 1 l>r", "sfx", true, false, ""));
+            DrumInstruments.Add(new DrumInstrument("exsn6", 77, "starship 1 r>l", "sfx", true, false, ""));
+            DrumInstruments.Add(new DrumInstrument("exsn6", 78, "starship 2 l>r", "sfx", true, false, ""));
+            DrumInstruments.Add(new DrumInstrument("exsn6", 79, "starsmhip 2 r>l", "sfx", true, false, ""));
+            DrumInstruments.Add(new DrumInstrument("exsn6", 80, "starship 3 l>r", "sfx", true, false, ""));
+            DrumInstruments.Add(new DrumInstrument("exsn6", 81, "starship 3 r>l", "sfx", true, false, ""));
+            DrumInstruments.Add(new DrumInstrument("exsn6", 82, "gun shot 1", "sfx", true, false, ""));
+            DrumInstruments.Add(new DrumInstrument("exsn6", 83, "gun shot 2", "sfx", true, false, ""));
+            DrumInstruments.Add(new DrumInstrument("exsn6", 84, "gun shot 3", "sfx", true, false, ""));
+            DrumInstruments.Add(new DrumInstrument("exsn6", 85, "machine gun 1", "sfx", true, false, ""));
+            DrumInstruments.Add(new DrumInstrument("exsn6", 86, "machine gun 2", "sfx", true, false, ""));
+            DrumInstruments.Add(new DrumInstrument("exsn6", 87, "machine gun 3", "sfx", true, false, ""));
+            DrumInstruments.Add(new DrumInstrument("exsn6", 88, "laser gun 1", "sfx", true, false, ""));
+            DrumInstruments.Add(new DrumInstrument("exsn6", 89, "laser gun 2", "sfx", true, false, ""));
+            DrumInstruments.Add(new DrumInstrument("exsn6", 90, "laser gun 3", "sfx", true, false, ""));
+            DrumInstruments.Add(new DrumInstrument("exsn6", 91, "explosion 1", "sfx", true, false, ""));
+            DrumInstruments.Add(new DrumInstrument("exsn6", 92, "explosion 2", "sfx", true, false, ""));
+            DrumInstruments.Add(new DrumInstrument("exsn6", 93, "explosion 3", "sfx", true, false, ""));
+            DrumInstruments.Add(new DrumInstrument("exsn6", 94, "dog 1", "sfx", true, false, ""));
+            DrumInstruments.Add(new DrumInstrument("exsn6", 95, "dog 2", "sfx", true, false, ""));
+            DrumInstruments.Add(new DrumInstrument("exsn6", 96, "dog 3", "sfx", true, false, ""));
+            DrumInstruments.Add(new DrumInstrument("exsn6", 97, "dog 4", "sfx", true, false, ""));
+            DrumInstruments.Add(new DrumInstrument("exsn6", 98, "horse 1 l>r", "sfx", true, false, ""));
+            DrumInstruments.Add(new DrumInstrument("exsn6", 99, "horse 1 r>l", "sfx", true, false, ""));
+            DrumInstruments.Add(new DrumInstrument("exsn6", 100, "horse 2 l>r", "sfx", true, false, ""));
+            DrumInstruments.Add(new DrumInstrument("exsn6", 101, "horse 2 r>l", "sfx", true, false, ""));
+            DrumInstruments.Add(new DrumInstrument("exsn6", 102, "horse 3 l>r", "sfx", true, false, ""));
+            DrumInstruments.Add(new DrumInstrument("exsn6", 103, "horse 3 r>l", "sfx", true, false, ""));
+            DrumInstruments.Add(new DrumInstrument("exsn6", 104, "birds 1", "sfx", true, false, ""));
+            DrumInstruments.Add(new DrumInstrument("exsn6", 105, "birds 2", "sfx", true, false, ""));
+            DrumInstruments.Add(new DrumInstrument("exsn6", 106, "rain 1", "sfx", true, false, ""));
+            DrumInstruments.Add(new DrumInstrument("exsn6", 107, "rain 2", "sfx", true, false, ""));
+            DrumInstruments.Add(new DrumInstrument("exsn6", 108, "thunder 1", "sfx", true, false, ""));
+            DrumInstruments.Add(new DrumInstrument("exsn6", 109, "thunder 2", "sfx", true, false, ""));
+            DrumInstruments.Add(new DrumInstrument("exsn6", 110, "thunder 3", "sfx", true, false, ""));
+            DrumInstruments.Add(new DrumInstrument("exsn6", 111, "wind", "sfx", true, false, ""));
+            DrumInstruments.Add(new DrumInstrument("exsn6", 112, "seashore", "sfx", true, false, ""));
+            DrumInstruments.Add(new DrumInstrument("exsn6", 113, "stream 1", "sfx", true, false, ""));
+            DrumInstruments.Add(new DrumInstrument("exsn6", 114, "stream 2", "sfx", true, false, ""));
+            DrumInstruments.Add(new DrumInstrument("exsn6", 115, "bubbles 1", "sfx", true, false, ""));
+            DrumInstruments.Add(new DrumInstrument("exsn6", 116, "bubbles 2", "sfx", true, false, ""));
+            DrumInstruments.Add(new DrumInstrument("exsn6", 117, "burst 1", "sfx", true, false, ""));
+            DrumInstruments.Add(new DrumInstrument("exsn6", 118, "burst 2", "sfx", true, false, ""));
+            DrumInstruments.Add(new DrumInstrument("exsn6", 119, "burst 3", "sfx", true, false, ""));
+            DrumInstruments.Add(new DrumInstrument("exsn6", 120, "burst 4", "sfx", false, false, ""));
+            DrumInstruments.Add(new DrumInstrument("exsn6", 121, "glass burst 1", "sfx", true, false, ""));
+            DrumInstruments.Add(new DrumInstrument("exsn6", 122, "glassm burst 2", "sfx", true, false, ""));
+            DrumInstruments.Add(new DrumInstrument("exsn6", 123, "glass burst 3", "sfx", true, false, ""));
+            DrumInstruments.Add(new DrumInstrument("exsn6", 124, "telephone 1", "sfx", true, false, ""));
+            DrumInstruments.Add(new DrumInstrument("exsn6", 125, "telephone 2", "sfx", true, false, ""));
+            DrumInstruments.Add(new DrumInstrument("exsn6", 126, "telephone 3", "sfx", true, false, ""));
+        }
+
+        public DrumInstrument Get(String Bank, String Instrument)
+        {
+            UInt16 i = 0;
+            while (i < DrumInstruments.Count())
+            {
+                if (Bank.StartsWith(DrumInstruments[i].Bank) && Instrument.StartsWith(DrumInstruments[i].Name.Trim()))
+                {
+                    return DrumInstruments[i];
+                }
+                i++;
+            }
+            return null;
+        }
+    }
+
+    class SuperNATURALDrumKit
+    {
+        HBTrace t = new HBTrace("class SuperNATURALDrumKit");
+        public SuperNATURALDrumKitCommon SuperNATURALDrumKitCommon { get; set; }
+        public SuperNATURALDrumKitCommonCompEQ SuperNATURALDrumKitCommonCompEQ { get; set; }
+        public SuperNATURALDrumKitKey SuperNATURALDrumKitkey { get; set; }
+
+        public SuperNATURALDrumKit(ReceivedData data)
+        {
+            t.Trace("public SuperNATURALDrumKit (" + "receiveddata" + data + ", " + ")");
+            SuperNATURALDrumKitCommon = new SuperNATURALDrumKitCommon(data);
+        }
+    }
+
+    /// <summary>
+    /// subclasses
+    /// </summary>
+
+    class phrases
+    {
+        public string[] names;
+        public phrases()
+        {
+            names = new string[] { "no assign", "piano 01", "piano 02", "piano 03", "piano 04", "piano 05", "piano 06", "piano 07", "piano 08", "piano 09", "piano 10",
+                "e.piano 01", "e.piano 02", "e.piano 03", "e.piano 04", "e.piano 05", "e.piano 06", "e.organ 01", "e.organ 02", "e.organ 03", "e.organ 04",
+                "e.organ 05", "e.organ 06", "e.organ 07", "e.organ 08", "e.organ 09", "e.organ 10", "pipe organ 01", "pipe organ 02", "reed organ", "harpsicord 01",
+                "harpsicord 02", "clav 01", "clav 02", "celesta", "accordion 01", "accordion 02", "harmonica", "bell 01", "music box", "vibraphone 01", "vibraphone 02", "vibraphone 03", "vibraphone 04",
+                "marimba 01", "marimba 02", "glockenspiel", "xylophon 01", "xylophone 02", "xylophone 03", "yangqin", "santur 01", "santur 02", "steeldrums",
+                "ac.guitar 01", "ac.guitar 02", "ac.guitar 03", "ac.guitar 04", "ac.guitar 05", "mandolin 01", "mandolin 02", "ukulele", "jazz guitar 01", "jazz guitar 02", "jazz guitar 03",
+                "e.guitar", "muted guitar", "pedal steel", "dist.guitar 01", "ac.bass 01", "ac.bass 02", "e.bass 01", "e.bass 02", "fretless bass 01", "fretless bass 02", "fretless bass 03",
+                "slap bass 01", "slap bass 02", "synth bass 01", "synth bass 02", "synth bass 03", "synth bass 04", "synth bass 05", "synth bass 06",
+                "plucked/stroke", "banjo", "harp", "koto", "shamisen", "sitar", "violin 01", "violin 02", "fiddle", "cello 01", " cello 02", "contrabass 01", "contrabass 02",
+                "enssemble strings 01", "enssemble strings 02", "enssemble strings 03", "tremolo strings", "pizzicato strings 01", "pizzicato strings 02",
+                "orchestra 01", "orchestra 02", "solo brass", "trumpet 01", "trumpet 02", "mute trumpet", "trombone", "french horn", "tuba", "ensemble brass 01",
+                "french horn section", "wind", "oboe", "clarinett", "bassoon", "bagpipe 01", "bagpipe 02", "shanai", "shakuhachi", "flute", "soprano sax 01", "soprano sax 02",
+                "alto sax 01", "alto sax 02", "tenor sax 01", "baritone sax", "recorder", "vox/choirs 01", "vox/choirs 02", "scat 01", "scat 02",
+                "synth lead 01", "synth lead 02", "synth lead 03", "synth lead 04", "synth lead 05", "synth lead 06", "synth lead 07", "synth brass 01", "synth brass 02", "synth brass 03",
+                "synth brass 04", "synth pad/strings 01", "synth pad/strings 02", "synth pad/strings 03", "synth bellpad 01", "synth bellpad 02", "synth bellpad 03", "synth polykey 01",
+                "synth polykey 02", "synth polykey 03", "synth seqpop 01", "synth seqpop 02", "timpani 01", "timpani 02", "percussion", "sound fx 01", "sound fx 02", "sound fx 03",
+                "bibraphone 05", "dist.guitar 02", "dist.guitar 03", "e.bass 03", "e.bass 04", "synth bass 07", "synth bass 08", "synth bass 09", "synth bass 10", "synth bass 11", "synth bass 12",
+                "santur 03", "ensemble brass 02", "tenor sax 02", "tenor sax 03", "pan pipe", "vox/choirs 03", "vox/choirs 04", "vox/choirs 05", "vox/choirs 06", "vox/choirs 07", "vox/choirs 08",
+                "sunth pad/strings 04", "synth pad/strings 05", "synth bell 01", "synth bell 02", "synth bell 03", "synth bell 04", "synth bell 05", "synth polykey 04", "synth polykey 05",
+                "synth polykey 06", "synth polykey 07", "synth polykey 08", "synth polykey 09", "synth polykey 10", "bell 02", "bell 03", "synth polykey 11", "synth pad/strings 06",
+                "synth pad/strings 07", "synth pad/strings 08", "sound fx 04", "sound fx 05", "xv/ac.piano", "xv/el.piano", "xv/keyboards", "xv/bell", "xv/mallet", "xv/organ",
+                "xv/accordion", "xv/harmonica", "xv/ac.guitar", "xv/elguitar", "xv/dist.guitar", "xv/bass", "xv/synth bass", "xv/strings", "xv/orchestra", "xv/hit&stab", "xv/wind", "xv/flute",
+                "xv/ac.brass", "xv/synth brass", "xv/sax", "xv/hard lead", "xv/soft lead", "xv/techno synth", "xv/pulsating", "xv/synth fx", "xv/other synth", "xv/bright pad", "soft pad", "xv/vox",
+                "xv/plucked", "xv/ethnic", "xv/fretted", "xv/percussion", "xv/sound fx", "xv/beat&groove", "xv/drums", "xv/combination" };
+        }
+    }
+
+    class CommonMFX
+    {
+        HBTrace t = new HBTrace("class CommonMFX");
+        public byte MFXType { get; set; }
+        public byte Reserve1 { get; set; }
+        public byte MFXChorusSendLevel { get; set; }
+        public byte MFXReverbSendLevel { get; set; }
+        public byte Reserve2 { get; set; }
+        public byte[] MFXControlSource { get; set; } // [4]
+        public byte[] MFXControlSens { get; set; }   // [4]
+        public byte[] MFXControlAssign { get; set; } // [4]
+        public MFXNumberedParameters MFXNumberedParameters { get; set; }
+
+        private ParameterSets sets;
+
+        public CommonMFX(ReceivedData Data)
+        {
+            t.Trace("public CommonMFX (" + "ReceivedData" + Data + ", " + ")");
+            sets = new ParameterSets();
+            MFXControlSource = new byte[4];
+            MFXControlSens = new byte[4];
+            MFXControlAssign = new byte[4];
+            MFXNumberedParameters = new MFXNumberedParameters(Data, 0x11);
+
+            MFXType = Data.GetByte(0);
+            Reserve1 = Data.GetByte(1);
+            MFXChorusSendLevel = Data.GetByte(2);
+            MFXReverbSendLevel = Data.GetByte(3);
+            Reserve1 = Data.GetByte(4);
+
+            for (byte i = 0; i < 4; i++)
+            {
+                MFXControlSource[i] = Data.GetByte((byte)(5 + 2 * i));
+                MFXControlSens[i] = Data.GetByte((byte)(6 + 2 * i));
+                MFXControlAssign[i] = Data.GetByte((byte)(13 + i));
+            }
+        }
+    }
+
+    /// <summary>
+    /// Some parameters are not documented
+    /// Address is 0x19, 0x01, 0x50, 0x00
+    /// Length is 0x25 (37) bytes
+    /// Given the address, this probably belongs to SuperNATURAL Synth Tone.
+    /// Read it only for SuperNATURAL Synth Tone since it does not answer otherwise.
+    /// Fill out info on any other parameters found, if ever.
+    /// </summary>
+    class Undocumented_Parameters
+    {
+        public byte Data_00 { get; set; }
+        public byte Data_01 { get; set; }
+        public byte Data_02 { get; set; }
+        public byte Data_03 { get; set; }
+        public byte Data_04 { get; set; }
+        public byte Data_05 { get; set; } // Envelope Loop Sync Note
+        public byte Data_06 { get; set; }
+        public byte Data_07 { get; set; }
+        public byte Data_08 { get; set; }
+        public byte Data_09 { get; set; }
+        public byte Data_10 { get; set; }
+        public byte Data_11 { get; set; }
+        public byte Data_12 { get; set; }
+        public byte Data_13 { get; set; }
+        public byte Data_14 { get; set; }
+        public byte Data_15 { get; set; }
+        public byte Data_16 { get; set; }
+        public byte Data_17 { get; set; }
+        public byte Data_18 { get; set; }
+        public byte Data_19 { get; set; }
+        public byte Data_20 { get; set; }
+        public byte Data_21 { get; set; }
+        public byte Data_22 { get; set; }
+        public byte Data_23 { get; set; }
+        public byte Data_24 { get; set; }
+        public byte Data_25 { get; set; }
+        public byte Data_26 { get; set; }
+        public byte Data_27 { get; set; }
+        public byte Data_28 { get; set; }
+        public byte Data_29 { get; set; }
+        public byte Data_30 { get; set; }
+        public byte Data_31 { get; set; }
+        public byte Data_32 { get; set; }
+        public byte Data_33 { get; set; }
+        public byte Data_34 { get; set; }
+        public byte Data_35 { get; set; }
+        public byte Data_36 { get; set; }
+
+        public Undocumented_Parameters(ReceivedData Data)
+        {
+            Data_00 = Data.GetByte(00);
+            Data_01 = Data.GetByte(01);
+            Data_02 = Data.GetByte(02);
+            Data_03 = Data.GetByte(03);
+            Data_04 = Data.GetByte(04);
+            Data_05 = Data.GetByte(05);
+            Data_06 = Data.GetByte(06);
+            Data_07 = Data.GetByte(07);
+            Data_08 = Data.GetByte(08);
+            Data_09 = Data.GetByte(09);
+            Data_10 = Data.GetByte(10);
+            Data_11 = Data.GetByte(11);
+            Data_12 = Data.GetByte(12);
+            Data_13 = Data.GetByte(13);
+            Data_14 = Data.GetByte(14);
+            Data_15 = Data.GetByte(15);
+            Data_16 = Data.GetByte(16);
+            Data_17 = Data.GetByte(17);
+            Data_18 = Data.GetByte(18);
+            Data_19 = Data.GetByte(19);
+            Data_20 = Data.GetByte(20);
+            Data_21 = Data.GetByte(21);
+            Data_22 = Data.GetByte(22);
+            Data_23 = Data.GetByte(23);
+            Data_24 = Data.GetByte(24);
+            Data_25 = Data.GetByte(25);
+            Data_26 = Data.GetByte(26);
+            Data_27 = Data.GetByte(27);
+            Data_28 = Data.GetByte(28);
+            Data_29 = Data.GetByte(29);
+            Data_30 = Data.GetByte(30);
+            Data_31 = Data.GetByte(31);
+            Data_32 = Data.GetByte(32);
+            Data_33 = Data.GetByte(33);
+            Data_34 = Data.GetByte(34);
+            Data_35 = Data.GetByte(35);
+            Data_36 = Data.GetByte(36);
+        }
+    }
+
+    /// <summary>
+    /// Some commands are not documented
+    /// </summary>
+    class Undocumented_Commands
+    {
+        // Addresses:
+        public byte[] Play { get; set; } // 0 = Stop Current part number (1-based!) = Play part.
+
+        public Undocumented_Commands()
+        {
+            Play = new byte[] { 0x0f, 0x00, 0x20, 0x00 };
+        }
+
+    }
+
+    class PCMSynthToneCommon
+    {
+        HBTrace t = new HBTrace("class PCMSynthToneCommon");
+        public String Name { get; set; }
+        public byte Level { get; set; }
+        public byte Pan { get; set; }
+        public byte Priority { get; set; }
+        public byte CoarseTune { get; set; }
+        public byte FineTune { get; set; }
+        public byte OctaveShift { get; set; }
+        public byte TuneDepth { get; set; }
+        public byte AnalogFeel { get; set; }
+        public byte MonoPoly { get; set; }
+        public Boolean LegatoSwitch { get; set; }
+        public Boolean LegatoRetrigger { get; set; }
+        public Boolean PortamentoSwitch { get; set; }
+        public byte PortamentoMode { get; set; }
+        public byte PortamentoType { get; set; }
+        public byte PortamentoStart { get; set; }
+        public byte PortamentoTime { get; set; }
+        public byte CutoffOffset { get; set; }
+        public byte ResonanceOffset { get; set; }
+        public byte AttackTimeOffset { get; set; }
+        public byte ReleaseTimeOffset { get; set; }
+        public byte VelocitySenseOffset { get; set; }
+        public Boolean PMTControlSwitch { get; set; }
+        public byte PitchBendRangeUp { get; set; }
+        public byte PitchBendRangeDown { get; set; }
+        public byte[] MatrixControlSource { get; set; }        // [4]
+        public byte[][] MatrixControlDestination { get; set; } // [4][4]
+        public byte[][] MatrixControlSens { get; set; }       // [4][4]
+
+        public PCMSynthToneCommon(ReceivedData Data)
+        {
+            t.Trace("public PCMSynthToneCommon (" + "ReceivedData" + Data + ", " + ")");
+            MatrixControlSource = new byte[4];
+            MatrixControlDestination = new byte[4][];
+            MatrixControlSens = new byte[4][];
+            for (byte i = 0; i < 4; i++)
+            {
+                MatrixControlDestination[i] = new byte[4];
+                MatrixControlSens[i] = new byte[4];
+            }
+
+            Name = "";
+            for (byte i = 0x00; i < 0x0c; i++)
+            {
+                Name += (char)Data.GetByte(i);
+            }
+            Level = Data.GetByte(0x0e);
+            Pan = Data.GetByte(0x0f);
+            Priority = Data.GetByte(0x10);
+            CoarseTune = Data.GetByte(0x11);
+            FineTune = Data.GetByte(0x12);
+            OctaveShift = Data.GetByte(0x13);
+            TuneDepth = Data.GetByte(0x14);
+            AnalogFeel = Data.GetByte(0x15);
+            MonoPoly = Data.GetByte(0x16);
+            LegatoSwitch = Data.GetByte(0x17) > 0;
+            LegatoRetrigger = Data.GetByte(0x18) > 0;
+            PortamentoSwitch = Data.GetByte(0x19) > 0;
+            PortamentoMode = Data.GetByte(0x1a);
+            PortamentoType = Data.GetByte(0x1b);
+            PortamentoStart = Data.GetByte(0x1c);
+            PortamentoTime = Data.GetByte(0x1d);
+            CutoffOffset = Data.GetByte(0x22);
+            ResonanceOffset = Data.GetByte(0x23);
+            AttackTimeOffset = Data.GetByte(0x24);
+            ReleaseTimeOffset = Data.GetByte(0x25);
+            VelocitySenseOffset = Data.GetByte(0x26);
+            PMTControlSwitch = Data.GetByte(0x28) > 0;
+            PitchBendRangeUp = Data.GetByte(0x29);
+            PitchBendRangeDown = Data.GetByte(0x2a);
+            for (byte i = 0; i < 4; i++)
+            {
+                MatrixControlSource[i] = Data.GetByte(0x2b + (9 * i));
+                for (byte j = 0; j < 4; j++)
+                {
+                    MatrixControlDestination[i][j] = Data.GetByte(0x2c + (9 * i) + (j * 2));
+                    MatrixControlSens[i][j] = Data.GetByte(0x2d + (9 * i) + (j * 2));
+                }
+            }
+        }
+
+    }
+
+    class PCMSynthTonePMT // Partial Mapping Table
+    {
+        HBTrace t = new HBTrace("class PCMSynthTonePMT // Partial Mapping Table");
+        public byte StructureType1_2 { get; set; }
+        public byte Booster1_2 { get; set; }
+        public byte StructureType3_4 { get; set; }
+        public byte Booster3_4 { get; set; }
+        public byte PMTVelocityControl { get; set; }
+        public Boolean[] PMTPartialSwitch { get; set; }       // [4]
+        public byte[] PMTKeyboardRangeLower { get; set; }     // [4]
+        public byte[] PMTKeyboardRangeUpper { get; set; }     // [4]
+        public byte[] PMTKeyboardFadeWidthLower { get; set; } // [4]
+        public byte[] PMTKeyboardFadeWidthUpper { get; set; } // [4]
+        public byte[] PMTVelocityRangeLower { get; set; }     // [4]
+        public byte[] PMTVelocityRangeUpper { get; set; }     // [4]
+        public byte[] PMTVelocityFadeWidthLower { get; set; } // [4]
+        public byte[] PMTVelocityFadeWidthUpper { get; set; } // [4]
+
+        public PCMSynthTonePMT(ReceivedData Data)
+        {
+            t.Trace("public PCMSynthTonePMT (" + "ReceivedData" + Data + ", " + ")");
+            PMTPartialSwitch = new Boolean[4];
+            PMTKeyboardRangeLower = new byte[4];
+            PMTKeyboardRangeUpper = new byte[4];
+            PMTKeyboardFadeWidthLower = new byte[4];
+            PMTKeyboardFadeWidthUpper = new byte[4];
+            PMTVelocityRangeLower = new byte[4];
+            PMTVelocityRangeUpper = new byte[4];
+            PMTVelocityFadeWidthLower = new byte[4];
+            PMTVelocityFadeWidthUpper = new byte[4];
+
+            StructureType1_2 = Data.GetByte(0x00);
+            Booster1_2 = Data.GetByte(0x01);
+            StructureType3_4 = Data.GetByte(0x02);
+            Booster3_4 = Data.GetByte(0x03);
+            PMTVelocityControl = Data.GetByte(0x04);
+            for (byte i = 0; i < 4; i++)
+            {
+                PMTPartialSwitch[i] = Data.GetByte(0x05 + 9 * i) > 0;
+                PMTKeyboardRangeLower[i] = Data.GetByte(0x06 + 9 * i);
+                PMTKeyboardRangeUpper[i] = Data.GetByte(0x07 + 9 * i);
+                PMTKeyboardFadeWidthLower[i] = Data.GetByte(0x08 + 9 * i);
+                PMTKeyboardFadeWidthUpper[i] = Data.GetByte(0x09 + 9 * i);
+                PMTVelocityRangeLower[i] = Data.GetByte(0x0a + 9 * i);
+                PMTVelocityRangeUpper[i] = Data.GetByte(0x0b + 9 * i);
+                PMTVelocityFadeWidthLower[i] = Data.GetByte(0x0c + 9 * i);
+                PMTVelocityFadeWidthUpper[i] = Data.GetByte(0x0d + 9 * i);
+            }
+        }
+    }
+
+    class LFO
+    {
+        HBTrace t = new HBTrace("class LFO");
+        public byte LFOWaveform { get; set; }
+        public byte LFORate { get; set; }
+        public byte LFOOffset { get; set; }
+        public byte LFORateDetune { get; set; }
+        public byte LFODelayTime { get; set; }
+        public byte LFODelayTimeKeyfollow { get; set; }
+        public byte LFOFadeMode { get; set; }
+        public byte LFOFadeTime { get; set; }
+        public Boolean LFOKeyTrigger { get; set; }
+        public byte LFOPitchDepth { get; set; }
+        public byte LFOTVFDepth { get; set; }
+        public byte LFOTVADepth { get; set; }
+        public byte LFOPanDepth { get; set; }
+
+        public LFO(ReceivedData Data, byte msb, byte lsb)
+        {
+            t.Trace("public LFO (" + "ReceivedData" + Data + ", " + "byte" + msb + ", " + "byte" + lsb + ", " + ")");
+            LFOWaveform = Data.GetByte(256 * msb + lsb + 0x00);
+            LFORate = (byte)(16 * Data.GetByte(256 * msb + lsb + 0x01) + Data.GetByte(256 * msb + lsb + 0x02));
+            LFOOffset = Data.GetByte(256 * msb + lsb + 0x03);
+            LFORateDetune = Data.GetByte(256 * msb + lsb + 0x04);
+            LFODelayTime = Data.GetByte(256 * msb + lsb + 0x05);
+            LFODelayTimeKeyfollow = Data.GetByte(256 * msb + lsb + 0x06);
+            LFOFadeMode = Data.GetByte(256 * msb + lsb + 0x07);
+            LFOFadeTime = Data.GetByte(256 * msb + lsb + 0x08);
+            LFOKeyTrigger = Data.GetByte(256 * msb + lsb + 0x09) > 0;
+            LFOPitchDepth = Data.GetByte(256 * msb + lsb + 0x0a);
+            LFOTVFDepth = Data.GetByte(256 * msb + lsb + 0x0b);
+            LFOTVADepth = Data.GetByte(256 * msb + lsb + 0x0c);
+            LFOPanDepth = Data.GetByte(256 * msb + lsb + 0x0d);
+        }
+    }
+
+    class TVA
+    {
+        HBTrace t = new HBTrace("class TVA");
+        public byte TVALevelVelocityCurve { get; set; }
+        public byte TVALevelVelocitySens { get; set; }
+        public byte TVAEnvTime1VelocitySens { get; set; }
+        public byte TVAEnvTime4VelocitySens { get; set; }
+        public byte TVAEnvTimeKeyfollow { get; set; }
+        public byte[] TVAEnvTime { get; set; } // [4]
+        public byte[] TVAEnvLevel { get; set; } // [3]
+
+        public TVA(ReceivedData Data, byte msb, byte lsb, Boolean keyFollow)
+        {
+            t.Trace("public TVA (" + "ReceivedData" + Data + ", " + "byte" + msb + ", " + "byte" + lsb + ", " + ")");
+            TVAEnvTime = new byte[4];
+            TVAEnvLevel = new byte[3];
+
+            TVALevelVelocityCurve = Data.GetByte(msb, lsb, 0x00);
+            TVALevelVelocitySens = Data.GetByte(msb, lsb, 0x01);
+            TVAEnvTime1VelocitySens = Data.GetByte(msb, lsb, 0x02);
+            TVAEnvTime4VelocitySens = Data.GetByte(msb, lsb, 0x03);
+            byte offset = 0;
+            if (keyFollow)
+            {
+                TVAEnvTimeKeyfollow = Data.GetByte(msb, lsb, 0x04);
+                offset = 1;
+            }
+            for (byte i = 0; i < 4; i++)
+            {
+                TVAEnvTime[i] = Data.GetByte(msb, lsb, (byte)(0x04 + i + offset));
+            }
+            for (byte i = 0; i < 3; i++)
+            {
+                TVAEnvLevel[i] = Data.GetByte(msb, lsb, (byte)(0x08 + i + offset));
+            }
+        }
+    }
+
+    class TVF
+    {
+        HBTrace t = new HBTrace("class TVF");
+        public byte TVFFilterType { get; set; }
+        public byte TVFCutoffFrequency { get; set; }
+        public byte TVFCutoffKeyfollow { get; set; }
+        public byte TVFCutoffVelocityCurve { get; set; }
+        public byte TVFCutoffVelocitySens { get; set; }
+        public byte TVFResonance { get; set; }
+        public byte TVFResonanceVelocitySens { get; set; }
+        public byte TVFEnvDepth { get; set; }
+        public byte TVFEnvVelocityCurve { get; set; }
+        public byte TVFEnvVelocitySens { get; set; }
+        public byte TVFEnvTime1VelocitySens { get; set; }
+        public byte TVFEnvTime4VelocitySens { get; set; }
+        public byte TVFEnvTimeKeyfollow { get; set; }
+        public byte[] TVFEnvTime { get; set; } // [4]
+        public byte[] TVFEnvLevel { get; set; } // [5]
+
+        public TVF(ReceivedData Data, byte msb, byte lsb, Boolean keyFollow)
+        {
+            t.Trace("public TVF (" + "ReceivedData" + Data + ", " + "byte" + msb + ", " + "byte" + lsb + ", " + ")");
+            TVFEnvTime = new byte[4];
+            TVFEnvLevel = new byte[5];
+
+            TVFFilterType = Data.GetByte(msb, lsb, 0x00);
+            TVFCutoffFrequency = Data.GetByte(msb, lsb, 0x01);
+            byte offset = 0;
+            if (keyFollow)
+            {
+                TVFCutoffKeyfollow = Data.GetByte(msb, lsb, 0x02);
+                TVFEnvTimeKeyfollow = Data.GetByte(msb, lsb, 0x0c);
+                offset = 1;
+            }
+            TVFCutoffVelocityCurve = Data.GetByte(msb, lsb, (byte)(0x02 + offset));
+            TVFCutoffVelocitySens = Data.GetByte(msb, lsb, (byte)(0x03 + offset));
+            TVFResonance = Data.GetByte(msb, lsb, (byte)(0x04 + offset));
+            TVFResonanceVelocitySens = Data.GetByte(msb, lsb, (byte)(0x05 + offset));
+            TVFEnvDepth = Data.GetByte(msb, lsb, (byte)(0x06 + offset));
+            TVFEnvVelocityCurve = Data.GetByte(msb, lsb, (byte)(0x07 + offset));
+            TVFEnvVelocitySens = Data.GetByte(msb, lsb, (byte)(0x08 + offset));
+            TVFEnvTime1VelocitySens = Data.GetByte(msb, lsb, (byte)(0x09 + offset));
+            TVFEnvTime4VelocitySens = Data.GetByte(msb, lsb, (byte)(0x0a + offset));
+            if (keyFollow)
+            {
+                offset = 2;
+            }
+            for (byte i = 0; i < 4; i++)
+            {
+                TVFEnvTime[i] = Data.GetByte(msb, lsb, (byte)(0x0b + i + offset));
+            }
+            for (byte i = 0; i < 5; i++)
+            {
+                TVFEnvLevel[i] = Data.GetByte(msb, lsb, (byte)(0x0f + i + offset));
+            }
+        }
+    }
+
+    class WMT
+    {
+        HBTrace t = new HBTrace("class WMT");
+        public Boolean WMTWaveSwitch { get; set; }
+        public byte WMTWaveGroupType { get; set; }
+        public UInt16 WMTWaveGroupID { get; set; }
+        public UInt16 WMTWaveNumberL { get; set; }
+        public UInt16 WMTWaveNumberR { get; set; }
+        public byte WMTWaveGain { get; set; }
+        public Boolean WMTWaveFXMSwitch { get; set; }
+        public byte WMTWaveFXMColor { get; set; }
+        public byte WMTWaveFXMDepth { get; set; }
+        public Boolean WMTWaveTempoSync { get; set; }
+        public byte WMTWaveCoarseTune { get; set; }
+        public byte WMTWaveFineTune { get; set; }
+        public byte WMTWavePan { get; set; }
+        public Boolean WMTWaveRandomPanSwitch { get; set; }
+        public byte WMTWaveAlternatePanSwitch { get; set; }
+        public byte WMTWaveLevel { get; set; }
+        public byte WMTVelocityRangeLower { get; set; }
+        public byte WMTVelocityRangeUpper { get; set; }
+        public byte WMTVelocityFadeWidthLower { get; set; }
+        public byte WMTVelocityFadeWidthUpper { get; set; }
+
+        public WMT(ReceivedData Data, byte msb, byte lsb, byte index)
+        {
+            t.Trace("public WMT (" + "ReceivedData" + Data + ", " + "byte" + msb + ", " + "byte" + lsb + ", " + "byte" + index + ", " + ")");
+            UInt16 offset = (UInt16)(msb * 16 + lsb + 29 * index);
+            WMTWaveSwitch = Data.GetByte(offset + 0x00) > 0;
+            WMTWaveGroupType = Data.GetByte(offset + 0x01);
+            WMTWaveGroupID = Data.Get4Byte(offset + 0x02);
+            WMTWaveNumberL = Data.Get4Byte(offset + 0x06);
+            WMTWaveNumberR = Data.Get4Byte(offset + 0x0a);
+            WMTWaveGain = Data.GetByte(offset + 0x0e);
+            WMTWaveFXMSwitch = Data.GetByte(offset + 0x0f) > 0;
+            WMTWaveFXMColor = Data.GetByte(offset + 0x10);
+            WMTWaveFXMDepth = Data.GetByte(offset + 0x11);
+            WMTWaveTempoSync = Data.GetByte(offset + 0x12) > 0;
+            WMTWaveCoarseTune = Data.GetByte(offset + 0x13);
+            WMTWaveFineTune = Data.GetByte(offset + 0x14);
+            WMTWavePan = Data.GetByte(offset + 0x15);
+            WMTWaveRandomPanSwitch = Data.GetByte(offset + 0x16) > 0;
+            WMTWaveAlternatePanSwitch = Data.GetByte(offset + 0x17);
+            WMTWaveLevel = Data.GetByte(offset + 0x18);
+            WMTVelocityRangeLower = Data.GetByte(offset + 0x19);
+            WMTVelocityRangeUpper = Data.GetByte(offset + 0x1a);
+            WMTVelocityFadeWidthLower = Data.GetByte(offset + 0x1b);
+            WMTVelocityFadeWidthUpper = Data.GetByte(offset + 0x1c);
+        }
+    }
+
+    class PitchEnv
+    {
+        HBTrace t = new HBTrace("class PitchEnv");
+        public byte PitchEnvDepth { get; set; }
+        public byte PitchEnvVelocitySens { get; set; }
+        public byte PitchEnvTime1VelocitySens { get; set; }
+        public byte PitchEnvTime4VelocitySens { get; set; }
+        public byte PitchEnvTimeKeyfollow { get; set; }
+        public byte[] PitchEnvTime { get; set; }  // [4]
+        public byte[] PitchEnvLevel { get; set; } // [5]
+
+        public PitchEnv(ReceivedData Data, byte msb, byte lsb, Boolean keyFollow)
+        {
+            t.Trace("public PitchEnv (" + "ReceivedData" + Data + ", " + "byte" + msb + ", " + "byte" + lsb + ", " + ")");
+            PitchEnvTime = new byte[4];
+            PitchEnvLevel = new byte[5];
+
+            PitchEnvDepth = Data.GetByte(msb, lsb, 0);
+            PitchEnvVelocitySens = Data.GetByte(msb, lsb, 1);
+            PitchEnvTime1VelocitySens = Data.GetByte(msb, lsb, 2);
+            PitchEnvTime4VelocitySens = Data.GetByte(msb, lsb, 3);
+            byte offset = 0;
+            if (keyFollow)
+            {
+                PitchEnvTimeKeyfollow = Data.GetByte(msb, lsb, 4);
+                offset = 1;
+            }
+            for (byte i = 0; i < 4; i++)
+            {
+                PitchEnvTime[i] = Data.GetByte(msb, lsb, (byte)(4 + i + offset));
+            }
+            for (byte i = 0; i < 5; i++)
+            {
+                PitchEnvLevel[i] = Data.GetByte(msb, lsb, (byte)(8 + i + offset));
+            }
+        }
+    }
+
+    class PCMSynthTonePartial
+    {
+        HBTrace t = new HBTrace("class PCMSynthTonePartial");
+        public TVA TVA { get; set; }
+        public TVF TVF { get; set; }
+        public LFO LFO1 { get; set; }
+        public LFO LFO2 { get; set; }
+        public PitchEnv PitchEnv { get; set; }
+
+        public byte PartialLevel { get; set; }
+        public byte PartialCoarseTune { get; set; }
+        public byte PartialFineTune { get; set; }
+        public byte PartialRandomPitchDepth { get; set; }
+        public byte PartialPan { get; set; }
+        public byte PartialPanKeyfollow { get; set; }
+        public byte PartialRandomPanDepth { get; set; }
+        public byte PartialAlternatePanDepth { get; set; }
+        public byte PartialEnvMode { get; set; }
+        public byte PartialDelayMode { get; set; }
+        public byte PartialDelayTime { get; set; }
+        public byte PartialOutputLevel { get; set; }
+        public byte PartialChorusSendLevel { get; set; }
+        public byte PartialReverbSendLevel { get; set; }
+        public Boolean PartialReceiveBender { get; set; }
+        public Boolean PartialReceiveExpression { get; set; }
+        public Boolean PartialReceiveHold_1 { get; set; }
+        public Boolean PartialRedamperSwitch { get; set; }
+        public byte[][] PartialControlSwitch { get; set; } // [4][4]
+        public byte WaveGroupType { get; set; }
+        public UInt16 WaveGroupID { get; set; }
+        public UInt16 WaveNumberL { get; set; }
+        public UInt16 WaveNumberR { get; set; }
+        public byte WaveGain { get; set; }
+        public Boolean WaveFXMSwitch { get; set; }
+        public byte WaveFXMColor { get; set; }
+        public byte WaveFXMDepth { get; set; }
+        public Boolean WaveTempoSync { get; set; }
+        public byte WavePitchKeyfollow { get; set; }
+        public byte BiasLevel { get; set; }
+        public byte BiasPosition { get; set; }
+        public byte BiasDirection { get; set; }
+        public byte LFOStepType { get; set; }
+        public byte[] LFOStep { get; set; }       // [16]
+
+        public PCMSynthTonePartial(ReceivedData Data)
+        {
+            t.Trace("public PCMSynthTonePartial (" + "ReceivedData" + Data + ", " + ")");
+
+            TVA = new TVA(Data, 0x00, 0x61, true);
+            TVF = new TVF(Data, 0x00, 0x48, true);
+            LFO1 = new LFO(Data, 0x00, 0x6d);
+            LFO2 = new LFO(Data, 0x00, 0x7b);
+            PitchEnv = new PitchEnv(Data, 0x00, 0x3a, true);
+            PartialControlSwitch = new byte[4][];
+            LFOStep = new byte[16];
+
+            PartialLevel = Data.GetByte(0x00);
+            PartialCoarseTune = Data.GetByte(0x01);
+            PartialFineTune = Data.GetByte(0x02);
+            PartialRandomPitchDepth = Data.GetByte(0x03);
+            PartialPan = Data.GetByte(0x04);
+            PartialPanKeyfollow = Data.GetByte(0x05);
+            PartialRandomPanDepth = Data.GetByte(0x06);
+            PartialAlternatePanDepth = Data.GetByte(0x07);
+            PartialEnvMode = Data.GetByte(0x08);
+            PartialDelayMode = Data.GetByte(0x09);
+            PartialDelayTime = (byte)(16 * Data.GetByte(0x0a) + Data.GetByte(0x0b));
+            PartialOutputLevel = Data.GetByte(0x0c);
+            PartialChorusSendLevel = Data.GetByte(0x0f);
+            PartialReverbSendLevel = Data.GetByte(0x10);
+            PartialReceiveBender = Data.GetByte(0x12) > 0;
+            PartialReceiveExpression = Data.GetByte(0x13) > 0;
+            PartialReceiveHold_1 = Data.GetByte(0x14) > 0;
+            PartialRedamperSwitch = Data.GetByte(0x16) > 0;
+            for (byte i = 0; i < 4; i++)
+            {
+                PartialControlSwitch[i] = new byte[4];
+                for (byte j = 0; j < 4; j++)
+                {
+                    PartialControlSwitch[i][j] = Data.GetByte(0x17 + 4 * i + j);
+                }
+            }
+            WaveGroupType = Data.GetByte(0x27);
+            WaveGroupID = (UInt16)(16 * 16 * 16 * Data.GetByte(0x28) + 16 * 16 * Data.GetByte(0x29) + 16 * Data.GetByte(0x2a) + Data.GetByte(0x2b));
+            WaveNumberL = (UInt16)(16 * 16 * 16 * Data.GetByte(0x2c) + 16 * 16 * Data.GetByte(0x2d) + 16 * Data.GetByte(0x2e) + Data.GetByte(0x2f));
+            WaveNumberR = (UInt16)(16 * 16 * 16 * Data.GetByte(0x30) + 16 * 16 * Data.GetByte(0x31) + 16 * Data.GetByte(0x32) + Data.GetByte(0x33));
+            WaveGain = Data.GetByte(0x34);
+            WaveFXMSwitch = Data.GetByte(0x35) > 0;
+            WaveFXMColor = Data.GetByte(0x36);
+            WaveFXMDepth = Data.GetByte(0x37);
+            WaveTempoSync = Data.GetByte(0x38) > 0;
+            WavePitchKeyfollow = Data.GetByte(0x39);
+            BiasLevel = Data.GetByte(0x5e);
+            BiasPosition = Data.GetByte(0x5f);
+            BiasDirection = Data.GetByte(0x60);
+            LFOStepType = Data.GetByte(0x89);
+            for (byte i = 0; i < 16; i++)
+            {
+                LFOStep[i] = Data.GetByte(0x8a + i);
+            }
+        }
+    }
+
+    class PCMSynthToneCommon2
+    {
+        HBTrace t = new HBTrace("class PCMSynthToneCommon2");
+        public byte ToneCategory { get; set; }
+        public byte MissingInDocs { get; set; }
+        public byte PhraseOctaveShift { get; set; }
+        public Boolean TFXSwitch { get; set; }
+        public UInt16 PhraseNumber { get; set; }
+
+        public PCMSynthToneCommon2(ReceivedData Data)
+        {
+            t.Trace("public PCMSynthToneCommon2 (" + "ReceivedData" + Data + ", " + ")");
+            ToneCategory = Data.GetByte(0x10);
+            MissingInDocs = (byte)(16 * Data.GetByte(0x11) + Data.GetByte(0x12));
+            PhraseOctaveShift = Data.GetByte(0x13);
+            TFXSwitch = Data.GetByte(0x33) > 0;
+            PhraseNumber = (UInt16)(16 * Data.GetByte(0x3a) + Data.GetByte(0x3b));
+        }
+    }
+
+    class PCMDrumKitCommon
+    {
+        HBTrace t = new HBTrace("class PCMDrumKitCommon");
+        public String Name { get; set; }
+        public byte DrumKitLevel { get; set; }
+        public PCMDrumKitCommon(ReceivedData Data)
+        {
+            t.Trace("public PCMDrumKitCommon (" + "ReceivedData" + Data + ", " + ")");
+            Name = "";
+            for (Int32 i = 0x00; i < 0x0c; i++)
+            {
+                Name += (char)Data.GetByte(i);
+            }
+            DrumKitLevel = Data.GetByte(0x0c);
+        }
+    }
+
+    class CompEq
+    {
+        HBTrace t = new HBTrace("class CompEq");
+        public Boolean CompSwitch { get; set; }
+        public byte CompAttackTime { get; set; }
+        public byte CompReleaseTime { get; set; }
+        public byte CompThreshold { get; set; }
+        public byte CompRatio { get; set; }
+        public byte CompOutputGain { get; set; }
+        public Boolean EQSwitch { get; set; }
+        public byte EQLowFreq { get; set; }
+        public byte EQLowGain { get; set; }
+        public byte EQMidFreq { get; set; }
+        public byte EQMidGain { get; set; }
+        public byte EQMidQ { get; set; }
+        public byte EQHighFreq { get; set; }
+        public byte EQHighGain { get; set; }
+
+        public void SetContent(byte i, ReceivedData Data)
+        {
+            t.Trace("public void SetContent (" + "byte" + i + ", " + "ReceivedData" + Data + ", " + ")");
+            byte address = (byte)(i * 0x0e);
+            CompSwitch = Data.GetByte(address + 0) > 0;
+            CompAttackTime = Data.GetByte(address + 1);
+            CompReleaseTime = Data.GetByte(address + 2);
+            CompThreshold = Data.GetByte(address + 3);
+            CompRatio = Data.GetByte(address + 4);
+            CompOutputGain = Data.GetByte(address + 5);
+            EQSwitch = Data.GetByte(address + 6) > 0;
+            EQLowFreq = Data.GetByte(address + 7);
+            EQLowGain = Data.GetByte(address + 8);
+            EQMidFreq = Data.GetByte(address + 9);
+            EQMidGain = Data.GetByte(address + 10);
+            EQMidQ = Data.GetByte(address + 11);
+            EQHighFreq = Data.GetByte(address + 12);
+            EQHighGain = Data.GetByte(address + 13);
+        }
+    }
+
+    class PCMDrumKitCommonCompEQ
+    {
+        HBTrace t = new HBTrace("class PCMDrumKitCommonCompEQ");
+        public CompEq[] CompEq { get; set; } // [6]
+
+        public PCMDrumKitCommonCompEQ(ReceivedData Data)
+        {
+            t.Trace("public PCMDrumKitCommonCompEQ (" + "ReceivedData" + Data + ", " + ")");
+            CompEq = new CompEq[6];
+            for (byte i = 0; i < 6; i++)
+            {
+                CompEq[i] = new CompEq();
+                CompEq[i].SetContent(i, Data);
+            }
+        }
+    }
+
+    class PCMDrumKitPartial
+    {
+        HBTrace t = new HBTrace("class PCMDrumKitPartial");
+        public TVF TVF { get; set; }
+        public TVA TVA { get; set; }
+        public WMT[] WMT { get; set; } // [4]
+        public PitchEnv PitchEnv { get; set; }
+
+        public String Name { get; set; }
+        public byte AssignType { get; set; }
+        public byte MuteGroup { get; set; }
+        public byte PartialLevel { get; set; }
+        public byte PartialCoarseTune { get; set; }
+        public byte PartialFineTune { get; set; }
+        public byte PartialRandomPitchDepth { get; set; }
+        public byte PartialPan { get; set; }
+        public byte PartialRandomPanDepth { get; set; }
+        public byte PartialAlternatePanDepth { get; set; }
+        public byte PartialEnvMode { get; set; }
+        public byte PartialOutputLevel { get; set; }
+        public byte PartialChorusSendLevel { get; set; }
+        public byte PartialReverbSendLevel { get; set; }
+        public byte PartialOutputAssign { get; set; }
+        public byte PartialPitchBendRange { get; set; }
+        public Boolean PartialReceiveExpression { get; set; }
+        public Boolean PartialReceiveHold_1 { get; set; }
+        public byte WMTVelocityControl { get; set; }
+        public Boolean OneShotMode { get; set; }
+        public byte RelativeLevel { get; set; }
+
+        public PCMDrumKitPartial(ReceivedData Data)
+        {
+            t.Trace("public PCMDrumKitPartial (" + "ReceivedData" + Data + ", " + ")");
+            TVF = new TVF(Data, 0x01, 0x22, false);
+            TVA = new TVA(Data, 0x01, 0x36, false);
+            WMT = new WMT[4];
+            for (byte i = 0; i < 4; i++)
+            {
+                WMT[i] = new WMT(Data, 0x00, 0x21, i);
+            }
+            PitchEnv = new PitchEnv(Data, 0x01, 0x15, false);
+
+            Name = "";
+            for (byte i = 0; i < 0x0c; i++)
+            {
+                Name += (char)Data.GetByte(i);
+            }
+            AssignType = Data.GetByte(0x0c);
+            MuteGroup = Data.GetByte(0x0d);
+            PartialLevel = Data.GetByte(0x0e);
+            PartialCoarseTune = Data.GetByte(0x0f);
+            PartialFineTune = Data.GetByte(0x10);
+            PartialRandomPitchDepth = Data.GetByte(0x11);
+            PartialPan = Data.GetByte(0x12);
+            PartialRandomPanDepth = Data.GetByte(0x13);
+            PartialAlternatePanDepth = Data.GetByte(0x14);
+            PartialEnvMode = Data.GetByte(0x15);
+            PartialOutputLevel = Data.GetByte(0x16);
+            PartialChorusSendLevel = Data.GetByte(0x19);
+            PartialReverbSendLevel = Data.GetByte(0x1a);
+            PartialOutputAssign = Data.GetByte(0x1b);
+            PartialPitchBendRange = Data.GetByte(0x1c);
+            PartialReceiveExpression = Data.GetByte(0x1d) > 0;
+            PartialReceiveHold_1 = Data.GetByte(0x1e) > 0;
+            WMTVelocityControl = Data.GetByte(0x20);
+            OneShotMode = Data.GetByte(0x141) > 1;
+            RelativeLevel = Data.GetByte(0x142);
+        }
+    }
+
+    class PCMDrumKitCommon2
+    {
+        HBTrace t = new HBTrace("class PCMDrumKitCommon2");
+        public byte PhraseNumber { get; set; }
+        public byte TFXSwitch { get; set; }
+
+        public PCMDrumKitCommon2(ReceivedData Data)
+        {
+            t.Trace("public PCMDrumKitCommon2 (" + "ReceivedData" + Data + ", " + ")");
+            PhraseNumber = Data.Get2Byte(16);
+            TFXSwitch = Data.GetByte(18);
+        }
+    }
+
+    class SuperNATURALSynthToneCommon
+    {
+        HBTrace t = new HBTrace("class SuperNATURALSynthToneCommon");
+        public String Name { get; set; }
+        public byte ToneLevel { get; set; }
+        public Boolean PortamentoSwitch { get; set; }
+        public byte PortamentoTime { get; set; }
+        public byte MonoPoly { get; set; }
+        public byte OctaveShift { get; set; }
+        public byte PitchBendRangeUp { get; set; }
+        public byte PitchBendRangeDown { get; set; }
+        public Boolean Partial1Switch { get; set; }
+        public byte Partial1Select { get; set; }
+        public Boolean Partial2Switch { get; set; }
+        public byte Partial2Select { get; set; }
+        public Boolean Partial3Switch { get; set; }
+        public byte Partial3Select { get; set; }
+        public Boolean RINGSwitch { get; set; } // 0 - 2!
+        public Boolean TFXSwitch { get; set; }
+        public Boolean UnisonSwitch { get; set; }
+        public byte PortamentoMode { get; set; }
+        public Boolean LegatoSwitch { get; set; }
+        public byte AnalogFeel { get; set; }
+        public byte WaveShape { get; set; }
+        public byte Category { get; set; }
+        public UInt16 PhraseNumber { get; set; }
+        public byte PhraseOctaveShift { get; set; }
+        public byte UnisonSize { get; set; }
+
+        public SuperNATURALSynthToneCommon(ReceivedData Data)
+        {
+            t.Trace("public SuperNATURALSynthToneCommon (" + "ReceivedData" + Data + ", " + ")");
+            Name = "";
+            for (byte i = 0; i < 0x0c; i++)
+            {
+                Name += (char)Data.GetByte(i);
+            }
+            ToneLevel = Data.GetByte(0x0c);
+            PortamentoSwitch = Data.GetByte(0x12) > 0;
+            PortamentoTime = Data.GetByte(0x13);
+            MonoPoly = Data.GetByte(0x14);
+            OctaveShift = Data.GetByte(0x15);
+            PitchBendRangeUp = Data.GetByte(0x16);
+            PitchBendRangeDown = Data.GetByte(0x17);
+            Partial1Switch = Data.GetByte(0x19) > 0;
+            Partial1Select = Data.GetByte(0x1a);
+            Partial2Switch = Data.GetByte(0x1b) > 0;
+            Partial2Select = Data.GetByte(0x1c);
+            Partial3Switch = Data.GetByte(0x1d) > 0;
+            Partial3Select = Data.GetByte(0x1e);
+            RINGSwitch = Data.GetByte(0x1f) > 0;
+            TFXSwitch = Data.GetByte(0x20) > 0;
+            UnisonSwitch = Data.GetByte(0x2e) > 0;
+            PortamentoMode = Data.GetByte(0x31);
+            LegatoSwitch = Data.GetByte(0x32) > 0;
+            AnalogFeel = Data.GetByte(0x34);
+            WaveShape = Data.GetByte(0x35);
+            Category = Data.GetByte(0x36);
+            PhraseNumber = Data.Get4Byte(0x37);
+            PhraseOctaveShift = Data.GetByte(0x3b);
+            UnisonSize = Data.GetByte(0x3c);
+        }
+    }
+
+    class SuperNATURALSynthTonePartial
+    {
+        HBTrace t = new HBTrace("class SuperNATURALSynthTonePartial");
+        public byte OSCWave { get; set; }
+        public byte OSCWaveVariation { get; set; }
+        public byte OSCPitch { get; set; }
+        public byte OSCDetune { get; set; }
+        public byte OSCPulseWidthModDepth { get; set; }
+        public byte OSCPulseWidth { get; set; }
+        public byte OSCPitchEnvAttackTime { get; set; }
+        public byte OSCPitchEnvDecay { get; set; }
+        public byte OSCPitchEnvDepth { get; set; }
+        public byte FILTERMode { get; set; }
+        public byte FILTERSlope { get; set; }
+        public byte FILTERCutoff { get; set; }
+        public byte FILTERCutoffKeyfollow { get; set; }
+        public byte FILTEREnvVelocitySens { get; set; }
+        public byte FILTERResonance { get; set; }
+        public byte FILTEREnvAttackTime { get; set; }
+        public byte FILTEREnvDecayTime { get; set; }
+        public byte FILTEREnvSustainLevel { get; set; }
+        public byte FILTEREnvReleaseTime { get; set; }
+        public byte FILTEREnvDepth { get; set; }
+        public byte AMPLevel { get; set; }
+        public byte AMPLevelVelocitySens { get; set; }
+        public byte AMPEnvAttackTime { get; set; }
+        public byte AMPEnvDecayTime { get; set; }
+        public byte AMPEnvSustainLevel { get; set; }
+        public byte AMPEnvReleaseTime { get; set; }
+        public byte AMPPan { get; set; }
+        public byte LFOShape { get; set; }
+        public byte LFORate { get; set; }
+        public Boolean LFOTempoSyncSwitch { get; set; }
+        public byte LFOTempoSyncNote { get; set; }
+        public byte LFOFadeTime { get; set; }
+        public Boolean LFOKeyTrigger { get; set; }
+        public byte LFOPitchDepth { get; set; }
+        public byte LFOFilterDepth { get; set; }
+        public byte LFOAmpDepth { get; set; }
+        public byte LFOPanDepth { get; set; }
+        public byte ModulationLFOShape { get; set; }
+        public byte ModulationLFORate { get; set; }
+        public Boolean ModulationLFOTempoSyncSwitch { get; set; }
+        public byte ModulationLFOTempoSyncNote { get; set; }
+        public byte OSCPulseWidthShift { get; set; }
+        public byte ModulationLFOPitchDepth { get; set; }
+        public byte ModulationLFOFilterDepth { get; set; }
+        public byte ModulationLFOAmpDepth { get; set; }
+        public byte ModulationLFOPanDepth { get; set; }
+        public byte CutoffAftertouchSens { get; set; }
+        public byte LevelAftertouchSens { get; set; }
+        public byte WaveGain { get; set; }
+        public UInt16 WaveNumber { get; set; }
+        public byte HPFCutoff { get; set; }
+        public byte SuperSawDetune { get; set; }
+        public byte ModulationLFORateControl { get; set; }
+        public byte AMPLevelKeyfollow { get; set; }
+
+        public SuperNATURALSynthTonePartial(ReceivedData Data)
+        {
+            t.Trace("public SuperNATURALSynthTonePartial (" + "ReceivedData" + Data + ", " + ")");
+            OSCWave = Data.GetByte(0x00);
+            OSCWaveVariation = Data.GetByte(0x01);
+            OSCPitch = Data.GetByte(0x03);
+            OSCDetune = Data.GetByte(0x04);
+            OSCPulseWidthModDepth = Data.GetByte(0x05);
+            OSCPulseWidth = Data.GetByte(0x06);
+            OSCPitchEnvAttackTime = Data.GetByte(0x07);
+            OSCPitchEnvDecay = Data.GetByte(0x08);
+            OSCPitchEnvDepth = Data.GetByte(0x09);
+            FILTERMode = Data.GetByte(0x0a);
+            FILTERSlope = Data.GetByte(0x0b);
+            FILTERCutoff = Data.GetByte(0x0c);
+            FILTERCutoffKeyfollow = Data.GetByte(0x0d);
+            FILTEREnvVelocitySens = Data.GetByte(0x0e);
+            FILTERResonance = Data.GetByte(0x0f);
+            FILTEREnvAttackTime = Data.GetByte(0x10);
+            FILTEREnvDecayTime = Data.GetByte(0x11);
+            FILTEREnvSustainLevel = Data.GetByte(0x12);
+            FILTEREnvReleaseTime = Data.GetByte(0x13);
+            FILTEREnvDepth = Data.GetByte(0x14);
+            AMPLevel = Data.GetByte(0x15);
+            AMPLevelVelocitySens = Data.GetByte(0x16);
+            AMPEnvAttackTime = Data.GetByte(0x17);
+            AMPEnvDecayTime = Data.GetByte(0x18);
+            AMPEnvSustainLevel = Data.GetByte(0x19);
+            AMPEnvReleaseTime = Data.GetByte(0x1a);
+            AMPPan = Data.GetByte(0x1b);
+            LFOShape = Data.GetByte(0x1c);
+            LFORate = Data.GetByte(0x1d);
+            LFOTempoSyncSwitch = Data.GetByte(0x1e) > 0;
+            LFOTempoSyncNote = Data.GetByte(0x1f);
+            LFOFadeTime = Data.GetByte(0x20);
+            LFOKeyTrigger = Data.GetByte(0x21) > 0;
+            LFOPitchDepth = Data.GetByte(0x22);
+            LFOFilterDepth = Data.GetByte(0x23);
+            LFOAmpDepth = Data.GetByte(0x24);
+            LFOPanDepth = Data.GetByte(0x25);
+            ModulationLFOShape = Data.GetByte(0x26);
+            ModulationLFORate = Data.GetByte(0x27);
+            ModulationLFOTempoSyncSwitch = Data.GetByte(0x28) > 0;
+            ModulationLFOTempoSyncNote = Data.GetByte(0x29);
+            OSCPulseWidthShift = Data.GetByte(0x2a);
+            ModulationLFOPitchDepth = Data.GetByte(0x2c);
+            ModulationLFOFilterDepth = Data.GetByte(0x2d);
+            ModulationLFOAmpDepth = Data.GetByte(0x2e);
+            ModulationLFOPanDepth = Data.GetByte(0x2f);
+            CutoffAftertouchSens = Data.GetByte(0x30);
+            LevelAftertouchSens = Data.GetByte(0x31);
+            WaveGain = Data.GetByte(0x34);
+            WaveNumber = Data.Get4Byte(0x35);
+            HPFCutoff = Data.GetByte(0x39);
+            SuperSawDetune = Data.GetByte(0x3a);
+            ModulationLFORateControl = Data.GetByte(0x3b);
+            AMPLevelKeyfollow = Data.GetByte(0x3c);
+        }
+    }
+
+    class SuperNATURALSynthToneMisc
+    {
+        public byte AttackTimeIntervalSens { get; set; }
+        public byte ReleaseTimeIntervalSens { get; set; }
+        public byte PortamentoTimeIntervalSens { get; set; }
+        public byte EnvelopeLoopMode { get; set; }
+        public byte EnvelopeLoopSyncNote { get; set; }
+        public Boolean ChromaticPortamento { get; set; }
+
+        public SuperNATURALSynthToneMisc(ReceivedData Data)
+        {
+            AttackTimeIntervalSens = Data.GetByte(0x01);
+            ReleaseTimeIntervalSens = Data.GetByte(0x02);
+            PortamentoTimeIntervalSens = Data.GetByte(0x03);
+            EnvelopeLoopMode = Data.GetByte(0x04);
+            EnvelopeLoopSyncNote = Data.GetByte(0x05);
+            ChromaticPortamento = Data.GetByte(0x06) > 0;
+        }
+    }
+
+    class SuperNATURALAcousticToneCommon
+    {
+        HBTrace t = new HBTrace("class SuperNATURALAcousticToneCommon");
+        public String Name { get; set; }
+        public byte ToneLevel { get; set; }
+        public byte MonoPoly { get; set; }
+        public byte PortamentoTimeOffset { get; set; }
+        public byte CutoffOffset { get; set; }
+        public byte ResonanceOffset { get; set; }
+        public byte AttackTimeOffset { get; set; }
+        public byte ReleaseTimeOffset { get; set; }
+        public byte VibratoRate { get; set; }
+        public byte VibratoDepth { get; set; }
+        public byte VibratoDelay { get; set; }
+        public byte OctaveShift { get; set; }
+        public byte Category { get; set; }
+        public byte PhraseNumber { get; set; }
+        public byte PhraseOctaveShift { get; set; }
+        public Boolean TFXSwitch { get; set; }
+        public byte InstVariation { get; set; }
+        public byte InstNumber { get; set; }
+        public byte ModifyParameter1 { get; set; }
+        public byte ModifyParameter2 { get; set; }
+        public byte ModifyParameter3 { get; set; }
+        public byte ModifyParameter4 { get; set; }
+        public byte ModifyParameter5 { get; set; }
+        public byte ModifyParameter6 { get; set; }
+        public byte ModifyParameter7 { get; set; }
+        public byte ModifyParameter8 { get; set; }
+        public byte ModifyParameter9 { get; set; }
+        public byte ModifyParameter10 { get; set; }
+        public byte ModifyParameter11 { get; set; }
+        public byte ModifyParameter12 { get; set; }
+        public byte ModifyParameter13 { get; set; }
+        public byte ModifyParameter14 { get; set; }
+        public byte ModifyParameter15 { get; set; }
+        public byte ModifyParameter16 { get; set; }
+        public byte ModifyParameter17 { get; set; }
+        public byte ModifyParameter18 { get; set; }
+        public byte ModifyParameter19 { get; set; }
+        public byte ModifyParameter20 { get; set; }
+        public byte ModifyParameter21 { get; set; }
+        public byte ModifyParameter22 { get; set; }
+        public byte ModifyParameter23 { get; set; }
+        public byte ModifyParameter24 { get; set; }
+        public byte ModifyParameter25 { get; set; }
+        public byte ModifyParameter26 { get; set; }
+        public byte ModifyParameter27 { get; set; }
+        public byte ModifyParameter28 { get; set; }
+        public byte ModifyParameter29 { get; set; }
+        public byte ModifyParameter30 { get; set; }
+        public byte ModifyParameter31 { get; set; }
+        public byte ModifyParameter32 { get; set; }
+
+        public SuperNATURALAcousticToneCommon(ReceivedData Data)
+        {
+            t.Trace("public SuperNATURALAcousticToneCommon (" + "ReceivedData" + Data + ", " + ")");
+            Name = "";
+            for (byte i = 0; i < 0x0c; i++)
+            {
+                Name += (char)Data.GetByte(i);
+            }
+            ToneLevel = Data.GetByte(0x10);
+            MonoPoly = Data.GetByte(0x11);
+            PortamentoTimeOffset = Data.GetByte(0x12);
+            CutoffOffset = Data.GetByte(0x13);
+            ResonanceOffset = Data.GetByte(0x14);
+            AttackTimeOffset = Data.GetByte(0x15);
+            ReleaseTimeOffset = Data.GetByte(0x16);
+            VibratoRate = Data.GetByte(0x17);
+            VibratoDepth = Data.GetByte(0x18);
+            VibratoDelay = Data.GetByte(0x19);
+            OctaveShift = Data.GetByte(0x1a);
+            Category = Data.GetByte(0x1b);
+            PhraseNumber = Data.Get2Byte(0x1c);
+            PhraseOctaveShift = Data.GetByte(0x1e);
+            TFXSwitch = Data.GetByte(0x1f) > 0;
+            InstVariation = Data.GetByte(0x20);
+            InstNumber = Data.GetByte(0x21);
+            ModifyParameter1 = Data.GetByte(0x22);
+            ModifyParameter2 = Data.GetByte(0x23);
+            ModifyParameter3 = Data.GetByte(0x24);
+            ModifyParameter4 = Data.GetByte(0x25);
+            ModifyParameter5 = Data.GetByte(0x26);
+            ModifyParameter6 = Data.GetByte(0x27);
+            ModifyParameter7 = Data.GetByte(0x28);
+            ModifyParameter8 = Data.GetByte(0x29);
+            ModifyParameter9 = Data.GetByte(0x2a);
+            ModifyParameter10 = Data.GetByte(0x2b);
+            ModifyParameter11 = Data.GetByte(0x2c);
+            ModifyParameter12 = Data.GetByte(0x2d);
+            ModifyParameter13 = Data.GetByte(0x2e);
+            ModifyParameter14 = Data.GetByte(0x2f);
+            ModifyParameter15 = Data.GetByte(0x30);
+            ModifyParameter16 = Data.GetByte(0x31);
+            ModifyParameter17 = Data.GetByte(0x32);
+            ModifyParameter18 = Data.GetByte(0x33);
+            ModifyParameter19 = Data.GetByte(0x34);
+            ModifyParameter20 = Data.GetByte(0x35);
+            ModifyParameter21 = Data.GetByte(0x36);
+            ModifyParameter22 = Data.GetByte(0x37);
+            ModifyParameter23 = Data.GetByte(0x38);
+            ModifyParameter24 = Data.GetByte(0x39);
+            ModifyParameter25 = Data.GetByte(0x3a);
+            ModifyParameter26 = Data.GetByte(0x3b);
+            ModifyParameter27 = Data.GetByte(0x3c);
+            ModifyParameter28 = Data.GetByte(0x3d);
+            ModifyParameter29 = Data.GetByte(0x3e);
+            ModifyParameter30 = Data.GetByte(0x3f);
+            ModifyParameter31 = Data.GetByte(0x40);
+            ModifyParameter32 = Data.GetByte(0x41);
+        }
+    }
+
+    class SuperNATURALDrumKitCommon
+    {
+        HBTrace t = new HBTrace("class SuperNATURALDrumKitCommon");
+        public String Name { get; set; }
+        public byte KitLevel { get; set; }
+        public byte AmbienceLevel { get; set; }
+        public byte PhraseNumber { get; set; }
+        public Boolean TFXSwitch { get; set; }
+
+        public SuperNATURALDrumKitCommon(ReceivedData Data)
+        {
+            t.Trace("public SuperNATURALDrumKitCommon (" + "ReceivedData" + Data + ", " + ")");
+            Name = "";
+            for (byte i = 0; i < 0x0c; i++)
+            {
+                Name += (char)Data.GetByte(i);
+            }
+            KitLevel = Data.GetByte(0x10);
+            AmbienceLevel = Data.GetByte(0x11);
+            PhraseNumber = Data.GetByte(0x12);
+            TFXSwitch = Data.GetByte(0x13) > 0;
+        }
+    }
+
+    class SuperNATURALDrumKitMFX
+    {
+        HBTrace t = new HBTrace("class SuperNATURALDrumKitMFX");
+        public byte MFXType { get; set; }
+        public byte MFXChorusSendLevel { get; set; }
+        public byte MFXReverbSendLevel { get; set; }
+        public byte[] MFXControlSource { get; set; } // [4]
+        public byte[] MFXControlSens { get; set; }   // [4]
+        public byte[] MFXControlAssign { get; set; } // [4]
+        public byte[] MFXParameter { get; set; } // [32] Kolla Ã¤ven dessa!
+        public MFXNumberedParameters MFXNumberedParameters { get; set; }
+
+        public SuperNATURALDrumKitMFX(ReceivedData Data)
+        {
+            t.Trace("public SuperNATURALDrumKitMFX (" + "ReceivedData" + Data + ", " + ")");
+            MFXControlSource = new byte[4];
+            MFXControlSens = new byte[4];
+            MFXControlAssign = new byte[4];
+
+            MFXType = Data.GetByte(0x00);
+            MFXChorusSendLevel = Data.GetByte(0x02);
+            MFXReverbSendLevel = Data.GetByte(0x03);
+            for (byte i = 0; i < 4; i++)
+            {
+                MFXControlSource[i] = Data.GetByte(0x05 + 2 * i);
+                MFXControlSens[i] = Data.GetByte(0x06 + 2 * i);
+                MFXControlAssign[i] = Data.GetByte(0x0d + i);
+            }
+            MFXNumberedParameters = new MFXNumberedParameters(Data, 0x11);
+        }
+    }
+
+    class SuperNATURALDrumKitCommonCompEQ
+    {
+        HBTrace t = new HBTrace("class SuperNATURALDrumKitCommonCompEQ");
+        public CompEq[] CompEQ; // [6]
+
+        public SuperNATURALDrumKitCommonCompEQ(ReceivedData Data)
+        {
+            t.Trace("public SuperNATURALDrumKitCommonCompEQ (" + "ReceivedData" + Data + ", " + ")");
+            CompEQ = new CompEq[6];
+            for (byte i = 0; i < 6; i++)
+            {
+                CompEQ[i] = new CompEq();
+                CompEQ[i].SetContent(i, Data);
+            }
+        }
+    }
+
+    class SuperNATURALDrumKitKey
+    {
+        HBTrace t = new HBTrace("class SuperNATURALDrumKitKey");
+        public byte BankNumber { get; set; } // This is 0 for Internal and 1 for ExSN6. Read more in MakeDynamicControls.cs AddSupernaturalDrumKitDruminstrumentControls()
+        public byte[] InstNumber { get; set; } // [2] 0 = iternal sound, 1 = ExSN6 sound
+        public byte Level { get; set; }
+        public byte Pan { get; set; }
+        public byte ChorusSendLevel { get; set; }
+        public byte ReverbSendLevel { get; set; }
+        public byte Tune { get; set; }
+        public byte Attack { get; set; }
+        public byte Decay { get; set; }
+        public byte Brilliance { get; set; }
+        public byte Variation { get; set; }
+        public byte DynamicRange { get; set; }
+        public byte StereoWidth { get; set; }
+        public byte OutputAssign { get; set; }
+
+        public SuperNATURALDrumKitKey(ReceivedData Data)
+        {
+            t.Trace("public SuperNATURALDrumKitNote (" + "ReceivedData" + Data + ", " + ")");
+            InstNumber = new byte[2];
+            UInt16 temp = Data.Get3Of4Byte(0);
+            if (temp > 168)
+            {
+                BankNumber = 0x01; // This is 0 for Internal and 1 for ExSN6. Read more in MakeDynamicControls.cs AddSupernaturalDrumKitDruminstrumentControls()
+                InstNumber[0] = 0; // Because we do not know yet
+                InstNumber[1] = (byte)(temp - 169);
+            }
+            else
+            {
+                BankNumber = 0x00; // Because we do not know yet
+                InstNumber[0] = (byte)temp;
+                InstNumber[1] = 0;
+            }
+            Level = Data.GetByte(4);
+            Pan = Data.GetByte(5);
+            ChorusSendLevel = Data.GetByte(6);
+            ReverbSendLevel = Data.GetByte(7);
+            Tune = Data.Get2Of4Byte(0x08);
+            Attack = Data.GetByte(0x0c);
+            Decay = Data.GetByte(0x0d);
+            Brilliance = Data.GetByte(0x0e);
+            Variation = Data.GetByte(0x0f);
+            DynamicRange = Data.GetByte(0x10);
+            StereoWidth = Data.GetByte(0x11);
+            OutputAssign = Data.GetByte(0x12);
+        }
+    }
 
     /// <summary>
     /// XAML layout classes
@@ -8613,6 +8613,109 @@ namespace INTEGRA_7_Xamarin
                         Parameters[67][31] = 0;
                         break;
                 }
+            }
+        }
+    }
+    class ReceivedData
+    {
+        HBTrace t = new HBTrace("class ReceivedData");
+        public byte[] RawData { get; set; }
+
+        public ReceivedData(byte[] RawData)
+        {
+            t.Trace("public ReceivedData (" + "byte[]" + RawData + ", " + ")");
+            this.RawData = RawData;
+        }
+
+        // Use when you have 2 bytes for where class object resides in parent class, and you have an offset into the current class:
+        public byte GetByte(byte msb, byte lsb, byte offset)
+        {
+            t.Trace("public byte GetByte (" + "byte" + msb + ", " + "byte" + lsb + ", " + "byte" + offset + ", " + ")");
+            UInt16 Index = (UInt16)(128 * msb + lsb + offset);
+            if (Index < RawData.Length - 11)
+            {
+                return RawData[Index + 11];
+            }
+            else
+            {
+                return 0xff;
+            }
+        }
+
+        public byte GetByte(Int32 Index)
+        {
+            t.Trace("public byte GetByte (" + "Int32" + Index + ", " + ")");
+            // NOTE!
+            // Addressing does NOT use msb. Index larger than 0x7f will start on new page, thus 0x00, 0x7f + 1 = 0x01, 0x00
+            // Msb is never larger than 0x01, so math can be simplified.
+            if (Index / 0x100 > 0)
+            {
+                Index -= 0x80;
+            }
+
+            if (Index < RawData.Length - 11 && Index > -1)
+            {
+                return RawData[Index + 11];
+            }
+            else
+            {
+                return 0xff;
+            }
+        }
+
+        // Use for non-numbered parameters where two address bytes (nibbles actually) are given _in sequence_ (not as msb + lsb).
+        // Those addresses are marked with a # in the MIDI implementation chart.
+        public byte Get2Byte(Int32 Index)
+        {
+            t.Trace("public byte Get2Byte (" + "Int32" + Index + ", " + ")");
+            if (Index < RawData.Length - 12 && Index > -1)
+            {
+                return (byte)(16 * RawData[Index + 11] + RawData[Index + 12]);
+            }
+            else
+            {
+                return 0xff;
+            }
+        }
+
+        // Use for numbered parameters. Actual address always points to the first of the four bytes,
+        // but the functions gets bytes 3-4, 2-4 and 1-4 respectively.
+        public byte Get2Of4Byte(Int32 Index)
+        {
+            t.Trace("public byte Get2Of4Byte (" + "Int32" + Index + ", " + ")");
+            if (Index < RawData.Length - 14 && Index > -1)
+            {
+                return (byte)(16 * RawData[Index + 13] + RawData[Index + 14]);
+            }
+            else
+            {
+                return 0xff;
+            }
+        }
+
+        public UInt16 Get3Of4Byte(Int32 Index)
+        {
+            t.Trace("public byte Get3Of4Byte (" + "Int32" + Index + ", " + ")");
+            if (Index < RawData.Length - 14 && Index > -1)
+            {
+                return (UInt16)(16 * 16 * RawData[Index + 12] + 16 * RawData[Index + 13] + RawData[Index + 14]);
+            }
+            else
+            {
+                return 0xffff;
+            }
+        }
+
+        public UInt16 Get4Byte(Int32 Index)
+        {
+            t.Trace("public UInt16 Get4Byte (" + "Int32" + Index + ", " + ")");
+            if (Index < RawData.Length - 14 && Index > -1)
+            {
+                return (UInt16)(16 * 16 * 16 * RawData[Index + 11] + 16 * 16 * RawData[Index + 12] + 16 * RawData[Index + 13] + RawData[Index + 14]);
+            }
+            else
+            {
+                return 0xffff;
             }
         }
     }

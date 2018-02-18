@@ -59,6 +59,7 @@ namespace INTEGRA_7_Xamarin.UWP
 
                 // Alert mainPage
                 mainPage.uIHandler.rawData = rawData;
+                mainPage.uIHandler.MidiInPort_MessageRecceived();
                 MessageReceived = false;
             }
         }

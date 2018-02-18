@@ -160,7 +160,13 @@ namespace INTEGRA_7_Xamarin
             // Always start by showing librarian:
             page = _page.LIBRARIAN;
             ShowLibrarianPage();
+            QueryUserTones();
         }
+
+        //public void ShowLibrarianPage()
+        //{
+        //    LibrarianStackLayout.IsVisible = true;
+        //}
 
         /// <summary>
         /// Device-specific classes fills out rawData and then calls MidiInPort_MessageRecceived().
@@ -169,6 +175,12 @@ namespace INTEGRA_7_Xamarin
         {
             if (rawData.Length > 0)
             {
+                switch (page)
+                {
+                    case _page.LIBRARIAN:
+                        Librarian_MidiInPort_MessageReceived();
+                        break;
+                }
                 rawData = new byte[0];
             }
         }
