@@ -22,8 +22,7 @@ namespace INTEGRA_7_Xamarin_MacOS
             var style = NSWindowStyle.Closable | NSWindowStyle.Resizable | NSWindowStyle.Titled;
             var rect = new CoreGraphics.CGRect(200, 1000, 1024, 768);
             mainPage_MacOS = new NSWindow(rect, style, NSBackingStore.Buffered, false);
-            mainPage_MacOS.Title = "the title";
-            mainPage_MacOS.TitleVisibility = NSWindowTitleVisibility.Hidden;
+            mainPage_MacOS.Title = "Roland INTEGRA-7 Librarian and Editor";
         }
 
         public override NSWindow MainWindow
