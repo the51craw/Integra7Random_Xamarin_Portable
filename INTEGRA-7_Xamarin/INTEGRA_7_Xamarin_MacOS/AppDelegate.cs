@@ -3,9 +3,10 @@ using Xamarin.Forms.Platform.MacOS;
 using AppKit;
 using Foundation;
 using INTEGRA_7_Xamarin_MacOS;
-using CoreMidi;
+//using CoreMidi;
 
 [assembly: Dependency(typeof(MIDI))]
+
 namespace INTEGRA_7_Xamarin_MacOS
 {
     [Register("AppDelegate")]
@@ -42,8 +43,6 @@ namespace INTEGRA_7_Xamarin_MacOS
             // corresponding Pickers in the Xamarin code.
             OutputSelector = mainPage.uIHandler.Librarian_midiOutputDevice;
             InputSelector = mainPage.uIHandler.Librarian_midiInputDevice;
-            //midi = new MIDI(mainPage, OutputSelector, InputSelector, /*Dispatcher,*/ 0, 0);
-            //midi.Init("INTEGRA-7");
 
             base.DidFinishLaunching(notification);
         }
