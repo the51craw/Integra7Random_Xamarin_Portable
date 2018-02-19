@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
+//using System.Diagnostics;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+//using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace INTEGRA_7_Xamarin
@@ -12,32 +12,32 @@ namespace INTEGRA_7_Xamarin
     /// XAML layout classes
     /// </summary>
 
-    public class HBTrace
-    {
-        Int32 debugLevel = 5;
-        //StorageFolder localFolder = null;
-        //StorageFile sampleFile = null;
+    //public class HBTrace
+    //{
+    //    Int32 debugLevel = 5;
+    //    //StorageFolder localFolder = null;
+    //    //StorageFile sampleFile = null;
 
-        public HBTrace(String s, Int32 DebugLevel = 0)
-        {
-            //localFolder = Windows.Storage.ApplicationData.Current.LocalFolder;
-            Debug.WriteLine(s);
-        }
+    //    public HBTrace(String s, Int32 DebugLevel = 0)
+    //    {
+    //        //localFolder = Windows.Storage.ApplicationData.Current.LocalFolder;
+    //        Debug.WriteLine(s);
+    //    }
 
-        public void Trace(String s, Int32 DebugLevel = 0, Double ticks = 0)
-        {
-            if (DebugLevel <= debugLevel)
-            {
-                //if (sampleFile == null)
-                //{
-                //    sampleFile = await localFolder.CreateFileAsync("Roland INTEGRA_7.log",
-                //           CreationCollisionOption.OpenIfExists);
-                //}
-                //await FileIO.AppendTextAsync(sampleFile, ticks > 0 ? ticks.ToString() + " " : "" + s + "\r\n");
-                Debug.WriteLine(s);
-            }
-        }
-    }
+    //    public void Trace(String s, Int32 DebugLevel = 0, Double ticks = 0)
+    //    {
+    //        if (DebugLevel <= debugLevel)
+    //        {
+    //            //if (sampleFile == null)
+    //            //{
+    //            //    sampleFile = await localFolder.CreateFileAsync("Roland INTEGRA_7.log",
+    //            //           CreationCollisionOption.OpenIfExists);
+    //            //}
+    //            //await FileIO.AppendTextAsync(sampleFile, ticks > 0 ? ticks.ToString() + " " : "" + s + "\r\n");
+    //            Debug.WriteLine(s);
+    //        }
+    //    }
+    //}
 
     class Player
     {
@@ -755,7 +755,7 @@ namespace INTEGRA_7_Xamarin
 
     class Buddy
     {
-        HBTrace t = new HBTrace("class Buddy");
+        //HBTrace t = new HBTrace("class Buddy");
         public byte Offset { get; set; }
         public byte ParameterNumber { get; set; }
         public Int16 ValueOffset { get; set; }
@@ -768,11 +768,11 @@ namespace INTEGRA_7_Xamarin
         {
             if (TextBox != null)
             {
-                t.Trace("public Buddy (" + "byte" + Offset + ", " + "Byte" + ParameterNumber + ", " + "Int16" + ValueOffset + ", " + "TextBox" + TextBox.Text + ", " + "Double" + ValueMultiplier + ", " + ")");
+                //t.Trace("public Buddy (" + "byte" + Offset + ", " + "Byte" + ParameterNumber + ", " + "Int16" + ValueOffset + ", " + "TextBox" + TextBox.Text + ", " + "Double" + ValueMultiplier + ", " + ")");
             }
             else
             {
-                t.Trace("public Buddy (" + "byte" + Offset + ", " + "Byte" + ParameterNumber + ", " + "Int16" + ValueOffset + ", " + "TextBox" + TextBox + ", " + "Double" + ValueMultiplier + ", " + ")");
+                //t.Trace("public Buddy (" + "byte" + Offset + ", " + "Byte" + ParameterNumber + ", " + "Int16" + ValueOffset + ", " + "TextBox" + TextBox + ", " + "Double" + ValueMultiplier + ", " + ")");
             }
             this.Offset = Offset;
             this.ParameterNumber = ParameterNumber;
@@ -787,11 +787,11 @@ namespace INTEGRA_7_Xamarin
         {
             if (CheckBox != null)
             {
-                t.Trace("public Buddy (" + "byte" + Offset + ", " + "Byte" + ParameterNumber + ", " + "Int16" + ValueOffset + ", " + "CheckBox" + CheckBox.IsChecked.ToString() + ")");
+                //t.Trace("public Buddy (" + "byte" + Offset + ", " + "Byte" + ParameterNumber + ", " + "Int16" + ValueOffset + ", " + "CheckBox" + CheckBox.IsChecked.ToString() + ")");
             }
             else
             {
-                t.Trace("public Buddy (" + "byte" + Offset + ", " + "Byte" + ParameterNumber + ", " + "Int16" + ValueOffset + ", " + "CheckBox" + CheckBox + ")");
+                //t.Trace("public Buddy (" + "byte" + Offset + ", " + "Byte" + ParameterNumber + ", " + "Int16" + ValueOffset + ", " + "CheckBox" + CheckBox + ")");
             }
             this.Offset = Offset;
             this.ParameterNumber = ParameterNumber;
@@ -825,7 +825,7 @@ namespace INTEGRA_7_Xamarin
 
     class SelectedTone
     {
-        HBTrace t = new HBTrace("class SelectedTone");
+        //HBTrace t = new HBTrace("class SelectedTone");
         public byte BankMSB { get; set; }
         public byte BankLSB { get; set; }
         public byte Program { get; set; }
@@ -835,7 +835,7 @@ namespace INTEGRA_7_Xamarin
 
         public SelectedTone(byte MSB, byte LSB, byte Program)
         {
-            t.Trace("public SelectedTone (" + "byte" + MSB + ", " + "byte" + LSB + ", " + "byte" + Program + ", " + ")");
+            //t.Trace("public SelectedTone (" + "byte" + MSB + ", " + "byte" + LSB + ", " + "byte" + Program + ", " + ")");
             this.BankMSB = MSB;
             this.BankLSB = LSB;
             this.Program = Program;
@@ -1039,12 +1039,12 @@ namespace INTEGRA_7_Xamarin
 
     class PCMWaveNames
     {
-        HBTrace t = new HBTrace("class PCMWaveNames");
+        //HBTrace t = new HBTrace("class PCMWaveNames");
         public String[] Names { get; set; }
 
         public PCMWaveNames()
         {
-            t.Trace("public PCMWaveNames()");
+            //t.Trace("public PCMWaveNames()");
             Names = new String[] { "Off", "StGrand pA L", "StGrand pA R", "StGrand pB L", "StGrand pB R", "StGrand pC L", "StGrand pC R", "StGrand fA L",
                 "StGrand fA R", "StGrand fB L", "StGrand fB R", "StGrand fC L", "StGrand fC R", "Ac Piano2 pA", "Ac Piano2 pB", "Ac Piano2 pC",
                 "Ac Piano2 fA", "Ac Piano2 fB", "Ac Piano2 fC", "Ac Piano1 A", "Ac Piano1 B", "Ac Piano1 C", "Piano Thump", "Piano Up TH", "Piano Atk",
@@ -1176,7 +1176,7 @@ namespace INTEGRA_7_Xamarin
 
     class SuperNaturalSynthToneWaveNames
     {
-        HBTrace t = new HBTrace("class PCMWaveNames");
+        //HBTrace t = new HBTrace("class PCMWaveNames");
         public String[] Names { get; set; }
 
         public SuperNaturalSynthToneWaveNames()
@@ -1421,7 +1421,7 @@ namespace INTEGRA_7_Xamarin
 
     class ParameterSets
     {
-        HBTrace t = new HBTrace("class ParameterSets");
+        //HBTrace t = new HBTrace("class ParameterSets");
         /// <summary>
         /// These are the specifics for SET_OF_NAMES type numbered parameters for PCM Synth Tone MFX
         /// </summary>
@@ -1429,7 +1429,7 @@ namespace INTEGRA_7_Xamarin
         /// <param name="i"></param>
         public String[] GetNumberedParameter(PARAMETER_TYPE ParameterType)
         {
-            t.Trace("public String[] GetNumberedParameter (" + "PARAMETER_TYPE." + ParameterType + ", " + ")");
+            //t.Trace("public String[] GetNumberedParameter (" + "PARAMETER_TYPE." + ParameterType + ", " + ")");
             String[] result = new String[] { };
             switch (ParameterType)
             {
@@ -1610,14 +1610,14 @@ namespace INTEGRA_7_Xamarin
 
     class NumberedParameters
     {
-        HBTrace t = new HBTrace("class NumberedParameters");
+        //HBTrace t = new HBTrace("class NumberedParameters");
         public String Name { get; set; }
         public byte Offset { get; set; }
         public NumberedParameter[] Parameters { get; set; }
 
         public NumberedParameters(byte Offset = 0)
         {
-            t.Trace("public NumberedParameters (" + "byte " + Offset + ", " + ")");
+            //t.Trace("public NumberedParameters (" + "byte " + Offset + ", " + ")");
             Name = "";
             this.Offset = Offset;
             Parameters = new NumberedParameter[0];
@@ -1629,7 +1629,7 @@ namespace INTEGRA_7_Xamarin
     /// </summary>
     class NumberedParameter
     {
-        HBTrace t = new HBTrace("class NumberedParameter");
+        //HBTrace t = new HBTrace("class NumberedParameter");
         public String Name { get; set; }
         public PARAMETER_TYPE Type { get; set; }
         public String ControlName { get; set; }
@@ -1637,7 +1637,7 @@ namespace INTEGRA_7_Xamarin
 
         public NumberedParameter()
         {
-            t.Trace("public NumberedParameter()");
+            //t.Trace("public NumberedParameter()");
             Name = "";
             Type = PARAMETER_TYPE.SLIDER_0_TO_127;
             ControlName = "";
@@ -1653,14 +1653,14 @@ namespace INTEGRA_7_Xamarin
     /// </summary>
     class NumberedParameterValue
     {
-        HBTrace t = new HBTrace("class NumberedParameterValue");
+        //HBTrace t = new HBTrace("class NumberedParameterValue");
         public String[] Text { get; set; } // These are texts for type SET_OF_NAMES
         public UInt16 Value { get; set; }    // This is for numerical values
         public Boolean On { get; set; }    // This is for boolean values
 
         public NumberedParameterValue()
         {
-            t.Trace("public NumberedParameterValue()");
+            //t.Trace("public NumberedParameterValue()");
             Text = null;
             Value = 0xff;
             On = false;
@@ -1669,7 +1669,7 @@ namespace INTEGRA_7_Xamarin
 
     class NumberedParametersContent
     {
-        HBTrace t = new HBTrace("class NumberedParametersContent");
+        //HBTrace t = new HBTrace("class NumberedParametersContent");
         public String[] TypeNames;
         public String[][] ParameterNames;
         public PARAMETER_TYPE[][] ParameterTypes;
@@ -1681,7 +1681,7 @@ namespace INTEGRA_7_Xamarin
 
         public NumberedParametersContent()
         {
-            t.Trace("public NumberedParametersContent()");
+            //t.Trace("public NumberedParametersContent()");
             // All type names (same for all 5 tone types [PCM tone, PCM drum kit, SuperNatural tone etc] of MFX)
             TypeNames = new String[] {"00:Thru","01:Equalizer","02:Spectrum","03:Low boost",
                 "04:Step filter band 1 - 8","        04:Step filter band 9 - 16","        04:Step filter settings","05:Enhancer",
@@ -3222,7 +3222,7 @@ namespace INTEGRA_7_Xamarin
 
     class MFXNumberedParameters
     {
-        HBTrace t = new HBTrace("class MFXNumberedParameters");
+        //HBTrace t = new HBTrace("class MFXNumberedParameters");
         public UInt16 Offset { get; set; }
         public byte MFXType { get; set; }
         public byte MFXLength { get; set; }
@@ -3232,7 +3232,7 @@ namespace INTEGRA_7_Xamarin
 
         public MFXNumberedParameters(ReceivedData Data, UInt16 Offset)
         {
-            t.Trace("public MFXNumberedParameters (" + "ReceivedData" + Data + ", " + "UInt16" + Offset + ", " + ")");
+            //t.Trace("public MFXNumberedParameters (" + "ReceivedData" + Data + ", " + "UInt16" + Offset + ", " + ")");
             this.Offset = Offset;
             sets = new ParameterSets();
             Parameters = new NumberedParameters(0x11);
@@ -3287,7 +3287,7 @@ namespace INTEGRA_7_Xamarin
                 {
                     message += " InnerException: " + e.InnerException.Message;
                 }
-                t.Trace(message);
+                //t.Trace(message);
             }
         }
     }
@@ -4306,7 +4306,7 @@ namespace INTEGRA_7_Xamarin
     /// </summary>
     class PCMSynthTone
     {
-        HBTrace t = new HBTrace("class PCMSynthTone");
+        //HBTrace t = new HBTrace("class PCMSynthTone");
         public PCMSynthToneCommon pCMSynthToneCommon { get; set; }
         //public PCMSynthToneCommonMFX PCMSynthToneCommonMFX { get; set; }
         public PCMSynthTonePMT pCMSynthTonePMT { get; set; }
@@ -4315,7 +4315,7 @@ namespace INTEGRA_7_Xamarin
 
         public PCMSynthTone(ReceivedData Data)
         {
-            t.Trace("public PCMSynthTone (" + "ReceivedData" + Data + ", " + ")");
+            //t.Trace("public PCMSynthTone (" + "ReceivedData" + Data + ", " + ")");
             pCMSynthTonePartial = new PCMSynthTonePartial(Data);
             pCMSynthToneCommon = new PCMSynthToneCommon(Data);
         }
@@ -4326,7 +4326,7 @@ namespace INTEGRA_7_Xamarin
     /// </summary>
     class PCMDrumKit
     {
-        HBTrace t = new HBTrace("class PCMDrumKit");
+        //HBTrace t = new HBTrace("class PCMDrumKit");
         public PCMDrumKitCommon pCMDrumKitCommon { get; set; }
         //public PCMDrumKitCommonMFX PCMDrumKitCommonMFX { get; set; }
         public PCMDrumKitCommonCompEQ pCMDrumKitCommonCompEQ { get; set; }
@@ -4335,7 +4335,7 @@ namespace INTEGRA_7_Xamarin
 
         public PCMDrumKit(ReceivedData Data)
         {
-            t.Trace("public PCMDrumKit (" + "ReceivedData" + Data + ", " + ")");
+            //t.Trace("public PCMDrumKit (" + "ReceivedData" + Data + ", " + ")");
             pCMDrumKitPartial = new PCMDrumKitPartial(Data);
             pCMDrumKitCommon = new PCMDrumKitCommon(Data);
         }
@@ -4343,20 +4343,20 @@ namespace INTEGRA_7_Xamarin
 
     class SuperNATURALAcousticTone
     {
-        HBTrace t = new HBTrace("class SuperNATURALAcousticTone");
+        //HBTrace t = new HBTrace("class SuperNATURALAcousticTone");
         public SuperNATURALAcousticToneCommon superNATURALAcousticToneCommon { get; set; }
         //public SuperNATURALAcousticToneMFX SuperNATURALAcousticToneMFX { get; set; }
 
         public SuperNATURALAcousticTone(ReceivedData Data)
         {
-            t.Trace("public SuperNATURALAcousticTone (" + "ReceivedData" + Data + ", " + ")");
+            //t.Trace("public SuperNATURALAcousticTone (" + "ReceivedData" + Data + ", " + ")");
             superNATURALAcousticToneCommon = new SuperNATURALAcousticToneCommon(Data);
         }
     }
 
     class SuperNATURALSynthTone
     {
-        HBTrace t = new HBTrace("class SuperNATURALSynthTone");
+        //HBTrace t = new HBTrace("class SuperNATURALSynthTone");
         public SuperNATURALSynthToneCommon superNATURALSynthToneCommon { get; set; }
         //public SuperNATURALSynthToneCommonMFX SuperNATURALSynthToneCommonMFX { get; set; }
         public SuperNATURALSynthTonePartial superNATURALSynthTonePartial { get; set; }
@@ -4364,7 +4364,7 @@ namespace INTEGRA_7_Xamarin
 
         public SuperNATURALSynthTone(ReceivedData Data)
         {
-            t.Trace("public SuperNATURALSynthTone (" + "ReceivedData" + Data + ", " + ")");
+            //t.Trace("public SuperNATURALSynthTone (" + "ReceivedData" + Data + ", " + ")");
             superNATURALSynthToneCommon = new SuperNATURALSynthToneCommon(Data);
         }
     }
@@ -4755,14 +4755,14 @@ namespace INTEGRA_7_Xamarin
 
     class SuperNATURALDrumKit
     {
-        HBTrace t = new HBTrace("class SuperNATURALDrumKit");
+        //HBTrace t = new HBTrace("class SuperNATURALDrumKit");
         public SuperNATURALDrumKitCommon SuperNATURALDrumKitCommon { get; set; }
         public SuperNATURALDrumKitCommonCompEQ SuperNATURALDrumKitCommonCompEQ { get; set; }
         public SuperNATURALDrumKitKey SuperNATURALDrumKitkey { get; set; }
 
         public SuperNATURALDrumKit(ReceivedData data)
         {
-            t.Trace("public SuperNATURALDrumKit (" + "receiveddata" + data + ", " + ")");
+            //t.Trace("public SuperNATURALDrumKit (" + "receiveddata" + data + ", " + ")");
             SuperNATURALDrumKitCommon = new SuperNATURALDrumKitCommon(data);
         }
     }
@@ -4805,7 +4805,7 @@ namespace INTEGRA_7_Xamarin
 
     class CommonMFX
     {
-        HBTrace t = new HBTrace("class CommonMFX");
+        //HBTrace t = new HBTrace("class CommonMFX");
         public byte MFXType { get; set; }
         public byte Reserve1 { get; set; }
         public byte MFXChorusSendLevel { get; set; }
@@ -4820,7 +4820,7 @@ namespace INTEGRA_7_Xamarin
 
         public CommonMFX(ReceivedData Data)
         {
-            t.Trace("public CommonMFX (" + "ReceivedData" + Data + ", " + ")");
+            //t.Trace("public CommonMFX (" + "ReceivedData" + Data + ", " + ")");
             sets = new ParameterSets();
             MFXControlSource = new byte[4];
             MFXControlSens = new byte[4];
@@ -4949,7 +4949,7 @@ namespace INTEGRA_7_Xamarin
 
     class PCMSynthToneCommon
     {
-        HBTrace t = new HBTrace("class PCMSynthToneCommon");
+        //HBTrace t = new HBTrace("class PCMSynthToneCommon");
         public String Name { get; set; }
         public byte Level { get; set; }
         public byte Pan { get; set; }
@@ -4981,7 +4981,7 @@ namespace INTEGRA_7_Xamarin
 
         public PCMSynthToneCommon(ReceivedData Data)
         {
-            t.Trace("public PCMSynthToneCommon (" + "ReceivedData" + Data + ", " + ")");
+            //t.Trace("public PCMSynthToneCommon (" + "ReceivedData" + Data + ", " + ")");
             MatrixControlSource = new byte[4];
             MatrixControlDestination = new byte[4][];
             MatrixControlSens = new byte[4][];
@@ -5035,7 +5035,7 @@ namespace INTEGRA_7_Xamarin
 
     class PCMSynthTonePMT // Partial Mapping Table
     {
-        HBTrace t = new HBTrace("class PCMSynthTonePMT // Partial Mapping Table");
+        //HBTrace t = new HBTrace("class PCMSynthTonePMT // Partial Mapping Table");
         public byte StructureType1_2 { get; set; }
         public byte Booster1_2 { get; set; }
         public byte StructureType3_4 { get; set; }
@@ -5053,7 +5053,7 @@ namespace INTEGRA_7_Xamarin
 
         public PCMSynthTonePMT(ReceivedData Data)
         {
-            t.Trace("public PCMSynthTonePMT (" + "ReceivedData" + Data + ", " + ")");
+            //t.Trace("public PCMSynthTonePMT (" + "ReceivedData" + Data + ", " + ")");
             PMTPartialSwitch = new Boolean[4];
             PMTKeyboardRangeLower = new byte[4];
             PMTKeyboardRangeUpper = new byte[4];
@@ -5086,7 +5086,7 @@ namespace INTEGRA_7_Xamarin
 
     class LFO
     {
-        HBTrace t = new HBTrace("class LFO");
+        //HBTrace t = new HBTrace("class LFO");
         public byte LFOWaveform { get; set; }
         public byte LFORate { get; set; }
         public byte LFOOffset { get; set; }
@@ -5103,7 +5103,7 @@ namespace INTEGRA_7_Xamarin
 
         public LFO(ReceivedData Data, byte msb, byte lsb)
         {
-            t.Trace("public LFO (" + "ReceivedData" + Data + ", " + "byte" + msb + ", " + "byte" + lsb + ", " + ")");
+            //t.Trace("public LFO (" + "ReceivedData" + Data + ", " + "byte" + msb + ", " + "byte" + lsb + ", " + ")");
             LFOWaveform = Data.GetByte(256 * msb + lsb + 0x00);
             LFORate = (byte)(16 * Data.GetByte(256 * msb + lsb + 0x01) + Data.GetByte(256 * msb + lsb + 0x02));
             LFOOffset = Data.GetByte(256 * msb + lsb + 0x03);
@@ -5122,7 +5122,7 @@ namespace INTEGRA_7_Xamarin
 
     class TVA
     {
-        HBTrace t = new HBTrace("class TVA");
+        //HBTrace t = new HBTrace("class TVA");
         public byte TVALevelVelocityCurve { get; set; }
         public byte TVALevelVelocitySens { get; set; }
         public byte TVAEnvTime1VelocitySens { get; set; }
@@ -5133,7 +5133,7 @@ namespace INTEGRA_7_Xamarin
 
         public TVA(ReceivedData Data, byte msb, byte lsb, Boolean keyFollow)
         {
-            t.Trace("public TVA (" + "ReceivedData" + Data + ", " + "byte" + msb + ", " + "byte" + lsb + ", " + ")");
+            //t.Trace("public TVA (" + "ReceivedData" + Data + ", " + "byte" + msb + ", " + "byte" + lsb + ", " + ")");
             TVAEnvTime = new byte[4];
             TVAEnvLevel = new byte[3];
 
@@ -5160,7 +5160,7 @@ namespace INTEGRA_7_Xamarin
 
     class TVF
     {
-        HBTrace t = new HBTrace("class TVF");
+        //HBTrace t = new HBTrace("class TVF");
         public byte TVFFilterType { get; set; }
         public byte TVFCutoffFrequency { get; set; }
         public byte TVFCutoffKeyfollow { get; set; }
@@ -5179,7 +5179,7 @@ namespace INTEGRA_7_Xamarin
 
         public TVF(ReceivedData Data, byte msb, byte lsb, Boolean keyFollow)
         {
-            t.Trace("public TVF (" + "ReceivedData" + Data + ", " + "byte" + msb + ", " + "byte" + lsb + ", " + ")");
+            //t.Trace("public TVF (" + "ReceivedData" + Data + ", " + "byte" + msb + ", " + "byte" + lsb + ", " + ")");
             TVFEnvTime = new byte[4];
             TVFEnvLevel = new byte[5];
 
@@ -5218,7 +5218,7 @@ namespace INTEGRA_7_Xamarin
 
     class WMT
     {
-        HBTrace t = new HBTrace("class WMT");
+        //HBTrace t = new HBTrace("class WMT");
         public Boolean WMTWaveSwitch { get; set; }
         public byte WMTWaveGroupType { get; set; }
         public UInt16 WMTWaveGroupID { get; set; }
@@ -5242,7 +5242,7 @@ namespace INTEGRA_7_Xamarin
 
         public WMT(ReceivedData Data, byte msb, byte lsb, byte index)
         {
-            t.Trace("public WMT (" + "ReceivedData" + Data + ", " + "byte" + msb + ", " + "byte" + lsb + ", " + "byte" + index + ", " + ")");
+            //t.Trace("public WMT (" + "ReceivedData" + Data + ", " + "byte" + msb + ", " + "byte" + lsb + ", " + "byte" + index + ", " + ")");
             UInt16 offset = (UInt16)(msb * 16 + lsb + 29 * index);
             WMTWaveSwitch = Data.GetByte(offset + 0x00) > 0;
             WMTWaveGroupType = Data.GetByte(offset + 0x01);
@@ -5269,7 +5269,7 @@ namespace INTEGRA_7_Xamarin
 
     class PitchEnv
     {
-        HBTrace t = new HBTrace("class PitchEnv");
+        //HBTrace t = new HBTrace("class PitchEnv");
         public byte PitchEnvDepth { get; set; }
         public byte PitchEnvVelocitySens { get; set; }
         public byte PitchEnvTime1VelocitySens { get; set; }
@@ -5280,7 +5280,7 @@ namespace INTEGRA_7_Xamarin
 
         public PitchEnv(ReceivedData Data, byte msb, byte lsb, Boolean keyFollow)
         {
-            t.Trace("public PitchEnv (" + "ReceivedData" + Data + ", " + "byte" + msb + ", " + "byte" + lsb + ", " + ")");
+            //t.Trace("public PitchEnv (" + "ReceivedData" + Data + ", " + "byte" + msb + ", " + "byte" + lsb + ", " + ")");
             PitchEnvTime = new byte[4];
             PitchEnvLevel = new byte[5];
 
@@ -5307,7 +5307,7 @@ namespace INTEGRA_7_Xamarin
 
     class PCMSynthTonePartial
     {
-        HBTrace t = new HBTrace("class PCMSynthTonePartial");
+        //HBTrace t = new HBTrace("class PCMSynthTonePartial");
         public TVA TVA { get; set; }
         public TVF TVF { get; set; }
         public LFO LFO1 { get; set; }
@@ -5351,7 +5351,7 @@ namespace INTEGRA_7_Xamarin
 
         public PCMSynthTonePartial(ReceivedData Data)
         {
-            t.Trace("public PCMSynthTonePartial (" + "ReceivedData" + Data + ", " + ")");
+            //t.Trace("public PCMSynthTonePartial (" + "ReceivedData" + Data + ", " + ")");
 
             TVA = new TVA(Data, 0x00, 0x61, true);
             TVF = new TVF(Data, 0x00, 0x48, true);
@@ -5410,7 +5410,7 @@ namespace INTEGRA_7_Xamarin
 
     class PCMSynthToneCommon2
     {
-        HBTrace t = new HBTrace("class PCMSynthToneCommon2");
+        //HBTrace t = new HBTrace("class PCMSynthToneCommon2");
         public byte ToneCategory { get; set; }
         public byte MissingInDocs { get; set; }
         public byte PhraseOctaveShift { get; set; }
@@ -5419,7 +5419,7 @@ namespace INTEGRA_7_Xamarin
 
         public PCMSynthToneCommon2(ReceivedData Data)
         {
-            t.Trace("public PCMSynthToneCommon2 (" + "ReceivedData" + Data + ", " + ")");
+            //t.Trace("public PCMSynthToneCommon2 (" + "ReceivedData" + Data + ", " + ")");
             ToneCategory = Data.GetByte(0x10);
             MissingInDocs = (byte)(16 * Data.GetByte(0x11) + Data.GetByte(0x12));
             PhraseOctaveShift = Data.GetByte(0x13);
@@ -5430,12 +5430,12 @@ namespace INTEGRA_7_Xamarin
 
     class PCMDrumKitCommon
     {
-        HBTrace t = new HBTrace("class PCMDrumKitCommon");
+        //HBTrace t = new HBTrace("class PCMDrumKitCommon");
         public String Name { get; set; }
         public byte DrumKitLevel { get; set; }
         public PCMDrumKitCommon(ReceivedData Data)
         {
-            t.Trace("public PCMDrumKitCommon (" + "ReceivedData" + Data + ", " + ")");
+            //t.Trace("public PCMDrumKitCommon (" + "ReceivedData" + Data + ", " + ")");
             Name = "";
             for (Int32 i = 0x00; i < 0x0c; i++)
             {
@@ -5447,7 +5447,7 @@ namespace INTEGRA_7_Xamarin
 
     class CompEq
     {
-        HBTrace t = new HBTrace("class CompEq");
+        //HBTrace t = new HBTrace("class CompEq");
         public Boolean CompSwitch { get; set; }
         public byte CompAttackTime { get; set; }
         public byte CompReleaseTime { get; set; }
@@ -5465,7 +5465,7 @@ namespace INTEGRA_7_Xamarin
 
         public void SetContent(byte i, ReceivedData Data)
         {
-            t.Trace("public void SetContent (" + "byte" + i + ", " + "ReceivedData" + Data + ", " + ")");
+            //t.Trace("public void SetContent (" + "byte" + i + ", " + "ReceivedData" + Data + ", " + ")");
             byte address = (byte)(i * 0x0e);
             CompSwitch = Data.GetByte(address + 0) > 0;
             CompAttackTime = Data.GetByte(address + 1);
@@ -5486,12 +5486,12 @@ namespace INTEGRA_7_Xamarin
 
     class PCMDrumKitCommonCompEQ
     {
-        HBTrace t = new HBTrace("class PCMDrumKitCommonCompEQ");
+        //HBTrace t = new HBTrace("class PCMDrumKitCommonCompEQ");
         public CompEq[] CompEq { get; set; } // [6]
 
         public PCMDrumKitCommonCompEQ(ReceivedData Data)
         {
-            t.Trace("public PCMDrumKitCommonCompEQ (" + "ReceivedData" + Data + ", " + ")");
+            //t.Trace("public PCMDrumKitCommonCompEQ (" + "ReceivedData" + Data + ", " + ")");
             CompEq = new CompEq[6];
             for (byte i = 0; i < 6; i++)
             {
@@ -5503,7 +5503,7 @@ namespace INTEGRA_7_Xamarin
 
     class PCMDrumKitPartial
     {
-        HBTrace t = new HBTrace("class PCMDrumKitPartial");
+        //HBTrace t = new HBTrace("class PCMDrumKitPartial");
         public TVF TVF { get; set; }
         public TVA TVA { get; set; }
         public WMT[] WMT { get; set; } // [4]
@@ -5533,7 +5533,7 @@ namespace INTEGRA_7_Xamarin
 
         public PCMDrumKitPartial(ReceivedData Data)
         {
-            t.Trace("public PCMDrumKitPartial (" + "ReceivedData" + Data + ", " + ")");
+            //t.Trace("public PCMDrumKitPartial (" + "ReceivedData" + Data + ", " + ")");
             TVF = new TVF(Data, 0x01, 0x22, false);
             TVA = new TVA(Data, 0x01, 0x36, false);
             WMT = new WMT[4];
@@ -5573,13 +5573,13 @@ namespace INTEGRA_7_Xamarin
 
     class PCMDrumKitCommon2
     {
-        HBTrace t = new HBTrace("class PCMDrumKitCommon2");
+        //HBTrace t = new HBTrace("class PCMDrumKitCommon2");
         public byte PhraseNumber { get; set; }
         public byte TFXSwitch { get; set; }
 
         public PCMDrumKitCommon2(ReceivedData Data)
         {
-            t.Trace("public PCMDrumKitCommon2 (" + "ReceivedData" + Data + ", " + ")");
+            //t.Trace("public PCMDrumKitCommon2 (" + "ReceivedData" + Data + ", " + ")");
             PhraseNumber = Data.Get2Byte(16);
             TFXSwitch = Data.GetByte(18);
         }
@@ -5587,7 +5587,7 @@ namespace INTEGRA_7_Xamarin
 
     class SuperNATURALSynthToneCommon
     {
-        HBTrace t = new HBTrace("class SuperNATURALSynthToneCommon");
+        //HBTrace t = new HBTrace("class SuperNATURALSynthToneCommon");
         public String Name { get; set; }
         public byte ToneLevel { get; set; }
         public Boolean PortamentoSwitch { get; set; }
@@ -5616,7 +5616,7 @@ namespace INTEGRA_7_Xamarin
 
         public SuperNATURALSynthToneCommon(ReceivedData Data)
         {
-            t.Trace("public SuperNATURALSynthToneCommon (" + "ReceivedData" + Data + ", " + ")");
+            //t.Trace("public SuperNATURALSynthToneCommon (" + "ReceivedData" + Data + ", " + ")");
             Name = "";
             for (byte i = 0; i < 0x0c; i++)
             {
@@ -5651,7 +5651,7 @@ namespace INTEGRA_7_Xamarin
 
     class SuperNATURALSynthTonePartial
     {
-        HBTrace t = new HBTrace("class SuperNATURALSynthTonePartial");
+        //HBTrace t = new HBTrace("class SuperNATURALSynthTonePartial");
         public byte OSCWave { get; set; }
         public byte OSCWaveVariation { get; set; }
         public byte OSCPitch { get; set; }
@@ -5709,7 +5709,7 @@ namespace INTEGRA_7_Xamarin
 
         public SuperNATURALSynthTonePartial(ReceivedData Data)
         {
-            t.Trace("public SuperNATURALSynthTonePartial (" + "ReceivedData" + Data + ", " + ")");
+            //t.Trace("public SuperNATURALSynthTonePartial (" + "ReceivedData" + Data + ", " + ")");
             OSCWave = Data.GetByte(0x00);
             OSCWaveVariation = Data.GetByte(0x01);
             OSCPitch = Data.GetByte(0x03);
@@ -5789,7 +5789,7 @@ namespace INTEGRA_7_Xamarin
 
     class SuperNATURALAcousticToneCommon
     {
-        HBTrace t = new HBTrace("class SuperNATURALAcousticToneCommon");
+        //HBTrace t = new HBTrace("class SuperNATURALAcousticToneCommon");
         public String Name { get; set; }
         public byte ToneLevel { get; set; }
         public byte MonoPoly { get; set; }
@@ -5843,7 +5843,7 @@ namespace INTEGRA_7_Xamarin
 
         public SuperNATURALAcousticToneCommon(ReceivedData Data)
         {
-            t.Trace("public SuperNATURALAcousticToneCommon (" + "ReceivedData" + Data + ", " + ")");
+            //t.Trace("public SuperNATURALAcousticToneCommon (" + "ReceivedData" + Data + ", " + ")");
             Name = "";
             for (byte i = 0; i < 0x0c; i++)
             {
@@ -5903,7 +5903,7 @@ namespace INTEGRA_7_Xamarin
 
     class SuperNATURALDrumKitCommon
     {
-        HBTrace t = new HBTrace("class SuperNATURALDrumKitCommon");
+        //HBTrace t = new HBTrace("class SuperNATURALDrumKitCommon");
         public String Name { get; set; }
         public byte KitLevel { get; set; }
         public byte AmbienceLevel { get; set; }
@@ -5912,7 +5912,7 @@ namespace INTEGRA_7_Xamarin
 
         public SuperNATURALDrumKitCommon(ReceivedData Data)
         {
-            t.Trace("public SuperNATURALDrumKitCommon (" + "ReceivedData" + Data + ", " + ")");
+            //t.Trace("public SuperNATURALDrumKitCommon (" + "ReceivedData" + Data + ", " + ")");
             Name = "";
             for (byte i = 0; i < 0x0c; i++)
             {
@@ -5927,7 +5927,7 @@ namespace INTEGRA_7_Xamarin
 
     class SuperNATURALDrumKitMFX
     {
-        HBTrace t = new HBTrace("class SuperNATURALDrumKitMFX");
+        //HBTrace t = new HBTrace("class SuperNATURALDrumKitMFX");
         public byte MFXType { get; set; }
         public byte MFXChorusSendLevel { get; set; }
         public byte MFXReverbSendLevel { get; set; }
@@ -5939,7 +5939,7 @@ namespace INTEGRA_7_Xamarin
 
         public SuperNATURALDrumKitMFX(ReceivedData Data)
         {
-            t.Trace("public SuperNATURALDrumKitMFX (" + "ReceivedData" + Data + ", " + ")");
+            //t.Trace("public SuperNATURALDrumKitMFX (" + "ReceivedData" + Data + ", " + ")");
             MFXControlSource = new byte[4];
             MFXControlSens = new byte[4];
             MFXControlAssign = new byte[4];
@@ -5959,12 +5959,12 @@ namespace INTEGRA_7_Xamarin
 
     class SuperNATURALDrumKitCommonCompEQ
     {
-        HBTrace t = new HBTrace("class SuperNATURALDrumKitCommonCompEQ");
+        //HBTrace t = new HBTrace("class SuperNATURALDrumKitCommonCompEQ");
         public CompEq[] CompEQ; // [6]
 
         public SuperNATURALDrumKitCommonCompEQ(ReceivedData Data)
         {
-            t.Trace("public SuperNATURALDrumKitCommonCompEQ (" + "ReceivedData" + Data + ", " + ")");
+            //t.Trace("public SuperNATURALDrumKitCommonCompEQ (" + "ReceivedData" + Data + ", " + ")");
             CompEQ = new CompEq[6];
             for (byte i = 0; i < 6; i++)
             {
@@ -5976,7 +5976,7 @@ namespace INTEGRA_7_Xamarin
 
     class SuperNATURALDrumKitKey
     {
-        HBTrace t = new HBTrace("class SuperNATURALDrumKitKey");
+        //HBTrace t = new HBTrace("class SuperNATURALDrumKitKey");
         public byte BankNumber { get; set; } // This is 0 for Internal and 1 for ExSN6. Read more in MakeDynamicControls.cs AddSupernaturalDrumKitDruminstrumentControls()
         public byte[] InstNumber { get; set; } // [2] 0 = iternal sound, 1 = ExSN6 sound
         public byte Level { get; set; }
@@ -5994,7 +5994,7 @@ namespace INTEGRA_7_Xamarin
 
         public SuperNATURALDrumKitKey(ReceivedData Data)
         {
-            t.Trace("public SuperNATURALDrumKitNote (" + "ReceivedData" + Data + ", " + ")");
+            //t.Trace("public SuperNATURALDrumKitNote (" + "ReceivedData" + Data + ", " + ")");
             InstNumber = new byte[2];
             UInt16 temp = Data.Get3Of4Byte(0);
             if (temp > 168)
@@ -6288,12 +6288,12 @@ namespace INTEGRA_7_Xamarin
 
     class NumberedParameterValues
     {
-        HBTrace t = new HBTrace("class NumberedParameterValues");
+        //HBTrace t = new HBTrace("class NumberedParameterValues");
         public UInt16[][] Parameters { get; set; }
 
         public NumberedParameterValues()
         {
-            t.Trace("public NumberedParameterValues()");
+            //t.Trace("public NumberedParameterValues()");
             Parameters = new UInt16[68][];
             for (byte i = 0; i < 68; i++)
             {
@@ -8618,19 +8618,19 @@ namespace INTEGRA_7_Xamarin
     }
     class ReceivedData
     {
-        HBTrace t = new HBTrace("class ReceivedData");
+        //HBTrace t = new HBTrace("class ReceivedData");
         public byte[] RawData { get; set; }
 
         public ReceivedData(byte[] RawData)
         {
-            t.Trace("public ReceivedData (" + "byte[]" + RawData + ", " + ")");
+            //t.Trace("public ReceivedData (" + "byte[]" + RawData + ", " + ")");
             this.RawData = RawData;
         }
 
         // Use when you have 2 bytes for where class object resides in parent class, and you have an offset into the current class:
         public byte GetByte(byte msb, byte lsb, byte offset)
         {
-            t.Trace("public byte GetByte (" + "byte" + msb + ", " + "byte" + lsb + ", " + "byte" + offset + ", " + ")");
+            //t.Trace("public byte GetByte (" + "byte" + msb + ", " + "byte" + lsb + ", " + "byte" + offset + ", " + ")");
             UInt16 Index = (UInt16)(128 * msb + lsb + offset);
             if (Index < RawData.Length - 11)
             {
@@ -8644,7 +8644,7 @@ namespace INTEGRA_7_Xamarin
 
         public byte GetByte(Int32 Index)
         {
-            t.Trace("public byte GetByte (" + "Int32" + Index + ", " + ")");
+            //t.Trace("public byte GetByte (" + "Int32" + Index + ", " + ")");
             // NOTE!
             // Addressing does NOT use msb. Index larger than 0x7f will start on new page, thus 0x00, 0x7f + 1 = 0x01, 0x00
             // Msb is never larger than 0x01, so math can be simplified.
@@ -8667,7 +8667,7 @@ namespace INTEGRA_7_Xamarin
         // Those addresses are marked with a # in the MIDI implementation chart.
         public byte Get2Byte(Int32 Index)
         {
-            t.Trace("public byte Get2Byte (" + "Int32" + Index + ", " + ")");
+            //t.Trace("public byte Get2Byte (" + "Int32" + Index + ", " + ")");
             if (Index < RawData.Length - 12 && Index > -1)
             {
                 return (byte)(16 * RawData[Index + 11] + RawData[Index + 12]);
@@ -8682,7 +8682,7 @@ namespace INTEGRA_7_Xamarin
         // but the functions gets bytes 3-4, 2-4 and 1-4 respectively.
         public byte Get2Of4Byte(Int32 Index)
         {
-            t.Trace("public byte Get2Of4Byte (" + "Int32" + Index + ", " + ")");
+            //t.Trace("public byte Get2Of4Byte (" + "Int32" + Index + ", " + ")");
             if (Index < RawData.Length - 14 && Index > -1)
             {
                 return (byte)(16 * RawData[Index + 13] + RawData[Index + 14]);
@@ -8695,7 +8695,7 @@ namespace INTEGRA_7_Xamarin
 
         public UInt16 Get3Of4Byte(Int32 Index)
         {
-            t.Trace("public byte Get3Of4Byte (" + "Int32" + Index + ", " + ")");
+            //t.Trace("public byte Get3Of4Byte (" + "Int32" + Index + ", " + ")");
             if (Index < RawData.Length - 14 && Index > -1)
             {
                 return (UInt16)(16 * 16 * RawData[Index + 12] + 16 * RawData[Index + 13] + RawData[Index + 14]);
@@ -8708,7 +8708,7 @@ namespace INTEGRA_7_Xamarin
 
         public UInt16 Get4Byte(Int32 Index)
         {
-            t.Trace("public UInt16 Get4Byte (" + "Int32" + Index + ", " + ")");
+            //t.Trace("public UInt16 Get4Byte (" + "Int32" + Index + ", " + ")");
             if (Index < RawData.Length - 14 && Index > -1)
             {
                 return (UInt16)(16 * 16 * 16 * RawData[Index + 11] + 16 * 16 * RawData[Index + 12] + 16 * RawData[Index + 13] + RawData[Index + 14]);

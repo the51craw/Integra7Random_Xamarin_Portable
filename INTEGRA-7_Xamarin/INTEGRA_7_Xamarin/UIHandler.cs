@@ -15,7 +15,7 @@ namespace INTEGRA_7_Xamarin
      */
     public partial class UIHandler
     {
-        private HBTrace t = new HBTrace("public sealed partial class MainPage : Page");
+        //private HBTrace t = new HBTrace("public sealed partial class MainPage : Page");
 
         public enum _appType
         {
@@ -155,12 +155,12 @@ namespace INTEGRA_7_Xamarin
             DrawFavoritesPage();
 
             commonState.midi = DependencyService.Get<IMidi>();
-            commonState.midi.Init("INTEGRA-7", mainPage);
+            //commonState.midi.Init("INTEGRA-7", mainPage);
 
             // Always start by showing librarian:
             page = _page.LIBRARIAN;
             ShowLibrarianPage();
-            QueryUserTones();
+            //QueryUserTones();
         }
 
         //public void ShowLibrarianPage()

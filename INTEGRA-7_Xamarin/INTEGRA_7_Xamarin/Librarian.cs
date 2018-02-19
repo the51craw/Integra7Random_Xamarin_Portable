@@ -309,7 +309,7 @@ namespace INTEGRA_7_Xamarin
 
         public void Librarian_MidiInPort_MessageReceived()
         {
-            t.Trace("private void MainPage_MidiInPort_MessageReceived");
+            //t.Trace("private void MainPage_MidiInPort_MessageReceived");
             if (queryType == QueryType.CHECKING_I_7_READINESS)
             {
                 integra_7Ready = true;
@@ -770,7 +770,7 @@ namespace INTEGRA_7_Xamarin
         {
             if (initDone)
             {
-                t.Trace("private void lvToneNames_SelectionChanged (" + "object" + sender + ", " + "SelectionChangedEventArgs" + e + ", " + ")");
+                //t.Trace("private void lvToneNames_SelectionChanged (" + "object" + sender + ", " + "SelectionChangedEventArgs" + e + ", " + ")");
                 if (initDone && !scanning)
                 {
                     if (Librarian_lvToneNames.SelectedItem != null && Librarian_lvToneNames.SelectedItem.ToString() != "")
@@ -819,7 +819,7 @@ namespace INTEGRA_7_Xamarin
         {
             if (initDone)
             {
-                t.Trace("private void lvSearchResults_SelectionChanged (" + "object" + sender + ", " + "SelectionChangedEventArgs" + e + ", " + ")");
+                //t.Trace("private void lvSearchResults_SelectionChanged (" + "object" + sender + ", " + "SelectionChangedEventArgs" + e + ", " + ")");
                 String soundName = (String)((ListView)sender).SelectedItem;
                 Boolean drumMap = false;
                 if (!String.IsNullOrEmpty(soundName))
@@ -913,7 +913,7 @@ namespace INTEGRA_7_Xamarin
         {
             if (initDone)
             {
-                t.Trace("private void tbSearch_TextChanged (" + "object" + sender + ", " + "TextChangedEventArgs" + e + ", " + ")");
+                //t.Trace("private void tbSearch_TextChanged (" + "object" + sender + ", " + "TextChangedEventArgs" + e + ", " + ")");
                 if (!String.IsNullOrEmpty(Librarian_tbSearch.Editor.Text))
                 {
                     AutoUpdateChildLists = false;
@@ -1000,6 +1000,9 @@ namespace INTEGRA_7_Xamarin
 
         private void Librarian_btnPlay_Clicked(object sender, EventArgs e)
         {
+//            Boolean response = await mainPage.DisplayAlert("INTEGRA_7 Librarian", "Do you want the librarian to scan your INTEGRA-7 for user tones, or will you only use the INTEGRA-7 preset tones?\r\n\r\n" +
+//                "Note: Scanning will change Tone on your INTEGRA-7, part 16.", "Yes", "No");
+            QueryUserTones();
         }
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1008,7 +1011,7 @@ namespace INTEGRA_7_Xamarin
 
         private Boolean IsInitTone(byte[] data)
         {
-            t.Trace("private Boolean IsInitTone (" + "byte[]" + data + ", " + ")");
+            //t.Trace("private Boolean IsInitTone (" + "byte[]" + data + ", " + ")");
             char[] init = "INIT TONE   ".ToCharArray();
             Boolean initTone = true;
             for (byte i = 0; i < 12; i++)
@@ -1024,7 +1027,7 @@ namespace INTEGRA_7_Xamarin
 
         private Boolean IsInitKit(byte[] data)
         {
-            t.Trace("private Boolean IsInitKit (" + "byte[]" + data + ", " + ")");
+            //t.Trace("private Boolean IsInitKit (" + "byte[]" + data + ", " + ")");
             char[] init = "INIT KIT    ".ToCharArray();
             Boolean initTone = true;
             for (byte i = 0; i < 12; i++)
@@ -1082,7 +1085,7 @@ namespace INTEGRA_7_Xamarin
         // These 5 functions will change program on channel 16 and query to get the name.
         private void QueryUserPCMSyntTones()
         {
-            t.Trace("private void QueryUserPCMSyntTones()");
+            //t.Trace("private void QueryUserPCMSyntTones()");
             commonState.midi.ProgramChange(0x0f, msb, lsb, pc);
             byte[] address = new byte[] { 0x1c, 0x60, 0x00, 0x00 };
             byte[] length = new byte[] { 0x00, 0x00, 0x00, 0x0c };
@@ -1092,7 +1095,7 @@ namespace INTEGRA_7_Xamarin
         }
         private void QueryUserPCMDrumKitTones()
         {
-            t.Trace("private void QueryUserPCMDrumKitTones()");
+            //t.Trace("private void QueryUserPCMDrumKitTones()");
             commonState.midi.ProgramChange(0x0f, msb, lsb, pc);
             byte[] address = new byte[] { 0x1c, 0x70, 0x00, 0x00 };
             byte[] length = new byte[] { 0x00, 0x00, 0x00, 0x0c };
@@ -1102,7 +1105,7 @@ namespace INTEGRA_7_Xamarin
         }
         private void QueryPcmDrumKitKeyName(byte Key)
         {
-            t.Trace("private void QueryPcmDrumKitKeyName()");
+            //t.Trace("private void QueryPcmDrumKitKeyName()");
             byte[] address = new byte[] { 0x1c, 0x70, 0x10, 0x00 };
             address = hex2Midi.AddBytes128(address, new byte[] { 0x00, 0x00, Key, 0x00 });
             address = hex2Midi.AddBytes128(address, new byte[] { 0x00, 0x00, Key, 0x00 });
@@ -1113,7 +1116,7 @@ namespace INTEGRA_7_Xamarin
         }
         private void QueryUserSuperNaturalAcousticTones()
         {
-            t.Trace("private void QueryUserSuperNaturalAcousticTones()");
+            //t.Trace("private void QueryUserSuperNaturalAcousticTones()");
             commonState.midi.ProgramChange(0x0f, msb, lsb, pc);
             byte[] address = new byte[] { 0x1c, 0x62, 0x00, 0x00 };
             byte[] length = new byte[] { 0x00, 0x00, 0x00, 0x46 };
@@ -1123,7 +1126,7 @@ namespace INTEGRA_7_Xamarin
         }
         private void QueryUserSuperNaturalSynthTones()
         {
-            t.Trace("private void QueryUserSuperNaturalSynthTones()");
+            //t.Trace("private void QueryUserSuperNaturalSynthTones()");
             commonState.midi.ProgramChange(0x0f, msb, lsb, pc);
             byte[] address = new byte[] { 0x1c, 0x61, 0x00, 0x00 };
             byte[] length = new byte[] { 0x00, 0x00, 0x00, 0x40 };
@@ -1133,7 +1136,7 @@ namespace INTEGRA_7_Xamarin
         }
         private void QueryUserSuperNaturalDrumKitTones()
         {
-            t.Trace("private void QueryUserSuperNaturalDrumKitTones()");
+            //t.Trace("private void QueryUserSuperNaturalDrumKitTones()");
             commonState.midi.ProgramChange(0x0f, msb, lsb, pc);
             byte[] address = new byte[] { 0x1c, 0x63, 0x00, 0x00 };
             byte[] length = new byte[] { 0x00, 0x00, 0x00, 0x0e };
@@ -1143,7 +1146,7 @@ namespace INTEGRA_7_Xamarin
         }
         private void QuerySnDrumKitKeyName(byte Key)
         {
-            t.Trace("private void QuerySnDrumKitKeyName()");
+            //t.Trace("private void QuerySnDrumKitKeyName()");
             byte[] address = new byte[] { 0x1c, 0x63, 0x10, 0x00 };
             address = hex2Midi.AddBytes128(address, new byte[] { 0x00, 0x00, Key, 0x00 });
             byte[] length = new byte[] { 0x00, 0x00, 0x00, 0x04 };
@@ -1153,7 +1156,7 @@ namespace INTEGRA_7_Xamarin
         }
         private void QuerySelectedStudioSet()
         {
-            t.Trace("private void QuerySelectedStudioSet()");
+            //t.Trace("private void QuerySelectedStudioSet()");
             commonState.midi.ProgramChange(0x0f, msb, lsb, pc);
             byte[] address = new byte[] { 0x01, 0x00, 0x00, 0x00 };
             byte[] length = new byte[] { 0x00, 0x00, 0x00, 0x07 };
@@ -1164,7 +1167,7 @@ namespace INTEGRA_7_Xamarin
 
         private void QuerySelectedTone()
         {
-            t.Trace("private void QuerySelectedTone()");
+            //t.Trace("private void QuerySelectedTone()");
             commonState.midi.ProgramChange(0x0f, msb, lsb, pc);
             byte[] address = new byte[] { 0x18, 0x00, (byte)(0x20 + commonState.CurrentPart), 0x00 };
             byte[] length = new byte[] { 0x00, 0x00, 0x00, 0x09 };
@@ -1205,7 +1208,7 @@ namespace INTEGRA_7_Xamarin
 
         private void PopulateCategories(String group)
         {
-            t.Trace("private void PopulateCategories (" + "String" + group + ", " + ")");
+            //t.Trace("private void PopulateCategories (" + "String" + group + ", " + ")");
             //commonState.currentTone.Group = group;
             String lastCategory = "";
             allowListViewUpdates = false;
@@ -1234,7 +1237,7 @@ namespace INTEGRA_7_Xamarin
 
         private void PopulateToneNames(String category)
         {
-            t.Trace("private void PopulateToneNames (" + "String" + category + ", " + ")");
+            //t.Trace("private void PopulateToneNames (" + "String" + category + ", " + ")");
             if (initDone || !scanning)
             {
                 try
@@ -1373,7 +1376,7 @@ namespace INTEGRA_7_Xamarin
 
         private void PopulateToneData(Int32 Index)
         {
-            t.Trace("private void PopulateToneData (" + "Int32" + Index + ", " + ")");
+            //t.Trace("private void PopulateToneData (" + "Int32" + Index + ", " + ")");
             if (Index > -1)
             {
                 List<String> tone = commonState.toneList.Tones[Index];
@@ -1399,7 +1402,7 @@ namespace INTEGRA_7_Xamarin
 
         private void UpdateDrumNames()
         {
-            t.Trace("private void UpdateDrumNames()");
+            //t.Trace("private void UpdateDrumNames()");
             //ClearKeyNames();
             if (commonState.currentTone.Category == "Drum" && commonState.drumKeyAssignLists.KeyboardNameList(commonState.currentTone.Group, commonState.currentTone.Name) != null)
             {
@@ -1423,7 +1426,7 @@ namespace INTEGRA_7_Xamarin
         }
         private Boolean IsFavorite()
         {
-            t.Trace("private Boolean IsFavorite()");
+            //t.Trace("private Boolean IsFavorite()");
             if (commonState.favoritesList != null)
             {
                 foreach (FavoritesFolder folder in commonState.favoritesList.folders)
@@ -1546,7 +1549,7 @@ namespace INTEGRA_7_Xamarin
 
         //private void ClearKeyNames()
         //{
-        //    t.Trace("private void ClearKeyNames()");
+        //    //t.Trace("private void ClearKeyNames()");
         //    for (Int32 key = 0; key < 61; key++)
         //    {
         //        SetKeyText(key, "");
@@ -1555,7 +1558,7 @@ namespace INTEGRA_7_Xamarin
 
         //private void SetKeyText(Int32 Key, String Text)
         //{
-        //    t.Trace("private void SetKeyText (" + "Int32" + Key + ", " + "String" + Text + ", " + ")");
+        //    //t.Trace("private void SetKeyText (" + "Int32" + Key + ", " + "String" + Text + ", " + ")");
         //    switch (Key)
         //    {
         //        case 0:
@@ -1746,7 +1749,7 @@ namespace INTEGRA_7_Xamarin
 
         //private void PlayNote(byte note, Int32 length)
         //{
-        //    t.Trace("private void PlayNote (" + "byte" + note + ", " + "Int32" + length + ", " + ")");
+        //    //t.Trace("private void PlayNote (" + "byte" + note + ", " + "Int32" + length + ", " + ")");
         //    commonState.midi.NoteOn(commonState.CurrentPart, note, 92);
         //    Task.Delay(length).Wait();
         //    commonState.midi.NoteOff(commonState.CurrentPart, note);
@@ -1754,7 +1757,7 @@ namespace INTEGRA_7_Xamarin
 
         //private void SetFavorite()
         //{
-        //    t.Trace("private void SetFavorite()");
+        //    //t.Trace("private void SetFavorite()");
         //    btnAddFavorite.IsEnabled = true;
         //    btnRemoveFavorite.IsEnabled = true;
         //}
