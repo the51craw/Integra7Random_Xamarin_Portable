@@ -12,9 +12,10 @@ namespace INTEGRA_7_Xamarin
         {
             ALL = 0,
             PRESET = 1,
-            USER = 2
+            USER = 2,
+            INIT = 3,
         }
-        ToneNamesFilter toneNamesFilter = ToneNamesFilter.ALL;
+        ToneNamesFilter toneNamesFilter = ToneNamesFilter.INIT;
 
         // Librarian controls:
         public Picker Librarian_midiOutputDevice { get; set; }
@@ -62,6 +63,19 @@ namespace INTEGRA_7_Xamarin
         Image Librarian_Keyboard;
 
         SuperNATURALDrumKitInstrumentList superNATURALDrumKitInstrumentList = new SuperNATURALDrumKitInstrumentList();
+
+        public void Librarian_Init()
+        {
+            //t.Trace("private void Librarian_Init()");
+            //localSettings = ApplicationData.Current.LocalSettings;
+            //green = new SolidColorBrush(Windows.UI.Color.FromArgb(255, 155, 232, 130));
+            //gray = new SolidColorBrush(Windows.UI.Color.FromArgb(255, 204, 204, 204));
+            //userToneNumbers = new UInt16[128];
+            //for (byte i = 0; i < 128; i++)
+            //{
+            //    userToneNumbers[i] = 0;
+            //}
+        }
 
         public void DrawLibrarianPage()
         {
@@ -128,7 +142,7 @@ namespace INTEGRA_7_Xamarin
 
             // Make a filter button for column 2:
             Librarian_filterPresetAndUser = new Button();
-            Librarian_filterPresetAndUser.Text = "Preset and User";
+            Librarian_filterPresetAndUser.Text = "Load user tones";
             Librarian_filterPresetAndUser.BackgroundColor = colorSettings.Background;
 
             // Make listviews lvToneNames and lvSearchResult for column 2:
@@ -763,7 +777,6 @@ namespace INTEGRA_7_Xamarin
                 PopulateToneNames(Librarian_lvCategories.SelectedItem.ToString());
                 allowListViewUpdates = true;
             }
-
         }
 
         private void Librarian_LvToneNames_ItemSelected(object sender, SelectedItemChangedEventArgs e)
@@ -812,7 +825,6 @@ namespace INTEGRA_7_Xamarin
                     }
                 }
             }
-
         }
 
         private void Librarian_lvSearchResult_ItemSelected(object sender, SelectedItemChangedEventArgs e)
@@ -878,6 +890,9 @@ namespace INTEGRA_7_Xamarin
         {
             switch (toneNamesFilter)
             {
+                case ToneNamesFilter.INIT:
+                    QueryUserTones();
+                    break;
                 case ToneNamesFilter.ALL:
                     toneNamesFilter = ToneNamesFilter.PRESET;
                     Librarian_filterPresetAndUser.Text = "Preset tones only";
@@ -888,7 +903,7 @@ namespace INTEGRA_7_Xamarin
                     break;
                 case ToneNamesFilter.USER:
                     toneNamesFilter = ToneNamesFilter.ALL;
-                    Librarian_filterPresetAndUser.Text = "Presets and user tones";
+                    Librarian_filterPresetAndUser.Text = "Preset and user tones";
                     break;
             }
             PopulateToneNames(Librarian_lvCategories.SelectedItem.ToString());
@@ -1000,8 +1015,6 @@ namespace INTEGRA_7_Xamarin
 
         private void Librarian_btnPlay_Clicked(object sender, EventArgs e)
         {
-//            Boolean response = await mainPage.DisplayAlert("INTEGRA_7 Librarian", "Do you want the librarian to scan your INTEGRA-7 for user tones, or will you only use the INTEGRA-7 preset tones?\r\n\r\n" +
-//                "Note: Scanning will change Tone on your INTEGRA-7, part 16.", "Yes", "No");
             QueryUserTones();
         }
 
@@ -1049,7 +1062,6 @@ namespace INTEGRA_7_Xamarin
             // Start with PCM Synth Tone, MainPage_MidiInPort_MessageReceived and Timer_Tick will handle the rest:
             Boolean response = await mainPage.DisplayAlert("INTEGRA_7 Librarian", "Do you want the librarian to scan your INTEGRA-7 for user tones, or will you only use the INTEGRA-7 preset tones?\r\n\r\n" +
                 "Note: Scanning will change Tone on your INTEGRA-7, part 16.", "Yes", "No");
-            if (response)
             //MessageDialog warning = new MessageDialog("Do you want the librarian to scan your INTEGRA-7 for user tones, or will you only use the INTEGRA-7 preset tones?\r\n\r\n" +
             //    "Note: Scanning will change Tone on your INTEGRA-7, part 16. If you have unsaved data, save before tapping or clicking \'Scan...\'!\r\n\r\n" +
             //    "This could take a while, so please select scanning option below:");
@@ -1063,12 +1075,15 @@ namespace INTEGRA_7_Xamarin
             //}
             if (response)
             {
-                scanAll = await mainPage.DisplayAlert("INTEGRA_7 Librarian", "This could take a while, so please select scanning option below:", "Scan all user tone slots", "Scan until 10 empty slots found in row");
+                toneNamesFilter = ToneNamesFilter.ALL;
+                Librarian_filterPresetAndUser.Text = "Preset and user tones";
+                scanAll = await mainPage.DisplayAlert("INTEGRA_7 Librarian", "This could take a while, so please select scanning option below:", "Scan all user tone slots", "Scan only until 10 empty slots are found in row");
                 msb = 87;
                 lsb = 0;
                 pc = 1;
                 emptySlots = 10;
                 scanning = true;
+                userToneNumbers = new ushort[128];
                 for (byte i = 0; i < 128; i++)
                 {
                     userToneNumbers[i] = 0;
@@ -1270,6 +1285,7 @@ namespace INTEGRA_7_Xamarin
                         if (tone[0] == group && tone[1] == category
                             && (toneNamesFilter == ToneNamesFilter.USER && tone[8] == "(User)"
                             || toneNamesFilter == ToneNamesFilter.PRESET && tone[8] != "(User)"
+                            || toneNamesFilter == ToneNamesFilter.INIT
                             || toneNamesFilter == ToneNamesFilter.ALL))
                         {
                             Librarian_ToneNames.Add(tone[3]);
@@ -1337,8 +1353,10 @@ namespace INTEGRA_7_Xamarin
             foreach (List<String> tone in commonState.toneList.Tones)
             {
                 if (tone[3].ToLower().Contains(searchString)
-                    && ((toneNamesFilter != ToneNamesFilter.PRESET && tone[8] == "(User)")
-                    || (toneNamesFilter != ToneNamesFilter.USER && tone[8] == "(Preset)")))
+                    && (toneNamesFilter == ToneNamesFilter.USER && tone[8] == "(User)"
+                    || toneNamesFilter == ToneNamesFilter.PRESET && tone[8] != "(User)"
+                    || toneNamesFilter == ToneNamesFilter.INIT
+                    || toneNamesFilter == ToneNamesFilter.ALL))
                 {
                     Librarian_SearchResult.Add(tone[3] + ", " + tone[0] + ", " + tone[1]);
                 }

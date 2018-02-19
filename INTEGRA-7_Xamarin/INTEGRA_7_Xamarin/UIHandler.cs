@@ -155,12 +155,11 @@ namespace INTEGRA_7_Xamarin
             DrawFavoritesPage();
 
             commonState.midi = DependencyService.Get<IMidi>();
-            //commonState.midi.Init("INTEGRA-7", mainPage);
+            commonState.midi.Init("INTEGRA-7", mainPage);
 
             // Always start by showing librarian:
             page = _page.LIBRARIAN;
             ShowLibrarianPage();
-            //QueryUserTones();
         }
 
         //public void ShowLibrarianPage()

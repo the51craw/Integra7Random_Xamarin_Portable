@@ -649,7 +649,7 @@ namespace INTEGRA_7_Xamarin
             pcmToneCategoryNames = new String[] { "No Assign", "AC.Piano", "", "", "E.Piano", "", "Organ", "", "", "Other Keyboards",
             "", "", "Accordeon/Harmonica", "", "Bell/Mallet", "", "Ac.Guitar", "E.Guitar", "Dist.Guitar", "Ac.Bass", "E.Bass",
             "Synth Bass", "Plucked/Stroke", "Strings", "", "", "Brass", "", "Wind", "Flute", "Sax", "Recorder", "Vox/Choir",
-            "Synth Lead", "Synth Brass", "Synth Pad/Strings", "Synth Bellpad", "Synth PolyKey", "FX", "Synth Seq/Pop", "Phrase",
+            "Synth Lead", "Synth Brass", "Synth Pad/Strings", "Synth Bellpad", "Synth PolyKey", "", "FX", "Synth Seq/Pop", "Phrase",
             "Pulsating", "Beat&Groove", "Hit", "SoundFx", "Drums", "Percussion", "Combination" };
             snsToneCategoryNames = new String[] { "No assign", "Ac.Piano", "", "", "", "E.Piano", "", "Organ", "", "", "", "Other Keyboards",
             "", "", "Accordion/Harmonica", "", "Bell/Mallet", "Ac.Guitar", "E.Guitar", "Dist.Guitar", "Ac.Bass", "E.Bass",

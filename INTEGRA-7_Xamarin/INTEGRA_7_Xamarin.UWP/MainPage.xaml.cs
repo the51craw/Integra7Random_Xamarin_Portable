@@ -79,8 +79,6 @@ namespace INTEGRA_7_Xamarin.UWP
             // corresponding Pickers in the Xamarin code.
             OutputSelector = mainPage.uIHandler.Librarian_midiOutputDevice;
             InputSelector = mainPage.uIHandler.Librarian_midiInputDevice;
-            midi = new MIDI(mainPage, this, OutputSelector, InputSelector, 0, 0);
-            midi.Init("INTEGRA-7");
         }
 
         private void Btn0_Click(object sender, RoutedEventArgs e)
