@@ -330,113 +330,66 @@ namespace INTEGRA_7_Xamarin
             }
             else if (initDone || scanning)
             {
-                if (rawData[0] == 0xf0) // handle system exclusive messages only
+                try
                 {
-                    byte[] data = rawData;
-                    switch (queryType)
+                    if (rawData[0] == 0xf0) // handle system exclusive messages only
                     {
-                        case QueryType.PCM_SYNTH_TONE_COMMON:
-                            // This is the first user tone.
-                            // Its index should be set to continue after the preset tones:
-                            userToneIndex = commonState.toneList.PresetsCount;
-                            if (!IsInitTone(data))
-                            {
-                                toneName = "";
-                                for (byte i = 0; i < 12; i++)
+                        byte[] data = rawData;
+                        switch (queryType)
+                        {
+                            case QueryType.PCM_SYNTH_TONE_COMMON:
+                                // This is the first user tone.
+                                // Its index should be set to continue after the preset tones:
+                                userToneIndex = commonState.toneList.PresetsCount;
+                                if (!IsInitTone(data))
                                 {
-                                    toneName += (char)data[i + 11];
-                                }
-                                toneName = toneName.Trim();
-                                commonState.toneNames[0].Add(toneName);
-                                // Also read common2 to get tone category:
-                                byte[] address = new byte[] { 0x1c, 0x60, 0x30, 0x00 };
-                                byte[] length = new byte[] { 0x00, 0x00, 0x00, 0x3c };
-                                byte[] message = commonState.midi.SystemExclusiveRQ1Message(address, length);
-                                commonState.midi.SendSystemExclusive(message);
-                                queryType = QueryType.PCM_SYNTH_TONE_COMMON2;
-                            }
-                            else
-                            {
-                                commonState.toneNames[0].Add("INIT TONE");
-                                emptySlots++;
-                                pc++;
-                                if (pc > 128 || (!scanAll && emptySlots > 10))
-                                {
-                                    lsb++;
-                                    pc = 1;
-                                    if (lsb > 1)
+                                    toneName = "";
+                                    for (byte i = 0; i < 12; i++)
                                     {
-                                        // No more patches to test!
-                                        while (commonState.toneNames[0].Count() < 256)
-                                        {
-                                            commonState.toneNames[0].Add("INIT TONE");
-                                        }
-                                        msb = 86;
-                                        lsb = 0;
+                                        toneName += (char)data[i + 11];
+                                    }
+                                    toneName = toneName.Trim();
+                                    commonState.toneNames[0].Add(toneName);
+                                    // Also read common2 to get tone category:
+                                    byte[] address = new byte[] { 0x1c, 0x60, 0x30, 0x00 };
+                                    byte[] length = new byte[] { 0x00, 0x00, 0x00, 0x3c };
+                                    byte[] message = commonState.midi.SystemExclusiveRQ1Message(address, length);
+                                    commonState.midi.SendSystemExclusive(message);
+                                    queryType = QueryType.PCM_SYNTH_TONE_COMMON2;
+                                }
+                                else
+                                {
+                                    commonState.toneNames[0].Add("INIT TONE");
+                                    emptySlots++;
+                                    pc++;
+                                    if (pc > 128 || (!scanAll && emptySlots > 10))
+                                    {
+                                        lsb++;
                                         pc = 1;
-                                        emptySlots = 0;
-                                        QueryUserPCMDrumKitTones();
-                                        break;
+                                        if (lsb > 1)
+                                        {
+                                            // No more patches to test!
+                                            while (commonState.toneNames[0].Count() < 256)
+                                            {
+                                                commonState.toneNames[0].Add("INIT TONE");
+                                            }
+                                            msb = 86;
+                                            lsb = 0;
+                                            pc = 1;
+                                            emptySlots = 0;
+                                            QueryUserPCMDrumKitTones();
+                                            break;
+                                        }
                                     }
+                                    // Check next:
+                                    QueryUserPCMSyntTones();
                                 }
-                                // Check next:
-                                QueryUserPCMSyntTones();
-                            }
-                            break;
-                        case QueryType.PCM_SYNTH_TONE_COMMON2:
-                            toneCategory = data[0x1b];
-                            List<String> tone = new List<String>();
-                            tone.Add("PCM Synth Tone");
-                            tone.Add(toneCategories.pcmToneCategoryNames[toneCategory]);
-                            tone.Add((userToneNumbers[toneCategory]++).ToString());
-                            tone.Add(toneName);
-                            tone.Add(msb.ToString());
-                            tone.Add(lsb.ToString());
-                            tone.Add((msb * 128 + lsb).ToString());
-                            tone.Add(pc.ToString());
-                            tone.Add("(User)");
-                            tone.Add((userToneIndex++).ToString());
-                            commonState.toneList.Tones.Add(tone);
-                            pc++;
-                            if (pc > 128 || (!scanAll && emptySlots > 10))
-                            {
-                                lsb++;
-                                pc = 1;
-                                if (lsb > 1 || (!scanAll && emptySlots > 10))
-                                {
-                                    // No more patches to test!
-                                    while (commonState.toneNames[0].Count() < 256)
-                                    {
-                                        commonState.toneNames[0].Add("INIT TONE");
-                                    }
-                                    msb = 86;
-                                    lsb = 0;
-                                    pc = 1;
-                                    emptySlots = 10;
-                                    for (byte i = 0; i < 128; i++)
-                                    {
-                                        userToneNumbers[i] = 0;
-                                    }
-                                    QueryUserPCMDrumKitTones();
-                                    break;
-                                }
-                            }
-                            // Check next:
-                            QueryUserPCMSyntTones();
-                            break;
-                        case QueryType.PCM_DRUM_KIT_COMMON:
-                            if (!IsInitKit(data))
-                            {
-                                toneName = "";
-                                for (byte i = 0; i < 12; i++)
-                                {
-                                    toneName += (char)data[i + 11];
-                                }
-                                toneName = toneName.Trim();
-                                commonState.toneNames[1].Add(toneName);
-                                tone = new List<String>();
-                                tone.Add("PCM Drum Kit");
-                                tone.Add("Drum");
+                                break;
+                            case QueryType.PCM_SYNTH_TONE_COMMON2:
+                                toneCategory = data[0x1b];
+                                List<String> tone = new List<String>();
+                                tone.Add("PCM Synth Tone");
+                                tone.Add(toneCategories.pcmToneCategoryNames[toneCategory]);
                                 tone.Add((userToneNumbers[toneCategory]++).ToString());
                                 tone.Add(toneName);
                                 tone.Add(msb.ToString());
@@ -446,61 +399,69 @@ namespace INTEGRA_7_Xamarin
                                 tone.Add("(User)");
                                 tone.Add((userToneIndex++).ToString());
                                 commonState.toneList.Tones.Add(tone);
-                                // Create a list for the key names:
-                                commonState.drumKeyAssignLists.ToneNames.Add(new List<String>());
-                                commonState.drumKeyAssignLists.ToneNames[commonState.drumKeyAssignLists.ToneNames.Count - 1].Add("PCM Drum Kit");
-                                commonState.drumKeyAssignLists.ToneNames[commonState.drumKeyAssignLists.ToneNames.Count - 1].Add(toneName);
-                                // Read all key names:
-                                key = 0;
-                                QueryPcmDrumKitKeyName(key);
+                                pc++;
+                                if (pc > 128 || (!scanAll && emptySlots > 10))
+                                {
+                                    lsb++;
+                                    pc = 1;
+                                    if (lsb > 1 || (!scanAll && emptySlots > 10))
+                                    {
+                                        // No more patches to test!
+                                        while (commonState.toneNames[0].Count() < 256)
+                                        {
+                                            commonState.toneNames[0].Add("INIT TONE");
+                                        }
+                                        msb = 86;
+                                        lsb = 0;
+                                        pc = 1;
+                                        emptySlots = 10;
+                                        for (byte i = 0; i < 128; i++)
+                                        {
+                                            userToneNumbers[i] = 0;
+                                        }
+                                        QueryUserPCMDrumKitTones();
+                                        break;
+                                    }
+                                }
+                                // Check next:
+                                QueryUserPCMSyntTones();
                                 break;
-                            }
-                            else
-                            {
-                                commonState.toneNames[1].Add("INIT KIT");
-                                emptySlots++;
-                            }
-                            pc++;
-                            if (pc > 32 || (!scanAll && emptySlots > 10))
-                            {
-                                // No more patches to test!
-                                while (commonState.toneNames[1].Count() < 32)
+                            case QueryType.PCM_DRUM_KIT_COMMON:
+                                if (!IsInitKit(data))
+                                {
+                                    toneName = "";
+                                    for (byte i = 0; i < 12; i++)
+                                    {
+                                        toneName += (char)data[i + 11];
+                                    }
+                                    toneName = toneName.Trim();
+                                    commonState.toneNames[1].Add(toneName);
+                                    tone = new List<String>();
+                                    tone.Add("PCM Drum Kit");
+                                    tone.Add("Drum");
+                                    tone.Add((userToneNumbers[toneCategory]++).ToString());
+                                    tone.Add(toneName);
+                                    tone.Add(msb.ToString());
+                                    tone.Add(lsb.ToString());
+                                    tone.Add((msb * 128 + lsb).ToString());
+                                    tone.Add(pc.ToString());
+                                    tone.Add("(User)");
+                                    tone.Add((userToneIndex++).ToString());
+                                    commonState.toneList.Tones.Add(tone);
+                                    // Create a list for the key names:
+                                    commonState.drumKeyAssignLists.ToneNames.Add(new List<String>());
+                                    commonState.drumKeyAssignLists.ToneNames[commonState.drumKeyAssignLists.ToneNames.Count - 1].Add("PCM Drum Kit");
+                                    commonState.drumKeyAssignLists.ToneNames[commonState.drumKeyAssignLists.ToneNames.Count - 1].Add(toneName);
+                                    // Read all key names:
+                                    key = 0;
+                                    QueryPcmDrumKitKeyName(key);
+                                    break;
+                                }
+                                else
                                 {
                                     commonState.toneNames[1].Add("INIT KIT");
+                                    emptySlots++;
                                 }
-                                msb = 89;
-                                lsb = 0;
-                                pc = 1;
-                                emptySlots = 10;
-                                for (byte i = 0; i < 128; i++)
-                                {
-                                    userToneNumbers[i] = 0;
-                                }
-                                emptySlots = 0;
-                                QueryUserSuperNaturalAcousticTones();
-                                break;
-                            }
-                            // Check next:
-                            QueryUserPCMDrumKitTones();
-                            break;
-                        case QueryType.PCM_KEY_NAME:
-                            // Put the name into the list:
-                            String name = "";
-                            for (byte i = 0; i < 12; i++)
-                            {
-                                name += (char)data[i + 11];
-                            }
-                            commonState.drumKeyAssignLists.ToneNames[commonState.drumKeyAssignLists.ToneNames.Count - 1].Add(name);
-                            // Query next if more is expected:
-                            key++;
-                            if (key < 88)
-                            {
-                                // Query next key:
-                                QueryPcmDrumKitKeyName(key);
-                            }
-                            else
-                            {
-                                // Query next PCM Drum Kit:
                                 pc++;
                                 if (pc > 32 || (!scanAll && emptySlots > 10))
                                 {
@@ -523,240 +484,283 @@ namespace INTEGRA_7_Xamarin
                                 }
                                 // Check next:
                                 QueryUserPCMDrumKitTones();
-                            }
-                            break;
-                        case QueryType.SUPERNATURAL_ACOUSTIC_TONE_COMMON:
-                            if (!IsInitTone(data))
-                            {
-                                toneCategory = data[0x26];
-                                toneName = "";
-                                for (byte i = 0; i < 12; i++)
-                                {
-                                    toneName += (char)data[i + 11];
-                                }
-                                toneName = toneName.Trim();
-                                commonState.toneNames[2].Add(toneName);
-                                tone = new List<String>();
-                                tone.Add("SuperNATURAL Acoustic Tone");
-                                tone.Add(toneCategories.snaToneCategoryNames[toneCategory]);
-                                tone.Add((userToneNumbers[toneCategory]++).ToString());
-                                tone.Add(toneName);
-                                tone.Add(msb.ToString());
-                                tone.Add(lsb.ToString());
-                                tone.Add((msb * 128 + lsb).ToString());
-                                tone.Add(pc.ToString());
-                                tone.Add("(User)");
-                                tone.Add((userToneIndex++).ToString());
-                                commonState.toneList.Tones.Add(tone);
-                            }
-                            else
-                            {
-                                commonState.toneNames[2].Add("INIT TONE");
-                                emptySlots++;
-                            }
-                            pc++;
-                            if (pc > 128 || (!scanAll && emptySlots > 10))
-                            {
-                                lsb++;
-                                pc = 1;
-                                if (lsb > 1 || (!scanAll && emptySlots > 10))
-                                {
-                                    // No more patches to test!
-                                    while (commonState.toneNames[2].Count() < 256)
-                                    {
-                                        commonState.toneNames[2].Add("INIT TONE");
-                                    }
-                                    msb = 95;
-                                    lsb = 0;
-                                    pc = 1;
-                                    emptySlots = 10;
-                                    for (byte i = 0; i < 128; i++)
-                                    {
-                                        userToneNumbers[i] = 0;
-                                    }
-                                    emptySlots = 0;
-                                    QueryUserSuperNaturalSynthTones();
-                                    break;
-                                }
-                            }
-                            // Check next:
-                            QueryUserSuperNaturalAcousticTones();
-                            break;
-                        case QueryType.SUPERNATURAL_SYNTH_TONE_COMMON:
-                            if (!IsInitTone(data))
-                            {
-                                toneCategory = data[0x41];
-                                toneName = "";
-                                for (byte i = 0; i < 12; i++)
-                                {
-                                    toneName += (char)data[i + 11];
-                                }
-                                toneName = toneName.Trim();
-                                commonState.toneNames[3].Add(toneName);
-                                tone = new List<String>();
-                                tone.Add("SuperNATURAL Synth Tone");
-                                tone.Add(toneCategories.snsToneCategoryNames[toneCategory]);
-                                tone.Add((userToneNumbers[toneCategory]++).ToString());
-                                tone.Add(toneName);
-                                tone.Add(msb.ToString());
-                                tone.Add(lsb.ToString());
-                                tone.Add((msb * 128 + lsb).ToString());
-                                tone.Add(pc.ToString());
-                                tone.Add("(User)");
-                                tone.Add((userToneIndex++).ToString());
-                                commonState.toneList.Tones.Add(tone);
-                            }
-                            else
-                            {
-                                commonState.toneNames[3].Add("INIT TONE");
-                                emptySlots++;
-                            }
-                            pc++;
-                            if (pc > 128 || (!scanAll && emptySlots > 10))
-                            {
-                                lsb++;
-                                pc = 1;
-                                if (lsb > 3 || (!scanAll && emptySlots > 10))
-                                {
-                                    // No more patches to test!
-                                    while (commonState.toneNames[3].Count() < 512)
-                                    {
-                                        commonState.toneNames[3].Add("INIT TONE");
-                                    }
-                                    msb = 88;
-                                    lsb = 0;
-                                    pc = 1;
-                                    emptySlots = 10;
-                                    for (byte i = 0; i < 128; i++)
-                                    {
-                                        userToneNumbers[i] = 0;
-                                    }
-                                    emptySlots = 0;
-                                    QueryUserSuperNaturalDrumKitTones();
-                                    break;
-                                }
-                            }
-                            // Check next:
-                            QueryUserSuperNaturalSynthTones();
-                            break;
-                        case QueryType.SUPERNATURAL_DRUM_KIT_COMMON:
-                            if (!IsInitKit(data))
-                            {
-                                toneName = "";
-                                for (byte i = 0; i < 12; i++)
-                                {
-                                    toneName += (char)data[i + 11];
-                                }
-                                toneName = toneName.Trim();
-                                commonState.toneNames[4].Add(toneName);
-                                tone = new List<String>();
-                                tone.Add("SuperNATURAL Drum Kit");
-                                tone.Add("Drum");
-                                tone.Add((userToneNumbers[toneCategory]++).ToString());
-                                tone.Add(toneName);
-                                tone.Add(msb.ToString());
-                                tone.Add(lsb.ToString());
-                                tone.Add((msb * 128 + lsb).ToString());
-                                tone.Add(pc.ToString());
-                                tone.Add("(User)");
-                                tone.Add((userToneIndex++).ToString());
-                                commonState.toneList.Tones.Add(tone);
-                                // Create a list for the key names:
-                                commonState.drumKeyAssignLists.ToneNames.Add(new List<String>());
-                                commonState.drumKeyAssignLists.ToneNames[commonState.drumKeyAssignLists.ToneNames.Count - 1].Add("SuperNATURAL Drum Kit");
-                                commonState.drumKeyAssignLists.ToneNames[commonState.drumKeyAssignLists.ToneNames.Count - 1].Add(toneName);
-                                // SN-D keys does not have keys 22 - 26, fill with empth slots:
-                                commonState.drumKeyAssignLists.ToneNames[commonState.drumKeyAssignLists.ToneNames.Count - 1].Add("-----");
-                                commonState.drumKeyAssignLists.ToneNames[commonState.drumKeyAssignLists.ToneNames.Count - 1].Add("-----");
-                                commonState.drumKeyAssignLists.ToneNames[commonState.drumKeyAssignLists.ToneNames.Count - 1].Add("-----");
-                                commonState.drumKeyAssignLists.ToneNames[commonState.drumKeyAssignLists.ToneNames.Count - 1].Add("-----");
-                                commonState.drumKeyAssignLists.ToneNames[commonState.drumKeyAssignLists.ToneNames.Count - 1].Add("-----");
-                                // Read all key names:
-                                key = 0;
-                                QuerySnDrumKitKeyName(key);
                                 break;
-                            }
-                            else
-                            {
-                                commonState.toneNames[4].Add("INIT KIT");
-                                emptySlots++;
-                            }
-                            pc++;
-                            if (pc > 64 || (!scanAll && emptySlots > 10))
-                            {
-                                // No more patches to test!
-                                while (commonState.toneNames[4].Count() < 64)
+                            case QueryType.PCM_KEY_NAME:
+                                // Put the name into the list:
+                                String name = "";
+                                for (byte i = 0; i < 12; i++)
+                                {
+                                    name += (char)data[i + 11];
+                                }
+                                commonState.drumKeyAssignLists.ToneNames[commonState.drumKeyAssignLists.ToneNames.Count - 1].Add(name);
+                                // Query next if more is expected:
+                                key++;
+                                if (key < 88)
+                                {
+                                    // Query next key:
+                                    QueryPcmDrumKitKeyName(key);
+                                }
+                                else
+                                {
+                                    // Query next PCM Drum Kit:
+                                    pc++;
+                                    if (pc > 32 || (!scanAll && emptySlots > 10))
+                                    {
+                                        // No more patches to test!
+                                        while (commonState.toneNames[1].Count() < 32)
+                                        {
+                                            commonState.toneNames[1].Add("INIT KIT");
+                                        }
+                                        msb = 89;
+                                        lsb = 0;
+                                        pc = 1;
+                                        emptySlots = 10;
+                                        for (byte i = 0; i < 128; i++)
+                                        {
+                                            userToneNumbers[i] = 0;
+                                        }
+                                        emptySlots = 0;
+                                        QueryUserSuperNaturalAcousticTones();
+                                        break;
+                                    }
+                                    // Check next:
+                                    QueryUserPCMDrumKitTones();
+                                }
+                                break;
+                            case QueryType.SUPERNATURAL_ACOUSTIC_TONE_COMMON:
+                                if (!IsInitTone(data))
+                                {
+                                    toneCategory = data[0x26];
+                                    toneName = "";
+                                    for (byte i = 0; i < 12; i++)
+                                    {
+                                        toneName += (char)data[i + 11];
+                                    }
+                                    toneName = toneName.Trim();
+                                    commonState.toneNames[2].Add(toneName);
+                                    tone = new List<String>();
+                                    tone.Add("SuperNATURAL Acoustic Tone");
+                                    tone.Add(toneCategories.snaToneCategoryNames[toneCategory]);
+                                    tone.Add((userToneNumbers[toneCategory]++).ToString());
+                                    tone.Add(toneName);
+                                    tone.Add(msb.ToString());
+                                    tone.Add(lsb.ToString());
+                                    tone.Add((msb * 128 + lsb).ToString());
+                                    tone.Add(pc.ToString());
+                                    tone.Add("(User)");
+                                    tone.Add((userToneIndex++).ToString());
+                                    commonState.toneList.Tones.Add(tone);
+                                }
+                                else
+                                {
+                                    commonState.toneNames[2].Add("INIT TONE");
+                                    emptySlots++;
+                                }
+                                pc++;
+                                if (pc > 128 || (!scanAll && emptySlots > 10))
+                                {
+                                    lsb++;
+                                    pc = 1;
+                                    if (lsb > 1 || (!scanAll && emptySlots > 10))
+                                    {
+                                        // No more patches to test!
+                                        while (commonState.toneNames[2].Count() < 256)
+                                        {
+                                            commonState.toneNames[2].Add("INIT TONE");
+                                        }
+                                        msb = 95;
+                                        lsb = 0;
+                                        pc = 1;
+                                        emptySlots = 10;
+                                        for (byte i = 0; i < 128; i++)
+                                        {
+                                            userToneNumbers[i] = 0;
+                                        }
+                                        emptySlots = 0;
+                                        QueryUserSuperNaturalSynthTones();
+                                        break;
+                                    }
+                                }
+                                // Check next:
+                                QueryUserSuperNaturalAcousticTones();
+                                break;
+                            case QueryType.SUPERNATURAL_SYNTH_TONE_COMMON:
+                                if (!IsInitTone(data))
+                                {
+                                    toneCategory = data[0x41];
+                                    toneName = "";
+                                    for (byte i = 0; i < 12; i++)
+                                    {
+                                        toneName += (char)data[i + 11];
+                                    }
+                                    toneName = toneName.Trim();
+                                    commonState.toneNames[3].Add(toneName);
+                                    tone = new List<String>();
+                                    tone.Add("SuperNATURAL Synth Tone");
+                                    tone.Add(toneCategories.snsToneCategoryNames[toneCategory]);
+                                    tone.Add((userToneNumbers[toneCategory]++).ToString());
+                                    tone.Add(toneName);
+                                    tone.Add(msb.ToString());
+                                    tone.Add(lsb.ToString());
+                                    tone.Add((msb * 128 + lsb).ToString());
+                                    tone.Add(pc.ToString());
+                                    tone.Add("(User)");
+                                    tone.Add((userToneIndex++).ToString());
+                                    commonState.toneList.Tones.Add(tone);
+                                }
+                                else
+                                {
+                                    commonState.toneNames[3].Add("INIT TONE");
+                                    emptySlots++;
+                                }
+                                pc++;
+                                if (pc > 128 || (!scanAll && emptySlots > 10))
+                                {
+                                    lsb++;
+                                    pc = 1;
+                                    if (lsb > 3 || (!scanAll && emptySlots > 10))
+                                    {
+                                        // No more patches to test!
+                                        while (commonState.toneNames[3].Count() < 512)
+                                        {
+                                            commonState.toneNames[3].Add("INIT TONE");
+                                        }
+                                        msb = 88;
+                                        lsb = 0;
+                                        pc = 1;
+                                        emptySlots = 10;
+                                        for (byte i = 0; i < 128; i++)
+                                        {
+                                            userToneNumbers[i] = 0;
+                                        }
+                                        emptySlots = 0;
+                                        QueryUserSuperNaturalDrumKitTones();
+                                        break;
+                                    }
+                                }
+                                // Check next:
+                                QueryUserSuperNaturalSynthTones();
+                                break;
+                            case QueryType.SUPERNATURAL_DRUM_KIT_COMMON:
+                                if (!IsInitKit(data))
+                                {
+                                    toneName = "";
+                                    for (byte i = 0; i < 12; i++)
+                                    {
+                                        toneName += (char)data[i + 11];
+                                    }
+                                    toneName = toneName.Trim();
+                                    commonState.toneNames[4].Add(toneName);
+                                    tone = new List<String>();
+                                    tone.Add("SuperNATURAL Drum Kit");
+                                    tone.Add("Drum");
+                                    tone.Add((userToneNumbers[toneCategory]++).ToString());
+                                    tone.Add(toneName);
+                                    tone.Add(msb.ToString());
+                                    tone.Add(lsb.ToString());
+                                    tone.Add((msb * 128 + lsb).ToString());
+                                    tone.Add(pc.ToString());
+                                    tone.Add("(User)");
+                                    tone.Add((userToneIndex++).ToString());
+                                    commonState.toneList.Tones.Add(tone);
+                                    // Create a list for the key names:
+                                    commonState.drumKeyAssignLists.ToneNames.Add(new List<String>());
+                                    commonState.drumKeyAssignLists.ToneNames[commonState.drumKeyAssignLists.ToneNames.Count - 1].Add("SuperNATURAL Drum Kit");
+                                    commonState.drumKeyAssignLists.ToneNames[commonState.drumKeyAssignLists.ToneNames.Count - 1].Add(toneName);
+                                    // SN-D keys does not have keys 22 - 26, fill with empth slots:
+                                    commonState.drumKeyAssignLists.ToneNames[commonState.drumKeyAssignLists.ToneNames.Count - 1].Add("-----");
+                                    commonState.drumKeyAssignLists.ToneNames[commonState.drumKeyAssignLists.ToneNames.Count - 1].Add("-----");
+                                    commonState.drumKeyAssignLists.ToneNames[commonState.drumKeyAssignLists.ToneNames.Count - 1].Add("-----");
+                                    commonState.drumKeyAssignLists.ToneNames[commonState.drumKeyAssignLists.ToneNames.Count - 1].Add("-----");
+                                    commonState.drumKeyAssignLists.ToneNames[commonState.drumKeyAssignLists.ToneNames.Count - 1].Add("-----");
+                                    // Read all key names:
+                                    key = 0;
+                                    QuerySnDrumKitKeyName(key);
+                                    break;
+                                }
+                                else
                                 {
                                     commonState.toneNames[4].Add("INIT KIT");
+                                    emptySlots++;
                                 }
-                                QuerySelectedStudioSet();
-                                break;
-                            }
-                            // Check next:
-                            QueryUserSuperNaturalDrumKitTones();
-                            break;
-                        case QueryType.SND_KEY_NAME:
-                            // Put the name into the list:
-                            try
-                            {
-                                commonState.drumKeyAssignLists.ToneNames[commonState.drumKeyAssignLists.ToneNames.Count - 1]
-                                    .Add(superNATURALDrumKitInstrumentList.DrumInstruments[data[12] * 256 + data[13] * 16 + data[14]].Name);
-                            }
-                            catch { }
-                            // Query next if more is expected:
-                            key++;
-                            if (key < 61)
-                            {
-                                // Query next key:
-                                QuerySnDrumKitKeyName(key);
-                            }
-                            else
-                            {
-                                // Query next SN Drum Kit:
                                 pc++;
                                 if (pc > 64 || (!scanAll && emptySlots > 10))
                                 {
                                     // No more patches to test!
-                                    while (commonState.toneNames[1].Count() < 32)
+                                    while (commonState.toneNames[4].Count() < 64)
                                     {
-                                        commonState.toneNames[1].Add("INIT KIT");
-                                    }
-                                    msb = 85;
-                                    lsb = 0;
-                                    pc = 1;
-                                    emptySlots = 10;
-                                    for (byte i = 0; i < 128; i++)
-                                    {
-                                        userToneNumbers[i] = 0;
+                                        commonState.toneNames[4].Add("INIT KIT");
                                     }
                                     QuerySelectedStudioSet();
                                     break;
                                 }
                                 // Check next:
                                 QueryUserSuperNaturalDrumKitTones();
-                            }
-                            break;
-                        case QueryType.CURRENT_SELECTED_STUDIO_SET:
-                            //commonState.CurrentStudioSet = receivedMidiMessage.RawData.ToArray()[0x11];
-                            commonState.CurrentStudioSet = rawData[0x11];
-                            QuerySelectedTone();
-                            break;
-                        case QueryType.CURRENT_SELECTED_TONE:
-                            Int32 index = commonState.toneList.Get(
-                                rawData[0x11],
-                                rawData[0x12],
-                                (byte)(rawData[0x13]));
-                            try
-                            {
-                                commonState.currentTone = new Tone(commonState.toneList.Tones[index]);
-                            }
-                            catch { }
-                            queryType = QueryType.NONE;
-                            scanning = false;
-                            updateToneNames = true;
-                            break;
+                                break;
+                            case QueryType.SND_KEY_NAME:
+                                // Put the name into the list:
+                                try
+                                {
+                                    commonState.drumKeyAssignLists.ToneNames[commonState.drumKeyAssignLists.ToneNames.Count - 1]
+                                        .Add(superNATURALDrumKitInstrumentList.DrumInstruments[data[12] * 256 + data[13] * 16 + data[14]].Name);
+                                }
+                                catch { }
+                                // Query next if more is expected:
+                                key++;
+                                if (key < 61)
+                                {
+                                    // Query next key:
+                                    QuerySnDrumKitKeyName(key);
+                                }
+                                else
+                                {
+                                    // Query next SN Drum Kit:
+                                    pc++;
+                                    if (pc > 64 || (!scanAll && emptySlots > 10))
+                                    {
+                                        // No more patches to test!
+                                        while (commonState.toneNames[1].Count() < 32)
+                                        {
+                                            commonState.toneNames[1].Add("INIT KIT");
+                                        }
+                                        msb = 85;
+                                        lsb = 0;
+                                        pc = 1;
+                                        emptySlots = 10;
+                                        for (byte i = 0; i < 128; i++)
+                                        {
+                                            userToneNumbers[i] = 0;
+                                        }
+                                        QuerySelectedStudioSet();
+                                        break;
+                                    }
+                                    // Check next:
+                                    QueryUserSuperNaturalDrumKitTones();
+                                }
+                                break;
+                            case QueryType.CURRENT_SELECTED_STUDIO_SET:
+                                //commonState.CurrentStudioSet = receivedMidiMessage.RawData.ToArray()[0x11];
+                                commonState.CurrentStudioSet = rawData[0x11];
+                                QuerySelectedTone();
+                                break;
+                            case QueryType.CURRENT_SELECTED_TONE:
+                                Int32 index = commonState.toneList.Get(
+                                    rawData[0x11],
+                                    rawData[0x12],
+                                    (byte)(rawData[0x13]));
+                                try
+                                {
+                                    commonState.currentTone = new Tone(commonState.toneList.Tones[index]);
+                                }
+                                catch { }
+                                queryType = QueryType.NONE;
+                                scanning = false;
+                                updateToneNames = true;
+                                break;
+                        }
                     }
                 }
+                catch {}
             }
         }
 
