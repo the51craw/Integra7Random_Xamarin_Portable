@@ -15,7 +15,7 @@ namespace INTEGRA_7_Xamarin
      */
     public partial class UIHandler
     {
-        //private HBTrace t = new HBTrace("public sealed partial class MainPage : Page");
+        private HBTrace t = new HBTrace("UIHandler public sealed partial class MainPage : Page");
 
         public enum _appType
         {
@@ -54,7 +54,7 @@ namespace INTEGRA_7_Xamarin
         UInt16 emptySlots = 10;
 
         //ApplicationDataContainer localSettings = null;
-        CommonState commonState = null;
+        public CommonState commonState = null;
         public System.Collections.Generic.List<System.Collections.Generic.List<String>> Lists = null;
         private Boolean AutoUpdateChildLists = true;
         private Int32 currentGroupIndex = -1;
@@ -133,6 +133,7 @@ namespace INTEGRA_7_Xamarin
             colorSettings = new ColorSettings(_colorSettings.LIGHT);
             borderThicknesSettings = new BorderThicknesSettings(1);
             commonState = new CommonState(ref Librarian_btnPlay);
+            commonState.midi = DependencyService.Get<IMidi>();
             rawData = new byte[0];
             initDone = true;
         }
@@ -146,7 +147,7 @@ namespace INTEGRA_7_Xamarin
         }
 
         // Creates all pages and shows the librarian:
-        public void DrawPage()
+        public void DrawPages()
         {
             DrawLibrarianPage();
             DrawToneEditorPage();
@@ -154,12 +155,15 @@ namespace INTEGRA_7_Xamarin
             DrawStudioSetEditorPage();
             DrawFavoritesPage();
 
-            commonState.midi = DependencyService.Get<IMidi>();
-            commonState.midi.Init("INTEGRA-7", mainPage);
+            //commonState.midi = DependencyService.Get<IMidi>();
+            //commonState.midi.Init("INTEGRA-7", mainPage, Librarian_midiInputDevice, Librarian_midiInputDevice, 0, 0);
+            //commonState.midi.Init(this.mainPage, mainPage_UWP, Librarian_midiInputDevice, Librarian_midiInputDevice, 0, 0);
+            //commonState.midi.Init(INTEGRA_7_Xamarin.MainPage mainPage, MainPage mainPage_UWP, Picker OutputDeviceSelector, Picker InputDeviceSelector, byte MidiOutPortChannel, byte MidiInPortChannel)
 
-            // Always start by showing librarian:
-            page = _page.LIBRARIAN;
-            ShowLibrarianPage();
+
+            //// Always start by showing librarian:
+            //page = _page.LIBRARIAN;
+            //ShowLibrarianPage();
         }
 
         //public void ShowLibrarianPage()

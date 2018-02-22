@@ -15,9 +15,11 @@ using INTEGRA_7_Xamarin.UWP;
 
 [assembly: Xamarin.Forms.Dependency(typeof(GenericHandlerInterface))]
 
+[assembly: Dependency(typeof(MIDI))]
+
 namespace INTEGRA_7_Xamarin.UWP
 {
-    public class MIDI : IMidi
+    public class MIDI : IMidi, IGenericHandler
     {
         public MidiDeviceWatcher midiOutputDeviceWatcher;
         public MidiDeviceWatcher midiInputDeviceWatcher;
@@ -30,16 +32,24 @@ namespace INTEGRA_7_Xamarin.UWP
         public Int32 MidiOutPortSelectedIndex { get; set; }
         public Int32 MidiInPortSelectedIndex { get; set; }
         public INTEGRA_7_Xamarin.MainPage mainPage { get; set; }
-        public MainPage mainPage_UWP { get; set; }
+        public INTEGRA_7_Xamarin.UWP.MainPage MainPage_UWP { get; set; }
         public byte[] rawData;
         public DispatcherTimer timer;
         public Boolean MessageReceived = false;
+        public Windows.UI.Core.CoreDispatcher dispatcher;
+
+        public void GenericHandler(object sender, object e)
+        {
+            //if (mainPage.uIHandler.commonState.midi. midiOutPort == null)
+            //{
+            //    mainPage.midi.Init("INTEGRA-7");
+            //}
+        }
 
         public MIDI()
         {
             if (midiOutPort == null)
             {
-                mainPage_UWP = DependencyService.Get<INTEGRA_7_Xamarin.UWP.MainPage>();
                 timer = new DispatcherTimer();
                 timer.Interval = TimeSpan.FromMilliseconds(1);
                 timer.Tick += Timer_Tick;
@@ -71,13 +81,18 @@ namespace INTEGRA_7_Xamarin.UWP
             MessageReceived = true;
         }
 
+        public MIDI(INTEGRA_7_Xamarin.MainPage mainPage, Picker OutputDeviceSelector, Picker InputDeviceSelector, byte MidiOutPortChannel, byte MidiInPortChannel)
+        {
+            Init("INTEGRA-7", mainPage, OutputDeviceSelector, InputDeviceSelector, MidiOutPortChannel, MidiInPortChannel);
+        }
+
         // Constructor using a combobox for full device watch:
         public MIDI(INTEGRA_7_Xamarin.MainPage mainPage, MainPage mainPage_UWP, Picker OutputDeviceSelector, Picker InputDeviceSelector, byte MidiOutPortChannel, byte MidiInPortChannel)
         {
             this.mainPage = mainPage;
-            this.mainPage_UWP = mainPage_UWP;
-            midiOutputDeviceWatcher = new MidiDeviceWatcher(MidiOutPort.GetDeviceSelector(), OutputDeviceSelector, mainPage_UWP.dispatcher);
-            midiInputDeviceWatcher = new MidiDeviceWatcher(MidiInPort.GetDeviceSelector(), InputDeviceSelector, mainPage_UWP.dispatcher);
+            this.MainPage_UWP = mainPage_UWP;
+            midiOutputDeviceWatcher = new MidiDeviceWatcher(MidiOutPort.GetDeviceSelector(), OutputDeviceSelector, mainPage_UWP.Dispatcher_UWP);
+            midiInputDeviceWatcher = new MidiDeviceWatcher(MidiInPort.GetDeviceSelector(), InputDeviceSelector, mainPage_UWP.Dispatcher_UWP);
             midiOutputDeviceWatcher.StartWatcher();
             midiInputDeviceWatcher.StartWatcher();
             this.MidiOutPortChannel = MidiOutPortChannel;
@@ -104,16 +119,23 @@ namespace INTEGRA_7_Xamarin.UWP
             Init(deviceName);
         }
 
-        public void Init(String deviceName, INTEGRA_7_Xamarin.MainPage mainPage, Picker OutputDeviceSelector, Picker InputDeviceSelector, byte MidiOutPortChannel, byte MidiInPortChannel)
+        public void Init(String deviceName, object mainPage_UWP, Picker OutputDeviceSelector, Picker InputDeviceSelector, byte MidiOutPortChannel, byte MidiInPortChannel)
         {
-            Init(deviceName, OutputDeviceSelector, InputDeviceSelector, mainPage_UWP.dispatcher, MidiOutPortChannel, MidiInPortChannel);
+            //MainPage_UWP = (INTEGRA_7_Xamarin_UWP).MainPage)mainPage_UWP;
+            //dispatcher =    ((inte MainPage_UWP)mainPage_UWP).
+            //INTEGRA_7_Xamarin.MainPage.GetMainPage(), 
+            //Dispatcher
+            //mainPage_UWP.dispatcher;
+            //dispatcher = Windows.UI.Core.CoreDispatcher; DependencyObject.Dispatcher; rs
+            //Init(deviceName, OutputDeviceSelector, InputDeviceSelector, INTEGRA_7_Xamarin.MainPage mainPage_UWP.ge, MidiOutPortChannel, MidiInPortChannel);
         }
 
-        public void Init(String deviceName, Picker OutputDeviceSelector, Picker InputDeviceSelector, CoreDispatcher Dispatcher, byte MidiOutPortChannel, byte MidiInPortChannel)
+        public void Init(INTEGRA_7_Xamarin.MainPage mainPage, String deviceName, Picker OutputDeviceSelector, Picker InputDeviceSelector, object Dispatcher, byte MidiOutPortChannel, byte MidiInPortChannel)
         {
-            //this.mainPage = mainPage;
-            midiOutputDeviceWatcher = new MidiDeviceWatcher(MidiOutPort.GetDeviceSelector(), OutputDeviceSelector, Dispatcher);
-            midiInputDeviceWatcher = new MidiDeviceWatcher(MidiInPort.GetDeviceSelector(), InputDeviceSelector, Dispatcher);
+            //mainPage_UWP = DependencyService.Get<INTEGRA_7_Xamarin.UWP.MainPage>();
+            this.mainPage = mainPage;
+            midiOutputDeviceWatcher = new MidiDeviceWatcher(MidiOutPort.GetDeviceSelector(), OutputDeviceSelector, (CoreDispatcher)Dispatcher);
+            midiInputDeviceWatcher = new MidiDeviceWatcher(MidiInPort.GetDeviceSelector(), InputDeviceSelector, (CoreDispatcher)Dispatcher);
             midiOutputDeviceWatcher.StartWatcher();
             midiInputDeviceWatcher.StartWatcher();
             this.MidiOutPortChannel = MidiOutPortChannel;
@@ -125,6 +147,12 @@ namespace INTEGRA_7_Xamarin.UWP
         {
             this.mainPage = mainPage;
             Init(deviceName);
+        }
+
+        public void Init(String deviceName, INTEGRA_7_Xamarin.MainPage mainPage, Picker OutputDeviceSelector, Picker InputDeviceSelector)
+        {
+            this.mainPage = mainPage;
+            Init(deviceName, mainPage, OutputDeviceSelector, InputDeviceSelector, 0, 0);
         }
 
         public async void Init(String deviceName)

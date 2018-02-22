@@ -37,7 +37,7 @@ namespace INTEGRA_7_Xamarin_MacOS
             Forms.Init();
             LoadApplication(new INTEGRA_7_Xamarin.App());
             mainPage = INTEGRA_7_Xamarin.MainPage.GetMainPage();
-            mainPage.uIHandler.DrawPage();
+            mainPage.uIHandler.DrawPages();
  
             // We need invisible ComboBoxes to hold settings from the
             // corresponding Pickers in the Xamarin code.

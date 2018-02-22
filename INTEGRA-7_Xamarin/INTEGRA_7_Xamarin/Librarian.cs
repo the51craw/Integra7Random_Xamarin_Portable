@@ -1195,8 +1195,9 @@ namespace INTEGRA_7_Xamarin
             commonState.midi.SendSystemExclusive(message);
         }
 
-        private void ShowLibrarianPage()
+        public void ShowLibrarianPage()
         {
+            page = _page.LIBRARIAN;
             mainStackLayout.Children.Add(LibrarianStackLayout);
             if (Librarian_Groups.Count == 0)
             {

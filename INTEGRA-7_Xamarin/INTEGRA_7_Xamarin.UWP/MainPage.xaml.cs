@@ -38,7 +38,8 @@ namespace INTEGRA_7_Xamarin.UWP
     public sealed partial class MainPage
     {
         // For accessing INTEGRA_7_Xamarin.MainPage from UWP:
-        private INTEGRA_7_Xamarin.MainPage mainPage;
+        private INTEGRA_7_Xamarin.MainPage MainPage_Portable { get; set; }
+        public INTEGRA_7_Xamarin.UWP.MainPage MainPage_UWP { get; set; }
 
         // Invisible comboboxes used by MIDI class (will always have INTEGRA-7 selected):
         private Picker OutputSelector;
@@ -47,7 +48,7 @@ namespace INTEGRA_7_Xamarin.UWP
         
         // For accessing the genericHandlerInterface:
         GenericHandlerInterface genericHandlerInterface;
-        public Windows.UI.Core.CoreDispatcher dispatcher;
+        public Windows.UI.Core.CoreDispatcher Dispatcher_UWP { get; set; }
 
         public MainPage()
         {
@@ -60,10 +61,10 @@ namespace INTEGRA_7_Xamarin.UWP
         private void Init()
         {
             // Get dispatcher:
-            dispatcher = Dispatcher;
+            Dispatcher_UWP = Dispatcher;
 
             // Get INTEGRA_7_Xamarin.MainPage:
-            mainPage = INTEGRA_7_Xamarin.MainPage.GetMainPage();
+            MainPage_Portable = INTEGRA_7_Xamarin.MainPage.GetMainPage();
             UIHandler.appType = UIHandler._appType.UWP;
 
             // Get the generic handler (same way as done in INTEGRA_7_Xamarin.UIHandler):
@@ -73,17 +74,24 @@ namespace INTEGRA_7_Xamarin.UWP
             genericHandlerInterface.mainPage = this;
 
             // Draw UI (function is in mainPage.uIHandler):
-            mainPage.uIHandler.DrawPage();
+            MainPage_Portable.uIHandler.DrawPages();
 
             // We need invisible ComboBoxes to hold settings from the
             // corresponding Pickers in the Xamarin code.
-            OutputSelector = mainPage.uIHandler.Librarian_midiOutputDevice;
-            InputSelector = mainPage.uIHandler.Librarian_midiInputDevice;
+            OutputSelector = MainPage_Portable.uIHandler.Librarian_midiOutputDevice;
+            InputSelector = MainPage_Portable.uIHandler.Librarian_midiInputDevice;
+
+            MainPage_Portable.SetDeviceSpecificMainPage(this);
+
+            MainPage_Portable.uIHandler.commonState.midi.Init(MainPage_Portable, "INTEGRA-7", OutputSelector, InputSelector, (object)Dispatcher_UWP, 0, 0);
+
+            // Always start by showing librarian:
+            MainPage_Portable.uIHandler.ShowLibrarianPage();
         }
 
-        private void Btn0_Click(object sender, RoutedEventArgs e)
+        public Windows.UI.Core.CoreDispatcher GetDispatcher()
         {
-            throw new NotImplementedException();
+            return Dispatcher_UWP;
         }
     }
 }

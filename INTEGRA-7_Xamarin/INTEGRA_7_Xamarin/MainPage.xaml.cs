@@ -10,7 +10,8 @@ namespace INTEGRA_7_Xamarin
     public partial class MainPage : ContentPage
     {
         public UIHandler uIHandler;
-        private static MainPage mainPage;
+        private static MainPage MainPage_Portable;
+        private object MainPage_Device;
 
         public interface IEventHandler
         {
@@ -20,7 +21,7 @@ namespace INTEGRA_7_Xamarin
         public MainPage()
         {
             InitializeComponent();
-            mainPage = this;
+            MainPage_Portable = this;
             Init();
         }
 
@@ -32,7 +33,12 @@ namespace INTEGRA_7_Xamarin
 
         public static MainPage GetMainPage()
         {
-            return mainPage;
+            return MainPage_Portable;
+        }
+
+        public void SetDeviceSpecificMainPage(object mainPage)
+        {
+            MainPage_Device = mainPage;
         }
     }
 }

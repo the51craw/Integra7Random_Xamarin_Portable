@@ -42,7 +42,7 @@ namespace INTEGRA_7_Xamarin.iOS
             // Get INTEGRA_7_Xamarin.MainPage:
             mainPage = INTEGRA_7_Xamarin.MainPage.GetMainPage();
             UIHandler.appType = UIHandler._appType.IOS;
-            mainPage.uIHandler.DrawPage();
+            mainPage.uIHandler.DrawPages();
 			
             // We need invisible ComboBoxes to hold settings from the
             // corresponding Pickers in the Xamarin code.

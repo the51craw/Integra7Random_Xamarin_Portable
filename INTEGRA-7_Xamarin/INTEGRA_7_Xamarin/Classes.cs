@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-//using System.Diagnostics;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 //using System.Threading.Tasks;
@@ -12,34 +12,34 @@ namespace INTEGRA_7_Xamarin
     /// XAML layout classes
     /// </summary>
 
-    //public class HBTrace
-    //{
-    //    Int32 debugLevel = 5;
-    //    //StorageFolder localFolder = null;
-    //    //StorageFile sampleFile = null;
+    public class HBTrace
+    {
+        Int32 debugLevel = 5;
+        //StorageFolder localFolder = null;
+        //StorageFile sampleFile = null;
 
-    //    public HBTrace(String s, Int32 DebugLevel = 0)
-    //    {
-    //        //localFolder = Windows.Storage.ApplicationData.Current.LocalFolder;
-    //        Debug.WriteLine(s);
-    //    }
+        public HBTrace(String s, Int32 DebugLevel = 0)
+        {
+            //localFolder = Windows.Storage.ApplicationData.Current.LocalFolder;
+            Debug.WriteLine(s);
+        }
 
-    //    public void Trace(String s, Int32 DebugLevel = 0, Double ticks = 0)
-    //    {
-    //        if (DebugLevel <= debugLevel)
-    //        {
-    //            //if (sampleFile == null)
-    //            //{
-    //            //    sampleFile = await localFolder.CreateFileAsync("Roland INTEGRA_7.log",
-    //            //           CreationCollisionOption.OpenIfExists);
-    //            //}
-    //            //await FileIO.AppendTextAsync(sampleFile, ticks > 0 ? ticks.ToString() + " " : "" + s + "\r\n");
-    //            Debug.WriteLine(s);
-    //        }
-    //    }
-    //}
+        public void Trace(String s, Int32 DebugLevel = 0, Double ticks = 0)
+        {
+            if (DebugLevel <= debugLevel)
+            {
+                //if (sampleFile == null)
+                //{
+                //    sampleFile = await localFolder.CreateFileAsync("Roland INTEGRA_7.log",
+                //           CreationCollisionOption.OpenIfExists);
+                //}
+                //await FileIO.AppendTextAsync(sampleFile, ticks > 0 ? ticks.ToString() + " " : "" + s + "\r\n");
+                Debug.WriteLine(s);
+            }
+        }
+    }
 
-    class Player
+    public class Player
     {
         public Boolean Playing { get; set; }
         public Boolean WasPlaying { get; set; }
@@ -119,7 +119,7 @@ namespace INTEGRA_7_Xamarin
     /// Use this class to preserve the application state over page navigations.
     /// Include it in all navigations.
     /// </summary>
-    class CommonState
+    public class CommonState
     {
         public enum SimpleToneTypes
         {
@@ -724,7 +724,7 @@ namespace INTEGRA_7_Xamarin
         }
     }
 
-    class FavoritesFolder
+    public class FavoritesFolder
     {
         public String Name { get; set; }
         public List<Tone> FavoritesTones { get; set; }
@@ -748,14 +748,14 @@ namespace INTEGRA_7_Xamarin
         }
     }
 
-    class FavoritesList
+    public class FavoritesList
     {
         public List<FavoritesFolder> folders = null;
     }
 
     class Buddy
     {
-        //HBTrace t = new HBTrace("class Buddy");
+        HBTrace t = new HBTrace("class Buddy");
         public byte Offset { get; set; }
         public byte ParameterNumber { get; set; }
         public Int16 ValueOffset { get; set; }
@@ -825,7 +825,7 @@ namespace INTEGRA_7_Xamarin
 
     class SelectedTone
     {
-        //HBTrace t = new HBTrace("class SelectedTone");
+        HBTrace t = new HBTrace("class SelectedTone");
         public byte BankMSB { get; set; }
         public byte BankLSB { get; set; }
         public byte Program { get; set; }
@@ -1039,7 +1039,7 @@ namespace INTEGRA_7_Xamarin
 
     class PCMWaveNames
     {
-        //HBTrace t = new HBTrace("class PCMWaveNames");
+        HBTrace t = new HBTrace("class PCMWaveNames");
         public String[] Names { get; set; }
 
         public PCMWaveNames()
@@ -1176,7 +1176,7 @@ namespace INTEGRA_7_Xamarin
 
     class SuperNaturalSynthToneWaveNames
     {
-        //HBTrace t = new HBTrace("class PCMWaveNames");
+        HBTrace t = new HBTrace("class PCMWaveNames");
         public String[] Names { get; set; }
 
         public SuperNaturalSynthToneWaveNames()
@@ -1421,7 +1421,7 @@ namespace INTEGRA_7_Xamarin
 
     class ParameterSets
     {
-        //HBTrace t = new HBTrace("class ParameterSets");
+        HBTrace t = new HBTrace("class ParameterSets");
         /// <summary>
         /// These are the specifics for SET_OF_NAMES type numbered parameters for PCM Synth Tone MFX
         /// </summary>
@@ -1610,7 +1610,7 @@ namespace INTEGRA_7_Xamarin
 
     class NumberedParameters
     {
-        //HBTrace t = new HBTrace("class NumberedParameters");
+        HBTrace t = new HBTrace("class NumberedParameters");
         public String Name { get; set; }
         public byte Offset { get; set; }
         public NumberedParameter[] Parameters { get; set; }
@@ -1629,7 +1629,7 @@ namespace INTEGRA_7_Xamarin
     /// </summary>
     class NumberedParameter
     {
-        //HBTrace t = new HBTrace("class NumberedParameter");
+        HBTrace t = new HBTrace("class NumberedParameter");
         public String Name { get; set; }
         public PARAMETER_TYPE Type { get; set; }
         public String ControlName { get; set; }
@@ -1653,7 +1653,7 @@ namespace INTEGRA_7_Xamarin
     /// </summary>
     class NumberedParameterValue
     {
-        //HBTrace t = new HBTrace("class NumberedParameterValue");
+        HBTrace t = new HBTrace("class NumberedParameterValue");
         public String[] Text { get; set; } // These are texts for type SET_OF_NAMES
         public UInt16 Value { get; set; }    // This is for numerical values
         public Boolean On { get; set; }    // This is for boolean values
@@ -1669,7 +1669,7 @@ namespace INTEGRA_7_Xamarin
 
     class NumberedParametersContent
     {
-        //HBTrace t = new HBTrace("class NumberedParametersContent");
+        HBTrace t = new HBTrace("class NumberedParametersContent");
         public String[] TypeNames;
         public String[][] ParameterNames;
         public PARAMETER_TYPE[][] ParameterTypes;
@@ -3222,7 +3222,7 @@ namespace INTEGRA_7_Xamarin
 
     class MFXNumberedParameters
     {
-        //HBTrace t = new HBTrace("class MFXNumberedParameters");
+        HBTrace t = new HBTrace("class MFXNumberedParameters");
         public UInt16 Offset { get; set; }
         public byte MFXType { get; set; }
         public byte MFXLength { get; set; }
@@ -4306,7 +4306,7 @@ namespace INTEGRA_7_Xamarin
     /// </summary>
     class PCMSynthTone
     {
-        //HBTrace t = new HBTrace("class PCMSynthTone");
+        HBTrace t = new HBTrace("class PCMSynthTone");
         public PCMSynthToneCommon pCMSynthToneCommon { get; set; }
         //public PCMSynthToneCommonMFX PCMSynthToneCommonMFX { get; set; }
         public PCMSynthTonePMT pCMSynthTonePMT { get; set; }
@@ -4326,7 +4326,7 @@ namespace INTEGRA_7_Xamarin
     /// </summary>
     class PCMDrumKit
     {
-        //HBTrace t = new HBTrace("class PCMDrumKit");
+        HBTrace t = new HBTrace("class PCMDrumKit");
         public PCMDrumKitCommon pCMDrumKitCommon { get; set; }
         //public PCMDrumKitCommonMFX PCMDrumKitCommonMFX { get; set; }
         public PCMDrumKitCommonCompEQ pCMDrumKitCommonCompEQ { get; set; }
@@ -4343,7 +4343,7 @@ namespace INTEGRA_7_Xamarin
 
     class SuperNATURALAcousticTone
     {
-        //HBTrace t = new HBTrace("class SuperNATURALAcousticTone");
+        HBTrace t = new HBTrace("class SuperNATURALAcousticTone");
         public SuperNATURALAcousticToneCommon superNATURALAcousticToneCommon { get; set; }
         //public SuperNATURALAcousticToneMFX SuperNATURALAcousticToneMFX { get; set; }
 
@@ -4356,7 +4356,7 @@ namespace INTEGRA_7_Xamarin
 
     class SuperNATURALSynthTone
     {
-        //HBTrace t = new HBTrace("class SuperNATURALSynthTone");
+        HBTrace t = new HBTrace("class SuperNATURALSynthTone");
         public SuperNATURALSynthToneCommon superNATURALSynthToneCommon { get; set; }
         //public SuperNATURALSynthToneCommonMFX SuperNATURALSynthToneCommonMFX { get; set; }
         public SuperNATURALSynthTonePartial superNATURALSynthTonePartial { get; set; }
@@ -4755,7 +4755,7 @@ namespace INTEGRA_7_Xamarin
 
     class SuperNATURALDrumKit
     {
-        //HBTrace t = new HBTrace("class SuperNATURALDrumKit");
+        HBTrace t = new HBTrace("class SuperNATURALDrumKit");
         public SuperNATURALDrumKitCommon SuperNATURALDrumKitCommon { get; set; }
         public SuperNATURALDrumKitCommonCompEQ SuperNATURALDrumKitCommonCompEQ { get; set; }
         public SuperNATURALDrumKitKey SuperNATURALDrumKitkey { get; set; }
@@ -4805,7 +4805,7 @@ namespace INTEGRA_7_Xamarin
 
     class CommonMFX
     {
-        //HBTrace t = new HBTrace("class CommonMFX");
+        HBTrace t = new HBTrace("class CommonMFX");
         public byte MFXType { get; set; }
         public byte Reserve1 { get; set; }
         public byte MFXChorusSendLevel { get; set; }
@@ -4949,7 +4949,7 @@ namespace INTEGRA_7_Xamarin
 
     class PCMSynthToneCommon
     {
-        //HBTrace t = new HBTrace("class PCMSynthToneCommon");
+        HBTrace t = new HBTrace("class PCMSynthToneCommon");
         public String Name { get; set; }
         public byte Level { get; set; }
         public byte Pan { get; set; }
@@ -5035,7 +5035,7 @@ namespace INTEGRA_7_Xamarin
 
     class PCMSynthTonePMT // Partial Mapping Table
     {
-        //HBTrace t = new HBTrace("class PCMSynthTonePMT // Partial Mapping Table");
+        HBTrace t = new HBTrace("class PCMSynthTonePMT // Partial Mapping Table");
         public byte StructureType1_2 { get; set; }
         public byte Booster1_2 { get; set; }
         public byte StructureType3_4 { get; set; }
@@ -5086,7 +5086,7 @@ namespace INTEGRA_7_Xamarin
 
     class LFO
     {
-        //HBTrace t = new HBTrace("class LFO");
+        HBTrace t = new HBTrace("class LFO");
         public byte LFOWaveform { get; set; }
         public byte LFORate { get; set; }
         public byte LFOOffset { get; set; }
@@ -5122,7 +5122,7 @@ namespace INTEGRA_7_Xamarin
 
     class TVA
     {
-        //HBTrace t = new HBTrace("class TVA");
+        HBTrace t = new HBTrace("class TVA");
         public byte TVALevelVelocityCurve { get; set; }
         public byte TVALevelVelocitySens { get; set; }
         public byte TVAEnvTime1VelocitySens { get; set; }
@@ -5160,7 +5160,7 @@ namespace INTEGRA_7_Xamarin
 
     class TVF
     {
-        //HBTrace t = new HBTrace("class TVF");
+        HBTrace t = new HBTrace("class TVF");
         public byte TVFFilterType { get; set; }
         public byte TVFCutoffFrequency { get; set; }
         public byte TVFCutoffKeyfollow { get; set; }
@@ -5218,7 +5218,7 @@ namespace INTEGRA_7_Xamarin
 
     class WMT
     {
-        //HBTrace t = new HBTrace("class WMT");
+        HBTrace t = new HBTrace("class WMT");
         public Boolean WMTWaveSwitch { get; set; }
         public byte WMTWaveGroupType { get; set; }
         public UInt16 WMTWaveGroupID { get; set; }
@@ -5269,7 +5269,7 @@ namespace INTEGRA_7_Xamarin
 
     class PitchEnv
     {
-        //HBTrace t = new HBTrace("class PitchEnv");
+        HBTrace t = new HBTrace("class PitchEnv");
         public byte PitchEnvDepth { get; set; }
         public byte PitchEnvVelocitySens { get; set; }
         public byte PitchEnvTime1VelocitySens { get; set; }
@@ -5307,7 +5307,7 @@ namespace INTEGRA_7_Xamarin
 
     class PCMSynthTonePartial
     {
-        //HBTrace t = new HBTrace("class PCMSynthTonePartial");
+        HBTrace t = new HBTrace("class PCMSynthTonePartial");
         public TVA TVA { get; set; }
         public TVF TVF { get; set; }
         public LFO LFO1 { get; set; }
@@ -5410,7 +5410,7 @@ namespace INTEGRA_7_Xamarin
 
     class PCMSynthToneCommon2
     {
-        //HBTrace t = new HBTrace("class PCMSynthToneCommon2");
+        HBTrace t = new HBTrace("class PCMSynthToneCommon2");
         public byte ToneCategory { get; set; }
         public byte MissingInDocs { get; set; }
         public byte PhraseOctaveShift { get; set; }
@@ -5430,7 +5430,7 @@ namespace INTEGRA_7_Xamarin
 
     class PCMDrumKitCommon
     {
-        //HBTrace t = new HBTrace("class PCMDrumKitCommon");
+        HBTrace t = new HBTrace("class PCMDrumKitCommon");
         public String Name { get; set; }
         public byte DrumKitLevel { get; set; }
         public PCMDrumKitCommon(ReceivedData Data)
@@ -5447,7 +5447,7 @@ namespace INTEGRA_7_Xamarin
 
     class CompEq
     {
-        //HBTrace t = new HBTrace("class CompEq");
+        HBTrace t = new HBTrace("class CompEq");
         public Boolean CompSwitch { get; set; }
         public byte CompAttackTime { get; set; }
         public byte CompReleaseTime { get; set; }
@@ -5486,7 +5486,7 @@ namespace INTEGRA_7_Xamarin
 
     class PCMDrumKitCommonCompEQ
     {
-        //HBTrace t = new HBTrace("class PCMDrumKitCommonCompEQ");
+        HBTrace t = new HBTrace("class PCMDrumKitCommonCompEQ");
         public CompEq[] CompEq { get; set; } // [6]
 
         public PCMDrumKitCommonCompEQ(ReceivedData Data)
@@ -5503,7 +5503,7 @@ namespace INTEGRA_7_Xamarin
 
     class PCMDrumKitPartial
     {
-        //HBTrace t = new HBTrace("class PCMDrumKitPartial");
+        HBTrace t = new HBTrace("class PCMDrumKitPartial");
         public TVF TVF { get; set; }
         public TVA TVA { get; set; }
         public WMT[] WMT { get; set; } // [4]
@@ -5573,7 +5573,7 @@ namespace INTEGRA_7_Xamarin
 
     class PCMDrumKitCommon2
     {
-        //HBTrace t = new HBTrace("class PCMDrumKitCommon2");
+        HBTrace t = new HBTrace("class PCMDrumKitCommon2");
         public byte PhraseNumber { get; set; }
         public byte TFXSwitch { get; set; }
 
@@ -5587,7 +5587,7 @@ namespace INTEGRA_7_Xamarin
 
     class SuperNATURALSynthToneCommon
     {
-        //HBTrace t = new HBTrace("class SuperNATURALSynthToneCommon");
+        HBTrace t = new HBTrace("class SuperNATURALSynthToneCommon");
         public String Name { get; set; }
         public byte ToneLevel { get; set; }
         public Boolean PortamentoSwitch { get; set; }
@@ -5651,7 +5651,7 @@ namespace INTEGRA_7_Xamarin
 
     class SuperNATURALSynthTonePartial
     {
-        //HBTrace t = new HBTrace("class SuperNATURALSynthTonePartial");
+        HBTrace t = new HBTrace("class SuperNATURALSynthTonePartial");
         public byte OSCWave { get; set; }
         public byte OSCWaveVariation { get; set; }
         public byte OSCPitch { get; set; }
@@ -5789,7 +5789,7 @@ namespace INTEGRA_7_Xamarin
 
     class SuperNATURALAcousticToneCommon
     {
-        //HBTrace t = new HBTrace("class SuperNATURALAcousticToneCommon");
+        HBTrace t = new HBTrace("class SuperNATURALAcousticToneCommon");
         public String Name { get; set; }
         public byte ToneLevel { get; set; }
         public byte MonoPoly { get; set; }
@@ -5903,7 +5903,7 @@ namespace INTEGRA_7_Xamarin
 
     class SuperNATURALDrumKitCommon
     {
-        //HBTrace t = new HBTrace("class SuperNATURALDrumKitCommon");
+        HBTrace t = new HBTrace("class SuperNATURALDrumKitCommon");
         public String Name { get; set; }
         public byte KitLevel { get; set; }
         public byte AmbienceLevel { get; set; }
@@ -5927,7 +5927,7 @@ namespace INTEGRA_7_Xamarin
 
     class SuperNATURALDrumKitMFX
     {
-        //HBTrace t = new HBTrace("class SuperNATURALDrumKitMFX");
+        HBTrace t = new HBTrace("class SuperNATURALDrumKitMFX");
         public byte MFXType { get; set; }
         public byte MFXChorusSendLevel { get; set; }
         public byte MFXReverbSendLevel { get; set; }
@@ -5959,7 +5959,7 @@ namespace INTEGRA_7_Xamarin
 
     class SuperNATURALDrumKitCommonCompEQ
     {
-        //HBTrace t = new HBTrace("class SuperNATURALDrumKitCommonCompEQ");
+        HBTrace t = new HBTrace("class SuperNATURALDrumKitCommonCompEQ");
         public CompEq[] CompEQ; // [6]
 
         public SuperNATURALDrumKitCommonCompEQ(ReceivedData Data)
@@ -5976,7 +5976,7 @@ namespace INTEGRA_7_Xamarin
 
     class SuperNATURALDrumKitKey
     {
-        //HBTrace t = new HBTrace("class SuperNATURALDrumKitKey");
+        HBTrace t = new HBTrace("class SuperNATURALDrumKitKey");
         public byte BankNumber { get; set; } // This is 0 for Internal and 1 for ExSN6. Read more in MakeDynamicControls.cs AddSupernaturalDrumKitDruminstrumentControls()
         public byte[] InstNumber { get; set; } // [2] 0 = iternal sound, 1 = ExSN6 sound
         public byte Level { get; set; }
@@ -6288,7 +6288,7 @@ namespace INTEGRA_7_Xamarin
 
     class NumberedParameterValues
     {
-        //HBTrace t = new HBTrace("class NumberedParameterValues");
+        HBTrace t = new HBTrace("class NumberedParameterValues");
         public UInt16[][] Parameters { get; set; }
 
         public NumberedParameterValues()
@@ -8618,7 +8618,7 @@ namespace INTEGRA_7_Xamarin
     }
     class ReceivedData
     {
-        //HBTrace t = new HBTrace("class ReceivedData");
+        HBTrace t = new HBTrace("class ReceivedData");
         public byte[] RawData { get; set; }
 
         public ReceivedData(byte[] RawData)
