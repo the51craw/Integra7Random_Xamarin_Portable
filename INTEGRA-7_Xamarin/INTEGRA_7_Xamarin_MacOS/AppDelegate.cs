@@ -15,8 +15,7 @@ namespace INTEGRA_7_Xamarin_MacOS
         NSWindow mainPage_MacOS;
         private Picker OutputSelector;
         private Picker InputSelector;
-        public MIDI midi;
-        public INTEGRA_7_Xamarin.MainPage mainPage = null;
+        public INTEGRA_7_Xamarin.MainPage MainPage_Portable { get; set; }
 
         public AppDelegate()
         {
@@ -36,13 +35,19 @@ namespace INTEGRA_7_Xamarin_MacOS
             // Insert code here to initialize your application
             Forms.Init();
             LoadApplication(new INTEGRA_7_Xamarin.App());
-            mainPage = INTEGRA_7_Xamarin.MainPage.GetMainPage();
-            mainPage.uIHandler.DrawPages();
+            MainPage_Portable = INTEGRA_7_Xamarin.MainPage.GetMainPage();
+            MainPage_Portable.uIHandler.DrawPages();
  
             // We need invisible ComboBoxes to hold settings from the
             // corresponding Pickers in the Xamarin code.
-            OutputSelector = mainPage.uIHandler.Librarian_midiOutputDevice;
-            InputSelector = mainPage.uIHandler.Librarian_midiInputDevice;
+            OutputSelector = MainPage_Portable.uIHandler.Librarian_midiOutputDevice;
+            InputSelector = MainPage_Portable.uIHandler.Librarian_midiInputDevice;
+
+            MainPage_Portable.SetDeviceSpecificMainPage(this);
+
+            MainPage_Portable.uIHandler.commonState.midi.Init(MainPage_Portable, "INTEGRA-7", OutputSelector, InputSelector, null, 0, 0);
+
+            MainPage_Portable.uIHandler.ShowLibrarianPage();
 
             base.DidFinishLaunching(notification);
         }
