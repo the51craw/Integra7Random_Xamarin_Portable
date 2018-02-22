@@ -852,7 +852,7 @@ namespace INTEGRA_7_Xamarin
                         {
                             //localSettings.Values["Tone"] = lvToneNames.SelectedIndex;
                             currentToneNameIndex = Librarian_ToneNames.IndexOf(Librarian_lvToneNames.SelectedItem.ToString());
-                            String toneName = (String)Librarian_lvToneNames.SelectedItem;
+                            toneName = (String)Librarian_lvToneNames.SelectedItem;
                             commonState.currentTone = new Tone(
                                 Librarian_Groups.IndexOf(Librarian_lvGroups.SelectedItem.ToString()),
                                 Librarian_Categories.IndexOf(Librarian_lvCategories.SelectedItem.ToString()),
@@ -890,64 +890,64 @@ namespace INTEGRA_7_Xamarin
             }
         }
 
-        private void Librarian_lvSearchResult_ItemSelected(object sender, SelectedItemChangedEventArgs e)
-        {
-            if (initDone)
-            {
-                //t.Trace("private void lvSearchResults_SelectionChanged (" + "object" + sender + ", " + "SelectionChangedEventArgs" + e + ", " + ")");
-                String soundName = (String)((ListView)sender).SelectedItem;
-                Boolean drumMap = false;
-                if (!String.IsNullOrEmpty(soundName))
-                {
-                    commonState.currentTone.Name = soundName;
-                }
-                if (!String.IsNullOrEmpty(Librarian_tbSearch.Editor.Text))
-                {
-                    if (commonState.currentTone.Name.EndsWith("\t"))
-                    {
-                        drumMap = true;
-                        commonState.currentTone.Name = commonState.currentTone.Name.TrimEnd('\t');
-                    }
-                    String[] parts = commonState.currentTone.Name.Split(',');
-                    if (parts.Length == 3)
-                    {
-                        if (drumMap)
-                        {
-                            commonState.currentTone.Group = parts[1].TrimStart();
-                            commonState.currentTone.Category = "Drum";
-                            commonState.currentTone.Name = parts[2].TrimStart();
-                        }
-                        else
-                        {
-                            commonState.currentTone.Group = parts[1].TrimStart();
-                            commonState.currentTone.Category = parts[2].TrimStart();
-                            commonState.currentTone.Name = parts[0].TrimStart();
-                        }
-                        Librarian_lvGroups.SelectedItem = commonState.currentTone.Group;
-                        Librarian_lvCategories.SelectedItem = commonState.currentTone.Category;
-                        Librarian_lvToneNames.SelectedItem = commonState.currentTone.Name;
-                        commonState.currentTone.Index = commonState.toneList.Get(Librarian_lvGroups.SelectedItem.ToString(), Librarian_lvCategories.SelectedItem.ToString(), toneName);
-                    }
-                }
-                if (!String.IsNullOrEmpty(commonState.currentTone.Name))
-                {
-                    try
-                    {
-                        PopulateToneData(commonState.toneList.Get(commonState.currentTone.Group, commonState.currentTone.Category, commonState.currentTone.Name));
-                    }
-                    catch { }
-                    commonState.midi.SetVolume(commonState.CurrentPart, 127);
-                    UpdateDrumNames();
-                    if (commonState.player.Playing)
-                    {
-                        commonState.player.StopPlaying();
-                        commonState.player.StartPlaying();
-                        commonState.player.WasPlaying = true;
-                    }
-                }
-                Librarian_lvGroups.SelectedItem = commonState.currentTone.Group;
-            }
-        }
+        //private void Librarian_lvSearchResult_ItemSelected(object sender, SelectedItemChangedEventArgs e)
+        //{
+        //    if (initDone)
+        //    {
+        //        //t.Trace("private void lvSearchResults_SelectionChanged (" + "object" + sender + ", " + "SelectionChangedEventArgs" + e + ", " + ")");
+        //        String soundName = (String)((ListView)sender).SelectedItem;
+        //        Boolean drumMap = false;
+        //        if (!String.IsNullOrEmpty(soundName))
+        //        {
+        //            commonState.currentTone.Name = soundName;
+        //        }
+        //        if (!String.IsNullOrEmpty(Librarian_tbSearch.Editor.Text))
+        //        {
+        //            if (commonState.currentTone.Name.EndsWith("\t"))
+        //            {
+        //                drumMap = true;
+        //                commonState.currentTone.Name = commonState.currentTone.Name.TrimEnd('\t');
+        //            }
+        //            String[] parts = commonState.currentTone.Name.Split(',');
+        //            if (parts.Length == 3)
+        //            {
+        //                if (drumMap)
+        //                {
+        //                    commonState.currentTone.Group = parts[1].TrimStart();
+        //                    commonState.currentTone.Category = "Drum";
+        //                    commonState.currentTone.Name = parts[2].TrimStart();
+        //                }
+        //                else
+        //                {
+        //                    commonState.currentTone.Group = parts[1].TrimStart();
+        //                    commonState.currentTone.Category = parts[2].TrimStart();
+        //                    commonState.currentTone.Name = parts[0].TrimStart();
+        //                }
+        //                Librarian_lvGroups.SelectedItem = commonState.currentTone.Group;
+        //                Librarian_lvCategories.SelectedItem = commonState.currentTone.Category;
+        //                Librarian_lvToneNames.SelectedItem = commonState.currentTone.Name;
+        //                commonState.currentTone.Index = commonState.toneList.Get(Librarian_lvGroups.SelectedItem.ToString(), Librarian_lvCategories.SelectedItem.ToString(), toneName);
+        //            }
+        //        }
+        //        if (!String.IsNullOrEmpty(commonState.currentTone.Name))
+        //        {
+        //            try
+        //            {
+        //                PopulateToneData(commonState.toneList.Get(commonState.currentTone.Group, commonState.currentTone.Category, commonState.currentTone.Name));
+        //            }
+        //            catch { }
+        //            commonState.midi.SetVolume(commonState.CurrentPart, 127);
+        //            UpdateDrumNames();
+        //            if (commonState.player.Playing)
+        //            {
+        //                commonState.player.StopPlaying();
+        //                commonState.player.StartPlaying();
+        //                commonState.player.WasPlaying = true;
+        //            }
+        //        }
+        //        Librarian_lvGroups.SelectedItem = commonState.currentTone.Group;
+        //    }
+        //}
 
         private void Librarian_FilterPresetAndUser_Clicked(object sender, EventArgs e)
         {
@@ -992,34 +992,19 @@ namespace INTEGRA_7_Xamarin
             if (initDone)
             {
                 //t.Trace("private void tbSearch_TextChanged (" + "object" + sender + ", " + "TextChangedEventArgs" + e + ", " + ")");
-                if (!String.IsNullOrEmpty(Librarian_tbSearch.Editor.Text))
+                if (!String.IsNullOrEmpty(Librarian_tbSearch.Editor.Text) && Librarian_tbSearch.Editor.Text.Length > 2)
                 {
-                    //AutoUpdateChildLists = false;
                     Librarian_lvGroups.IsEnabled = false;
                     Librarian_lvCategories.IsEnabled = false;
-                    //Librarian_lvToneNames.IsEnabled = false;
                     usingSearchResults = true;
+                    Librarian_PopulateSearchResults();
                 }
                 else
                 {
-                    //AutoUpdateChildLists = true;
                     Librarian_lvGroups.IsEnabled = true;
                     Librarian_lvCategories.IsEnabled = true;
-                    //Librarian_lvToneNames.IsEnabled = true;
-                }
-                if (Librarian_tbSearch.Editor.Text.Length > 2)
-                {
-                    //Librarian_lvToneNames.IsVisible = false;
-                    //Librarian_lvSearchResult.IsVisible = true;
-                    Librarian_PopulateSearchResults();
-                }
-                else if (String.IsNullOrEmpty(Librarian_tbSearch.Editor.Text))
-                {
-                    //AutoUpdateChildLists = true;
-                    //Librarian_lvToneNames.IsVisible = true;
-                    //Librarian_lvSearchResult.IsVisible = false;
-                    PopulateToneNames(commonState.currentTone.Category);
                     usingSearchResults = false;
+                    PopulateToneNames(commonState.currentTone.Category);
                 }
             }
         }
