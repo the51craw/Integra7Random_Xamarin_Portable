@@ -24,11 +24,11 @@ namespace INTEGRA_7_Xamarin.Droid
 {
     [Android.Runtime.Register("android/content/Context", DoNotGenerateAcw = true)]
 
-    public class MIDI : IOnDeviceOpenedListener
+    public class MIDI : Java.Lang.Object, IMidi, IOnDeviceOpenedListener
     {
         public Context context;
-        public MidiDeviceWatcher midiOutputDeviceWatcher;
-        public MidiDeviceWatcher midiInputDeviceWatcher;
+        //public MidiDeviceWatcher midiOutputDeviceWatcher;
+        //public MidiDeviceWatcher midiInputDeviceWatcher;
         public MidiDevice.MidiConnection midiConnection;
         public MidiOutputPort midiOutPort;
         public MidiInputPort midiInPort;
@@ -36,6 +36,7 @@ namespace INTEGRA_7_Xamarin.Droid
         public byte MidiInPortChannel { get; set; }
         public Int32 MidiOutPortSelectedIndex { get; set; }
         public Int32 MidiInPortSelectedIndex { get; set; }
+        public INTEGRA_7_Xamarin.MainPage mainPage;
 
         public IntPtr Handle => throw new NotImplementedException();
 
@@ -76,13 +77,15 @@ namespace INTEGRA_7_Xamarin.Droid
             //    // do MIDI stuff
             //}
             //MidiManager m = (MidiManager)context.getSystemService(Context.MidiService);
-            midiOutputDeviceWatcher = new MidiDeviceWatcher(/*MidiOutputPort.GetDeviceSelector(), OutputDeviceSelector, Dispatcher*/);
+            //midiOutputDeviceWatcher = new MidiDeviceWatcher(/*MidiOutputPort.GetDeviceSelector(), OutputDeviceSelector, Dispatcher*/);
             //midiInputDeviceWatcher = new MidiDeviceWatcher(MidiInputPort.GetDeviceSelector(), InputDeviceSelector, Dispatcher);
             //midiOutputDeviceWatcher.StartWatcher();
             //midiInputDeviceWatcher.StartWatcher();
             this.MidiOutPortChannel = MidiOutPortChannel;
             this.MidiInPortChannel = MidiInPortChannel;
         }
+
+        public MIDI() { }
 
         // Simpleconstructor that takes the name of the device:
         public MIDI(String deviceName)
@@ -103,6 +106,14 @@ namespace INTEGRA_7_Xamarin.Droid
                 midiInPort = null;
             } catch { }
         }
+
+        public void Init(INTEGRA_7_Xamarin.MainPage mainPage, String deviceName, Picker OutputDeviceSelector, Picker InputDeviceSelector, object Dispatcher, byte MidiOutPortChannel, byte MidiInPortChannel)
+        {
+            this.mainPage = mainPage;
+            Init(deviceName);
+        }
+
+
 
         public async void Init(String deviceName)
         {
@@ -219,6 +230,26 @@ namespace INTEGRA_7_Xamarin.Droid
             //    }
             //}
             //catch { }
+        }
+
+        public byte GetMidiOutPortChannel()
+        {
+            return MidiOutPortChannel;
+        }
+
+        public void SetMidiOutPortChannel(byte OutPortChannel)
+        {
+            MidiOutPortChannel = OutPortChannel;
+        }
+
+        public byte GetMidiInPortChannel()
+        {
+            return MidiInPortChannel;
+        }
+
+        public void SetMidiInPortChannel(byte InPortChannel)
+        {
+            MidiInPortChannel = InPortChannel;
         }
 
         public void NoteOn(byte currentChannel, byte noteNumber, byte velocity)

@@ -1,59 +1,65 @@
-﻿
+﻿using System;
+
+using Android;
 using Android.App;
 using Android.Content.PM;
+//using Android.Runtime;
+//using Android.Views;
+//using Android.Widget;
 using Android.OS;
 //using Android.Media.Midi;
 //using INTEGRA_7_Xamarin.Droid;
-//using Xamarin.Forms;
+using Xamarin.Forms;
 //using Windows.UI.Core;
 //using Android.Content;
 //using Mono;
+using INTEGRA_7_Xamarin.Droid;
 
 //[assembly: Xamarin.Forms.Dependency(typeof(GenericHandlerInterface))]
+[assembly: Dependency(typeof(MIDI))]
 
 namespace INTEGRA_7_Xamarin.Droid
 {
-    //public class GenericHandlerInterface: IGenericHandler
+    //public class GenericHandlerInterface : IGenericHandler
     //{
-    //    public MainPage mainPage { get; set; }
-    //    public MidiManager midiManager;
+    //    //public MainPage mainPage { get; set; }
+    //    //public MidiManager midiManager;
 
     //    public void GenericHandler(object sender, object e)
     //    {
-            //Mono.Runtime.
-            //Android.Runtime.JNIEnv.CallObjectMethod(midiManager, )
-            //PortInfo.GetName();
-            //if (context.MidiService.getPackageManager().hasSystemFeature(PackageManager.FeatureMidi))
-            ////{
-            ////    // do MIDI stuff
-            ////}
-            //    Android.Media.Midi.MidiManager.GetObject<MidiManager>()
-            //MidiManager m = (MidiManager)Context.getSystemService(Context.MidiService);
-            //if (mainPage.midi.midiOutPort == null)
-            //{
-            //    mainPage.midi.Init("INTEGRA-7");
-            //}
-            //mainPage.midi.ProgramChange(0, 88, 0, 1);
-    //   }
+    //        //Mono.Runtime.
+    //        //Android.Runtime.JNIEnv.CallObjectMethod(midiManager, )
+    //        //PortInfo.GetName();
+    //        //if (context.MidiService.getPackageManager().hasSystemFeature(PackageManager.FeatureMidi))
+    //        //    //{
+    //        //    //    // do MIDI stuff
+    //        //    //}
+    //        //    Android.Media.Midi.MidiManager.GetObject<MidiManager>()
+    //        //MidiManager m = (MidiManager)Context.getSystemService(Context.MidiService);
+    //        //if (mainPage.midi.midiOutPort == null)
+    //        //{
+    //        //    mainPage.midi.Init("INTEGRA-7");
+    //        //}
+    //        //mainPage.midi.ProgramChange(0, 88, 0, 1);
+    //    }
     //}
 
     [Activity(Label = "INTEGRA_7_Xamarin", Icon = "@drawable/icon", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
-        // For accessing INTEGRA_7_Xamarin.MainPage from UWP:
-        private INTEGRA_7_Xamarin.MainPage mainPage;
-        // Invisible comboboxes used by MIDI class (will always have INTEGRA-7 selected):
-        //private Picker OutputSelector;
-        //private Picker InputSelector;
-        //public MIDI midi;
-        //global::INTEGRA_7_Xamarin.Droid.MainActivity mainActivity { get; set; }
-        // For accessing the genericHandlerInterface:
         //GenericHandlerInterface genericHandlerInterface;
+        // For accessing INTEGRA_7_Xamarin.MainPage from UWP:
+        private INTEGRA_7_Xamarin.MainPage MainPage_Portable;
+        // Invisible comboboxes used by MIDI class (will always have INTEGRA-7 selected):
+        private Picker OutputSelector;
+        private Picker InputSelector;
+        //public MIDI midi;
+		
 
         protected override void OnCreate(Bundle bundle)
         {
-            TabLayoutResource = Resource.Layout.Tabbar;
-            ToolbarResource = Resource.Layout.Toolbar;
+            //TabLayoutResource = Resource.Layout.Tabbar;
+            //ToolbarResource = Resource.Layout.Toolbar;
 
             base.OnCreate(bundle);
 
@@ -69,10 +75,9 @@ namespace INTEGRA_7_Xamarin.Droid
         {
             //MidiManager midiManager = (MidiManager)GetSystemService(Context.MidiService);
             //MidiDeviceInfo[] midiDeviceInfo = midiManager.GetDevices();
-
-
+            Xamarin.Forms.DependencyService.Register<IMidi>();
             // Get INTEGRA_7_Xamarin.MainPage:
-            mainPage = INTEGRA_7_Xamarin.MainPage.GetMainPage();
+            MainPage_Portable = INTEGRA_7_Xamarin.MainPage.GetMainPage();
             UIHandler.appType = UIHandler._appType.ANDROID;
             // Get mainActivity:
             //mainActivity = this;
@@ -81,15 +86,12 @@ namespace INTEGRA_7_Xamarin.Droid
             // Let genericHandlerInterface know this MainPage:
             //genericHandlerInterface.mainPage = this;
             // Draw UI (function is in mainPage.uIHandler):
-            mainPage.uIHandler.DrawPage();
-
-            // We need invisible ComboBoxes to hold settings from the
-            // corresponding Pickers in the Xamarin code.
-            //OutputSelector = new Picker();
-            //InputSelector = new Picker();
-            
-            //midi = new MIDI(midiManager, mainPage, OutputSelector, InputSelector, /*DependencyService.Get<CoreDispatcher>(),*/ 0, 0);
-            //midi.Init("INTEGRA-7");
+            MainPage_Portable.uIHandler.DrawPages();
+            OutputSelector = MainPage_Portable.uIHandler.Librarian_midiOutputDevice;
+            InputSelector = MainPage_Portable.uIHandler.Librarian_midiInputDevice;
+            MainPage_Portable.SetDeviceSpecificMainPage(this);
+            MainPage_Portable.uIHandler.commonState.midi.Init(MainPage_Portable, "INTEGRA-7", OutputSelector, InputSelector, null, 0, 0);
+            MainPage_Portable.uIHandler.ShowLibrarianPage();
         }
 
         //public MainActivity GetMainActivity()
