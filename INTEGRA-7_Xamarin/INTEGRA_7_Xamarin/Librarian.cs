@@ -260,6 +260,12 @@ namespace INTEGRA_7_Xamarin
             Librarian_btnPlus12keys.Clicked += Librarian_btnPlus12keys_Clicked;
             Librarian_btnMinus12keys.Clicked += Librarian_btnMinus12keys_Clicked;
 
+            //TapGestureRecognizer tapGestureRecognizer = new TapGestureRecognizer();
+            //tapGestureRecognizer.Tapped += (sender, e) => keyboard_PointerPressed(sender, e); ;
+            //Librarian_Keyboard.GestureRecognizers.Add(tapGestureRecognizer);
+
+            //((View)Librarian_Keyboard).
+
             // Assemble grids with controls ---------------------------------------------------------------
 
             // Assemble column 0:
@@ -1067,6 +1073,48 @@ namespace INTEGRA_7_Xamarin
         {
             QueryUserTones();
         }
+
+        private void keyboard_PointerPressed(object sender, System.EventArgs e)
+        {
+            t.Trace("private void keyboard_PointerPressed (" + "object" + sender + ", " + "PointerRoutedEventArgs" + e + ", " + ")");
+            
+            //PointerPoint mousePosition = e.GetCurrentPoint(keyboard);
+            //Note note = NoteFromMousePosition(mousePosition.Position.X, mousePosition.Position.Y);
+            //if (note.NoteNumber < 128)
+            //{
+            //    currentNote = note.NoteNumber;
+            //    commonState.midi.NoteOn(commonState.CurrentPart, note.NoteNumber, note.Velocity);
+            //}
+        }
+
+        //private void keyboard_PointerReleased(object sender, PointerRoutedEventArgs e)
+        //{
+        //    t.Trace("private void keyboard_PointerReleased (" + "object" + sender + ", " + "PointerRoutedEventArgs" + e + ", " + ")");
+        //    if (currentNote < 128)
+        //    {
+        //        commonState.midi.NoteOff(commonState.CurrentPart, currentNote);
+        //        currentNote = 255;
+        //    }
+        //}
+
+        //private void keyboard_PointerMoved(object sender, PointerRoutedEventArgs e)
+        //{
+        //    t.Trace("private void keyboard_PointerMoved (" + "object" + sender + ", " + "PointerRoutedEventArgs" + e + ", " + ")");
+        //    if (currentNote < 128) // Do this only when a note is currently playing.
+        //    {
+        //        PointerPoint mousePosition = e.GetCurrentPoint(keyboard);
+        //        Note note = NoteFromMousePosition(mousePosition.Position.X, mousePosition.Position.Y);
+        //        if (note.NoteNumber != currentNote)
+        //        {
+        //            // Kill sounding note:
+        //            commonState.midi.NoteOff(commonState.CurrentPart, currentNote);
+
+        //            // Play next note:
+        //            currentNote = note.NoteNumber;
+        //            commonState.midi.NoteOn(commonState.CurrentPart, currentNote, note.Velocity);
+        //        }
+        //    }
+        //}
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // Librarian functions

@@ -22,14 +22,14 @@ using Android.Content.PM;
 
 namespace INTEGRA_7_Xamarin.Droid
 {
-    [Android.Runtime.Register("android/content/Context", DoNotGenerateAcw = true)]
+    //[Android.Runtime.Register("android/content/Context", DoNotGenerateAcw = true)]
 
-    public class MIDI : Java.Lang.Object, IMidi, IOnDeviceOpenedListener
+    public class MIDI //: Java.Lang.Object, IMidi, IOnDeviceOpenedListener
     {
-        public Context context;
+        //public Context context;
         //public MidiDeviceWatcher midiOutputDeviceWatcher;
         //public MidiDeviceWatcher midiInputDeviceWatcher;
-        public MidiDevice.MidiConnection midiConnection;
+        //public MidiDevice.MidiConnection midiConnection;
         public MidiOutputPort midiOutPort;
         public MidiInputPort midiInPort;
         public byte MidiOutPortChannel { get; set; }
@@ -41,12 +41,12 @@ namespace INTEGRA_7_Xamarin.Droid
         public IntPtr Handle => throw new NotImplementedException();
 
         public CharEnumerator charEnumerator;
-        //public PackageManager packageManager;
+        public PackageManager packageManager;
 
         // Constructor using a combobox for full device watch:
         public MIDI(MidiManager midiManager, MainPage mainPage, Picker OutputDeviceSelector, Picker InputDeviceSelector, /*CoreDispatcher Dispatcher,*/ byte MidiOutPortChannel, byte MidiInPortChannel)
         {
-            MidiDeviceInfo[] midiDeviceInfo = midiManager.GetDevices();
+            //MidiDeviceInfo[] midiDeviceInfo = midiManager.GetDevices();
             //GetSystemService("MidiManager.class");
             //context = (Context)Context.GetObject<Context>(JNIEnv.Handle, JniHandleOwnership.TransferLocalRef);
 
@@ -63,8 +63,10 @@ namespace INTEGRA_7_Xamarin.Droid
             //Android.Media.Midi.MidiSender
 
             //Java.Lang.JavaSystem.LoadLibrary("android.software.midi");
-            charEnumerator = MidiDeviceService.MidiService.GetEnumerator();
-            //PackageManager packageManager = PackageManager.GetObject<PackageManager>(JNIEnv.Handle, JniHandleOwnership.TransferLocalRef);
+            //packageManager = JNIEnv.FindClass("MidiDeviceService");
+            //charEnumerator = MidiDeviceService.MidiService.GetEnumerator();
+            //var midiManager = (MidiManager)GetSystemService(MidiService);
+            //var midiDevInfos = (MidiDeviceInfo[])midiManager.GetDevices();            //PackageManager packageManager = PackageManager.GetObject<PackageManager>(JNIEnv.Handle, JniHandleOwnership.TransferLocalRef);
             //if (PackageManager. HasSystemFeature(PackageManager.FeatureMidi))
             //{
             //    throw new NotSupportedException("Midi");
@@ -109,6 +111,14 @@ namespace INTEGRA_7_Xamarin.Droid
 
         public void Init(INTEGRA_7_Xamarin.MainPage mainPage, String deviceName, Picker OutputDeviceSelector, Picker InputDeviceSelector, object Dispatcher, byte MidiOutPortChannel, byte MidiInPortChannel)
         {
+            //MidiManager midiManager = getSystemService("MidiManager"); // PackageManager.GetObject<MidiManager>(JNIEnv.FindClass("MidiManager"), JniHandleOwnership.TransferGlobalRef);
+            //MidiManager.get
+            //var midiDevInfos = (MidiDeviceInfo[])midiManager.GetDevices();
+            //packageManager = PackageManager.GetObject<PackageManager>(JNIEnv.FindClass("PackageManager"), JniHandleOwnership.TransferGlobalRef);
+            //if (!packageManager.HasSystemFeature(PackageManager.FeatureMidi))
+            //{
+            //    throw new NotSupportedException("Midi");
+            //}
             this.mainPage = mainPage;
             Init(deviceName);
         }
