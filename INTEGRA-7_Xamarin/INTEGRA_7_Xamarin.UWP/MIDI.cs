@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.Devices.Enumeration;
 using Windows.Devices.Midi;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
 using Windows.UI.Core;
 using Windows.Storage.Streams;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -56,6 +52,8 @@ namespace INTEGRA_7_Xamarin.UWP
                 timer.Start();
             }
         }
+
+        public void PreInit(object usbManager, object usbReceiver) { }
 
         private void Timer_Tick(object sender, object e)
         {

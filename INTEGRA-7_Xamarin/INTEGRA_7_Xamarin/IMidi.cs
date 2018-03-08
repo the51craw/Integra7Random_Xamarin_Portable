@@ -46,5 +46,8 @@ namespace INTEGRA_7_Xamarin
         byte GetMidiInPortChannel();
 
         void SetMidiInPortChannel(byte InPortChannel);
+
+        void PreInit(object usbManager, object usbReceiver);
+
     }
 }

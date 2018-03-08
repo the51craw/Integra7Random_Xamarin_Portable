@@ -1,245 +1,67 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
 using Android.App;
 using Android.Content;
-using Android.OS;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
-using Android.Media;
-using Android.Media.Midi;
 using Xamarin.Forms;
-//using Mono.CompilerServices;
-//using Mono.CSharp;
-using Mono;
-using static Android.Media.Midi.MidiManager;
+using Android.Content;
 using Android.Content.PM;
-//using static Android.Media.Midi.MidiManager;
+using Android.Hardware.Usb;
 //using Java.Lang;
+using INTEGRA_7_Xamarin.Droid;
+using Mono;
+
+[assembly: Dependency(typeof(MIDI))]
 
 namespace INTEGRA_7_Xamarin.Droid
 {
     //[Android.Runtime.Register("android/content/Context", DoNotGenerateAcw = true)]
 
-    public class MIDI //: Java.Lang.Object, IMidi, IOnDeviceOpenedListener
+    public class MIDI : Xamarin.Forms.Platform.Android.FormsAppCompatActivity, IMidi
     {
-        //public Context context;
-        //public MidiDeviceWatcher midiOutputDeviceWatcher;
-        //public MidiDeviceWatcher midiInputDeviceWatcher;
-        //public MidiDevice.MidiConnection midiConnection;
-        public MidiOutputPort midiOutPort;
-        public MidiInputPort midiInPort;
         public byte MidiOutPortChannel { get; set; }
         public byte MidiInPortChannel { get; set; }
         public Int32 MidiOutPortSelectedIndex { get; set; }
         public Int32 MidiInPortSelectedIndex { get; set; }
         public INTEGRA_7_Xamarin.MainPage mainPage;
-
-        public IntPtr Handle => throw new NotImplementedException();
-
-        public CharEnumerator charEnumerator;
-        public PackageManager packageManager;
-
-        // Constructor using a combobox for full device watch:
-        public MIDI(MidiManager midiManager, MainPage mainPage, Picker OutputDeviceSelector, Picker InputDeviceSelector, /*CoreDispatcher Dispatcher,*/ byte MidiOutPortChannel, byte MidiInPortChannel)
-        {
-            //MidiDeviceInfo[] midiDeviceInfo = midiManager.GetDevices();
-            //GetSystemService("MidiManager.class");
-            //context = (Context)Context.GetObject<Context>(JNIEnv.Handle, JniHandleOwnership.TransferLocalRef);
-
-            //Android.Media.Midi.MidiDevice.MidiConnection.GetObject()
-            //MidiDeviceInfo midiDeviceInfo = new Android.Media.Midi.MidiDeviceInfo();
-            //MidiDeviceService midiDeviceService = new Android.Media.Midi.MidiDeviceService();
-            //Android.Media.Midi.MidiDeviceStatus
-            //Android.Media.Midi.MidiDeviceType
-            //Android.Media.Midi.MidiInputPort
-            MidiDevice midiDevice = Android.Media.Midi.MidiManager.GetObject<MidiDevice>(JNIEnv.Handle, JniHandleOwnership.DoNotTransfer);
-            //Android.Media.Midi.MidiOutputPort
-            //Android.Media.Midi.MidiPortType
-            //Android.Media.Midi.MidiReceiver
-            //Android.Media.Midi.MidiSender
-
-            //Java.Lang.JavaSystem.LoadLibrary("android.software.midi");
-            //packageManager = JNIEnv.FindClass("MidiDeviceService");
-            //charEnumerator = MidiDeviceService.MidiService.GetEnumerator();
-            //var midiManager = (MidiManager)GetSystemService(MidiService);
-            //var midiDevInfos = (MidiDeviceInfo[])midiManager.GetDevices();            //PackageManager packageManager = PackageManager.GetObject<PackageManager>(JNIEnv.Handle, JniHandleOwnership.TransferLocalRef);
-            //if (PackageManager. HasSystemFeature(PackageManager.FeatureMidi))
-            //{
-            //    throw new NotSupportedException("Midi");
-            //}
-            //var midiManager = (MidiManager)GetSystemService(MidiService);
-            //var midiDevInfos = (MidiDeviceInfo[])midiManager.GetDevices();
-
-            //if (Context.MidiService.get getPackageManager().hasSystemFeature(PackageManager.FeatureMidi))
-            //{
-            //    // do MIDI stuff
-            //}
-            //MidiManager m = (MidiManager)context.getSystemService(Context.MidiService);
-            //midiOutputDeviceWatcher = new MidiDeviceWatcher(/*MidiOutputPort.GetDeviceSelector(), OutputDeviceSelector, Dispatcher*/);
-            //midiInputDeviceWatcher = new MidiDeviceWatcher(MidiInputPort.GetDeviceSelector(), InputDeviceSelector, Dispatcher);
-            //midiOutputDeviceWatcher.StartWatcher();
-            //midiInputDeviceWatcher.StartWatcher();
-            this.MidiOutPortChannel = MidiOutPortChannel;
-            this.MidiInPortChannel = MidiInPortChannel;
-        }
-
+        UsbReceiver usbReceiver;
+        public UsbManager usbManager { get; set; }
+        UsbInterface usbInterface = null;
+        UsbDevice usbDevice = null;
+        UsbEndpoint outputEndpoint = null;
+        UsbEndpoint inputEndpoint = null;
+        MainActivity mainActivity = null;
         public MIDI() { }
 
         // Simpleconstructor that takes the name of the device:
-        public MIDI(String deviceName)
-        {
-            Init(deviceName);
-        }
-
         ~MIDI()
         {
             try
             {
-                //midiOutputDeviceWatcher.StopWatcher();
-                //midiInputDeviceWatcher.StopWatcher();
-                midiOutPort.Dispose();
-                //midiInPort.MessageReceived -= MidiInPort_MessageReceived;
-                midiInPort.Dispose();
-                midiOutPort = null;
-                midiInPort = null;
             } catch { }
+        }
+
+        public void PreInit(object usbManager, object usbReceiver)
+        {
+            this.usbManager = (UsbManager)usbManager;
+            this.usbReceiver = (UsbReceiver)usbReceiver;
         }
 
         public void Init(INTEGRA_7_Xamarin.MainPage mainPage, String deviceName, Picker OutputDeviceSelector, Picker InputDeviceSelector, object Dispatcher, byte MidiOutPortChannel, byte MidiInPortChannel)
         {
-            //MidiManager midiManager = getSystemService("MidiManager"); // PackageManager.GetObject<MidiManager>(JNIEnv.FindClass("MidiManager"), JniHandleOwnership.TransferGlobalRef);
-            //MidiManager.get
-            //var midiDevInfos = (MidiDeviceInfo[])midiManager.GetDevices();
-            //packageManager = PackageManager.GetObject<PackageManager>(JNIEnv.FindClass("PackageManager"), JniHandleOwnership.TransferGlobalRef);
-            //if (!packageManager.HasSystemFeature(PackageManager.FeatureMidi))
-            //{
-            //    throw new NotSupportedException("Midi");
-            //}
+            mainActivity = (MainActivity)Dispatcher;
             this.mainPage = mainPage;
-            Init(deviceName);
-        }
-
-
-
-        public async void Init(String deviceName)
-        {
-            //DeviceInformationCollection midiOutputDevices = await DeviceInformation.FindAllAsync(MidiOutPort.GetDeviceSelector());
-            //DeviceInformationCollection midiInputDevices = await DeviceInformation.FindAllAsync(MidiInPort.GetDeviceSelector());
-            //DeviceInformation midiOutDevInfo = null;
-            //DeviceInformation midiInDevInfo = null;
-
-            //foreach (DeviceInformation device in midiOutputDevices)
-            //{
-            //    if (device.Name.Contains(deviceName))
-            //    {
-            //        midiOutDevInfo = device;
-            //        break;
-            //    }
-            //}
-
-            //if (midiOutDevInfo != null)
-            //{
-            //    midiOutPort = (MidiOutPort)await MidiOutPort.FromIdAsync(midiOutDevInfo.Id);
-            //}
-
-            //foreach (DeviceInformation device in midiInputDevices)
-            //{
-            //    if (device.Name.Contains(deviceName))
-            //    {
-            //        midiInDevInfo = device;
-            //        break;
-            //    }
-            //}
-
-            //if (midiInDevInfo != null)
-            //{
-            //    midiInPort = await MidiInPort.FromIdAsync(midiInDevInfo.Id);
-            //}
-
-            if (midiOutPort == null)
-            {
-                System.Diagnostics.Debug.WriteLine("Unable to create MidiOutPort from output device");
-            }
-
-            if (midiInPort == null)
-            {
-                System.Diagnostics.Debug.WriteLine("Unable to create MidiInPort from output device");
-            }
         }
 
         public void UpdateMidiComboBoxes(Picker midiOutputComboBox, Picker midiInputComboBox)
         {
-            //midiOutputDeviceWatcher.UpdateComboBox(midiOutputComboBox, MidiOutPortSelectedIndex);
-            //midiInputDeviceWatcher.UpdateComboBox(midiInputComboBox, MidiInPortSelectedIndex);
         }
 
-        public async void OutputDeviceChanged(Picker DeviceSelector)
+        public void OutputDeviceChanged(Picker DeviceSelector)
         {
-            //try
-            //{
-            //    if (!String.IsNullOrEmpty((String)DeviceSelector.SelectedValue))
-            //    {
-            //        var midiOutDeviceInformationCollection = midiOutputDeviceWatcher.DeviceInformationCollection;
-
-            //        if (midiOutDeviceInformationCollection == null)
-            //        {
-            //            return;
-            //        }
-
-            //        DeviceInformation midiOutDevInfo = midiOutDeviceInformationCollection[DeviceSelector.SelectedIndex];
-
-            //        if (midiOutDevInfo == null)
-            //        {
-            //            return;
-            //        }
-
-            //        midiOutPort = (MidiOutPort)await MidiOutPort.FromIdAsync(midiOutDevInfo.Id);
-
-            //        if (midiOutPort == null)
-            //        {
-            //            System.Diagnostics.Debug.WriteLine("Unable to create MidiOutPort from output device");
-            //            return;
-            //        }
-            //    }
-            //}
-            //catch { }
         }
 
-        public async void InputDeviceChanged(Picker DeviceSelector)
+        public void InputDeviceChanged(Picker DeviceSelector)
         {
-            //try
-            //{
-            //    if (!String.IsNullOrEmpty((String)DeviceSelector.SelectedValue))
-            //    {
-            //        var midiInDeviceInformationCollection = midiInputDeviceWatcher.DeviceInformationCollection;
-
-            //        if (midiInDeviceInformationCollection == null)
-            //        {
-            //            return;
-            //        }
-
-            //        DeviceInformation midiInDevInfo = midiInDeviceInformationCollection[DeviceSelector.SelectedIndex];
-
-            //        if (midiInDevInfo == null)
-            //        {
-            //            return;
-            //        }
-
-            //        midiInPort = await MidiInPort.FromIdAsync(midiInDevInfo.Id);
-
-            //        if (midiInPort == null)
-            //        {
-            //            System.Diagnostics.Debug.WriteLine("Unable to create MidiInPort from input device");
-            //            return;
-            //        }
-            //        //midiInPort.MessageReceived += MidiInPort_MessageReceived;
-            //    }
-            //}
-            //catch { }
         }
 
         public byte GetMidiOutPortChannel()
@@ -264,38 +86,21 @@ namespace INTEGRA_7_Xamarin.Droid
 
         public void NoteOn(byte currentChannel, byte noteNumber, byte velocity)
         {
-            //if (midiOutPort != null)
-            //{
-            //    IMidiMessage midiMessageToSend = new MidiNoteOnMessage(currentChannel, noteNumber, velocity);
-            //    midiOutPort.SendMessage(midiMessageToSend);
-            //}
+            mainActivity.NoteOn(currentChannel, noteNumber, velocity);
         }
 
         public void NoteOff(byte currentChannel, byte noteNumber)
         {
-            //if (midiOutPort != null)
-            //{
-            //    IMidiMessage midiMessageToSend = new MidiNoteOnMessage(currentChannel, noteNumber, 0);
-            //    midiOutPort.SendMessage(midiMessageToSend);
-            //}
+            mainActivity.NoteOff(currentChannel, noteNumber);
+
         }
 
         public void SendControlChange(byte channel, byte controller, byte value)
         {
-            //if (midiOutPort != null)
-            //{
-            //    IMidiMessage midiMessageToSend = new MidiControlChangeMessage(channel, controller, value);
-            //    midiOutPort.SendMessage(midiMessageToSend);
-            //}
         }
 
         public void SetVolume(byte currentChannel, byte volume)
         {
-            //if (midiOutPort != null)
-            //{
-            //    IMidiMessage midiMessageToSend = new MidiControlChangeMessage(currentChannel, 0x07, volume);
-            //    midiOutPort.SendMessage(midiMessageToSend);
-            //}
         }
 
         public void ProgramChange(byte currentChannel, String smsb, String slsb, String spc)
@@ -395,10 +200,10 @@ namespace INTEGRA_7_Xamarin.Droid
             bytes[bytes.Length - 2] = (byte)((0x80 - (chksum & 0x7f)) & 0x7f);
         }
 
-        public void OnDeviceOpened(MidiDevice device)
-        {
-            throw new NotImplementedException();
-        }
+        //public void OnDeviceOpened(MidiDevice device)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
         public void Dispose()
         {

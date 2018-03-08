@@ -157,6 +157,7 @@
     <Compile Include="MainActivity.cs" />
     <Compile Include="MIDI.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
+    <Compile Include="USB.cs" />
     <Compile Include="UsbReceiver.cs" />
   </ItemGroup>
   <ItemGroup>

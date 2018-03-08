@@ -12,6 +12,7 @@ namespace INTEGRA_7_Xamarin
         public UIHandler uIHandler;
         private static MainPage MainPage_Portable;
         private object MainPage_Device;
+        public object[] platform_specific { get; set; }
 
         public interface IEventHandler
         {
