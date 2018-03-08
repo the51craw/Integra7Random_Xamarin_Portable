@@ -9,47 +9,36 @@ using Android.Hardware.Usb;
 //using Java.Lang;
 using INTEGRA_7_Xamarin.Droid;
 using Mono;
+using System.Runtime.InteropServices.WindowsRuntime;
 
 [assembly: Dependency(typeof(MIDI))]
 
 namespace INTEGRA_7_Xamarin.Droid
 {
-    //[Android.Runtime.Register("android/content/Context", DoNotGenerateAcw = true)]
-
-    public class MIDI : Xamarin.Forms.Platform.Android.FormsAppCompatActivity, IMidi
+    // This midi class does not implement MIDI, but it is called the same way as for other platforms.
+    // Here we only forward all MIDI calls to MainActivity which in turn uses USB to
+    // send MIDI packets. The class that implements MIDI via USB is Android_Midi below.
+    public class MIDI : IMidi, IGenericHandler
     {
+        MainActivity mainActivity = null;
+        MainPage MainPage_Portable = null;
         public byte MidiOutPortChannel { get; set; }
         public byte MidiInPortChannel { get; set; }
         public Int32 MidiOutPortSelectedIndex { get; set; }
         public Int32 MidiInPortSelectedIndex { get; set; }
         public INTEGRA_7_Xamarin.MainPage mainPage;
-        UsbReceiver usbReceiver;
-        public UsbManager usbManager { get; set; }
-        UsbInterface usbInterface = null;
-        UsbDevice usbDevice = null;
-        UsbEndpoint outputEndpoint = null;
-        UsbEndpoint inputEndpoint = null;
-        MainActivity mainActivity = null;
+        public USB usb { get; set; }
+
+        public void GenericHandler(object sender, object e)
+        {
+        }
+
         public MIDI() { }
 
-        // Simpleconstructor that takes the name of the device:
-        ~MIDI()
+        public void Init(INTEGRA_7_Xamarin.MainPage mainPage, String deviceName, Picker OutputDeviceSelector, Picker InputDeviceSelector, object MainActivity, byte MidiOutPortChannel, byte MidiInPortChannel)
         {
-            try
-            {
-            } catch { }
-        }
-
-        public void PreInit(object usbManager, object usbReceiver)
-        {
-            this.usbManager = (UsbManager)usbManager;
-            this.usbReceiver = (UsbReceiver)usbReceiver;
-        }
-
-        public void Init(INTEGRA_7_Xamarin.MainPage mainPage, String deviceName, Picker OutputDeviceSelector, Picker InputDeviceSelector, object Dispatcher, byte MidiOutPortChannel, byte MidiInPortChannel)
-        {
-            mainActivity = (MainActivity)Dispatcher;
-            this.mainPage = mainPage;
+            mainActivity = (MainActivity)MainActivity;
+            this.MainPage_Portable = mainPage;
         }
 
         public void UpdateMidiComboBoxes(Picker midiOutputComboBox, Picker midiInputComboBox)
@@ -86,13 +75,12 @@ namespace INTEGRA_7_Xamarin.Droid
 
         public void NoteOn(byte currentChannel, byte noteNumber, byte velocity)
         {
-            mainActivity.NoteOn(currentChannel, noteNumber, velocity);
+            UsbTransmit(MakeUsbBuffer(new byte[] { 0x90, noteNumber, velocity }));
         }
 
         public void NoteOff(byte currentChannel, byte noteNumber)
         {
-            mainActivity.NoteOff(currentChannel, noteNumber);
-
+            UsbTransmit(MakeUsbBuffer(new byte[] { 0x80, noteNumber, 0x00 }));
         }
 
         public void SendControlChange(byte channel, byte controller, byte value)
@@ -133,14 +121,52 @@ namespace INTEGRA_7_Xamarin.Droid
 
         public void SendSystemExclusive(byte[] bytes)
         {
-            //IBuffer buffer = bytes.AsBuffer();
-            //MidiSystemExclusiveMessage midiMessageToSend = new MidiSystemExclusiveMessage(buffer);
-            //midiOutPort.SendMessage(midiMessageToSend);
+            UsbTransmit(MakeUsbBuffer(bytes));
         }
 
-        //public void MidiInPort_MessageReceived(MidiInPort sender, MidiMessageReceivedEventArgs args)
-        //{
-        //}
+        public void MidiInPort_MessageReceived(MidiInPort sender, MidiMessageReceivedEventArgs args)
+        {
+            //IMidiMessage receivedMidiMessage = args.Message;
+            //rawData = receivedMidiMessage.RawData.ToArray();
+            //MessageReceived = true;
+        }
+
+        private byte[] MakeUsbBuffer(byte[] bytes)
+        {
+            // USB protocol needs packets starting with 0x04, followed by 3 bytes, max 16 packets in one transmission.
+            // Last packet, however, starts with 0x06 (I think).
+            Int32 newBufferLength = bytes.Length + bytes.Length / 4 + (4 - bytes.Length % 4) - 1;
+            byte[] usbBuffer = new byte[newBufferLength];
+            Int32 from = 0;
+            for (Int32 to = 0; to < newBufferLength; to++)
+            {
+                if (to % 4 == 0)
+                {
+                    usbBuffer[to] = 0x04;
+                }
+                else
+                {
+                    usbBuffer[to] = bytes[from++];
+                }
+            }
+            return usbBuffer;
+        }
+
+        private void UsbTransmit(byte[] buffer)
+        {
+            USB usb = (USB)MainPage_Portable.platform_specific[0];
+            if (usb != null && usb.HasPermission)
+            {
+                UsbDeviceConnection deviceConnection = usb.Manager.OpenDevice(usb.Device);
+                if (deviceConnection.ClaimInterface(usb.Interface, true))
+                {
+                    deviceConnection.BulkTransfer(usb.OutputEndpoint, buffer, buffer.Length, 5000);
+                    deviceConnection.ReleaseInterface(usb.Interface);
+                    deviceConnection.Close();
+                    deviceConnection.Dispose();
+                }
+            }
+        }
 
         public byte[] SystemExclusiveRQ1Message(byte[] Address, byte[] Length)
         {
@@ -169,7 +195,7 @@ namespace INTEGRA_7_Xamarin.Droid
         public byte[] SystemExclusiveDT1Message(byte[] Address, byte[] DataToTransmit)
         {
             Int32 length = 13 + DataToTransmit.Length;
-            byte[] result = new byte[length]; 
+            byte[] result = new byte[length];
             result[0] = 0xf0; // Start of exclusive message
             result[1] = 0x41; // Roland
             result[2] = 0x10; // Device Id is 17 according to settings in INTEGRA-7 (Menu -> System -> MIDI, 1 = 0x00 ... 17 = 0x10)
@@ -199,15 +225,14 @@ namespace INTEGRA_7_Xamarin.Droid
             }
             bytes[bytes.Length - 2] = (byte)((0x80 - (chksum & 0x7f)) & 0x7f);
         }
+    }
 
-        //public void OnDeviceOpened(MidiDevice device)
-        //{
-        //    throw new NotImplementedException();
-        //}
+    // These are dummy classes to satisfy IMidi argument definitions that are actually not used.
+    public class MidiMessageReceivedEventArgs
+    {
+    }
 
-        public void Dispose()
-        {
-            throw new NotImplementedException();
-        }
+    public class MidiInPort
+    {
     }
 }

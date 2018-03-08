@@ -13,7 +13,7 @@ using Android.Hardware.Usb;
 
 namespace INTEGRA_7_Xamarin.Droid
 {
-    class UsbReceiver : BroadcastReceiver
+    public class UsbReceiver : BroadcastReceiver
     {
         private static String ACTION_USB_PERMISSION = "com.android.example.USB_PERMISSION";
 

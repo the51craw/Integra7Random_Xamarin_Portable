@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System;
 
 //[assembly: Xamarin.Forms.Dependency(typeof(GenericHandlerInterface))]
-[assembly: Dependency(typeof(MIDI))]
+//[assembly: Dependency(typeof(Android_MIDI))]
 
 namespace INTEGRA_7_Xamarin.Droid
 {
@@ -52,6 +52,7 @@ namespace INTEGRA_7_Xamarin.Droid
         public UsbEndpoint outputEndpoint = null;
         public UsbEndpoint inputEndpoint = null;
         public USB usb = null;
+        //public Android_MIDI midi = null;
 
         //private BroadcastReceiver mUsbReceiver = new BroadcastReceiver()
         //{
@@ -109,18 +110,18 @@ namespace INTEGRA_7_Xamarin.Droid
         {
             Xamarin.Forms.DependencyService.Register<IMidi>();
 
-            Int32 deviceIndex = 0;
-            Int32 deviceCount = 0;
-            Int32 interfaceIndex;
-            Int32 endpointIndex;
-            UsbDevice[] usbDevices;
-            UsbInterface[][] usbInterfaces = null;
-            UsbEndpoint[][][] usbEndpoints = null;
-            UsbInterface usbInterface = null;
-            UsbDevice usbDevice = null;
-            UsbEndpoint outputEndpoint = null;
-            UsbEndpoint inputEndpoint = null;
-            Int32 count = 0;
+            //Int32 deviceIndex = 0;
+            //Int32 deviceCount = 0;
+            //Int32 interfaceIndex;
+            //Int32 endpointIndex;
+            //UsbDevice[] usbDevices;
+            //UsbInterface[][] usbInterfaces = null;
+            //UsbEndpoint[][][] usbEndpoints = null;
+            //UsbInterface usbInterface = null;
+            //UsbDevice usbDevice = null;
+            //UsbEndpoint outputEndpoint = null;
+            //UsbEndpoint inputEndpoint = null;
+            //Int32 count = 0;
 
             // Get INTEGRA_7_Xamarin.MainPage:
             MainPage_Portable = INTEGRA_7_Xamarin.MainPage.GetMainPage();
@@ -130,125 +131,39 @@ namespace INTEGRA_7_Xamarin.Droid
             InputSelector = MainPage_Portable.uIHandler.Librarian_midiInputDevice;
             MainPage_Portable.SetDeviceSpecificMainPage(this);
 
-            // Get the USB manager:
             UsbManager usbManager = (UsbManager)GetSystemService(Context.UsbService);
-            UsbReceiver usbReceiver = new UsbReceiver();
+            usb = new USB(usbManager);
 
-            // Get the USB devices (normally one in an Android device):
-            usbDevices = new UsbDevice[usbManager.DeviceList.Count];
-            foreach (KeyValuePair<string, UsbDevice> keyValuePair in usbManager.DeviceList)
+            if (usb.Device != null && usb.Interface != null && usb.OutputEndpoint != null && usb.InputEndpoint != null)
             {
-                usbDevices[deviceIndex] = keyValuePair.Value;
-                deviceIndex++;
-            }
-            deviceCount = deviceIndex;
-
-            // Create usbInterface and usbEnpont lists:
-            usbInterfaces = new UsbInterface[deviceCount][];
-            usbEndpoints = new UsbEndpoint[deviceCount][][];
-
-            // Loop all (one) devices and look for interfaces and endpoints:
-            for (deviceIndex = 0; deviceIndex < deviceCount; deviceIndex++)
-            {
-                if (usbDevices[deviceIndex].InterfaceCount > 0)
-                {
-                    if (usbDevices[deviceIndex].ProductName == "INTEGRA-7")
-                    {
-                        usbDevice = usbDevices[deviceIndex];
-                        usbInterfaces[deviceIndex] = new UsbInterface[usbDevices[deviceIndex].InterfaceCount];
-                        for (interfaceIndex = 0; interfaceIndex < usbDevices[deviceIndex].InterfaceCount; interfaceIndex++)
-                        {
-                            usbInterfaces[deviceIndex][interfaceIndex] = usbDevices[deviceIndex].GetInterface(interfaceIndex);
-                        }
-                        usbEndpoints[deviceIndex] = new UsbEndpoint[usbDevices[deviceIndex].InterfaceCount][];
-                        for (interfaceIndex = 0; interfaceIndex < usbDevices[deviceIndex].InterfaceCount; interfaceIndex++)
-                        {
-                            usbEndpoints[deviceIndex][interfaceIndex] = new UsbEndpoint[usbInterfaces[deviceIndex][interfaceIndex].EndpointCount];
-                            usbInterface = usbInterfaces[deviceIndex][interfaceIndex];
-                            for (endpointIndex = 0; endpointIndex < usbInterfaces[deviceIndex][interfaceIndex].EndpointCount; endpointIndex++)
-                            {
-                                usbEndpoints[deviceIndex][interfaceIndex][endpointIndex] = usbInterfaces[deviceIndex][interfaceIndex].GetEndpoint(endpointIndex);
-                                if (usbEndpoints[deviceIndex][interfaceIndex][endpointIndex].Direction == Android.Hardware.Usb.UsbAddressing.Out)
-                                {
-                                    outputEndpoint = usbEndpoints[deviceIndex][interfaceIndex][endpointIndex];
-                                }
-                                else
-                                {
-                                    inputEndpoint = usbEndpoints[deviceIndex][interfaceIndex][endpointIndex];
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-
-            if (usbDevice != null && usbInterface != null && outputEndpoint != null && inputEndpoint != null)
-            {
-                PendingIntent mPermissionIntent = PendingIntent.GetBroadcast(this, 0, new Intent(ACTION_USB_PERMISSION), 0);
+                //midi = new Android_MIDI();
+                PendingIntent pendingIntent = PendingIntent.GetBroadcast(this, 0, new Intent(ACTION_USB_PERMISSION), 0);
                 IntentFilter filter = new IntentFilter(ACTION_USB_PERMISSION);
-                RegisterReceiver(usbReceiver, filter);
-                usbManager.RequestPermission(usbDevice, mPermissionIntent);
-                bool hasPermision = usbManager.HasPermission(usbDevice);
-
-                if (hasPermision)
-                {
-                    UsbDeviceConnection deviceConnection = usbManager.OpenDevice(usbDevices[0]);
-                    if (deviceConnection.ClaimInterface(usbInterface, true))
-                    {
-                        byte[] buffer = new byte[] { 0x04, 0x90, 0x65, 0x64 };
-                        count = deviceConnection.BulkTransfer(outputEndpoint, buffer, buffer.Length, 5000);
-                        buffer = new byte[] { 0x04, 0x80, 0x65, 0x60 };
-                        count = deviceConnection.BulkTransfer(outputEndpoint, buffer, buffer.Length, 5000);
-                        deviceConnection.ReleaseInterface(usbInterface);
-                        deviceConnection.Close();
-                        deviceConnection.Dispose();
-                    }
-                }
+                //UsbReceiver usbReceiver = new UsbReceiver();
+                RegisterReceiver(usb.UsbReceiver, filter);
+                usb.Manager.RequestPermission(usb.Device, pendingIntent);
+                usb.HasPermission = usb.Manager.HasPermission(usb.Device);
             }
 
-            MainPage_Portable.uIHandler.commonState.midi.PreInit((UsbManager)GetSystemService(Context.UsbService), usbReceiver);
             MainPage_Portable.uIHandler.commonState.midi.Init(MainPage_Portable, "INTEGRA-7", OutputSelector, InputSelector, this, 0, 0);
-            MainPage_Portable.platform_specific = new object[] { usbManager, usbInterface, usbDevice, outputEndpoint, inputEndpoint };
+            MainPage_Portable.platform_specific = new object[] { usb };
             MainPage_Portable.uIHandler.ShowLibrarianPage();
         }
 
-        public void NoteOn(byte currentChannel, byte noteNumber, byte velocity)
-        {
-            Int32 count = 0;
-            usbManager = (UsbManager)MainPage_Portable.platform_specific[0];
-            usbInterface = (UsbInterface)MainPage_Portable.platform_specific[1];
-            usbDevice = (UsbDevice)MainPage_Portable.platform_specific[2];
-            outputEndpoint = (UsbEndpoint)MainPage_Portable.platform_specific[3];
-            inputEndpoint = (UsbEndpoint)MainPage_Portable.platform_specific[4];
-            UsbDeviceConnection deviceConnection = usbManager.OpenDevice(usbDevice);
-            if (deviceConnection.ClaimInterface(usbInterface, true))
-            {
-                byte[] buffer = new byte[] { 0x04, 0x90, 0x65, 0x64 };
-                count = deviceConnection.BulkTransfer(outputEndpoint, buffer, buffer.Length, 5000);
-                deviceConnection.ReleaseInterface(usbInterface);
-                deviceConnection.Close();
-                deviceConnection.Dispose();
-            }
-        }
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // Here below are wrappers that receives calls from the MIDI class, adds USB and forwards to class Android_MIDI.
+        // It is done this way because 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        public void NoteOff(byte currentChannel, byte noteNumber)
-        {
-            Int32 count = 0;
-            usbManager = (UsbManager)MainPage_Portable.platform_specific[0];
-            usbInterface = (UsbInterface)MainPage_Portable.platform_specific[1];
-            usbDevice = (UsbDevice)MainPage_Portable.platform_specific[2];
-            outputEndpoint = (UsbEndpoint)MainPage_Portable.platform_specific[3];
-            inputEndpoint = (UsbEndpoint)MainPage_Portable.platform_specific[4];
-            UsbDeviceConnection deviceConnection = usbManager.OpenDevice(usbDevice);
-            if (deviceConnection.ClaimInterface(usbInterface, true))
-            {
-                byte[] buffer = new byte[] { 0x04, 0x80, 0x65, 0x00 };
-                count = deviceConnection.BulkTransfer(outputEndpoint, buffer, buffer.Length, 5000);
-                deviceConnection.ReleaseInterface(usbInterface);
-                deviceConnection.Close();
-                deviceConnection.Dispose();
-            }
-        }
+        //public void NoteOn(byte currentChannel, byte noteNumber, byte velocity)
+        //{
+        //    midi.NoteOn((USB)MainPage_Portable.platform_specific[0], currentChannel, noteNumber, velocity);
+        //}
+
+        //public void NoteOff(byte currentChannel, byte noteNumber)
+        //{
+        //    midi.NoteOff((USB)MainPage_Portable.platform_specific[0], currentChannel, noteNumber);
+        //}
     }
 }
 

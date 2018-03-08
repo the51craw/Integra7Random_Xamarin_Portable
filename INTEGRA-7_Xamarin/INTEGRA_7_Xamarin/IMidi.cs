@@ -15,7 +15,7 @@ namespace INTEGRA_7_Xamarin
 
         //void Init(String deviceName, INTEGRA_7_Xamarin.MainPage mainPage, Picker OutputDeviceSelector, Picker InputDeviceSelector);
 
-        void Init(INTEGRA_7_Xamarin.MainPage mainPage, String deviceName, Picker OutputDeviceSelector, Picker InputDeviceSelector, object Dispatcher, byte MidiOutPortChannel, byte MidiInPortChannel);
+        void Init(INTEGRA_7_Xamarin.MainPage mainPage, String deviceName, Picker OutputDeviceSelector, Picker InputDeviceSelector, object DeviceSpecificObject, byte MidiOutPortChannel, byte MidiInPortChannel);
 
         void NoteOn(byte currentChannel, byte noteNumber, byte velocity);
 
@@ -46,8 +46,5 @@ namespace INTEGRA_7_Xamarin
         byte GetMidiInPortChannel();
 
         void SetMidiInPortChannel(byte InPortChannel);
-
-        void PreInit(object usbManager, object usbReceiver);
-
     }
 }

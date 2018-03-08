@@ -53,8 +53,6 @@ namespace INTEGRA_7_Xamarin.UWP
             }
         }
 
-        public void PreInit(object usbManager, object usbReceiver) { }
-
         private void Timer_Tick(object sender, object e)
         {
             if (MessageReceived)

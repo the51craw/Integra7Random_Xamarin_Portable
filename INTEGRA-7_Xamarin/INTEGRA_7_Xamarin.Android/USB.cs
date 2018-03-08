@@ -1,46 +1,44 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Android.App;
-using Android.Content;
+﻿using Android.App;
+using Android.Content.PM;
 using Android.OS;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
+using Xamarin.Forms;
+using INTEGRA_7_Xamarin.Droid;
+using Android.Content;
 using Android.Hardware.Usb;
+using System.Collections.Generic;
+using System;
 
 namespace INTEGRA_7_Xamarin.Droid
 {
     public class USB
     {
-        private static String ACTION_USB_PERMISSION = "com.android.example.USB_PERMISSION";
-        public PendingIntent mPermissionIntent = null;
-        public UsbManager usbManager = null;
-        public UsbInterface usbInterface = null;
-        public UsbDevice usbDevice = null;
-        public UsbEndpoint outputEndpoint = null;
-        public UsbEndpoint inputEndpoint = null;
+        public UsbManager Manager { get; set; }
+        public UsbInterface Interface { get; set; }
+        public UsbDevice Device { get; set; }
+        public UsbEndpoint OutputEndpoint { get; set; }
+        public UsbEndpoint InputEndpoint { get; set; }
+        public Boolean HasPermission { get; set; }
+        public UsbReceiver UsbReceiver { get; set; }
 
-        public void Init(UsbManager usbManager)
+        public USB(UsbManager Manager)
         {
             Int32 deviceIndex = 0;
             Int32 deviceCount = 0;
-            Int32 interfaceIndex;
-            Int32 endpointIndex;
-            UsbDevice[] usbDevices;
+            Int32 interfaceIndex = 0;
+            Int32 endpointIndex = 0;
+            UsbDevice[] usbDevices = null;
             UsbInterface[][] usbInterfaces = null;
             UsbEndpoint[][][] usbEndpoints = null;
-            Int32 count = 0;
 
-            this.usbManager = usbManager;
+            // The UsbManager can only be obtained from MainActivity!
+            this.Manager = Manager;
 
             // Get the USB devices (normally one in an Android device):
-            usbDevices = new UsbDevice[usbManager.DeviceList.Count];
-            foreach (KeyValuePair<string, UsbDevice> keyValuePair in usbManager.DeviceList)
+            usbDevices = new UsbDevice[Manager.DeviceList.Count];
+            foreach (KeyValuePair<string, UsbDevice> keyValuePair in Manager.DeviceList)
             {
-                usbDevice = keyValuePair.Value;
+                usbDevices[deviceIndex] = keyValuePair.Value;
+                deviceIndex++;
             }
             deviceCount = deviceIndex;
 
@@ -55,7 +53,7 @@ namespace INTEGRA_7_Xamarin.Droid
                 {
                     if (usbDevices[deviceIndex].ProductName == "INTEGRA-7")
                     {
-                        usbDevice = usbDevices[deviceIndex];
+                        Device = usbDevices[deviceIndex];
                         usbInterfaces[deviceIndex] = new UsbInterface[usbDevices[deviceIndex].InterfaceCount];
                         for (interfaceIndex = 0; interfaceIndex < usbDevices[deviceIndex].InterfaceCount; interfaceIndex++)
                         {
@@ -65,43 +63,26 @@ namespace INTEGRA_7_Xamarin.Droid
                         for (interfaceIndex = 0; interfaceIndex < usbDevices[deviceIndex].InterfaceCount; interfaceIndex++)
                         {
                             usbEndpoints[deviceIndex][interfaceIndex] = new UsbEndpoint[usbInterfaces[deviceIndex][interfaceIndex].EndpointCount];
-                            usbInterface = usbInterfaces[deviceIndex][interfaceIndex];
+                            Interface = usbInterfaces[deviceIndex][interfaceIndex];
                             for (endpointIndex = 0; endpointIndex < usbInterfaces[deviceIndex][interfaceIndex].EndpointCount; endpointIndex++)
                             {
                                 usbEndpoints[deviceIndex][interfaceIndex][endpointIndex] = usbInterfaces[deviceIndex][interfaceIndex].GetEndpoint(endpointIndex);
                                 if (usbEndpoints[deviceIndex][interfaceIndex][endpointIndex].Direction == Android.Hardware.Usb.UsbAddressing.Out)
                                 {
-                                    outputEndpoint = usbEndpoints[deviceIndex][interfaceIndex][endpointIndex];
+                                    OutputEndpoint = usbEndpoints[deviceIndex][interfaceIndex][endpointIndex];
                                 }
                                 else
                                 {
-                                    inputEndpoint = usbEndpoints[deviceIndex][interfaceIndex][endpointIndex];
+                                    InputEndpoint = usbEndpoints[deviceIndex][interfaceIndex][endpointIndex];
                                 }
                             }
                         }
                     }
                 }
             }
-
-            if (usbDevice != null && usbDevice != null && usbInterface != null && outputEndpoint != null && inputEndpoint != null)
+            if (Device != null && Interface != null && OutputEndpoint != null && InputEndpoint != null)
             {
-                usbManager.RequestPermission(usbDevice, mPermissionIntent);
-                bool hasPermision = usbManager.HasPermission(usbDevice);
-
-                if (hasPermision)
-                {
-                    UsbDeviceConnection deviceConnection = usbManager.OpenDevice(usbDevices[0]);
-                    if (deviceConnection.ClaimInterface(usbInterface, true))
-                    {
-                        byte[] buffer = new byte[] { 0x04, 0x90, 0x65, 0x64 };
-                        count = deviceConnection.BulkTransfer(outputEndpoint, buffer, buffer.Length, 5000);
-                        buffer = new byte[] { 0x04, 0x80, 0x65, 0x00 };
-                        count = deviceConnection.BulkTransfer(outputEndpoint, buffer, buffer.Length, 5000);
-                        deviceConnection.ReleaseInterface(usbInterface);
-                        deviceConnection.Close();
-                        deviceConnection.Dispose();
-                    }
-                }
+                UsbReceiver = new UsbReceiver();
             }
         }
     }
