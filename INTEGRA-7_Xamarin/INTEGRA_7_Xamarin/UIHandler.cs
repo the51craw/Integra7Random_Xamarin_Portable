@@ -34,7 +34,7 @@ namespace INTEGRA_7_Xamarin
             EDIT_STUDIO_SET,
         }
 
-        enum QueryType
+        public enum QueryType
         {
             NONE,
             CHECKING_I_7_READINESS,
@@ -96,7 +96,7 @@ namespace INTEGRA_7_Xamarin
         //SolidColorBrush gray = null;
         Boolean initMidi = false;
         UInt16[] userToneNumbers;
-        QueryType queryType;
+        public QueryType queryType { get; set; }
         Boolean updateToneNames = false;
         ToneCategories toneCategories = new ToneCategories();
         Hex2Midi hex2Midi = new Hex2Midi();

@@ -44,7 +44,10 @@ namespace INTEGRA_7_Xamarin.Droid
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
 
-        private static String ACTION_USB_PERMISSION = "com.android.example.USB_PERMISSION";
+        private static String ACTION_USB_PERMISSION = "eu.mrmartin.MIDI.USB_PERMISSION";
+        private static String USB_ENDPOINT_XFER_BULK = "android.hardware.usb.action.USB_ENDPOINT_XFER_BULK";
+        //private static String USB_DEVICE_ATTACHED = "eu.mrmartin.MIDI.USB_DEVICE_ATTACHED";
+        private static String USB_DEVICE_ATTACHED = "android.hardware.usb.action.USB_DEVICE_ATTACHED";
         public PendingIntent mPermissionIntent = null;
         public UsbManager usbManager = null;
         public static UsbInterface usbInterface = null;
@@ -89,7 +92,7 @@ namespace INTEGRA_7_Xamarin.Droid
         private Picker OutputSelector;
         private Picker InputSelector;
         //public MIDI midi;
-		
+
 
         protected override void OnCreate(Bundle bundle)
         {
@@ -136,11 +139,18 @@ namespace INTEGRA_7_Xamarin.Droid
 
             if (usb.Device != null && usb.Interface != null && usb.OutputEndpoint != null && usb.InputEndpoint != null)
             {
-                //midi = new Android_MIDI();
                 PendingIntent pendingIntent = PendingIntent.GetBroadcast(this, 0, new Intent(ACTION_USB_PERMISSION), 0);
                 IntentFilter filter = new IntentFilter(ACTION_USB_PERMISSION);
-                //UsbReceiver usbReceiver = new UsbReceiver();
-                RegisterReceiver(usb.UsbReceiver, filter);
+                filter.AddAction(USB_ENDPOINT_XFER_BULK);
+                filter.AddAction(USB_DEVICE_ATTACHED);
+                //filter.AddAction(USB_DEVICE_ATTACHED);
+                //filter.AddAction(Intent.ActionDefault);
+                //filter.AddAction(Intent.Action);
+                //filter.AddAction("eu.mrmartin.MIDI.VIEW");
+                RegisterReceiver(usb, filter);
+                //IntentFilter filter2 = new IntentFilter(USB_ENDPOINT_XFER_BULK);
+                //RegisterReceiver(usb, filter2);
+
                 usb.Manager.RequestPermission(usb.Device, pendingIntent);
                 usb.HasPermission = usb.Manager.HasPermission(usb.Device);
             }
@@ -149,21 +159,6 @@ namespace INTEGRA_7_Xamarin.Droid
             MainPage_Portable.platform_specific = new object[] { usb };
             MainPage_Portable.uIHandler.ShowLibrarianPage();
         }
-
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        // Here below are wrappers that receives calls from the MIDI class, adds USB and forwards to class Android_MIDI.
-        // It is done this way because 
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-        //public void NoteOn(byte currentChannel, byte noteNumber, byte velocity)
-        //{
-        //    midi.NoteOn((USB)MainPage_Portable.platform_specific[0], currentChannel, noteNumber, velocity);
-        //}
-
-        //public void NoteOff(byte currentChannel, byte noteNumber)
-        //{
-        //    midi.NoteOff((USB)MainPage_Portable.platform_specific[0], currentChannel, noteNumber);
-        //}
     }
 }
 

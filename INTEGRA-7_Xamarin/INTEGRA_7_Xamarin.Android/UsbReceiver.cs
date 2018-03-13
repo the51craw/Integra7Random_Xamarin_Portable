@@ -41,6 +41,10 @@ namespace INTEGRA_7_Xamarin.Droid
                     }
                 }
             }
+            else
+            {
+
+            }
         }
     }
 

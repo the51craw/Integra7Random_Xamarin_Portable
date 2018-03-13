@@ -7,18 +7,28 @@ using Android.Content;
 using Android.Hardware.Usb;
 using System.Collections.Generic;
 using System;
+using Java.Nio;
 
 namespace INTEGRA_7_Xamarin.Droid
 {
-    public class USB
+    [Android.Runtime.Register("eu.mrmartin.MIDI", "(Ljava/nio/ByteBuffer;I)Z", "GetQueue_Ljava_nio_ByteBuffer_IHandler")]
+
+    public class USB : BroadcastReceiver, IGenericHandler, IInterface
     {
+        private static String ACTION_USB_PERMISSION = "eu.mrmartin.MIDI.USB_PERMISSION";
+        private static String USB_ENDPOINT_XFER_BULK = "eu.mrmartin.MIDI.USB_ENDPOINT_XFER_BULK";
+        private static String USB_DEVICE_ATTACHED = "eu.mrmartin.MIDI.USB_DEVICE_ATTACHED";
+        //public UsbReceiver Receiver { get; set; }
         public UsbManager Manager { get; set; }
         public UsbInterface Interface { get; set; }
         public UsbDevice Device { get; set; }
         public UsbEndpoint OutputEndpoint { get; set; }
         public UsbEndpoint InputEndpoint { get; set; }
         public Boolean HasPermission { get; set; }
-        public UsbReceiver UsbReceiver { get; set; }
+        public UsbDeviceConnection DeviceConnection { get; set; }
+        public UsbRequest OutputRequest { get; set; }
+        public UsbRequest InputRequest { get; set; }
+        public Boolean IsReady { get; set;}
 
         public USB(UsbManager Manager)
         {
@@ -29,6 +39,7 @@ namespace INTEGRA_7_Xamarin.Droid
             UsbDevice[] usbDevices = null;
             UsbInterface[][] usbInterfaces = null;
             UsbEndpoint[][][] usbEndpoints = null;
+            IsReady = false;
 
             // The UsbManager can only be obtained from MainActivity!
             this.Manager = Manager;
@@ -80,10 +91,93 @@ namespace INTEGRA_7_Xamarin.Droid
                     }
                 }
             }
-            if (Device != null && Interface != null && OutputEndpoint != null && InputEndpoint != null)
+            //if (Device != null && Interface != null && OutputEndpoint != null && InputEndpoint != null)
+            //{
+            //    //UsbReceiver = new UsbReceiver();
+            //    DeviceConnection = Manager.OpenDevice(Device);
+            //    if (DeviceConnection.ClaimInterface(Interface, true))
+            //    {
+            //        Request = new UsbRequest();
+            //        Request.Initialize(DeviceConnection, OutputEndpoint);
+            //        IsReady = true;
+            //    }
+            //}
+        }
+
+        ~USB()
+        {
+            if (IsReady)
             {
-                UsbReceiver = new UsbReceiver();
+                DeviceConnection.ReleaseInterface(Interface);
+                DeviceConnection.Close();
+                DeviceConnection.Dispose();
             }
+        }
+
+        public override void OnReceive(Context context, Intent intent)
+        {
+            String action = intent.Action;
+            if (ACTION_USB_PERMISSION.Equals(action))
+            {
+                lock (this)
+                {
+                    Device = (UsbDevice)intent
+                            .GetParcelableExtra(UsbManager.ExtraDevice);
+
+                    if (intent.GetBooleanExtra(
+                            UsbManager.ExtraPermissionGranted, false))
+                    {
+                        if (Device != null)
+                        {
+                            DeviceConnection = Manager.OpenDevice(Device);
+                            if (DeviceConnection.ClaimInterface(Interface, true))
+                            {
+                                OutputRequest = new UsbRequest();
+                                OutputRequest.Initialize(DeviceConnection, OutputEndpoint);
+                                InputRequest = new UsbRequest();
+                                InputRequest.Initialize(DeviceConnection, InputEndpoint);
+                                //InputEndpoint.
+                                HasPermission = true;
+                                IsReady = true;
+                                //DeviceConnection.RequestWait(5000);
+                            }
+                        }
+                    }
+                    else
+                    {
+
+                    }
+                }
+            }
+            else if (USB_ENDPOINT_XFER_BULK.Equals(action))
+            {
+
+            }
+        }
+
+        //public override void OnDeviceConnect(Context context, Intent intent)
+        //{
+
+        //}
+
+        public void UsbRequest()
+        {
+
+        }
+
+        public virtual Boolean Queue(ByteBuffer buffer, Int32 length)
+        {
+            return true;
+        }
+
+        public void GenericHandler(object sender, object e)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IBinder AsBinder()
+        {
+            throw new NotImplementedException();
         }
     }
 }
