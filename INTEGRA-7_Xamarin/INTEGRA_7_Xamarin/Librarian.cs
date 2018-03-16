@@ -62,21 +62,22 @@ namespace INTEGRA_7_Xamarin
         MyLabel Librarian_lblKeys;
         Image Librarian_Keyboard;
         Boolean usingSearchResults = false;
+        Int32 headingHeight;
 
         SuperNATURALDrumKitInstrumentList superNATURALDrumKitInstrumentList = new SuperNATURALDrumKitInstrumentList();
 
-        public void Librarian_Init()
-        {
-            //t.Trace("private void Librarian_Init()");
-            //localSettings = ApplicationData.Current.LocalSettings;
-            //green = new SolidColorBrush(Windows.UI.Color.FromArgb(255, 155, 232, 130));
-            //gray = new SolidColorBrush(Windows.UI.Color.FromArgb(255, 204, 204, 204));
-            //userToneNumbers = new UInt16[128];
-            //for (byte i = 0; i < 128; i++)
-            //{
-            //    userToneNumbers[i] = 0;
-            //}
-        }
+        //public void Librarian_Init()
+        //{
+        //    //t.Trace("private void Librarian_Init()");
+        //    //localSettings = ApplicationData.Current.LocalSettings;
+        //    //green = new SolidColorBrush(Windows.UI.Color.FromArgb(255, 155, 232, 130));
+        //    //gray = new SolidColorBrush(Windows.UI.Color.FromArgb(255, 204, 204, 204));
+        //    //userToneNumbers = new UInt16[128];
+        //    //for (byte i = 0; i < 128; i++)
+        //    //{
+        //    //    userToneNumbers[i] = 0;
+        //    //}
+        //}
 
         public void DrawLibrarianPage()
         {
@@ -268,13 +269,19 @@ namespace INTEGRA_7_Xamarin
 
             // Assemble grids with controls ---------------------------------------------------------------
 
+            headingHeight = 30;
+            if (appType == _appType.ANDROID)
+            {
+                headingHeight = 64;
+            }
+
             // Assemble column 0:
             Librarian_gridGroups.Children.Add((new GridRow(0, new View[] { Librarian_lblGroups }, null, false, false)).Row);
             Librarian_gridGroups.Children.Add((new GridRow(1, new View[] { Librarian_lvGroups }, null, false, false)).Row);
             Librarian_gridGroups.RowDefinitions = new RowDefinitionCollection();
             Librarian_gridGroups.RowDefinitions.Add(new RowDefinition());
             Librarian_gridGroups.RowDefinitions.Add(new RowDefinition());
-            Librarian_gridGroups.RowDefinitions[0].Height = new GridLength(30, GridUnitType.Absolute);
+            Librarian_gridGroups.RowDefinitions[0].Height = new GridLength(headingHeight, GridUnitType.Absolute);
             Librarian_gridGroups.RowDefinitions[1].Height = new GridLength(0, GridUnitType.Auto);
 
             // Assemble column 1:
@@ -283,7 +290,7 @@ namespace INTEGRA_7_Xamarin
             Librarian_gridCategories.RowDefinitions = new RowDefinitionCollection();
             Librarian_gridCategories.RowDefinitions.Add(new RowDefinition());
             Librarian_gridCategories.RowDefinitions.Add(new RowDefinition());
-            Librarian_gridCategories.RowDefinitions[0].Height = new GridLength(30, GridUnitType.Absolute);
+            Librarian_gridCategories.RowDefinitions[0].Height = new GridLength(headingHeight, GridUnitType.Absolute);
             Librarian_gridCategories.RowDefinitions[1].Height = new GridLength(0, GridUnitType.Auto);
 
             // Assemble column 2:
@@ -293,7 +300,7 @@ namespace INTEGRA_7_Xamarin
             Librarian_gridTones.RowDefinitions = new RowDefinitionCollection();
             Librarian_gridTones.RowDefinitions.Add(new RowDefinition());
             Librarian_gridTones.RowDefinitions.Add(new RowDefinition());
-            Librarian_gridTones.RowDefinitions[0].Height = new GridLength(30, GridUnitType.Absolute);
+            Librarian_gridTones.RowDefinitions[0].Height = new GridLength(headingHeight, GridUnitType.Absolute);
             Librarian_gridTones.RowDefinitions[1].Height = new GridLength(0, GridUnitType.Auto);
 
             // Assemble column 3:

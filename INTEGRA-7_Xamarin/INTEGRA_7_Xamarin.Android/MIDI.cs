@@ -1,15 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using Android.App;
-using Android.Content;
 using Xamarin.Forms;
-using Android.Content;
-using Android.Content.PM;
-using Android.Hardware.Usb;
 using Java.Util;
 using INTEGRA_7_Xamarin.Droid;
-using Mono;
-using System.Runtime.InteropServices.WindowsRuntime;
 
 [assembly: Dependency(typeof(MIDI))]
 
@@ -27,7 +19,6 @@ namespace INTEGRA_7_Xamarin.Droid
         public Int32 MidiOutPortSelectedIndex { get; set; }
         public Int32 MidiInPortSelectedIndex { get; set; }
         public INTEGRA_7_Xamarin.MainPage mainPage;
-//        public USB usb { get; set; }
         public byte[] rawData;
         public Timer timer;
         public Boolean MessageReceived = false;
@@ -75,18 +66,6 @@ namespace INTEGRA_7_Xamarin.Droid
                         collectionBuffer = null;
                         MidiInPort_MessageReceived(rawData);
                     }
-                    //MessageReceived = true;
-                }
-            }
-            if (MessageReceived)
-            {
-                // Just skip the keep-alive messages:
-                if (!(rawData.Length == 1 && rawData[0] == 0xfe))
-                {
-                    // Alert mainPage
-                    mainPage.uIHandler.rawData = rawData;
-                    mainPage.uIHandler.MidiInPort_MessageRecceived();
-                    MessageReceived = false;
                 }
             }
         }
@@ -281,30 +260,8 @@ namespace INTEGRA_7_Xamarin.Droid
             USB usb = (USB)MainPage_Portable.platform_specific[0];
             if (usb != null && usb.HasPermission)
             {
-                //UsbDeviceConnection deviceConnection = usb.Manager.OpenDevice(usb.Device);
-                //if (usb.DeviceConnection.ClaimInterface(usb.Interface, true))
                 {
                     usb.DeviceConnection.BulkTransfer(usb.OutputEndpoint, buffer, buffer.Length, 5000);
-                    //if (buffer[1] == 0xf0 && buffer[9] == 0x11) // Note: Offsets from MIDI SysEx standard due to embedded USB codes.
-                    //{
-                    //    byte[] inputBuffer = new byte[64];
-                    //    usb.DeviceConnection.BulkTransfer(usb.InputEndpoint, inputBuffer, 64, 5000);
-                    //    rawData = RemoveUsbCodes(inputBuffer);
-                    //    MessageReceived = true;
-                    //}
-                    //Java.Nio.ByteBuffer byteBuffer = (Java.Nio.ByteBuffer)Java.Nio.ByteBuffer. FromArray<byte>(buffer);
-                    //usb.Request.Queue(byteBuffer);
-                    //deviceConnection.ReleaseInterface(usb.Interface);
-                    //deviceConnection.Close();
-                    //deviceConnection.Dispose();
-                    //try
-                    //{
-                    //    usb.DeviceConnection.RequestWait(5000);
-                    //}
-                    //catch (Exception e)
-                    //{
-
-                    //}
                 }
             }
         }
@@ -389,14 +346,5 @@ namespace INTEGRA_7_Xamarin.Droid
             Message[1] = controlNumber;
             Message[2] = value;
         }
-    }
-
-    // These are dummy classes to satisfy IMidi argument definitions that are actually not used.
-    public class MidiMessageReceivedEventArgs
-    {
-    }
-
-    public class MidiInPort
-    {
     }
 }

@@ -1,6 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
-  <manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="1" android:versionName="1.0" package="com.companyname.INTEGRA_7_Xamarin">
-    <uses-feature android:name="android.hardware.usb.host" />
-    <uses-sdk android:minSdkVersion="12" />
-    <application android:label="INTEGRA_7_Xamarin.Android"></application>
+﻿<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="1" android:versionName="0.1" package="se.masterberg.INTEGRA_7_Xamarin" android:installLocation="auto">
+	<uses-feature android:name="android.hardware.usb.host" />
+	<uses-sdk android:minSdkVersion="12" />
+	<application android:label="INTEGRA_7_Xamarin.Android"></application>
 </manifest>
