@@ -7,6 +7,9 @@ using Android.Content;
 using Android.Hardware.Usb;
 using System.Collections.Generic;
 using System;
+using Android.Views;
+using Android.Text.Method;
+using static Android.Views.View;
 
 //[assembly: Xamarin.Forms.Dependency(typeof(GenericHandlerInterface))]
 //[assembly: Dependency(typeof(Android_MIDI))]
@@ -14,9 +17,10 @@ using System;
 namespace INTEGRA_7_Xamarin.Droid
 {
     [Activity(Label = "INTEGRA_7_Xamarin", Icon = "@drawable/icon", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
+    //[Android.Runtime.Register("setOnTouchListener", "(Landroid/view/View$OnTouchListener;)V", "GetSetOnTouchListener_Landroid_view_View_OnTouchListener_Handler")]
     [IntentFilter(new[] { UsbManager.ActionUsbDeviceAttached })]
 
-    public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
+    public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity, IOnTouchListener
     {
 
         private static String ACTION_USB_PERMISSION = "eu.mrmartin.MIDI.USB_PERMISSION";
@@ -34,10 +38,12 @@ namespace INTEGRA_7_Xamarin.Droid
         // For accessing INTEGRA_7_Xamarin.MainPage from UWP:
         private INTEGRA_7_Xamarin.MainPage MainPage_Portable;
 
+        public MainActivity mainActivity;
+
         // Invisible comboboxes used by MIDI class (will always have INTEGRA-7 selected):
         private Picker OutputSelector;
         private Picker InputSelector;
-        
+
 
         protected override void OnCreate(Bundle bundle)
         {
@@ -62,6 +68,7 @@ namespace INTEGRA_7_Xamarin.Droid
             InputSelector = MainPage_Portable.uIHandler.Librarian_midiInputDevice;
 
             // Let the portable project know this MainActivity:
+            mainActivity = this;
             MainPage_Portable.SetDeviceSpecificMainPage(this);
 
             // Get and initiate USB:
@@ -88,9 +95,58 @@ namespace INTEGRA_7_Xamarin.Droid
             // Let the portable project access our USB:
             MainPage_Portable.platform_specific = new object[] { usb };
 
+            //Android.Views.View view = this.SetContentView()
+            //mainActivity.Touch  
+            //OnTouchListener += 
+            //Android.Views.View view = FindViewById(Resource.Id.sliding_tabs);
+            //view.SetOnTouchListener(this);    
+
+            //SetOnListener(this);
+            //mainActivity. SetOnTouchListener()
+
             // Show the librarian at startup:
             MainPage_Portable.uIHandler.ShowLibrarianPage();
+
+
+            //Image image = (Xamarin.Forms.Image)MainPage_Portable.uIHandler.Librarian_Keyboard. On<Xamarin.Forms.Image>();
         }
+
+        public bool OnTouch(Android.Views.View v, MotionEvent e)
+        {
+            return ((IOnTouchListener)mainActivity).OnTouch(v, e);
+        }
+
+        //public override bool OnTouchEvent(MotionEvent e)
+        //{
+        //    return base.OnTouchEvent(e);
+        //}
+
+        //private void SetOnTouchListener()
+        //{
+
+        //}
+
+        //public bool OnTouchListener(Xamarin.Forms.View v, MotionEvent e)
+        //{
+        //    MainPage_Portable.uIHandler.x = e.GetX(0);
+        //    MainPage_Portable.uIHandler.y = e.GetY(0);
+        //    //return base.OnTouchEvent(e);
+        //    return false;
+        //}
+
+        //public bool OnTouch(Android.Views.View v, MotionEvent e)
+        //{
+        //    MainPage_Portable.uIHandler.x = e.GetX(0);
+        //    MainPage_Portable.uIHandler.y = e.GetY(0);
+        //    //return base.OnTouchEvent(e);
+        //    return false;
+        //}
+
+        //public override bool OnTouchEvent(MotionEvent e)
+        //{
+        //    MainPage_Portable.uIHandler.x = e.GetX(0);
+        //    MainPage_Portable.uIHandler.y = e.GetY(0);
+        //    return base.OnTouchEvent(e);
+        //}
     }
 }
-

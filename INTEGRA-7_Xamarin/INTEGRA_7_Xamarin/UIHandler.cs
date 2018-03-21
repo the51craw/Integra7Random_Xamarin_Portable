@@ -50,6 +50,7 @@ namespace INTEGRA_7_Xamarin
             CURRENT_SELECTED_TONE,
         }
 
+        public object MainPage_Device { get; set; }
         Boolean scanAll = false;
         UInt16 emptySlots = 10;
 
@@ -104,7 +105,7 @@ namespace INTEGRA_7_Xamarin
         public byte[] rawData;
 
         INTEGRA_7_Xamarin.MainPage mainPage;
-        StackLayout mainStackLayout { get; set; }
+        public StackLayout mainStackLayout { get; set; }
         StackLayout LibrarianStackLayout;
         StackLayout EditorStackLayout;
         StackLayout FavoritesStackLayout;
@@ -124,6 +125,7 @@ namespace INTEGRA_7_Xamarin
         {
             this.mainStackLayout = mainStackLayout;
             this.mainPage = mainPage;
+            MainPage_Device = mainPage.MainPage_Device;
             Init();
         }
 

@@ -38,14 +38,16 @@ namespace INTEGRA_7_Xamarin.UWP
     public sealed partial class MainPage
     {
         // For accessing INTEGRA_7_Xamarin.MainPage from UWP:
-        private INTEGRA_7_Xamarin.MainPage MainPage_Portable { get; set; }
+        public INTEGRA_7_Xamarin.MainPage MainPage_Portable { get; set; }
         public INTEGRA_7_Xamarin.UWP.MainPage MainPage_UWP { get; set; }
 
         // Invisible comboboxes used by MIDI class (will always have INTEGRA-7 selected):
         private Picker OutputSelector;
         private Picker InputSelector;
         public MIDI midi;
-        
+        public Keyboard keyboard;
+        //private Double x, y;
+
         // For accessing the genericHandlerInterface:
         GenericHandlerInterface genericHandlerInterface;
         public Windows.UI.Core.CoreDispatcher Dispatcher_UWP { get; set; }
@@ -73,6 +75,9 @@ namespace INTEGRA_7_Xamarin.UWP
             // Let genericHandlerInterface know this MainPage:
             genericHandlerInterface.mainPage = this;
 
+            // Let portable know this MainPage:
+            MainPage_Portable.MainPage_Device = this;
+
             // Draw UI (function is in mainPage.uIHandler):
             MainPage_Portable.uIHandler.DrawPages();
 
@@ -87,6 +92,45 @@ namespace INTEGRA_7_Xamarin.UWP
 
             // Always start by showing librarian:
             MainPage_Portable.uIHandler.ShowLibrarianPage();
+
+            //keyboard = new Keyboard(MainPage_Portable.uIHandler);
+            AddMouseHandlers();
+        }
+
+        private void AddMouseHandlers()
+        {
+            var window = Windows.UI.Core.CoreWindow.GetForCurrentThread();
+            window.PointerPressed += Window_PointerPressed;
+        }
+
+        //public double GetMouseX()
+        //{
+        //    //var window = Windows.UI.Core.CoreWindow.GetForCurrentThread();
+        //    //window.PointerPressed += Window_PointerPressed;
+        //    //    PointerPressed
+        //    //System.Windows.Forms.Cursor.Position;
+        //    //MouseState ms = Mouse.GetState();
+
+        //    //Pointer mouse = Windows.ge
+        //    return x;
+        //}
+
+        //public double GetMouseY()
+        //{
+        //    //var window = Windows.UI.Core.CoreWindow.GetForCurrentThread();
+        //    //window.PointerPressed += Window_PointerPressed;
+        //    //    PointerPressed
+        //    //System.Windows.Forms.Cursor.Position;
+        //    //MouseState ms = Mouse.GetState();
+
+        //    //Pointer mouse = Windows.ge
+        //    return y;
+        //}
+
+        private void Window_PointerPressed(Windows.UI.Core.CoreWindow sender, Windows.UI.Core.PointerEventArgs args)
+        {
+            MainPage_Portable.uIHandler.x = sender.PointerPosition.X;
+            MainPage_Portable.uIHandler.y = sender.PointerPosition.Y;
         }
 
         public Windows.UI.Core.CoreDispatcher GetDispatcher()

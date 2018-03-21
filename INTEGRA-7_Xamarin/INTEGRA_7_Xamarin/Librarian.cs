@@ -16,12 +16,15 @@ namespace INTEGRA_7_Xamarin
             INIT = 3,
         }
         ToneNamesFilter toneNamesFilter = ToneNamesFilter.INIT;
+        public Double x { get; set; }
+        public Double y { get; set; }
 
         // Librarian controls:
         public Picker Librarian_midiOutputDevice { get; set; }
         public Picker Librarian_midiInputDevice { get; set; }
         public Picker Librarian_midiOutputChannel { get; set; }
         public Picker Librarian_midiInputChannel { get; set; }
+        public Image Librarian_Keyboard { get; set; }
 
         Boolean allowListViewUpdates = true;
         Boolean previousAllowListViewUpdates = true;
@@ -60,7 +63,6 @@ namespace INTEGRA_7_Xamarin
         Button Librarian_btnPlus12keys;
         Button Librarian_btnMinus12keys;
         MyLabel Librarian_lblKeys;
-        Image Librarian_Keyboard;
         Boolean usingSearchResults = false;
         Int32 headingHeight;
 
@@ -81,6 +83,9 @@ namespace INTEGRA_7_Xamarin
 
         public void DrawLibrarianPage()
         {
+            x = -1;
+            y = -1;
+
             /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             // Librarian 
             //                                                           ____________________________________ gridTones
@@ -191,6 +196,8 @@ namespace INTEGRA_7_Xamarin
             Librarian_ltPatchLSB = new LabeledText("Bank LSB:", "", new byte[] { 1, 2 });
             Librarian_ltProgramNumber = new LabeledText("Program #:", "", new byte[] { 1, 2 });
 
+            // This has been moved to the platform dependent projects because
+            // Xamarin does not handle all needed events
             // Add the keyboard image:
             Librarian_Keyboard = new Image { Aspect = Aspect.Fill };
             Librarian_Keyboard.Source = ImageSource.FromFile("Keyboard.jpg");
@@ -261,9 +268,9 @@ namespace INTEGRA_7_Xamarin
             Librarian_btnPlus12keys.Clicked += Librarian_btnPlus12keys_Clicked;
             Librarian_btnMinus12keys.Clicked += Librarian_btnMinus12keys_Clicked;
 
-            //TapGestureRecognizer tapGestureRecognizer = new TapGestureRecognizer();
-            //tapGestureRecognizer.Tapped += (sender, e) => keyboard_PointerPressed(sender, e); ;
-            //Librarian_Keyboard.GestureRecognizers.Add(tapGestureRecognizer);
+            TapGestureRecognizer tapGestureRecognizer = new TapGestureRecognizer();
+            tapGestureRecognizer.Tapped += (sender, e) => keyboard_PointerPressed((Image)sender, (TappedEventArgs)e);
+            Librarian_Keyboard.GestureRecognizers.Add(tapGestureRecognizer);
 
             //((View)Librarian_Keyboard).
 
@@ -1025,6 +1032,7 @@ namespace INTEGRA_7_Xamarin
         private void Librarian_btnMinus12keys_Clicked(object sender, EventArgs e)
         {
             commonState.midi.NoteOff(0, 64);
+            //commonState.midi.ProgramChange(0, 0, 0, 5);
         }
 
         private void Librarian_btnPlus12keys_Clicked(object sender, EventArgs e)
@@ -1081,26 +1089,36 @@ namespace INTEGRA_7_Xamarin
             QueryUserTones();
         }
 
-        private void keyboard_PointerPressed(object sender, System.EventArgs e)
+        private void keyboard_PointerPressed(Image sender, TappedEventArgs e)
         {
-            t.Trace("private void keyboard_PointerPressed (" + "object" + sender + ", " + "PointerRoutedEventArgs" + e + ", " + ")");
-            
-            //PointerPoint mousePosition = e.GetCurrentPoint(keyboard);
-            //Note note = NoteFromMousePosition(mousePosition.Position.X, mousePosition.Position.Y);
-            //if (note.NoteNumber < 128)
-            //{
-            //    currentNote = note.NoteNumber;
-            //    commonState.midi.NoteOn(commonState.CurrentPart, note.NoteNumber, note.Velocity);
-            //}
+            if (x >= 0 && y >= 0)
+            {
+                Note note = NoteFromMousePosition(x, y);
+                if (note.NoteNumber == currentNote)
+                {
+                    commonState.midi.NoteOff(commonState.CurrentPart, currentNote);
+                    currentNote = 255;
+                }
+                else if (note.NoteNumber < 128)
+                {
+                    commonState.midi.NoteOff(commonState.CurrentPart, currentNote);
+                    currentNote = note.NoteNumber;
+                    commonState.midi.NoteOn(commonState.CurrentPart, note.NoteNumber, note.Velocity);
+                }
+            }
         }
 
-        //private void keyboard_PointerReleased(object sender, PointerRoutedEventArgs e)
+        //private void keyboard_PointerReleased(Image sender, TappedEventArgs e)
         //{
-        //    t.Trace("private void keyboard_PointerReleased (" + "object" + sender + ", " + "PointerRoutedEventArgs" + e + ", " + ")");
-        //    if (currentNote < 128)
+        //    if (x >= 0 && y >= 0)
         //    {
-        //        commonState.midi.NoteOff(commonState.CurrentPart, currentNote);
-        //        currentNote = 255;
+        //        Note note = NoteFromMousePosition(x, y);
+        //        if (note.NoteNumber < 128)
+        //        {
+        //            currentNote = note.NoteNumber;
+        //            commonState.midi.NoteOff(commonState.CurrentPart, currentNote);
+        //            currentNote = 255;
+        //        }
         //    }
         //}
 
@@ -1619,57 +1637,60 @@ namespace INTEGRA_7_Xamarin
         //    catch { }
         //}
 
-        //private Note NoteFromMousePosition(Double x, Double y)
-        //{
-        //    Note key = new Note();
-        //    key.NoteNumber = 255;
-        //    key.Velocity = 255;
+        private Note NoteFromMousePosition(Double x, Double y)
+        {
+            Note key = new Note();
+            key.NoteNumber = 255;
+            key.Velocity = 255;
 
-        //    Double keyBoardWidth = keyboard.ActualWidth;
+            Double keyBoardWidth = Librarian_Keyboard.Width;
 
-        //    Double keyWidthAll = keyboard.ActualWidth / 61.7;
-        //    Double keyWidthWhite = keyboard.ActualWidth / 36;
-        //    Int32 keyNumber = 0;
-        //    if (y > (0.56 * keyboard.ActualHeight))
-        //    {
-        //        // White key area
-        //        keyNumber = (byte)((double)x / keyWidthWhite);
-        //        if (keyNumber > 35)
-        //        {
-        //            keyNumber = 35;
-        //        }
-        //        key.NoteNumber = (byte)(whiteKeys[keyNumber] + transpose);
-        //        if (currentNote > 127)
-        //        {
-        //            currentNote = 127;
-        //        }
-        //        key.Velocity = (byte)(127 * (y - (0.56 * keyboard.ActualHeight)) / (0.44 * keyboard.ActualHeight));
-        //        if (key.Velocity > 127)
-        //        {
-        //            key.Velocity = 127;
-        //        }
-        //    }
-        //    else
-        //    {
-        //        // All keys area
-        //        keyNumber = (byte)((double)x / keyWidthAll);
-        //        if (keyNumber > 60)
-        //        {
-        //            keyNumber = 60;
-        //        }
-        //        key.NoteNumber = (byte)(keyNumber + 36 + transpose);
-        //        if (currentNote > 127)
-        //        {
-        //            currentNote = 127;
-        //        }
-        //        key.Velocity = (byte)(127 * (y / (0.56 * keyboard.ActualHeight)));
-        //        if (key.Velocity > 127)
-        //        {
-        //            key.Velocity = 127;
-        //        }
-        //    }
-        //    return key;
-        //}
+            // y is based on entire screen. Remove diff to image top:
+            y -= (mainPage.Height - Librarian_Keyboard.Height);
+
+            Double keyWidthAll = Librarian_Keyboard.Width / 61.7;
+            Double keyWidthWhite = Librarian_Keyboard.Width / 36;
+            Int32 keyNumber = 0;
+            if (y > (0.56 * Librarian_Keyboard.Height))
+            {
+                // White key area
+                keyNumber = (byte)((double)x / keyWidthWhite);
+                if (keyNumber > 35)
+                {
+                    keyNumber = 35;
+                }
+                key.NoteNumber = (byte)(whiteKeys[keyNumber] + transpose);
+                if (currentNote > 127)
+                {
+                    currentNote = 127;
+                }
+                key.Velocity = (byte)(127 * (y - (0.56 * Librarian_Keyboard.Height)) / (0.44 * Librarian_Keyboard.Height));
+                if (key.Velocity > 127)
+                {
+                    key.Velocity = 127;
+                }
+            }
+            else
+            {
+                // All keys area
+                keyNumber = (byte)((double)x / keyWidthAll);
+                if (keyNumber > 60)
+                {
+                    keyNumber = 60;
+                }
+                key.NoteNumber = (byte)(keyNumber + 36 + transpose);
+                if (currentNote > 127)
+                {
+                    currentNote = 127;
+                }
+                key.Velocity = (byte)(127 * (y / (0.56 * Librarian_Keyboard.Height)));
+                if (key.Velocity > 127)
+                {
+                    key.Velocity = 127;
+                }
+            }
+            return key;
+        }
 
         //private void ClearKeyNames()
         //{
@@ -1885,5 +1906,11 @@ namespace INTEGRA_7_Xamarin
         //    btnAddFavorite.IsEnabled = true;
         //    btnRemoveFavorite.IsEnabled = true;
         //}
+    }
+    class Note
+    {
+        //HBTrace t = new HBTrace("class Note");
+        public byte NoteNumber { get; set; }
+        public byte Velocity { get; set; }
     }
 }
