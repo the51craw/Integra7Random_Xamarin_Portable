@@ -30,5 +30,10 @@ namespace INTEGRA_7_Xamarin_MacOS
                 // Update the view, if already loaded.
             }
         }
+
+        //public override void MouseDown(NSEvent e)
+        //{
+            
+        //}
     }
 }
