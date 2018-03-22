@@ -177,9 +177,9 @@
     <AndroidResource Include="Resources\drawable-xxhdpi\Keyboard.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </AndroidResource>
-    <AndroidResource Include="Resources\drawable\Keyboard.jpg">
+    <Content Include="Resources\drawable\Keyboard.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </AndroidResource>
+    </Content>
     <Content Include="Resources\xml\device_filter.xml">
       <SubType>Designer</SubType>
     </Content>

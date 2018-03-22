@@ -20,7 +20,7 @@ namespace INTEGRA_7_Xamarin.Droid
     //[Android.Runtime.Register("setOnTouchListener", "(Landroid/view/View$OnTouchListener;)V", "GetSetOnTouchListener_Landroid_view_View_OnTouchListener_Handler")]
     [IntentFilter(new[] { UsbManager.ActionUsbDeviceAttached })]
 
-    public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity, IOnTouchListener
+    public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity//, IOnTouchListener
     {
 
         private static String ACTION_USB_PERMISSION = "eu.mrmartin.MIDI.USB_PERMISSION";
@@ -107,14 +107,23 @@ namespace INTEGRA_7_Xamarin.Droid
             // Show the librarian at startup:
             MainPage_Portable.uIHandler.ShowLibrarianPage();
 
+            //TapGestureRecognizer tapGestureRecognizer = new TapGestureRecognizer();
+            //tapGestureRecognizer.Tapped += (sender, e) => OnTouch((Android.Views.View)sender, (TappedEventArgs)e);
+            //MainPage_Portable.uIHandler.Librarian_Keyboard.GestureRecognizers.Add(tapGestureRecognizer);
+
+            //PanGestureRecognizer panGestureRecognizer = new PanGestureRecognizer();
+            ////panGestureRecognizer.PanUpdated += panGestureRecognizer_PanUpdated;
+            //MainPage_Portable.uIHandler.Librarian_Keyboard.GestureRecognizers.Add(panGestureRecognizer);
+
 
             //Image image = (Xamarin.Forms.Image)MainPage_Portable.uIHandler.Librarian_Keyboard. On<Xamarin.Forms.Image>();
         }
 
-        public bool OnTouch(Android.Views.View v, MotionEvent e)
-        {
-            return ((IOnTouchListener)mainActivity).OnTouch(v, e);
-        }
+        //public bool OnTouch(Android.Views.View sender, TappedEventArgs e)
+        //{
+        //    //return ((IOnTouchListener)mainActivity).OnTouch(sender, e);
+        //    return false;
+        //}
 
         //public override bool OnTouchEvent(MotionEvent e)
         //{
