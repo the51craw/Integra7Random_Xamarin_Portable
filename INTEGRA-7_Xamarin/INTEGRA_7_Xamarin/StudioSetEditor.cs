@@ -43,6 +43,10 @@ namespace INTEGRA_7_Xamarin
 
         public void ShowStudioSetEditorPage()
         {
+            if (StudioSetEditorStackLayout == null)
+            {
+                DrawStudioSetEditorPage();
+            }
             mainStackLayout.Children.Add(StudioSetEditorStackLayout);
         }
     }

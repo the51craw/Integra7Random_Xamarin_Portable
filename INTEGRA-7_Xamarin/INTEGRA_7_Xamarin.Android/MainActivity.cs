@@ -63,7 +63,7 @@ namespace INTEGRA_7_Xamarin.Droid
             UIHandler.appType = UIHandler._appType.ANDROID;
 
             // Make Portable project draw UI and get the Pickers for Midi output device:
-            MainPage_Portable.uIHandler.DrawPages();
+            MainPage_Portable.uIHandler.DrawLibrarianPage();
             OutputSelector = MainPage_Portable.uIHandler.Librarian_midiOutputDevice;
             InputSelector = MainPage_Portable.uIHandler.Librarian_midiInputDevice;
 
@@ -104,8 +104,8 @@ namespace INTEGRA_7_Xamarin.Droid
             //SetOnListener(this);
             //mainActivity. SetOnTouchListener()
 
-            // Show the librarian at startup:
-            MainPage_Portable.uIHandler.ShowLibrarianPage();
+            //// Show the librarian at startup:
+            //MainPage_Portable.uIHandler.ShowLibrarianPage();
 
             //TapGestureRecognizer tapGestureRecognizer = new TapGestureRecognizer();
             //tapGestureRecognizer.Tapped += (sender, e) => OnTouch((Android.Views.View)sender, (TappedEventArgs)e);

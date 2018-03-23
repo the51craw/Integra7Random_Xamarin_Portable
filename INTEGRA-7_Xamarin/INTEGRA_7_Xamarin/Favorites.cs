@@ -47,11 +47,15 @@ namespace INTEGRA_7_Xamarin
         private void Favorites_NotYetImplemented_Clicked(object sender, EventArgs e)
         {
             mainStackLayout.Children.RemoveAt(0);
-            //ShowLibrarianPage();
+            ShowLibrarianPage();
         }
 
         public void ShowFavoritesPage(FavoriteAction favoriteAction)
         {
+            if (FavoritesStackLayout == null)
+            {
+                DrawFavoritesPage();
+            }
             mainStackLayout.Children.Add(FavoritesStackLayout);
         }
     }

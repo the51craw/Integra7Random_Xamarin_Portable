@@ -43,6 +43,10 @@ namespace INTEGRA_7_Xamarin
 
         public void ShowMotionalSurroundPage()
         {
+            if (MotionalSurroundStackLayout == null)
+            {
+                DrawMotionalSurroundPage();
+            }
             mainStackLayout.Children.Add(MotionalSurroundStackLayout);
         }
     }

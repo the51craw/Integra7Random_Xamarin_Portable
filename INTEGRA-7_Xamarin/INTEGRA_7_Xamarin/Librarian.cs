@@ -269,11 +269,11 @@ namespace INTEGRA_7_Xamarin
                 Librarian_gridKeyboard.Children.Add(grid);
                 position += 8;
                 Librarian_btnBlackKeys[i].Text = "Black # " + i.ToString();
-                Librarian_btnBlackKeys[i].Clicked += Librarian_btnBlackKey_Clicked;
                 Librarian_btnBlackKeys[i].StyleId = i.ToString();
                 Librarian_btnBlackKeys[i].BackgroundColor = Color.Black;
                 Librarian_btnBlackKeys[i].TextColor = Color.White;
                 Librarian_btnBlackKeys[i].Margin = new Thickness(2, 0, 0, 0);
+                Librarian_btnBlackKeys[i].Clicked += Librarian_btnBlackKey_Clicked;
                 Librarian_btnBlackKeys[i].BorderWidth = 0;
             }
 
@@ -1379,6 +1379,10 @@ namespace INTEGRA_7_Xamarin
 
         public void ShowLibrarianPage()
         {
+            if (Librarian_gridGroups == null)
+            {
+                DrawLibrarianPage();
+            }
             page = _page.LIBRARIAN;
             mainStackLayout.Children.Add(LibrarianStackLayout);
             if (Librarian_Groups.Count == 0)

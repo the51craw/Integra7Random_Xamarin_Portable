@@ -107,10 +107,10 @@ namespace INTEGRA_7_Xamarin
         INTEGRA_7_Xamarin.MainPage mainPage;
         public StackLayout mainStackLayout { get; set; }
         StackLayout LibrarianStackLayout;
-        StackLayout EditorStackLayout;
-        StackLayout FavoritesStackLayout;
-        StackLayout StudioSetEditorStackLayout;
-        StackLayout MotionalSurroundStackLayout;
+        StackLayout EditorStackLayout = null;
+        StackLayout FavoritesStackLayout = null;
+        StackLayout StudioSetEditorStackLayout = null;
+        StackLayout MotionalSurroundStackLayout = null;
 
         public static _appType appType;
         public static ColorSettings colorSettings { get; set; }
@@ -148,25 +148,25 @@ namespace INTEGRA_7_Xamarin
             }
         }
 
-        // Creates all pages and shows the librarian:
-        public void DrawPages()
-        {
-            DrawLibrarianPage();
-            DrawToneEditorPage();
-            DrawMotionalSurroundPage();
-            DrawStudioSetEditorPage();
-            DrawFavoritesPage();
+        //// Creates all pages and shows the librarian:
+        //public void DrawPages()
+        //{
+        //    DrawLibrarianPage();
+        //    DrawToneEditorPage();
+        //    DrawMotionalSurroundPage();
+        //    DrawStudioSetEditorPage();
+        //    DrawFavoritesPage();
 
-            //commonState.midi = DependencyService.Get<IMidi>();
-            //commonState.midi.Init("INTEGRA-7", mainPage, Librarian_midiInputDevice, Librarian_midiInputDevice, 0, 0);
-            //commonState.midi.Init(this.mainPage, mainPage_UWP, Librarian_midiInputDevice, Librarian_midiInputDevice, 0, 0);
-            //commonState.midi.Init(INTEGRA_7_Xamarin.MainPage mainPage, MainPage mainPage_UWP, Picker OutputDeviceSelector, Picker InputDeviceSelector, byte MidiOutPortChannel, byte MidiInPortChannel)
+        //    //commonState.midi = DependencyService.Get<IMidi>();
+        //    //commonState.midi.Init("INTEGRA-7", mainPage, Librarian_midiInputDevice, Librarian_midiInputDevice, 0, 0);
+        //    //commonState.midi.Init(this.mainPage, mainPage_UWP, Librarian_midiInputDevice, Librarian_midiInputDevice, 0, 0);
+        //    //commonState.midi.Init(INTEGRA_7_Xamarin.MainPage mainPage, MainPage mainPage_UWP, Picker OutputDeviceSelector, Picker InputDeviceSelector, byte MidiOutPortChannel, byte MidiInPortChannel)
 
 
-            //// Always start by showing librarian:
-            //page = _page.LIBRARIAN;
-            //ShowLibrarianPage();
-        }
+        //    //// Always start by showing librarian:
+        //    //page = _page.LIBRARIAN;
+        //    //ShowLibrarianPage();
+        //}
 
         //public void ShowLibrarianPage()
         //{

@@ -78,6 +78,10 @@ namespace INTEGRA_7_Xamarin
 
         public void ShowToneEditorPage()
         {
+            if (EditorStackLayout == null)
+            {
+                DrawToneEditorPage();
+            }
             mainStackLayout.Children.Add(EditorStackLayout);
         }
     }

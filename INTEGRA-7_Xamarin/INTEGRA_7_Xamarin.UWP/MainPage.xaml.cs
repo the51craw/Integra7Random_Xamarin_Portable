@@ -79,7 +79,7 @@ namespace INTEGRA_7_Xamarin.UWP
             MainPage_Portable.MainPage_Device = this;
 
             // Draw UI (function is in mainPage.uIHandler):
-            MainPage_Portable.uIHandler.DrawPages();
+            MainPage_Portable.uIHandler.DrawLibrarianPage();
 
             // We need invisible ComboBoxes to hold settings from the
             // corresponding Pickers in the Xamarin code.
