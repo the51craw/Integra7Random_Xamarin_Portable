@@ -16,7 +16,6 @@ namespace INTEGRA_7_Xamarin_MacOS
         private Picker OutputSelector;
         private Picker InputSelector;
         public INTEGRA_7_Xamarin.MainPage MainPage_Portable { get; set; }
-        public MouseHandler mouseHandler;
 
         public AppDelegate()
         {
@@ -50,8 +49,6 @@ namespace INTEGRA_7_Xamarin_MacOS
 
             MainPage_Portable.uIHandler.ShowLibrarianPage();
 
-            //mouseHandler = new MouseHandler(MainPage_Portable);
-
             base.DidFinishLaunching(notification);
         }
 
@@ -60,19 +57,4 @@ namespace INTEGRA_7_Xamarin_MacOS
             // Insert code here to tear down your application
         }
     }
-
-    //public class MouseHandler : NSWindow
-    //{
-    //    public INTEGRA_7_Xamarin.MainPage MainPage_Portable { get; set; }
-
-    //    public MouseHandler(INTEGRA_7_Xamarin.MainPage MainPage_Portable)
-    //    {
-    //        this.MainPage_Portable = MainPage_Portable;
-    //    }
-
-    //    public override void MouseDown(NSEvent e)
-    //    {
-            
-    //    }
-    //}
 }
