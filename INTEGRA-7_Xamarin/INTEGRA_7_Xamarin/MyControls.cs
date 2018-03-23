@@ -16,7 +16,6 @@ namespace INTEGRA_7_Xamarin
         }
     }
 
-
     // My conveniance controls:
     public enum _orientation
     {
@@ -474,6 +473,65 @@ namespace INTEGRA_7_Xamarin
                 this.Label.HorizontalOptions = LayoutOptions.Center;
             }
             this.Switch.IsToggled = IsSelected;
+        }
+    }
+
+    //[Register("WhitePianoKey")]
+    public class WhitePianoKey : Grid
+    {
+        public Label Label { get; set; }
+        public Button Button { get; set; }
+        public byte Tag { get; set; }
+
+        public WhitePianoKey(byte Tag)
+        {
+            this.Tag = Tag;
+            Label = new Label();
+            Label.BackgroundColor = Color.FloralWhite;
+            Label.TextColor = Color.Black;
+            Label.HorizontalTextAlignment = TextAlignment.End;
+            Label.VerticalTextAlignment = TextAlignment.Center;
+            Button = new Button();
+            Button.Opacity = 0;
+            this.Clicked += OnClicked;
+            this.Children.Add((new GridRow(0, new View[] { this.Label }, null, true, true, 4)).Row);
+            this.Children.Add((new GridRow(0, new View[] { this.Button }, null, true, true, 4)).Row);
+        }
+
+        //private void btnWhiteKey_Clicked(object sender, EventArgs e)
+        //{
+        //    Button.Clicked(sender, e);
+        //}
+
+        public event EventHandler Clicked;
+
+        public virtual void OnClicked(object sender, EventArgs e)
+        {
+        }
+    }
+
+    public class BlackPianoKey : Grid
+    {
+        public Label Label { get; set; }
+        public Button Button { get; set; }
+        public byte Tag { get; set; }
+        public byte FillersNeeded { get; set; }
+        private Grid filler;
+
+        public BlackPianoKey(byte Tag, byte numberOfFillers)
+        {
+            this.Tag = Tag;
+            this.FillersNeeded = numberOfFillers;
+            filler = new Grid();
+            filler.InputTransparent = true;
+            Label = new Label();
+            Label.BackgroundColor = Color.Black;
+            Label.TextColor = Color.White;
+            Label.HorizontalTextAlignment = TextAlignment.End;
+            Button = new Button();
+            Button.Opacity = 0;
+            this.Children.Add((new GridRow(0, new View[] { this.Label,  filler}, new byte[] { 5, 2 }, true, true, 2)).Row);
+            this.Children.Add((new GridRow(0, new View[] { this.Button, filler }, new byte[] { 5, 2 }, true, true, 2)).Row);
         }
     }
 

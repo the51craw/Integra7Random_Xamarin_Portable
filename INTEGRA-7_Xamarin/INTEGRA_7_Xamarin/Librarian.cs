@@ -66,6 +66,11 @@ namespace INTEGRA_7_Xamarin
         MyLabel Librarian_lblKeys;
         Boolean usingSearchResults = false;
         Int32 headingHeight;
+        byte keyTranspose = 48;
+
+        // Buttons for the keyboard:
+        Button[] Librarian_btnWhiteKeys;
+        Button[] Librarian_btnBlackKeys;
 
         SuperNATURALDrumKitInstrumentList superNATURALDrumKitInstrumentList = new SuperNATURALDrumKitInstrumentList();
 
@@ -89,43 +94,6 @@ namespace INTEGRA_7_Xamarin
 
             /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             // Librarian 
-            //                                                           ____________________________________ gridTones
-            //                                                          /                      ______________ gridToneData
-            //                                                         /                      /
-            // ____________________________________________________________________________________________
-            // | lblGroups            | lblCategories        | filterPresetAndUser |midiOutputDevice/part |
-            // |----------------------|----------------------|---------------------|----------------------|
-            // | lvGroups             | lvCategories         | lvToneNames or      |tbSearch              |
-            // |                      |                      | lvSearchResult      |----------------------|
-            // |                      |                      |                     |ltToneName            |
-            // |                      |                      |                     |----------------------|
-            // |                      |                      |                     |ltType                |
-            // |                      |                      |                     |----------------------|
-            // |                      |                      |                     |ltToneNumber          |
-            // |                      |                      |                     |----------------------|
-            // |                      |                      |                     |ltBankNumber          |
-            // |                      |                      |                     |----------------------|
-            // |                      |                      |                     |ltBankMSB             |
-            // |                      |                      |                     |----------------------| Main row 0
-            // |                      |                      |                     |ltBankLSB             |
-            // |                      |                      |                     |----------------------|
-            // |                      |                      |                     |ltProgramNumber       |
-            // |                      |                      |                     |----------------------|
-            // |                      |                      |                     |Edit tone| studioset  |
-            // |                      |                      |                     |----------------------|
-            // |                      |                      |                     |Res vol  |Motion.sur. |
-            // |                      |                      |                     |----------------------|
-            // |                      |                      |                     |Favorites|Add  |Remove|
-            // |                      |                      |                     |----------------------|
-            // |                      |                      |                     |Reset hanging  |Play  |  
-            // |                      |                      |                     |----------------------|
-            // |                      |                      |                     |keyrange |+12k | -12k |
-            // |------------------------------------------------------------------------------------------|
-            // | Keyboard                                                                                 |
-            // |                                                                                          | Main row 1
-            // |                                                                                          |
-            // |__________________________________________________________________________________________|
-
             // New suggested layout since we cannot write vertical text on keyboard:
             // |-------------------------------------------------------------------------------------------| 
             // | lblGroups            | lblCategories        | filterPresetAndUser  | Keyboard             |
@@ -195,7 +163,6 @@ namespace INTEGRA_7_Xamarin
             //Librarian_lvSearchResult.IsVisible = false;
 
             // Make a Grid for column 3:
-            //Librarian_gridToneData = new Grid(); // This will be moved to bottom of screen and replaced by keyboard!
             Librarian_gridKeyboard = new Grid();
 
             // Make pickers for MIDI:
@@ -228,16 +195,93 @@ namespace INTEGRA_7_Xamarin
             Librarian_ltPatchLSB = new LabeledText("Bank LSB:", "", new byte[] { 1, 2 });
             Librarian_ltProgramNumber = new LabeledText("Program #:", "", new byte[] { 1, 2 });
 
-            // Add the keyboard image:
-            Librarian_Keyboard = new Image { Aspect = Aspect.Fill };
-            Librarian_Keyboard.Source = ImageSource.FromFile("Keyboard.jpg");
-            Librarian_Keyboard.HeightRequest = 330;
-            Librarian_Keyboard.VerticalOptions = LayoutOptions.StartAndExpand;
-            Librarian_Keyboard.HorizontalOptions = LayoutOptions.CenterAndExpand;
-            //mainStackLayout.Children.Add(Librarian_Keyboard);
+            // Make the keyboard grid (We cannot use GridRow here due to limitation of byte
+            // and we do not need to run a lot of setting we will change here anyway):
+            Librarian_gridKeyboard.ColumnDefinitions = new ColumnDefinitionCollection();
+            ColumnDefinition cdLength = new ColumnDefinition(); // Spanning first black key size,
+            ColumnDefinition cdMargin = new ColumnDefinition(); // Spanning both to get white key size
+            cdLength.Width = new GridLength(2, GridUnitType.Star);
+            cdMargin.Width = new GridLength(1, GridUnitType.Star);
+            Librarian_gridKeyboard.ColumnDefinitions.Add(cdLength);
+            Librarian_gridKeyboard.ColumnDefinitions.Add(cdMargin);
+
+            Librarian_gridKeyboard.RowDefinitions = new RowDefinitionCollection();
+            for (Int32 i = 0; i < 22 * 16; i++)
+            {
+                Librarian_gridKeyboard.RowDefinitions.Add(new RowDefinition());
+            }
+
+            // Make the white keyboard keys:
+            Librarian_btnWhiteKeys = new Button[22];
+            for (byte i = 0; i < 22; i++)
+            {
+                Librarian_btnWhiteKeys[i] = new Button();
+                Grid grid = new Grid();
+                Grid.SetRowSpan(grid, 16);
+                Grid.SetRow(grid, i * 16);
+                Grid.SetColumnSpan(grid, 2);
+                Grid.SetColumn(grid, 0);
+                grid.Children.Add(Librarian_btnWhiteKeys[i]);
+                Librarian_gridKeyboard.Children.Add(grid);
+                Librarian_btnWhiteKeys[i].BackgroundColor = Color.FloralWhite;
+                Librarian_btnWhiteKeys[i].TextColor = Color.Black;
+                Librarian_btnWhiteKeys[i].Text = "White # " + i.ToString();
+                Librarian_btnWhiteKeys[i].StyleId = i.ToString();
+                Librarian_btnWhiteKeys[i].Clicked += Librarian_btnWhiteKey_Clicked;
+                Librarian_btnWhiteKeys[i].BorderWidth = 0;
+                if (i == 0)
+                {
+                    Librarian_btnWhiteKeys[i].Margin = new Thickness(2);
+                }
+                else
+                {
+                    Librarian_btnWhiteKeys[i].Margin = new Thickness(2, 0, 2, 2);
+                }
+            }
+
+            // Make the black keyboard keys:
+            Librarian_btnBlackKeys = new Button[15];
+            byte[] need6fillers = { 3, 5, 8, 10, 13 };
+            byte numberOfFillers = 0;
+            Int32 position = 0;
+            for (byte i = 0; i < 15; i++)
+            {
+                if (i == 0)
+                {
+                    numberOfFillers = 27;
+                }
+                else if (need6fillers.Contains(i))
+                {
+                    numberOfFillers = 24;
+                }
+                else
+                {
+                    numberOfFillers = 8;
+                }
+                Librarian_btnBlackKeys[i] = new Button();
+                position += numberOfFillers;
+                Grid grid = new Grid();
+                Grid.SetRowSpan(grid, 10);
+                Grid.SetRow(grid, position);
+                Grid.SetColumnSpan(grid, 1);
+                Grid.SetColumn(grid, 0);
+                grid.Children.Add(Librarian_btnBlackKeys[i]);
+                Librarian_gridKeyboard.Children.Add(grid);
+                position += 8;
+                Librarian_btnBlackKeys[i].Text = "Black # " + i.ToString();
+                Librarian_btnBlackKeys[i].Clicked += Librarian_btnBlackKey_Clicked;
+                Librarian_btnBlackKeys[i].StyleId = i.ToString();
+                Librarian_btnBlackKeys[i].BackgroundColor = Color.Black;
+                Librarian_btnBlackKeys[i].TextColor = Color.White;
+                Librarian_btnBlackKeys[i].Margin = new Thickness(2, 0, 0, 0);
+                Librarian_btnBlackKeys[i].BorderWidth = 0;
+            }
 
             // Add the buttons
             Librarian_btnEditTone = new Button();
+            Librarian_btnEditTone.BorderColor = Color.Black;
+            Librarian_btnEditTone.BorderWidth = 1;
+            Librarian_btnEditTone.BorderRadius = 2;
             Librarian_btnEditStudioSet = new Button();
             Librarian_btnResetVolume = new Button();
             Librarian_btnMotionalSurround = new Button();
@@ -298,16 +342,6 @@ namespace INTEGRA_7_Xamarin
             Librarian_btnPlus12keys.Clicked += Librarian_btnPlus12keys_Clicked;
             Librarian_btnMinus12keys.Clicked += Librarian_btnMinus12keys_Clicked;
 
-            TapGestureRecognizer tapGestureRecognizer = new TapGestureRecognizer();
-            tapGestureRecognizer.Tapped += (sender, e) => keyboard_PointerPressed((Image)sender, (TappedEventArgs)e);
-            Librarian_Keyboard.GestureRecognizers.Add(tapGestureRecognizer);
-
-            //PanGestureRecognizer panGestureRecognizer = new PanGestureRecognizer();
-            //panGestureRecognizer.PanUpdated += PanGestureRecognizer_PanUpdated;
-            //Librarian_Keyboard.GestureRecognizers.Add(panGestureRecognizer);
-
-            //((View)Librarian_Keyboard).
-
             // Assemble grids with controls ---------------------------------------------------------------
 
             headingHeight = 30;
@@ -322,13 +356,11 @@ namespace INTEGRA_7_Xamarin
             Librarian_gridGroups.RowDefinitions = new RowDefinitionCollection();
             Librarian_gridGroups.RowDefinitions.Add(new RowDefinition());
             Librarian_gridGroups.RowDefinitions.Add(new RowDefinition());
-            // New layout:
             Librarian_gridGroups.RowDefinitions.Add(new RowDefinition());
             Librarian_gridGroups.RowDefinitions.Add(new RowDefinition());
             Librarian_gridGroups.RowDefinitions.Add(new RowDefinition());
             Librarian_gridGroups.RowDefinitions.Add(new RowDefinition());
             Librarian_gridGroups.RowDefinitions.Add(new RowDefinition());
-            // New layout:
             Librarian_gridGroups.Children.Add((new GridRow(2, new View[] { Librarian_midiOutputDevice, Librarian_midiInputDevice, Librarian_midiOutputChannel, Librarian_midiInputChannel }, new byte[] { 255, 1, 255, 1 }, false)).Row);
             Librarian_gridGroups.Children.Add((new GridRow(3, new View[] { Librarian_tbSearch }, null, false)).Row);
             Librarian_gridGroups.Children.Add((new GridRow(4, new View[] { Librarian_ltToneName }, null, false)).Row);
@@ -336,7 +368,6 @@ namespace INTEGRA_7_Xamarin
             Librarian_gridGroups.Children.Add((new GridRow(6, new View[] { Librarian_ltToneNumber }, null, false)).Row);
             Librarian_gridGroups.RowDefinitions[0].Height = new GridLength(headingHeight, GridUnitType.Absolute);
             Librarian_gridGroups.RowDefinitions[1].Height = new GridLength(0, GridUnitType.Auto);
-            // New layout:
             Librarian_gridGroups.RowDefinitions[2].Height = new GridLength(headingHeight, GridUnitType.Absolute);
             Librarian_gridGroups.RowDefinitions[3].Height = new GridLength(headingHeight, GridUnitType.Absolute);
             Librarian_gridGroups.RowDefinitions[4].Height = new GridLength(headingHeight, GridUnitType.Absolute);
@@ -349,13 +380,11 @@ namespace INTEGRA_7_Xamarin
             Librarian_gridCategories.RowDefinitions = new RowDefinitionCollection();
             Librarian_gridCategories.RowDefinitions.Add(new RowDefinition());
             Librarian_gridCategories.RowDefinitions.Add(new RowDefinition());
-            // New layout:
             Librarian_gridCategories.RowDefinitions.Add(new RowDefinition());
             Librarian_gridCategories.RowDefinitions.Add(new RowDefinition());
             Librarian_gridCategories.RowDefinitions.Add(new RowDefinition());
             Librarian_gridCategories.RowDefinitions.Add(new RowDefinition());
             Librarian_gridCategories.RowDefinitions.Add(new RowDefinition());
-            // New layout:
             Librarian_gridCategories.Children.Add((new GridRow(2, new View[] { Librarian_ltBankAddress }, null, false)).Row);
             Librarian_gridCategories.Children.Add((new GridRow(3, new View[] { Librarian_ltPatchMSB }, null, false)).Row);
             Librarian_gridCategories.Children.Add((new GridRow(4, new View[] { Librarian_ltPatchLSB }, null, false)).Row);
@@ -363,7 +392,6 @@ namespace INTEGRA_7_Xamarin
             Librarian_gridCategories.Children.Add((new GridRow(6, new View[] { Librarian_btnPlay }, null, false)).Row);
             Librarian_gridCategories.RowDefinitions[0].Height = new GridLength(headingHeight, GridUnitType.Absolute);
             Librarian_gridCategories.RowDefinitions[1].Height = new GridLength(0, GridUnitType.Auto);
-            // New layout:
             Librarian_gridCategories.RowDefinitions[2].Height = new GridLength(headingHeight, GridUnitType.Absolute);
             Librarian_gridCategories.RowDefinitions[3].Height = new GridLength(headingHeight, GridUnitType.Absolute);
             Librarian_gridCategories.RowDefinitions[4].Height = new GridLength(headingHeight, GridUnitType.Absolute);
@@ -377,7 +405,6 @@ namespace INTEGRA_7_Xamarin
             Librarian_gridTones.RowDefinitions = new RowDefinitionCollection();
             Librarian_gridTones.RowDefinitions.Add(new RowDefinition());
             Librarian_gridTones.RowDefinitions.Add(new RowDefinition());
-            // New layout:
             Librarian_gridTones.RowDefinitions.Add(new RowDefinition());
             Librarian_gridTones.RowDefinitions.Add(new RowDefinition());
             Librarian_gridTones.RowDefinitions.Add(new RowDefinition());
@@ -390,45 +417,20 @@ namespace INTEGRA_7_Xamarin
             Librarian_gridTones.Children.Add((new GridRow(6, new View[] { Librarian_lblKeys, Librarian_btnMinus12keys, Librarian_btnPlus12keys }, new byte[] { 1, 1, 1 }, false)).Row);
             Librarian_gridTones.RowDefinitions[0].Height = new GridLength(headingHeight, GridUnitType.Absolute);
             Librarian_gridTones.RowDefinitions[1].Height = new GridLength(0, GridUnitType.Auto);
-            // New layout:
             Librarian_gridTones.RowDefinitions[2].Height = new GridLength(headingHeight, GridUnitType.Absolute);
             Librarian_gridTones.RowDefinitions[3].Height = new GridLength(headingHeight, GridUnitType.Absolute);
             Librarian_gridTones.RowDefinitions[4].Height = new GridLength(headingHeight, GridUnitType.Absolute);
             Librarian_gridTones.RowDefinitions[5].Height = new GridLength(headingHeight, GridUnitType.Absolute);
             Librarian_gridTones.RowDefinitions[6].Height = new GridLength(headingHeight, GridUnitType.Absolute);
 
-            // Assemble column 3:
-            //Librarian_gridToneData.Children.Add((new GridRow(0, new View[] { Librarian_midiOutputDevice, Librarian_midiInputDevice, Librarian_midiOutputChannel, Librarian_midiInputChannel }, new byte[] { 255, 1, 255, 1 }, false)).Row);
-            //Librarian_gridToneData.Children.Add((new GridRow(1, new View[] { Librarian_tbSearch }, null, false)).Row);
-            //Librarian_gridToneData.Children.Add((new GridRow(2, new View[] { Librarian_ltToneName }, null, false)).Row);
-            //Librarian_gridToneData.Children.Add((new GridRow(3, new View[] { Librarian_ltType }, null, false)).Row);
-            //Librarian_gridToneData.Children.Add((new GridRow(4, new View[] { Librarian_ltToneNumber }, null, false)).Row);
-            //Librarian_gridToneData.Children.Add((new GridRow(5, new View[] { Librarian_ltBankAddress }, null, false)).Row);
-            //Librarian_gridToneData.Children.Add((new GridRow(6, new View[] { Librarian_ltPatchMSB }, null, false)).Row);
-            //Librarian_gridToneData.Children.Add((new GridRow(7, new View[] { Librarian_ltPatchLSB }, null, false)).Row);
-            //Librarian_gridToneData.Children.Add((new GridRow(8, new View[] { Librarian_ltProgramNumber }, null, false)).Row);
-            //Librarian_gridToneData.Children.Add((new GridRow(9, new View[] { Librarian_btnEditTone, Librarian_btnEditStudioSet }, new byte[] { 1, 2 }, false)).Row);
-            //Librarian_gridToneData.Children.Add((new GridRow(10, new View[] { Librarian_btnResetVolume, Librarian_btnMotionalSurround }, new byte[] { 1, 2 }, false)).Row);
-            //Librarian_gridToneData.Children.Add((new GridRow(11, new View[] { Librarian_btnShowFavorites, Librarian_btnAddFavorite, Librarian_btnRemoveFavorite }, new byte[] { 1, 1, 1 }, false)).Row);
-            //Librarian_gridToneData.Children.Add((new GridRow(12, new View[] { Librarian_btnResetHangingNotes, Librarian_btnPlay }, new byte[] { 1, 2 }, false)).Row);
-            //Librarian_gridToneData.Children.Add((new GridRow(13, new View[] { Librarian_lblKeys, Librarian_btnMinus12keys, Librarian_btnPlus12keys }, new byte[] { 1, 1, 1 }, false)).Row);
-            Librarian_gridKeyboard.Children.Add((new GridRow(0, new View[] { Librarian_Keyboard })).Row);
+            // Make the entire grid background black to show as borders around controls by using margins:
+            Librarian_gridKeyboard.BackgroundColor = Color.Black;
 
             // Assemble LibrarianStackLayout --------------------------------------------------------------
 
             LibrarianStackLayout = new StackLayout();
-            LibrarianStackLayout.Children.Add((new GridRow(0, new View[] { Librarian_gridGroups, Librarian_gridCategories, Librarian_gridTones, Librarian_gridKeyboard }, new byte[] { 5, 5, 5, 2 })).Row);
-            //LibrarianStackLayout.Children.Add((new GridRow(1, new View[] { Librarian_Keyboard })).Row);
-            //((Grid)LibrarianStackLayout.Children[0]).RowDefinitions = new RowDefinitionCollection();
-            //((Grid)LibrarianStackLayout.Children[0]).RowDefinitions.Add(new RowDefinition());
-            //((Grid)LibrarianStackLayout.Children[0]).RowDefinitions.Add(new RowDefinition());
-            //((Grid)LibrarianStackLayout.Children[0]).RowDefinitions[0].Height = new GridLength(8, GridUnitType.Star);
-            //((Grid)LibrarianStackLayout.Children[0]).RowDefinitions[1].Height = new GridLength(1, GridUnitType.Auto);
-        }
-
-        private void PanGestureRecognizer_PanUpdated(object sender, PanUpdatedEventArgs e)
-        {
-            throw new NotImplementedException();
+            LibrarianStackLayout.Children.Add((new GridRow(0, new View[] { Librarian_gridGroups, Librarian_gridCategories, Librarian_gridTones, Librarian_gridKeyboard }, new byte[] { 5, 5, 5, 5 })).Row);
+            LibrarianStackLayout.BackgroundColor = Color.Black;
         }
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1182,57 +1184,39 @@ namespace INTEGRA_7_Xamarin
             QueryUserTones();
         }
 
-        public void keyboard_PointerPressed(Image sender, TappedEventArgs e)
+        private void Librarian_btnWhiteKey_Clicked(object sender, EventArgs e)
         {
-            if (x >= 0 && y >= 0)
+            byte[] keyNumbers = new byte[] { 36, 35, 33, 31, 30, 28, 26, 24, 23, 21, 19, 17, 16, 14, 12, 11, 9, 7, 5, 4, 2, 0};
+            byte noteNumber = (byte)(keyNumbers[Int32.Parse(((Button)sender).StyleId)] + keyTranspose);
+            if (noteNumber == currentNote)
             {
-                Note note = NoteFromMousePosition(x, y);
-                if (note.NoteNumber == currentNote)
-                {
-                    commonState.midi.NoteOff(commonState.CurrentPart, currentNote);
-                    currentNote = 255;
-                }
-                else if (note.NoteNumber < 128)
-                {
-                    commonState.midi.NoteOff(commonState.CurrentPart, currentNote);
-                    currentNote = note.NoteNumber;
-                    commonState.midi.NoteOn(commonState.CurrentPart, note.NoteNumber, note.Velocity);
-                }
+                commonState.midi.NoteOff(commonState.CurrentPart, currentNote);
+                currentNote = 255;
+            }
+            else if (noteNumber < 128)
+            {
+                commonState.midi.NoteOff(commonState.CurrentPart, currentNote);
+                currentNote = noteNumber;
+                commonState.midi.NoteOn(commonState.CurrentPart, noteNumber, 64);
             }
         }
 
-        //private void keyboard_PointerReleased(Image sender, TappedEventArgs e)
-        //{
-        //    if (x >= 0 && y >= 0)
-        //    {
-        //        Note note = NoteFromMousePosition(x, y);
-        //        if (note.NoteNumber < 128)
-        //        {
-        //            currentNote = note.NoteNumber;
-        //            commonState.midi.NoteOff(commonState.CurrentPart, currentNote);
-        //            currentNote = 255;
-        //        }
-        //    }
-        //}
-
-        //private void keyboard_PointerMoved(object sender, PointerRoutedEventArgs e)
-        //{
-        //    t.Trace("private void keyboard_PointerMoved (" + "object" + sender + ", " + "PointerRoutedEventArgs" + e + ", " + ")");
-        //    if (currentNote < 128) // Do this only when a note is currently playing.
-        //    {
-        //        PointerPoint mousePosition = e.GetCurrentPoint(keyboard);
-        //        Note note = NoteFromMousePosition(mousePosition.Position.X, mousePosition.Position.Y);
-        //        if (note.NoteNumber != currentNote)
-        //        {
-        //            // Kill sounding note:
-        //            commonState.midi.NoteOff(commonState.CurrentPart, currentNote);
-
-        //            // Play next note:
-        //            currentNote = note.NoteNumber;
-        //            commonState.midi.NoteOn(commonState.CurrentPart, currentNote, note.Velocity);
-        //        }
-        //    }
-        //}
+        private void Librarian_btnBlackKey_Clicked(object sender, EventArgs e)
+        {
+            byte[] keyNumbers = new byte[] { 34, 32, 29, 27, 25, 22, 20, 18, 15, 13, 10, 8, 6, 3, 1 };
+            byte noteNumber = (byte)(keyNumbers[Int32.Parse(((Button)sender).StyleId)] + keyTranspose);
+            if (noteNumber == currentNote)
+            {
+                commonState.midi.NoteOff(commonState.CurrentPart, currentNote);
+                currentNote = 255;
+            }
+            else if (noteNumber < 128)
+            {
+                commonState.midi.NoteOff(commonState.CurrentPart, currentNote);
+                currentNote = noteNumber;
+                commonState.midi.NoteOn(commonState.CurrentPart, noteNumber, 64);
+            }
+        }
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // Librarian functions
@@ -1278,17 +1262,7 @@ namespace INTEGRA_7_Xamarin
             // Start with PCM Synth Tone, MainPage_MidiInPort_MessageReceived and Timer_Tick will handle the rest:
             Boolean response = await mainPage.DisplayAlert("INTEGRA_7 Librarian", "Do you want the librarian to scan your INTEGRA-7 for user tones, or will you only use the INTEGRA-7 preset tones?\r\n\r\n" +
                 "Note: Scanning will change Tone on your INTEGRA-7, part 16.", "Yes", "No");
-            //MessageDialog warning = new MessageDialog("Do you want the librarian to scan your INTEGRA-7 for user tones, or will you only use the INTEGRA-7 preset tones?\r\n\r\n" +
-            //    "Note: Scanning will change Tone on your INTEGRA-7, part 16. If you have unsaved data, save before tapping or clicking \'Scan...\'!\r\n\r\n" +
-            //    "This could take a while, so please select scanning option below:");
-            //warning.Title = "Welcome!";
-            //warning.Commands.Add(new UICommand { Label = "Scan all user tone slots", Id = 0 });
-            //warning.Commands.Add(new UICommand { Label = "Scan until 10 empty slots found in row", Id = 1 });
-            //warning.Commands.Add(new UICommand { Label = "Do not scan for user tones", Id = 2 });
-            //var response = await warning.ShowAsync();
-            //if ((Int32)response.Id == 0)
-            //{
-            //}
+
             if (response)
             {
                 toneNamesFilter = ToneNamesFilter.ALL;
@@ -1307,10 +1281,6 @@ namespace INTEGRA_7_Xamarin
                 emptySlots = 0;
                 QueryUserPCMSyntTones();
             }
-            //else
-            //{
-            //    Init2();
-            //}
         }
 
         // These 5 functions will change program on channel 16 and query to get the name.
@@ -1415,13 +1385,6 @@ namespace INTEGRA_7_Xamarin
             {
                 PopulateGroups();
             }
-            //PopulateCategories(commonState.currentTone.Group);
-            //PopulateToneNames(commonState.currentTone.Category);
-            //// Fill out form:
-            //if (commonState.currentTone.Index > -1)
-            //{
-            //    PopulateToneData(commonState.currentTone.Index);
-            //}
         }
 
         private void PopulateGroups()
@@ -1441,7 +1404,6 @@ namespace INTEGRA_7_Xamarin
         private void PopulateCategories(String group)
         {
             //t.Trace("private void PopulateCategories (" + "String" + group + ", " + ")");
-            //commonState.currentTone.Group = group;
             String lastCategory = "";
             allowListViewUpdates = false;
             Librarian_Categories.Clear();
@@ -1456,15 +1418,6 @@ namespace INTEGRA_7_Xamarin
             allowListViewUpdates = true;
             Librarian_lvCategories.ItemsSource = Librarian_Categories;
             Librarian_lvCategories.SelectedItem = Librarian_Categories[0];
-            //if (!String.IsNullOrEmpty(commonState.currentTone.Category))
-            //{
-            //    try
-            //    {
-            //        Librarian_lvCategories.SelectedItem = commonState.currentTone.Category;
-            //    }
-            //    catch { }
-            //}
-            //PopulateToneNames(Librarian_lvCategories.SelectedItem.ToString());
         }
 
         private void PopulateToneNames(String category)
@@ -1528,14 +1481,14 @@ namespace INTEGRA_7_Xamarin
                         try
                         {
                             Librarian_lvToneNames.SelectedItem = commonState.currentTone.Name;
-                            //if (IsFavorite())
-                            //{
-                            //    btnShowFavorites.Background = green;
-                            //}
-                            //else
-                            //{
-                            //    btnShowFavorites.Background = gray;
-                            //}
+                            if (IsFavorite())
+                            {
+                                Librarian_btnShowFavorites.BackgroundColor = Color.Green;
+                            }
+                            else
+                            {
+                                Librarian_btnShowFavorites.BackgroundColor = Color.White;
+                            }
                         }
                         catch
                         {

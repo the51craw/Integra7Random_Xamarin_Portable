@@ -6032,7 +6032,7 @@ namespace INTEGRA_7_Xamarin
         public Grid Row { get; set; }
         public Grid[] Columns { get; set; }
 
-        public GridRow(byte row, View[] controls = null, byte[] columnWiths = null, Boolean KeepAlignment = false, Boolean AddMargins = true)
+        public GridRow(byte row, View[] controls = null, byte[] columnWiths = null, Boolean KeepAlignment = false, Boolean AddMargins = true, Int32 rowspan = 1)
         {
             try
             {
@@ -6045,6 +6045,7 @@ namespace INTEGRA_7_Xamarin
                 Row.SetValue(Grid.RowSpacingProperty, 0);
                 Row.SetValue(Grid.PaddingProperty, new Thickness(0, 0, 0, 0));
                 Row.SetValue(Grid.MarginProperty, new Thickness(0, 0, 0, 0));
+                Grid.SetRowSpan(Row, rowspan);
                 ColumnDefinition[] columnDefinitions = new ColumnDefinition[controls.Length];
 
                 if (controls != null)

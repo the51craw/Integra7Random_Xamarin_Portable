@@ -94,14 +94,14 @@ namespace INTEGRA_7_Xamarin.UWP
             MainPage_Portable.uIHandler.ShowLibrarianPage();
 
             //keyboard = new Keyboard(MainPage_Portable.uIHandler);
-            AddMouseHandlers();
+            //AddMouseHandlers();
         }
 
-        private void AddMouseHandlers()
-        {
-            var window = Windows.UI.Core.CoreWindow.GetForCurrentThread();
-            window.PointerPressed += Window_PointerPressed;
-        }
+        //private void AddMouseHandlers()
+        //{
+        //    var window = Windows.UI.Core.CoreWindow.GetForCurrentThread();
+        //    window.PointerPressed += Window_PointerPressed;
+        //}
 
         //public double GetMouseX()
         //{
@@ -127,11 +127,11 @@ namespace INTEGRA_7_Xamarin.UWP
         //    return y;
         //}
 
-        private void Window_PointerPressed(Windows.UI.Core.CoreWindow sender, Windows.UI.Core.PointerEventArgs args)
-        {
-            MainPage_Portable.uIHandler.x = sender.PointerPosition.X;
-            MainPage_Portable.uIHandler.y = sender.PointerPosition.Y;
-        }
+        //private void Window_PointerPressed(Windows.UI.Core.CoreWindow sender, Windows.UI.Core.PointerEventArgs args)
+        //{
+        //    MainPage_Portable.uIHandler.x = sender.PointerPosition.X;
+        //    MainPage_Portable.uIHandler.y = sender.PointerPosition.Y;
+        //}
 
         public Windows.UI.Core.CoreDispatcher GetDispatcher()
         {
