@@ -185,7 +185,7 @@ namespace INTEGRA_7_Xamarin.iOS
             Init(deviceName);
         }
 
-        public void Init(String deviceName, INTEGRA_7_Xamarin.MainPage mainPage)
+        public void Init(INTEGRA_7_Xamarin.MainPage mainPage, String deviceName, Picker OutputDeviceSelector, Picker InputDeviceSelector, object Dispatcher, byte MidiOutPortChannel, byte MidiInPortChannel)
         {
             this.mainPage = mainPage;
             Init(deviceName);
@@ -197,7 +197,7 @@ namespace INTEGRA_7_Xamarin.iOS
             Midi.Restart();
             if (midiClient == null)
             {
-                midiClient = new MidiClient("TheMidiClient");
+                midiClient = new MidiClient("The MidiClient");
                 midiClient.ObjectAdded += delegate (object sender, ObjectAddedOrRemovedEventArgs e)
                 {
                     Int32 handle = ((MidiClient)sender).Handle;
@@ -240,7 +240,7 @@ namespace INTEGRA_7_Xamarin.iOS
                         {
                             mainPage.uIHandler.Librarian_midiOutputDevice.Items.Add(md.Name);
                         }
-                        if (md.Name.Contains("INTEGRA-7"))
+                        if (md.Name != null && md.Name.Contains("INTEGRA-7"))
                         {
                             midiDevice = md;
                             midiEntity = md.GetEntity(e);

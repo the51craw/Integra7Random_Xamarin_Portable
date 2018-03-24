@@ -191,12 +191,6 @@ namespace INTEGRA_7_Xamarin_MacOS
             Init(deviceName);
         }
 
-        //public void Init(String deviceName, INTEGRA_7_Xamarin.MainPage mainPage)
-        //{
-        //    this.mainPage = mainPage;
-        //    Init(deviceName);
-        //}
-
         public void Init(String deviceName)
         {
             MidiDevice md;
@@ -338,6 +332,11 @@ namespace INTEGRA_7_Xamarin_MacOS
             SendPacket(bytes);
             bytes = new Byte[] { (byte)(0xc0 | channel), (byte)(UInt16.Parse(spc) - 1) };
             SendPacket(bytes);
+        }
+
+        public void AllNotesOff(byte channel)
+        {
+            SendControlChange(channel, 0x78, 0);
         }
 
         public void ProgramChange(byte channel, byte msb, byte lsb, byte pc)
