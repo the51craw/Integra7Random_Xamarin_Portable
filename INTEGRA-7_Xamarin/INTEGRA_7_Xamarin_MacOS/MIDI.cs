@@ -325,6 +325,11 @@ namespace INTEGRA_7_Xamarin_MacOS
             SendControlChange(channel, 0x07, volume);
         }
 
+        public void AllNotesOff(byte channel)
+        {
+            SendControlChange(channel, 0x78, 0);
+        }
+
         public void ProgramChange(byte channel, String smsb, String slsb, String spc)
         {
             Byte[] bytes = new Byte[] { (byte)(0xb0 | channel), 0x00, (byte)(UInt16.Parse(smsb))};

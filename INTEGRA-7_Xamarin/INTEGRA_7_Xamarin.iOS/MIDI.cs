@@ -319,6 +319,11 @@ namespace INTEGRA_7_Xamarin.iOS
             SendControlChange(channel, 0x07, volume);
         }
 
+        public void AllNotesOff(byte channel)
+        {
+            SendControlChange(channel, 0x78, 0);
+        }
+
         public void ProgramChange(byte channel, String smsb, String slsb, String spc)
         {
             Byte[] bytes = new Byte[] { (byte)(0xb0 | channel), 0x00, (byte)(UInt16.Parse(smsb))};
@@ -329,7 +334,12 @@ namespace INTEGRA_7_Xamarin.iOS
             SendPacket(bytes);
         }
 
-        public void ProgramChange(byte channel, byte msb, byte lsb, byte pc)
+        public void AllNotesOff(byte channel)
+        {
+            SendControlChange(channel, 0x78, 0);
+        }
+
+       public void ProgramChange(byte channel, byte msb, byte lsb, byte pc)
         {
             Byte[] bytes = new Byte[] { (byte)(0xb0 | channel), 0x00, msb };
             SendPacket(bytes);
