@@ -41,5 +41,10 @@ namespace INTEGRA_7_Xamarin
         {
             MainPage_Device = mainPage;
         }
+
+        private void MainStackLayout_SizeChanged(object sender, EventArgs e)
+        {
+            uIHandler.SetFontSizes(uIHandler.mainStackLayout);
+        }
     }
 }

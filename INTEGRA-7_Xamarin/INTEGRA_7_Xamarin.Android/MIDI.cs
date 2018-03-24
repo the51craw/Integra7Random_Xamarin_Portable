@@ -145,6 +145,11 @@ namespace INTEGRA_7_Xamarin.Droid
         {
         }
 
+        public void AllNotesOff(byte currentChannel)
+        {
+            UsbTransmit(MakeUsbBuffer(new byte[] { 0xb0, 0x78, 0x00 }));
+        }
+
         public void ProgramChange(byte currentChannel, String smsb, String slsb, String spc)
         {
             try

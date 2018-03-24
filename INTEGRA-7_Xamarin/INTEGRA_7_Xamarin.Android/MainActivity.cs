@@ -104,8 +104,8 @@ namespace INTEGRA_7_Xamarin.Droid
             //SetOnListener(this);
             //mainActivity. SetOnTouchListener()
 
-            //// Show the librarian at startup:
-            //MainPage_Portable.uIHandler.ShowLibrarianPage();
+            // Show the librarian at startup:
+            MainPage_Portable.uIHandler.ShowLibrarianPage();
 
             //TapGestureRecognizer tapGestureRecognizer = new TapGestureRecognizer();
             //tapGestureRecognizer.Tapped += (sender, e) => OnTouch((Android.Views.View)sender, (TappedEventArgs)e);

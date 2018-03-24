@@ -103,6 +103,7 @@ namespace INTEGRA_7_Xamarin
         Hex2Midi hex2Midi = new Hex2Midi();
         //SuperNATURALDrumKitInstrumentList superNATURALDrumKitInstrumentList = new SuperNATURALDrumKitInstrumentList();
         public byte[] rawData;
+        Int32 lastfontSize = 15;
 
         INTEGRA_7_Xamarin.MainPage mainPage;
         public StackLayout mainStackLayout { get; set; }
@@ -148,31 +149,6 @@ namespace INTEGRA_7_Xamarin
             }
         }
 
-        //// Creates all pages and shows the librarian:
-        //public void DrawPages()
-        //{
-        //    DrawLibrarianPage();
-        //    DrawToneEditorPage();
-        //    DrawMotionalSurroundPage();
-        //    DrawStudioSetEditorPage();
-        //    DrawFavoritesPage();
-
-        //    //commonState.midi = DependencyService.Get<IMidi>();
-        //    //commonState.midi.Init("INTEGRA-7", mainPage, Librarian_midiInputDevice, Librarian_midiInputDevice, 0, 0);
-        //    //commonState.midi.Init(this.mainPage, mainPage_UWP, Librarian_midiInputDevice, Librarian_midiInputDevice, 0, 0);
-        //    //commonState.midi.Init(INTEGRA_7_Xamarin.MainPage mainPage, MainPage mainPage_UWP, Picker OutputDeviceSelector, Picker InputDeviceSelector, byte MidiOutPortChannel, byte MidiInPortChannel)
-
-
-        //    //// Always start by showing librarian:
-        //    //page = _page.LIBRARIAN;
-        //    //ShowLibrarianPage();
-        //}
-
-        //public void ShowLibrarianPage()
-        //{
-        //    LibrarianStackLayout.IsVisible = true;
-        //}
-
         /// <summary>
         /// Device-specific classes fills out rawData and then calls MidiInPort_MessageRecceived().
         /// </summary>
@@ -187,6 +163,70 @@ namespace INTEGRA_7_Xamarin
                         break;
                 }
                 rawData = new byte[0];
+            }
+        }
+
+        public void SetFontSizes(StackLayout stackLayout)
+        {
+            if (stackLayout.Children != null && stackLayout.Children.Count > 0)
+            {
+                Int32 size = (Int32)(stackLayout.Width < stackLayout.Height * 1.25 ? stackLayout.Width / 80 : stackLayout.Height / 70);
+                if (size > 0 && size != lastfontSize)
+                {
+                    lastfontSize = size;
+                    foreach (View view in stackLayout.Children)
+                    {
+                        SetFontSize(view, size);
+                    }
+                }
+            }
+        }
+
+        public void SetFontSize(View view, Int32 size)
+        {
+            if (view.GetType() == typeof(Button))
+            {
+                ((Button)view).FontSize = size;
+            }
+            else if (view.GetType() == typeof(Label))
+            {
+                ((Label)view).FontSize = size;
+            }
+            else if (view.GetType() == typeof(MyLabel))
+            {
+                ((MyLabel)view).Label.FontSize = size;
+            }
+            else if (view.GetType() == typeof(LabeledSwitch))
+            {
+                ((LabeledSwitch)view).Label.FontSize = size;
+            }
+            else if (view.GetType() == typeof(LabeledPicker))
+            {
+                ((LabeledPicker)view).Label.FontSize = size;
+            }
+            else if (view.GetType() == typeof(LabeledText))
+            {
+                ((LabeledText)view).Label.FontSize = size;
+                ((LabeledText)view).text.FontSize = size;
+            }
+            else if (view.GetType() == typeof(LabeledTextInput))
+            {
+                ((LabeledTextInput)view).Label.FontSize = size;
+                ((LabeledTextInput)view).Editor.FontSize = size;
+            }
+            else if (view.GetType() == typeof(StackLayout))
+            {
+                foreach (View subView in ((StackLayout)view).Children)
+                {
+                    SetFontSize(subView, size);
+                }
+            }
+            else if (view.GetType() == typeof(Grid))
+            {
+                foreach (View subView in ((Grid)view).Children)
+                {
+                    SetFontSize(subView, size);
+                }
             }
         }
     }

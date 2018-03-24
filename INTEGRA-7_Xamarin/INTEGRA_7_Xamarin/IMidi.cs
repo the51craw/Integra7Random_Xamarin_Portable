@@ -46,5 +46,7 @@ namespace INTEGRA_7_Xamarin
         byte GetMidiInPortChannel();
 
         void SetMidiInPortChannel(byte InPortChannel);
+
+        void AllNotesOff(byte currentChannel);
     }
 }

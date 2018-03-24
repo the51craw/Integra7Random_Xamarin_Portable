@@ -92,46 +92,7 @@ namespace INTEGRA_7_Xamarin.UWP
 
             // Always start by showing librarian:
             MainPage_Portable.uIHandler.ShowLibrarianPage();
-
-            //keyboard = new Keyboard(MainPage_Portable.uIHandler);
-            //AddMouseHandlers();
         }
-
-        //private void AddMouseHandlers()
-        //{
-        //    var window = Windows.UI.Core.CoreWindow.GetForCurrentThread();
-        //    window.PointerPressed += Window_PointerPressed;
-        //}
-
-        //public double GetMouseX()
-        //{
-        //    //var window = Windows.UI.Core.CoreWindow.GetForCurrentThread();
-        //    //window.PointerPressed += Window_PointerPressed;
-        //    //    PointerPressed
-        //    //System.Windows.Forms.Cursor.Position;
-        //    //MouseState ms = Mouse.GetState();
-
-        //    //Pointer mouse = Windows.ge
-        //    return x;
-        //}
-
-        //public double GetMouseY()
-        //{
-        //    //var window = Windows.UI.Core.CoreWindow.GetForCurrentThread();
-        //    //window.PointerPressed += Window_PointerPressed;
-        //    //    PointerPressed
-        //    //System.Windows.Forms.Cursor.Position;
-        //    //MouseState ms = Mouse.GetState();
-
-        //    //Pointer mouse = Windows.ge
-        //    return y;
-        //}
-
-        //private void Window_PointerPressed(Windows.UI.Core.CoreWindow sender, Windows.UI.Core.PointerEventArgs args)
-        //{
-        //    MainPage_Portable.uIHandler.x = sender.PointerPosition.X;
-        //    MainPage_Portable.uIHandler.y = sender.PointerPosition.Y;
-        //}
 
         public Windows.UI.Core.CoreDispatcher GetDispatcher()
         {

@@ -329,6 +329,15 @@ namespace INTEGRA_7_Xamarin.UWP
             }
         }
 
+        public void AllNotesOff(byte currentChannel)
+        {
+            if (midiOutPort != null)
+            {
+                IMidiMessage midiMessageToSend = new MidiControlChangeMessage(currentChannel, 0x78, 0);
+                midiOutPort.SendMessage(midiMessageToSend);
+            }
+        }
+
         public void ProgramChange(byte currentChannel, String smsb, String slsb, String spc)
         {
             try

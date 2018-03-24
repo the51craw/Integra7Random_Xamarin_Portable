@@ -77,8 +77,8 @@ namespace INTEGRA_7_Xamarin
 
     public class MyLabel : Grid
     {
-        public String Text { get { return btn.Text; } set { btn.Text = value; } }
-        private Button btn;
+        public String Text { get { return Label.Text; } set { Label.Text = value; } }
+        public Button Label;
 
         public MyLabel()
         {
@@ -92,14 +92,14 @@ namespace INTEGRA_7_Xamarin
 
         private void myLabel(String text)
         {
-            this.btn = new Button();
+            this.Label = new Button();
             //this.btn.IsEnabled = false;
-            this.btn.Text = text;
-            this.btn.Margin = new Thickness(0, 0, 0, 0);
-            this.btn.BorderWidth = 0;
-            this.btn.BackgroundColor = UIHandler.colorSettings.LabelBackground;
-            this.btn.BorderWidth = 0;
-            this.Children.Add((new GridRow(0, new View[] { this.btn })).Row);
+            this.Label.Text = text;
+            this.Label.Margin = new Thickness(0, 0, 0, 0);
+            this.Label.BorderWidth = 0;
+            this.Label.BackgroundColor = UIHandler.colorSettings.LabelBackground;
+            this.Label.BorderWidth = 0;
+            this.Children.Add((new GridRow(0, new View[] { this.Label })).Row);
 
         }
     }
@@ -475,146 +475,4 @@ namespace INTEGRA_7_Xamarin
             this.Switch.IsToggled = IsSelected;
         }
     }
-
-    //[Register("WhitePianoKey")]
-    public class WhitePianoKey : Grid
-    {
-        public Label Label { get; set; }
-        public Button Button { get; set; }
-        public byte Tag { get; set; }
-
-        public WhitePianoKey(byte Tag)
-        {
-            this.Tag = Tag;
-            Label = new Label();
-            Label.BackgroundColor = Color.FloralWhite;
-            Label.TextColor = Color.Black;
-            Label.HorizontalTextAlignment = TextAlignment.End;
-            Label.VerticalTextAlignment = TextAlignment.Center;
-            Button = new Button();
-            Button.Opacity = 0;
-            this.Clicked += OnClicked;
-            this.Children.Add((new GridRow(0, new View[] { this.Label }, null, true, true, 4)).Row);
-            this.Children.Add((new GridRow(0, new View[] { this.Button }, null, true, true, 4)).Row);
-        }
-
-        //private void btnWhiteKey_Clicked(object sender, EventArgs e)
-        //{
-        //    Button.Clicked(sender, e);
-        //}
-
-        public event EventHandler Clicked;
-
-        public virtual void OnClicked(object sender, EventArgs e)
-        {
-        }
-    }
-
-    public class BlackPianoKey : Grid
-    {
-        public Label Label { get; set; }
-        public Button Button { get; set; }
-        public byte Tag { get; set; }
-        public byte FillersNeeded { get; set; }
-        private Grid filler;
-
-        public BlackPianoKey(byte Tag, byte numberOfFillers)
-        {
-            this.Tag = Tag;
-            this.FillersNeeded = numberOfFillers;
-            filler = new Grid();
-            filler.InputTransparent = true;
-            Label = new Label();
-            Label.BackgroundColor = Color.Black;
-            Label.TextColor = Color.White;
-            Label.HorizontalTextAlignment = TextAlignment.End;
-            Button = new Button();
-            Button.Opacity = 0;
-            this.Children.Add((new GridRow(0, new View[] { this.Label,  filler}, new byte[] { 5, 2 }, true, true, 2)).Row);
-            this.Children.Add((new GridRow(0, new View[] { this.Button, filler }, new byte[] { 5, 2 }, true, true, 2)).Row);
-        }
-    }
-
-    //public class RadioButton : Grid
-    //{
-    //    public _orientation Orientation { get; set; }
-    //    public _labelPosition LabelPosition { get; set; }
-    //    public Label Label { get; set; }
-    //    public Switch Switch { get; set; }
-
-    //    public RadioButton(String LabelText)
-    //    {
-    //        radioButton(LabelText, null, 0, _orientation.HORIZONTAL, _labelPosition.BEFORE, null);
-    //    }
-
-    //    public RadioButton(String LabelText, Picker Picker = null, byte[] Sizes = null)
-    //    {
-    //        radioButton(LabelText, Switch, 0, _orientation.HORIZONTAL, _labelPosition.BEFORE, Sizes);
-    //    }
-
-    //    public RadioButton(String LabelText, Picker Picker = null, Int32 SelectedIndex = 0, _orientation Orientation = _orientation.HORIZONTAL, _labelPosition LabelPosition = _labelPosition.BEFORE, byte[] Sizes = null)
-    //    {
-    //        radioButton(LabelText, Switch, SelectedIndex, Orientation, LabelPosition, Sizes);
-    //    }
-
-    //private void radioButton(String LabelText, String[] ItemLabels, Switch Switch = null, Int32 SelectedIndex = 0, _orientation Orientation = _orientation.HORIZONTAL, _labelPosition LabelPosition = _labelPosition.BEFORE, byte[] Sizes = null)
-    //{
-    //    this.Orientation = Orientation;
-    //    this.LabelPosition = LabelPosition;
-    //    this.Label = new Label();
-    //    this.Label.Text = LabelText;
-    //    if (Switch == null)
-    //    {
-    //        this.Switch = new Switch();
-    //    }
-    //    else
-    //    {
-    //        this.Switch = Switch;
-    //    }
-    //    byte[] sizes;
-    //    if (Sizes == null || Sizes.Count() != 2)
-    //    {
-    //        sizes = new byte[] { 1, 1 };
-    //    }
-    //    else
-    //    {
-    //        sizes = Sizes;
-    //    }
-
-    //    this.Switch.VerticalOptions = LayoutOptions.FillAndExpand;
-    //    this.Label.VerticalOptions = LayoutOptions.FillAndExpand;
-    //    if (Orientation == _orientation.HORIZONTAL)
-    //    {
-
-    //        if (LabelPosition == _labelPosition.BEFORE)
-    //        {
-    //            this.Label.HorizontalOptions = LayoutOptions.End;
-    //            this.Children.Add((new GridRow(0, new View[] { this.Label, this.Switch }, sizes, true)).Row);
-    //        }
-    //        else
-    //        {
-    //            this.Switch.HorizontalOptions = LayoutOptions.Start;
-    //            this.Children.Add((new GridRow(0, new View[] { this.Switch, this.Label }, sizes, true)).Row);
-    //        }
-    //    }
-    //    else
-    //    {
-    //        if (LabelPosition == _labelPosition.BEFORE)
-    //        {
-    //            this.Label.HorizontalOptions = LayoutOptions.Start;
-    //            this.Switch.HorizontalOptions = LayoutOptions.End;
-    //            this.Children.Add((new GridRow(0, new View[] { this.Label }, null, true)).Row);
-    //            this.Children.Add((new GridRow(1, new View[] { this.Switch }, null, true)).Row);
-    //        }
-    //        else
-    //        {
-    //            this.Label.HorizontalOptions = LayoutOptions.End;
-    //            this.Switch.HorizontalOptions = LayoutOptions.Start;
-    //            this.Children.Add((new GridRow(0, new View[] { this.Switch }, null, true)).Row);
-    //            this.Children.Add((new GridRow(1, new View[] { this.Label }, null, true)).Row);
-    //        }
-    //    }
-    //    this.Switch.IsToggled = false;
-    //}
-    //}
 }

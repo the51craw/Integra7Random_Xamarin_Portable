@@ -74,19 +74,6 @@ namespace INTEGRA_7_Xamarin
 
         SuperNATURALDrumKitInstrumentList superNATURALDrumKitInstrumentList = new SuperNATURALDrumKitInstrumentList();
 
-        //public void Librarian_Init()
-        //{
-        //    //t.Trace("private void Librarian_Init()");
-        //    //localSettings = ApplicationData.Current.LocalSettings;
-        //    //green = new SolidColorBrush(Windows.UI.Color.FromArgb(255, 155, 232, 130));
-        //    //gray = new SolidColorBrush(Windows.UI.Color.FromArgb(255, 204, 204, 204));
-        //    //userToneNumbers = new UInt16[128];
-        //    //for (byte i = 0; i < 128; i++)
-        //    //{
-        //    //    userToneNumbers[i] = 0;
-        //    //}
-        //}
-
         public void DrawLibrarianPage()
         {
             x = -1;
@@ -281,18 +268,40 @@ namespace INTEGRA_7_Xamarin
             Librarian_btnEditTone = new Button();
             Librarian_btnEditTone.BorderColor = Color.Black;
             Librarian_btnEditTone.BorderWidth = 1;
-            Librarian_btnEditTone.BorderRadius = 2;
+            //Librarian_btnEditTone.BorderRadius = 2;
             Librarian_btnEditStudioSet = new Button();
+            Librarian_btnEditStudioSet.BorderColor = Color.Black;
+            Librarian_btnEditStudioSet.BorderWidth = 1;
             Librarian_btnResetVolume = new Button();
+            Librarian_btnResetVolume.BorderColor = Color.Black;
+            Librarian_btnResetVolume.BorderWidth = 1;
             Librarian_btnMotionalSurround = new Button();
+            Librarian_btnMotionalSurround.BorderColor = Color.Black;
+            Librarian_btnMotionalSurround.BorderWidth = 1;
             Librarian_btnAddFavorite = new Button();
+            Librarian_btnAddFavorite.BorderColor = Color.Black;
+            Librarian_btnAddFavorite.BorderWidth = 1;
             Librarian_btnRemoveFavorite = new Button();
+            Librarian_btnRemoveFavorite.BorderColor = Color.Black;
+            Librarian_btnRemoveFavorite.BorderWidth = 1;
             Librarian_btnPlay = new Button();
+            Librarian_btnPlay.BorderColor = Color.Black;
+            Librarian_btnPlay.BorderWidth = 1;
             Librarian_btnShowFavorites = new Button();
+            Librarian_btnShowFavorites.BorderColor = Color.Black;
+            Librarian_btnShowFavorites.BorderWidth = 1;
             Librarian_btnResetHangingNotes = new Button();
+            Librarian_btnResetHangingNotes.BorderColor = Color.Black;
+            Librarian_btnResetHangingNotes.BorderWidth = 1;
             Librarian_btnPlus12keys = new Button();
+            Librarian_btnPlus12keys.BorderColor = Color.Black;
+            Librarian_btnPlus12keys.BorderWidth = 1;
             Librarian_btnMinus12keys = new Button();
+            Librarian_btnMinus12keys.BorderColor = Color.Black;
+            Librarian_btnMinus12keys.BorderWidth = 1;
             Librarian_lblKeys = new MyLabel();
+            //Librarian_btnEditTone.BorderColor = Color.Black;
+            //Librarian_btnEditTone.BorderWidth = 1;
 
             Librarian_btnEditTone.Text = "Edit tone";
             Librarian_btnEditStudioSet.Text = "Edit studio set";
@@ -305,7 +314,7 @@ namespace INTEGRA_7_Xamarin
             Librarian_btnResetHangingNotes.Text = "Reset";
             Librarian_btnPlus12keys.Text = "+12";
             Librarian_btnMinus12keys.Text = "-12";
-            Librarian_lblKeys.Text = "Keys 36-96";
+            Librarian_lblKeys.Text = "Keys 48-96";
 
             Librarian_btnEditTone.BackgroundColor = colorSettings.Background;
             Librarian_btnEditStudioSet.BackgroundColor = colorSettings.Background;
@@ -1126,13 +1135,18 @@ namespace INTEGRA_7_Xamarin
 
         private void Librarian_btnMinus12keys_Clicked(object sender, EventArgs e)
         {
-            commonState.midi.NoteOff(0, 64);
-            //commonState.midi.ProgramChange(0, 0, 0, 5);
+            if (keyTranspose >= 12)
+            {
+                keyTranspose -= 12;
+            }
         }
 
         private void Librarian_btnPlus12keys_Clicked(object sender, EventArgs e)
         {
-            commonState.midi.NoteOn(0, 64, 64);
+            if (keyTranspose < 92)
+            {
+                keyTranspose += 12;
+            }
         }
 
         private void Librarian_BtnEditTone_Clicked(object sender, EventArgs e)
@@ -1149,6 +1163,10 @@ namespace INTEGRA_7_Xamarin
 
         private void Librarian_btnResetVolume_Clicked(object sender, EventArgs e)
         {
+            for (byte i = 0; i < 16; i++)
+            {
+                commonState.midi.SetVolume(i, 100);
+            }
         }
 
         private void Librarian_btnMotionalSurround_Clicked(object sender, EventArgs e)
@@ -1177,6 +1195,10 @@ namespace INTEGRA_7_Xamarin
 
         private void Librarian_btnResetHangingNotes_Clicked(object sender, EventArgs e)
         {
+            for (byte i = 0; i < 16; i++)
+            {
+                commonState.midi.AllNotesOff(i);
+            }
         }
 
         private void Librarian_btnPlay_Clicked(object sender, EventArgs e)
@@ -1195,7 +1217,10 @@ namespace INTEGRA_7_Xamarin
             }
             else if (noteNumber < 128)
             {
-                commonState.midi.NoteOff(commonState.CurrentPart, currentNote);
+                if (currentNote < 128)
+                {
+                    commonState.midi.NoteOff(commonState.CurrentPart, currentNote);
+                }
                 currentNote = noteNumber;
                 commonState.midi.NoteOn(commonState.CurrentPart, noteNumber, 64);
             }
@@ -1212,7 +1237,10 @@ namespace INTEGRA_7_Xamarin
             }
             else if (noteNumber < 128)
             {
-                commonState.midi.NoteOff(commonState.CurrentPart, currentNote);
+                if (currentNote < 128)
+                {
+                    commonState.midi.NoteOff(commonState.CurrentPart, currentNote);
+                }
                 currentNote = noteNumber;
                 commonState.midi.NoteOn(commonState.CurrentPart, noteNumber, 64);
             }
@@ -1389,6 +1417,9 @@ namespace INTEGRA_7_Xamarin
             {
                 PopulateGroups();
             }
+
+            // Set font size:
+            SetFontSizes(LibrarianStackLayout);
         }
 
         private void PopulateGroups()
