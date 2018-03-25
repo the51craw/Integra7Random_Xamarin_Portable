@@ -64,7 +64,6 @@ namespace INTEGRA_7_Xamarin
         private byte currentNote = 255; // > 127 when note is off
         public static String[] lines;
         // private DrumKeyAssignLists drumKeyAssignLists = null; Moved to commonState
-        private Int32 lowKey = 36;
         private Int32 transpose = 0;
         private byte[] notes = { 36, 40, 43, 48 };
         private byte[] drumNotes = { 36, 38, 42, 45, 43, 41,

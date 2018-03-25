@@ -66,7 +66,8 @@ namespace INTEGRA_7_Xamarin
         MyLabel Librarian_lblKeys;
         Boolean usingSearchResults = false;
         Int32 headingHeight;
-        byte keyTranspose = 48;
+        byte keyTranspose = 0;
+        private Int32 lowKey = 36;
 
         // Buttons for the keyboard:
         Button[] Librarian_btnWhiteKeys;
@@ -212,7 +213,7 @@ namespace INTEGRA_7_Xamarin
                 Librarian_gridKeyboard.Children.Add(grid);
                 Librarian_btnWhiteKeys[i].BackgroundColor = Color.FloralWhite;
                 Librarian_btnWhiteKeys[i].TextColor = Color.Black;
-                Librarian_btnWhiteKeys[i].Text = "White # " + i.ToString();
+                Librarian_btnWhiteKeys[i].Text = "";
                 Librarian_btnWhiteKeys[i].StyleId = i.ToString();
                 Librarian_btnWhiteKeys[i].Clicked += Librarian_btnWhiteKey_Clicked;
                 Librarian_btnWhiteKeys[i].BorderWidth = 0;
@@ -255,7 +256,7 @@ namespace INTEGRA_7_Xamarin
                 grid.Children.Add(Librarian_btnBlackKeys[i]);
                 Librarian_gridKeyboard.Children.Add(grid);
                 position += 8;
-                Librarian_btnBlackKeys[i].Text = "Black # " + i.ToString();
+                Librarian_btnBlackKeys[i].Text = "";
                 Librarian_btnBlackKeys[i].StyleId = i.ToString();
                 Librarian_btnBlackKeys[i].BackgroundColor = Color.Black;
                 Librarian_btnBlackKeys[i].TextColor = Color.White;
@@ -314,7 +315,8 @@ namespace INTEGRA_7_Xamarin
             Librarian_btnResetHangingNotes.Text = "Reset";
             Librarian_btnPlus12keys.Text = "+12";
             Librarian_btnMinus12keys.Text = "-12";
-            Librarian_lblKeys.Text = "Keys 48-96";
+            //Librarian_lblKeys.Text = "Keys 48-96";
+            ShowKeyNumbering();
 
             Librarian_btnEditTone.BackgroundColor = colorSettings.Background;
             Librarian_btnEditStudioSet.BackgroundColor = colorSettings.Background;
@@ -1108,6 +1110,7 @@ namespace INTEGRA_7_Xamarin
         {
             if (initDone)
             {
+                commonState.midi.OutputDeviceChanged((Picker)sender);
             }
         }
 
@@ -1135,18 +1138,47 @@ namespace INTEGRA_7_Xamarin
 
         private void Librarian_btnMinus12keys_Clicked(object sender, EventArgs e)
         {
-            if (keyTranspose >= 12)
+            if (lowKey >= 12)
             {
-                keyTranspose -= 12;
+                lowKey -= 12;
+                ShowKeyNumbering();
             }
         }
 
         private void Librarian_btnPlus12keys_Clicked(object sender, EventArgs e)
         {
-            if (keyTranspose < 92)
+            if (lowKey < 92)
             {
-                keyTranspose += 12;
+                lowKey += 12;
+                ShowKeyNumbering();
             }
+        }
+
+        private void ShowKeyNumbering()
+        {
+            if (lowKey + 3 * 12 > 127)
+            {
+                Librarian_lblKeys.Text = "Keys " + (lowKey + 1).ToString() + " - 128";
+                Librarian_btnWhiteKeys[0].IsVisible = false;
+                Librarian_btnWhiteKeys[1].IsVisible = false;
+                Librarian_btnWhiteKeys[2].IsVisible = false;
+                Librarian_btnWhiteKeys[3].IsVisible = false;
+                Librarian_btnBlackKeys[0].IsVisible = false;
+                Librarian_btnBlackKeys[1].IsVisible = false;
+                //Librarian_btnBlackKeys[2].IsVisible = false;
+            }
+            else
+            {
+                Librarian_lblKeys.Text = "Keys " + (lowKey + 1).ToString() + " - " + (lowKey + 37).ToString();
+                Librarian_btnWhiteKeys[0].IsVisible = true;
+                Librarian_btnWhiteKeys[1].IsVisible = true;
+                Librarian_btnWhiteKeys[2].IsVisible = true;
+                Librarian_btnWhiteKeys[3].IsVisible = true;
+                Librarian_btnBlackKeys[0].IsVisible = true;
+                Librarian_btnBlackKeys[1].IsVisible = true;
+                //Librarian_btnBlackKeys[2].IsVisible = true;
+            }
+            UpdateDrumNames();
         }
 
         private void Librarian_BtnEditTone_Clicked(object sender, EventArgs e)
@@ -1209,7 +1241,7 @@ namespace INTEGRA_7_Xamarin
         private void Librarian_btnWhiteKey_Clicked(object sender, EventArgs e)
         {
             byte[] keyNumbers = new byte[] { 36, 35, 33, 31, 30, 28, 26, 24, 23, 21, 19, 17, 16, 14, 12, 11, 9, 7, 5, 4, 2, 0};
-            byte noteNumber = (byte)(keyNumbers[Int32.Parse(((Button)sender).StyleId)] + keyTranspose);
+            byte noteNumber = (byte)(keyNumbers[Int32.Parse(((Button)sender).StyleId)] + lowKey);
             if (noteNumber == currentNote)
             {
                 commonState.midi.NoteOff(commonState.CurrentPart, currentNote);
@@ -1229,7 +1261,7 @@ namespace INTEGRA_7_Xamarin
         private void Librarian_btnBlackKey_Clicked(object sender, EventArgs e)
         {
             byte[] keyNumbers = new byte[] { 34, 32, 29, 27, 25, 22, 20, 18, 15, 13, 10, 8, 6, 3, 1 };
-            byte noteNumber = (byte)(keyNumbers[Int32.Parse(((Button)sender).StyleId)] + keyTranspose);
+            byte noteNumber = (byte)(keyNumbers[Int32.Parse(((Button)sender).StyleId)] + lowKey);
             if (noteNumber == currentNote)
             {
                 commonState.midi.NoteOff(commonState.CurrentPart, currentNote);
@@ -1627,7 +1659,7 @@ namespace INTEGRA_7_Xamarin
         {
             //t.Trace("private void UpdateDrumNames()");
             //ClearKeyNames();
-            if (commonState.currentTone.Category == "Drum" && commonState.drumKeyAssignLists.KeyboardNameList(commonState.currentTone.Group, commonState.currentTone.Name) != null)
+            if (commonState.currentTone != null && commonState.currentTone.Category == "Drum" && commonState.drumKeyAssignLists.KeyboardNameList(commonState.currentTone.Group, commonState.currentTone.Name) != null)
             {
                 commonState.keyNames = new List<String>();
                 foreach (String keyName in commonState.drumKeyAssignLists.KeyboardNameList(commonState.currentTone.Group, commonState.currentTone.Name))
@@ -1637,11 +1669,11 @@ namespace INTEGRA_7_Xamarin
 
                 if (commonState.keyNames != null && commonState.keyNames.Count() > 0)
                 {
-                    for (Int32 i = 0; i < 61; i++)
+                    for (Int32 i = 0; i < 37; i++)
                     {
                         if (i + lowKey - 22 > -1 && i + lowKey - 22 < commonState.keyNames.Count())
                         {
-                            //SetKeyText(i, commonState.keyNames[i + lowKey - 22]);
+                            SetKeyText(i, commonState.keyNames[i + lowKey - 22]);
                         }
                     }
                 }
@@ -1782,196 +1814,22 @@ namespace INTEGRA_7_Xamarin
         //    }
         //}
 
-        //private void SetKeyText(Int32 Key, String Text)
-        //{
-        //    //t.Trace("private void SetKeyText (" + "Int32" + Key + ", " + "String" + Text + ", " + ")");
-        //    switch (Key)
-        //    {
-        //        case 0:
-        //            K000.Text = Text;
-        //            break;
-        //        case 1:
-        //            K001.Text = Text;
-        //            break;
-        //        case 2:
-        //            K002.Text = Text;
-        //            break;
-        //        case 3:
-        //            K003.Text = Text;
-        //            break;
-        //        case 4:
-        //            K004.Text = Text;
-        //            break;
-        //        case 5:
-        //            K005.Text = Text;
-        //            break;
-        //        case 6:
-        //            K006.Text = Text;
-        //            break;
-        //        case 7:
-        //            K007.Text = Text;
-        //            break;
-        //        case 8:
-        //            K008.Text = Text;
-        //            break;
-        //        case 9:
-        //            K009.Text = Text;
-        //            break;
-        //        case 10:
-        //            K010.Text = Text;
-        //            break;
-        //        case 11:
-        //            K011.Text = Text;
-        //            break;
-        //        case 12:
-        //            K012.Text = Text;
-        //            break;
-        //        case 13:
-        //            K013.Text = Text;
-        //            break;
-        //        case 14:
-        //            K014.Text = Text;
-        //            break;
-        //        case 15:
-        //            K015.Text = Text;
-        //            break;
-        //        case 16:
-        //            K016.Text = Text;
-        //            break;
-        //        case 17:
-        //            K017.Text = Text;
-        //            break;
-        //        case 18:
-        //            K018.Text = Text;
-        //            break;
-        //        case 19:
-        //            K019.Text = Text;
-        //            break;
-        //        case 20:
-        //            K020.Text = Text;
-        //            break;
-        //        case 21:
-        //            K021.Text = Text;
-        //            break;
-        //        case 22:
-        //            K022.Text = Text;
-        //            break;
-        //        case 23:
-        //            K023.Text = Text;
-        //            break;
-        //        case 24:
-        //            K024.Text = Text;
-        //            break;
-        //        case 25:
-        //            K025.Text = Text;
-        //            break;
-        //        case 26:
-        //            K026.Text = Text;
-        //            break;
-        //        case 27:
-        //            K027.Text = Text;
-        //            break;
-        //        case 28:
-        //            K028.Text = Text;
-        //            break;
-        //        case 29:
-        //            K029.Text = Text;
-        //            break;
-        //        case 30:
-        //            K030.Text = Text;
-        //            break;
-        //        case 31:
-        //            K031.Text = Text;
-        //            break;
-        //        case 32:
-        //            K032.Text = Text;
-        //            break;
-        //        case 33:
-        //            K033.Text = Text;
-        //            break;
-        //        case 34:
-        //            K034.Text = Text;
-        //            break;
-        //        case 35:
-        //            K035.Text = Text;
-        //            break;
-        //        case 36:
-        //            K036.Text = Text;
-        //            break;
-        //        case 37:
-        //            K037.Text = Text;
-        //            break;
-        //        case 38:
-        //            K038.Text = Text;
-        //            break;
-        //        case 39:
-        //            K039.Text = Text;
-        //            break;
-        //        case 40:
-        //            K040.Text = Text;
-        //            break;
-        //        case 41:
-        //            K041.Text = Text;
-        //            break;
-        //        case 42:
-        //            K042.Text = Text;
-        //            break;
-        //        case 43:
-        //            K043.Text = Text;
-        //            break;
-        //        case 44:
-        //            K044.Text = Text;
-        //            break;
-        //        case 45:
-        //            K045.Text = Text;
-        //            break;
-        //        case 46:
-        //            K046.Text = Text;
-        //            break;
-        //        case 47:
-        //            K047.Text = Text;
-        //            break;
-        //        case 48:
-        //            K048.Text = Text;
-        //            break;
-        //        case 49:
-        //            K049.Text = Text;
-        //            break;
-        //        case 50:
-        //            K050.Text = Text;
-        //            break;
-        //        case 51:
-        //            K051.Text = Text;
-        //            break;
-        //        case 52:
-        //            K052.Text = Text;
-        //            break;
-        //        case 53:
-        //            K053.Text = Text;
-        //            break;
-        //        case 54:
-        //            K054.Text = Text;
-        //            break;
-        //        case 55:
-        //            K055.Text = Text;
-        //            break;
-        //        case 56:
-        //            K056.Text = Text;
-        //            break;
-        //        case 57:
-        //            K057.Text = Text;
-        //            break;
-        //        case 58:
-        //            K058.Text = Text;
-        //            break;
-        //        case 59:
-        //            K059.Text = Text;
-        //            break;
-        //        case 60:
-        //            K060.Text = Text;
-        //            break;
-        //    }
-        //}
+        private void SetKeyText(Int32 Key, String Text)
+        {
+            //t.Trace("private void SetKeyText (" + "Int32" + Key + ", " + "String" + Text + ", " + ")");
+            Int32 tempKeyNumber; // Derived from tone and lowKey, but then transformed to indicate actual key button.
+            // keyIndexes to find key buttons. If < 200 use as index in whiteKeys, else subtract 200 and use to index blackKeys
+            Int32[] keyIndexes = new Int32[] { 21, 214, 20, 213, 19, 18, 212, 17, 211, 16, 210, 15, 14, 209, 13, 208, 12, 11, 207, 10, 206, 9, 205, 8, 7, 203, 6, 204, 5, 4, 202, 3, 201, 2, 200, 1, 0};
+            tempKeyNumber = Key;// - lowKey;
+            if (keyIndexes[tempKeyNumber] < 200)
+            {
+                Librarian_btnWhiteKeys[keyIndexes[tempKeyNumber]].Text = Text;
+            }
+            else
+            {
+                Librarian_btnBlackKeys[keyIndexes[tempKeyNumber] - 200].Text = Text;
+            }
+        }
 
         //private void PlayNote(byte note, Int32 length)
         //{
