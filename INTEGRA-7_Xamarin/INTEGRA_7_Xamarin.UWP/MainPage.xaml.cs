@@ -90,6 +90,10 @@ namespace INTEGRA_7_Xamarin.UWP
 
             MainPage_Portable.uIHandler.commonState.midi.Init(MainPage_Portable, "INTEGRA-7", OutputSelector, InputSelector, (object)Dispatcher_UWP, 0, 0);
 
+            // Create a MyFileIO object:
+            //MyFileIO fileIO = new MyFileIO();
+            MainPage_Portable.uIHandler.myFileIO.SetMainPagePortable(MainPage_Portable);
+
             // Always start by showing librarian:
             MainPage_Portable.uIHandler.ShowLibrarianPage();
         }

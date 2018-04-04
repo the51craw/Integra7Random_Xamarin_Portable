@@ -45,6 +45,7 @@
     <Compile Include="DrumKeyAssignLists.cs" />
     <Compile Include="Help.cs" />
     <Compile Include="IMidi.cs" />
+    <Compile Include="IMyFileIO.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>

@@ -111,6 +111,7 @@
     </Compile>
     <Compile Include="MIDI.cs" />
     <Compile Include="MidiDeviceWatcher.cs" />
+    <Compile Include="MyFileIO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

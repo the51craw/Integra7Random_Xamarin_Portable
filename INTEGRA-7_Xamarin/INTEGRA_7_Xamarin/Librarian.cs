@@ -16,15 +16,15 @@ namespace INTEGRA_7_Xamarin
             INIT = 3,
         }
         ToneNamesFilter toneNamesFilter = ToneNamesFilter.INIT;
-        public Double x { get; set; }
-        public Double y { get; set; }
+        //public Double x { get; set; }
+        //public Double y { get; set; }
 
         // Librarian controls:
         public Picker Librarian_midiOutputDevice { get; set; }
         public Picker Librarian_midiInputDevice { get; set; }
         public Picker Librarian_midiOutputChannel { get; set; }
         public Picker Librarian_midiInputChannel { get; set; }
-        public Image Librarian_Keyboard { get; set; }
+        //public Image Librarian_Keyboard { get; set; }
 
         Boolean allowListViewUpdates = true;
         Boolean previousAllowListViewUpdates = true;
@@ -77,8 +77,8 @@ namespace INTEGRA_7_Xamarin
 
         public void DrawLibrarianPage()
         {
-            x = -1;
-            y = -1;
+            //x = -1;
+            //y = -1;
 
             /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             // Librarian 
@@ -434,13 +434,11 @@ namespace INTEGRA_7_Xamarin
             Librarian_gridTones.RowDefinitions[5].Height = new GridLength(headingHeight, GridUnitType.Absolute);
             Librarian_gridTones.RowDefinitions[6].Height = new GridLength(headingHeight, GridUnitType.Absolute);
 
-            // Make the entire grid background black to show as borders around controls by using margins:
-            Librarian_gridKeyboard.BackgroundColor = Color.Black;
-
             // Assemble LibrarianStackLayout --------------------------------------------------------------
 
             LibrarianStackLayout = new StackLayout();
             LibrarianStackLayout.Children.Add((new GridRow(0, new View[] { Librarian_gridGroups, Librarian_gridCategories, Librarian_gridTones, Librarian_gridKeyboard }, new byte[] { 5, 5, 5, 5 })).Row);
+            // Make the entire grid background black to show as borders around controls by using margins:
             LibrarianStackLayout.BackgroundColor = Color.Black;
         }
 
@@ -1750,60 +1748,60 @@ namespace INTEGRA_7_Xamarin
         //    catch { }
         //}
 
-        private Note NoteFromMousePosition(Double x, Double y)
-        {
-            Note key = new Note();
-            key.NoteNumber = 255;
-            key.Velocity = 255;
+        //private Note NoteFromMousePosition(Double x, Double y)
+        //{
+        //    Note key = new Note();
+        //    key.NoteNumber = 255;
+        //    key.Velocity = 255;
 
-            Double keyBoardWidth = Librarian_Keyboard.Width;
+        //    Double keyBoardWidth = Librarian_Keyboard.Width;
 
-            // y is based on entire screen. Remove diff to image top:
-            y -= (mainPage.Height - Librarian_Keyboard.Height);
+        //    // y is based on entire screen. Remove diff to image top:
+        //    y -= (mainPage.Height - Librarian_Keyboard.Height);
 
-            Double keyWidthAll = Librarian_Keyboard.Width / 61.7;
-            Double keyWidthWhite = Librarian_Keyboard.Width / 36;
-            Int32 keyNumber = 0;
-            if (y > (0.56 * Librarian_Keyboard.Height))
-            {
-                // White key area
-                keyNumber = (byte)((double)x / keyWidthWhite);
-                if (keyNumber > 35)
-                {
-                    keyNumber = 35;
-                }
-                key.NoteNumber = (byte)(whiteKeys[keyNumber] + transpose);
-                if (currentNote > 127)
-                {
-                    currentNote = 127;
-                }
-                key.Velocity = (byte)(127 * (y - (0.56 * Librarian_Keyboard.Height)) / (0.44 * Librarian_Keyboard.Height));
-                if (key.Velocity > 127)
-                {
-                    key.Velocity = 127;
-                }
-            }
-            else
-            {
-                // All keys area
-                keyNumber = (byte)((double)x / keyWidthAll);
-                if (keyNumber > 60)
-                {
-                    keyNumber = 60;
-                }
-                key.NoteNumber = (byte)(keyNumber + 36 + transpose);
-                if (currentNote > 127)
-                {
-                    currentNote = 127;
-                }
-                key.Velocity = (byte)(127 * (y / (0.56 * Librarian_Keyboard.Height)));
-                if (key.Velocity > 127)
-                {
-                    key.Velocity = 127;
-                }
-            }
-            return key;
-        }
+        //    Double keyWidthAll = Librarian_Keyboard.Width / 61.7;
+        //    Double keyWidthWhite = Librarian_Keyboard.Width / 36;
+        //    Int32 keyNumber = 0;
+        //    if (y > (0.56 * Librarian_Keyboard.Height))
+        //    {
+        //        // White key area
+        //        keyNumber = (byte)((double)x / keyWidthWhite);
+        //        if (keyNumber > 35)
+        //        {
+        //            keyNumber = 35;
+        //        }
+        //        key.NoteNumber = (byte)(whiteKeys[keyNumber] + transpose);
+        //        if (currentNote > 127)
+        //        {
+        //            currentNote = 127;
+        //        }
+        //        key.Velocity = (byte)(127 * (y - (0.56 * Librarian_Keyboard.Height)) / (0.44 * Librarian_Keyboard.Height));
+        //        if (key.Velocity > 127)
+        //        {
+        //            key.Velocity = 127;
+        //        }
+        //    }
+        //    else
+        //    {
+        //        // All keys area
+        //        keyNumber = (byte)((double)x / keyWidthAll);
+        //        if (keyNumber > 60)
+        //        {
+        //            keyNumber = 60;
+        //        }
+        //        key.NoteNumber = (byte)(keyNumber + 36 + transpose);
+        //        if (currentNote > 127)
+        //        {
+        //            currentNote = 127;
+        //        }
+        //        key.Velocity = (byte)(127 * (y / (0.56 * Librarian_Keyboard.Height)));
+        //        if (key.Velocity > 127)
+        //        {
+        //            key.Velocity = 127;
+        //        }
+        //    }
+        //    return key;
+        //}
 
         //private void ClearKeyNames()
         //{

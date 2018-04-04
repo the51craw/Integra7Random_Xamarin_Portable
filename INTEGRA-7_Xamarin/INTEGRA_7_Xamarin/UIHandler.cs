@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
@@ -16,6 +17,7 @@ namespace INTEGRA_7_Xamarin
     public partial class UIHandler
     {
         private HBTrace t = new HBTrace("UIHandler public sealed partial class MainPage : Page");
+        Boolean handleControlEvents = true;            // Some control events re-creates the control, and that will cause a loop. Use handleControlEvents to prevent that.
 
         public enum _appType
         {
@@ -56,6 +58,7 @@ namespace INTEGRA_7_Xamarin
 
         //ApplicationDataContainer localSettings = null;
         public CommonState commonState = null;
+        public IMyFileIO myFileIO = null;
         public System.Collections.Generic.List<System.Collections.Generic.List<String>> Lists = null;
         private Boolean AutoUpdateChildLists = true;
         private Int32 currentGroupIndex = -1;
@@ -133,9 +136,12 @@ namespace INTEGRA_7_Xamarin
         {
             page = _page.LIBRARIAN;
             colorSettings = new ColorSettings(_colorSettings.LIGHT);
-            borderThicknesSettings = new BorderThicknesSettings(1);
+            borderThicknesSettings = new BorderThicknesSettings(2);
             commonState = new CommonState(ref Librarian_btnPlay);
             commonState.midi = DependencyService.Get<IMidi>();
+            commonState.favoritesList = new FavoritesList();
+            commonState.favoritesList.folders = new List<FavoritesFolder>();
+            myFileIO = DependencyService.Get<IMyFileIO>();
             rawData = new byte[0];
             initDone = true;
         }
