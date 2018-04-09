@@ -75,6 +75,11 @@ namespace INTEGRA_7_Xamarin
 
         SuperNATURALDrumKitInstrumentList superNATURALDrumKitInstrumentList = new SuperNATURALDrumKitInstrumentList();
 
+        public UIHandler()
+        {
+
+        }
+
         public void DrawLibrarianPage()
         {
             //x = -1;

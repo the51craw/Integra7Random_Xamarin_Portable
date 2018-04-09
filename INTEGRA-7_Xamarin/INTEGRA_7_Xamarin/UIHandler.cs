@@ -141,6 +141,8 @@ namespace INTEGRA_7_Xamarin
             commonState.midi = DependencyService.Get<IMidi>();
             commonState.favoritesList = new FavoritesList();
             commonState.favoritesList.folders = new List<FavoritesFolder>();
+            String foldersWithFavorites = (String)mainPage.LoadLocalValue("Favorites");
+            UnpackFoldersWithFavoritesString(foldersWithFavorites);
             myFileIO = DependencyService.Get<IMyFileIO>();
             rawData = new byte[0];
             initDone = true;

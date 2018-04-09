@@ -46,5 +46,23 @@ namespace INTEGRA_7_Xamarin
         {
             uIHandler.SetFontSizes(uIHandler.mainStackLayout);
         }
+
+        public void SaveLocalValue(String Key, Object Value)
+        {
+            Application.Current.Properties.Add(new KeyValuePair<String, Object>(Key, Value));
+        }
+
+        public Object LoadLocalValue(String Key)
+        {
+            Object result = null;
+            if (Application.Current.Properties.TryGetValue(Key, out result))
+            {
+                return result;
+            }
+            else
+            {
+                return null;
+            }
+        }
     }
 }

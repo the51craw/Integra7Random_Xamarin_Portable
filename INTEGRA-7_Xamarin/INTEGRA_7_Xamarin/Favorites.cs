@@ -231,6 +231,7 @@ namespace INTEGRA_7_Xamarin
             FavoritesStackLayout.BackgroundColor = Color.Black;
 
             player = new Player(commonState);
+            UpdateFoldersList();
         }
 
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -281,13 +282,13 @@ namespace INTEGRA_7_Xamarin
                         commonState.favoritesList.folders[index].FavoritesTones.Add(commonState.currentTone);
                         Favorites_lvFolderList.SelectedItem = ((String)Favorites_lvFolderList.SelectedItem).TrimStart('*');
                         UpdateFavoritesList((String)Favorites_lvFolderList.SelectedItem);
-                        //SaveToLocalSettings();
+                        SaveToLocalSettings();
 
                     }
                 }
                 else if (commonState.command == "Delete")
                 {
-                    //DeleteFavorite(commonState.currentTone);
+                    DeleteFavorite(commonState.currentTone);
                 }
                 else if (commonState.command == "Show")
                 {
@@ -540,6 +541,7 @@ namespace INTEGRA_7_Xamarin
             if (linesToUnpack != "Error" && linesToUnpack != "Empty")
             {
                 UnpackFoldersWithFavoritesString(linesToUnpack);
+                SaveToLocalSettings();
                 UpdateFoldersList();
             }
         }
@@ -557,10 +559,30 @@ namespace INTEGRA_7_Xamarin
             if (response)
             {
                 commonState.favoritesList.folders.RemoveAt(Favorites_ocFolderList.IndexOf(folder));
-                //SaveToLocalSettings();
+                SaveToLocalSettings();
                 UpdateFoldersList();
             }
         }
+
+        private void DeleteFavorite(Tone Tone)
+        {
+            t.Trace("private void DeleteFavorite (" + Tone.Name + ")");
+            UInt16 i = 0;
+            UInt16 index = 0;
+            Int32 folderIndex = Favorites_ocFolderList.IndexOf(Favorites_lvFolderList.SelectedItem);
+            foreach (Tone tone in commonState.favoritesList.folders[folderIndex].FavoritesTones)
+            {
+                if (tone.Name == Tone.Name)
+                {
+                    index = i;
+                }
+                i++;
+            }
+            commonState.favoritesList.folders[folderIndex].FavoritesTones.RemoveAt(index);
+            UpdateFavoritesList((String)Favorites_lvFolderList.SelectedItem);
+            UpdateFoldersList(folderIndex);
+        }
+
 
         //protected override void OnNavigatedTo(NavigationEventArgs e)
         //{
@@ -629,7 +651,7 @@ namespace INTEGRA_7_Xamarin
         //    catch { }
         //}
 
-            private void SelectFolder(String folderName)
+        private void SelectFolder(String folderName)
         {
             t.Trace("private void SelectFolder (" + "String" + folderName + ", " + ")");
             try
@@ -654,32 +676,61 @@ namespace INTEGRA_7_Xamarin
             // Split each folder by \v to get folder name and all favorites together.
             // Split favorites by \b to get all favorites one by one.
             // Split each favorite by \t to get the 6 parts (3 indexes, 3 names).
-            FavoritesFolder folder = null;
-            commonState.favoritesList.folders.Clear();
-            foreach (String foldersWithFavoritePart in foldersWithFavorites.Split('\f'))
+            if (foldersWithFavorites != null)
             {
-                String[] folderWithFavorites = foldersWithFavoritePart.Split('\v');
-                // Folder name:
-                folder = new FavoritesFolder(folderWithFavorites[0]);
-                commonState.favoritesList.folders.Add(folder);
-                if (folderWithFavorites.Length > 1)
+                FavoritesFolder folder = null;
+                commonState.favoritesList.folders.Clear();
+                foreach (String foldersWithFavoritePart in foldersWithFavorites.Split('\f'))
                 {
-                    String[] favorites = folderWithFavorites[1].Split('\b');
-                    foreach (String favorite in favorites)
+                    String[] folderWithFavorites = foldersWithFavoritePart.Split('\v');
+                    // Folder name:
+                    folder = new FavoritesFolder(folderWithFavorites[0]);
+                    commonState.favoritesList.folders.Add(folder);
+                    if (folderWithFavorites.Length > 1)
                     {
-                        String[] favoriteParts = favorite.Split('\t');
-                        try
+                        String[] favorites = folderWithFavorites[1].Split('\b');
+                        foreach (String favorite in favorites)
                         {
-                            if (favoriteParts.Length == 6)
+                            String[] favoriteParts = favorite.Split('\t');
+                            try
                             {
-                                folder.FavoritesTones.Add(new Tone(Int32.Parse(favoriteParts[0]), Int32.Parse(favoriteParts[1]),
-                                    Int32.Parse(favoriteParts[2]), favoriteParts[3], favoriteParts[4], favoriteParts[5]));
+                                if (favoriteParts.Length == 6)
+                                {
+                                    folder.FavoritesTones.Add(new Tone(Int32.Parse(favoriteParts[0]), Int32.Parse(favoriteParts[1]),
+                                        Int32.Parse(favoriteParts[2]), favoriteParts[3], favoriteParts[4], favoriteParts[5]));
+                                }
                             }
+                            catch { }
                         }
-                        catch { }
                     }
                 }
             }
+        }
+
+        private void SaveToLocalSettings()
+        {
+            t.Trace("private void SaveToLocalSettings()");
+            // Format: [Folder name\v[Group index\tCategory index\tTone index\tGroup\tCategory\tTone\b]\f...]...
+            // I.e. Loop all folders, loop all favorites.
+            // Pack the 6 parts of the favorite as strings separated by \t.
+            // Concatenate the parts separated by \b.
+            // Concatenate the folder name and tthe parts separated by a \v.
+            // Concatenate all folders separated by a \b.
+            String toSave = "";
+            foreach (FavoritesFolder folder in commonState.favoritesList.folders)
+            {
+                toSave += folder.Name + '\v';
+                foreach (Tone favorite in folder.FavoritesTones)
+                {
+                    toSave += favorite.GroupIndex.ToString() + "\t" + favorite.CategoryIndex.ToString() + "\t" +
+                        favorite.ToneIndex.ToString() + "\t" + favorite.Group + "\t" +
+                        favorite.Category + "\t" + favorite.Name + "\b";
+                }
+                toSave = toSave.TrimEnd('\b') + "\f";
+            }
+            toSave = toSave.TrimEnd('\f');
+            mainPage.SaveLocalValue("Favorites", toSave);
+            //localSettings.Values["Favorites"] = toSave;
         }
 
         private void UpdateFoldersList(Int32 SelectedIndex = -1)
