@@ -43,13 +43,11 @@ namespace INTEGRA_7_Xamarin
     {
         public Boolean Playing { get; set; }
         public Boolean WasPlaying { get; set; }
-        public Button btnPlayStop { get; set; }
         private CommonState commonState;
 
-        public Player(CommonState commonState, ref Button btnPlayStop)
+        public Player(CommonState commonState)
         {
             this.commonState = commonState;
-            this.btnPlayStop = btnPlayStop;
             Playing = false;
             WasPlaying = false;
         }
@@ -71,13 +69,8 @@ namespace INTEGRA_7_Xamarin
 
         public void AllowPlay(Boolean allow = true)
         {
-            if (allow)
+            if (!allow)
             {
-                btnPlayStop.IsEnabled = true;
-            }
-            else
-            {
-                btnPlayStop.IsEnabled = false;
                 StopPlaying();
             }
         }
@@ -100,7 +93,6 @@ namespace INTEGRA_7_Xamarin
             byte[] data = new byte[] { (byte)(commonState.midi.GetMidiOutPortChannel() + 1) };
             byte[] package = commonState.midi.SystemExclusiveDT1Message(address, data);
             commonState.midi.SendSystemExclusive(package);
-            btnPlayStop.Text = "Stop";
             Playing = true;
         }
 
@@ -110,7 +102,6 @@ namespace INTEGRA_7_Xamarin
             byte[] data = new byte[] { 0x00 };
             byte[] package = commonState.midi.SystemExclusiveDT1Message(address, data);
             commonState.midi.SendSystemExclusive(package);
-            btnPlayStop.Text = "Play";
             Playing = false;
         }
     }
@@ -286,14 +277,14 @@ namespace INTEGRA_7_Xamarin
         public byte CurrentPart { get; set; }
         public byte[] PartChannels { get; set; }
 
-        public CommonState(ref Button btnPlayStop)
+        public CommonState()
         {
             command = "";
             midi = null;
             currentTone = null;
             toneList = new ToneList();
             toneNames = new List<List<string>>();
-            player = new Player(this, ref btnPlayStop);
+            player = new Player(this);
             for (byte i = 0; i < 5; i++)
             {
                 toneNames.Add(new List<String>());

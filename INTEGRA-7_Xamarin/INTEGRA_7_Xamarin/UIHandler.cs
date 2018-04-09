@@ -137,7 +137,7 @@ namespace INTEGRA_7_Xamarin
             page = _page.LIBRARIAN;
             colorSettings = new ColorSettings(_colorSettings.LIGHT);
             borderThicknesSettings = new BorderThicknesSettings(2);
-            commonState = new CommonState(ref Librarian_btnPlay);
+            commonState = new CommonState();
             commonState.midi = DependencyService.Get<IMidi>();
             commonState.favoritesList = new FavoritesList();
             commonState.favoritesList.folders = new List<FavoritesFolder>();

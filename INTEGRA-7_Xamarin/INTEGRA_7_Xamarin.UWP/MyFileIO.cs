@@ -65,7 +65,7 @@ namespace INTEGRA_7_Xamarin.UWP
                 IList<String> lines = await FileIO.ReadLinesAsync(file);
                 if (lines != null && lines.Count() > 0)
                 {
-                    MainPage_Portable.uIHandler.Favorites_ocGroupList = new ObservableCollection<String>();
+                    MainPage_Portable.uIHandler.Favorites_ocFolderList = new ObservableCollection<String>();
                     foreach (String line in lines)
                     {
                         linesToUnpack += line + '\n';
