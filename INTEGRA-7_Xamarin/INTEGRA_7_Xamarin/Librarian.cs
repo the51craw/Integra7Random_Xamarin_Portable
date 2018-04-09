@@ -1453,6 +1453,13 @@ namespace INTEGRA_7_Xamarin
                 PopulateGroups();
             }
 
+            if (commonState != null && commonState.currentTone != null)
+            {
+                Librarian_lvGroups.SelectedItem = commonState.currentTone.Group;
+                Librarian_lvCategories.SelectedItem = commonState.currentTone.Category;
+                Librarian_lvToneNames.SelectedItem = commonState.currentTone.Name;
+            }
+
             // Set font size:
             SetFontSizes(LibrarianStackLayout);
         }
