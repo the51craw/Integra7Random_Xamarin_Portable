@@ -26,8 +26,6 @@ namespace INTEGRA_7_Xamarin
         public Picker Librarian_midiInputChannel { get; set; }
         //public Image Librarian_Keyboard { get; set; }
 
-        Boolean allowListViewUpdates = true;
-        Boolean previousAllowListViewUpdates = true;
         Grid Librarian_gridGroups;
         Button Librarian_lblGroups;
         ListView Librarian_lvGroups;
@@ -890,13 +888,13 @@ namespace INTEGRA_7_Xamarin
                         }
                     }
                 }
-                catch {}
+                catch { }
             }
         }
 
         private void Librarian_LvGroups_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
-            if (initDone)
+            if (initDone && handleControlEvents)
             {
                 PopulateCategories(Librarian_lvGroups.SelectedItem.ToString());
             }
@@ -905,17 +903,15 @@ namespace INTEGRA_7_Xamarin
 
         private void Librarian_LvCategories_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
-            if (initDone && allowListViewUpdates)
+            if (initDone && handleControlEvents && Librarian_lvCategories.SelectedItem != null) // How the h*** did that become null?
             {
-                allowListViewUpdates = false;
                 PopulateToneNames(Librarian_lvCategories.SelectedItem.ToString());
-                allowListViewUpdates = true;
             }
         }
 
         private void Librarian_LvToneNames_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
-            if (initDone)
+            if (initDone && handleControlEvents)
             {
                 if (usingSearchResults)
                 {
@@ -926,8 +922,8 @@ namespace INTEGRA_7_Xamarin
                     {
                         commonState.currentTone.Name = soundName;
                     }
-                    if (!String.IsNullOrEmpty(Librarian_tbSearch.Editor.Text))
-                    {
+                    //if (!String.IsNullOrEmpty(Librarian_tbSearch.Editor.Text))
+                    //{
                         if (commonState.currentTone.Name.EndsWith("\t"))
                         {
                             drumMap = true;
@@ -948,17 +944,26 @@ namespace INTEGRA_7_Xamarin
                                 commonState.currentTone.Category = parts[2].TrimStart();
                                 commonState.currentTone.Name = parts[0].TrimStart();
                             }
+                            //Librarian_lvGroups.SelectedItem = commonState.currentTone.Group;
+                            //Librarian_lvCategories.SelectedItem = commonState.currentTone.Category;
+                            //Librarian_lvToneNames.SelectedItem = commonState.currentTone.Name;
+                            commonState.currentTone.Index = commonState.toneList.Get(commonState.currentTone.Group, commonState.currentTone.Category, commonState.currentTone.Name);
+                        }
+                    //}
+                    if (!String.IsNullOrEmpty(commonState.currentTone.Name))
+                    {
+                        previousHandleControlEvents = handleControlEvents;
+                        handleControlEvents = false;
+                        try
+                        {
+                            Librarian_lvGroups.IsEnabled = true;
+                            Librarian_lvCategories.IsEnabled = true;
+                            Librarian_tbSearch.Editor.Text = "";
+                            PopulateToneData(commonState.toneList.Get(commonState.currentTone.Group, commonState.currentTone.Category, commonState.currentTone.Name));
+                            PopulateToneNames(commonState.currentTone.Category);
                             Librarian_lvGroups.SelectedItem = commonState.currentTone.Group;
                             Librarian_lvCategories.SelectedItem = commonState.currentTone.Category;
                             Librarian_lvToneNames.SelectedItem = commonState.currentTone.Name;
-                            commonState.currentTone.Index = commonState.toneList.Get(Librarian_lvGroups.SelectedItem.ToString(), Librarian_lvCategories.SelectedItem.ToString(), toneName);
-                        }
-                    }
-                    if (!String.IsNullOrEmpty(commonState.currentTone.Name))
-                    {
-                        try
-                        {
-                            PopulateToneData(commonState.toneList.Get(commonState.currentTone.Group, commonState.currentTone.Category, commonState.currentTone.Name));
                         }
                         catch { }
                         commonState.midi.SetVolume(commonState.CurrentPart, 127);
@@ -969,8 +974,19 @@ namespace INTEGRA_7_Xamarin
                             commonState.player.StartPlaying();
                             commonState.player.WasPlaying = true;
                         }
+                        handleControlEvents = previousHandleControlEvents;
                     }
-                    Librarian_lvGroups.SelectedItem = commonState.currentTone.Group;
+                    //previousHandleControlEvents = handleControlEvents;
+                    //handleControlEvents = false;
+                    //Librarian_lvGroups.IsEnabled = true;
+                    //Librarian_lvCategories.IsEnabled = true;
+                    //Librarian_tbSearch.Editor.Text = "";
+                    //usingSearchResults = false;
+                    //Librarian_lvGroups.SelectedItem = commonState.currentTone.Group;
+                    //Librarian_lvCategories.SelectedItem = commonState.currentTone.Category;
+                    //PopulateToneNames(commonState.currentTone.Category);
+                    //Librarian_lvToneNames.SelectedItem = commonState.currentTone.Name;
+                    //handleControlEvents = previousHandleControlEvents;
                 }
                 else
                 {
@@ -1119,9 +1135,11 @@ namespace INTEGRA_7_Xamarin
 
         private void Librarian_Editor_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (initDone)
+            if (initDone && handleControlEvents)
             {
                 //t.Trace("private void tbSearch_TextChanged (" + "object" + sender + ", " + "TextChangedEventArgs" + e + ", " + ")");
+                previousHandleControlEvents = handleControlEvents;
+                handleControlEvents = false;
                 if (!String.IsNullOrEmpty(Librarian_tbSearch.Editor.Text) && Librarian_tbSearch.Editor.Text.Length > 2)
                 {
                     Librarian_lvGroups.IsEnabled = false;
@@ -1129,13 +1147,14 @@ namespace INTEGRA_7_Xamarin
                     usingSearchResults = true;
                     Librarian_PopulateSearchResults();
                 }
-                else
+                else if (String.IsNullOrEmpty(Librarian_tbSearch.Editor.Text))
                 {
                     Librarian_lvGroups.IsEnabled = true;
                     Librarian_lvCategories.IsEnabled = true;
                     usingSearchResults = false;
                     PopulateToneNames(commonState.currentTone.Category);
                 }
+                handleControlEvents = previousHandleControlEvents;
             }
         }
 
@@ -1243,7 +1262,7 @@ namespace INTEGRA_7_Xamarin
 
         private void Librarian_btnWhiteKey_Clicked(object sender, EventArgs e)
         {
-            byte[] keyNumbers = new byte[] { 36, 35, 33, 31, 30, 28, 26, 24, 23, 21, 19, 17, 16, 14, 12, 11, 9, 7, 5, 4, 2, 0};
+            byte[] keyNumbers = new byte[] { 36, 35, 33, 31, 30, 28, 26, 24, 23, 21, 19, 17, 16, 14, 12, 11, 9, 7, 5, 4, 2, 0 };
             byte noteNumber = (byte)(keyNumbers[Int32.Parse(((Button)sender).StyleId)] + lowKey);
             if (noteNumber == currentNote)
             {
@@ -1466,7 +1485,7 @@ namespace INTEGRA_7_Xamarin
 
         private void PopulateGroups()
         {
-            allowListViewUpdates = false;
+            handleControlEvents = false;
             foreach (List<String> tone in commonState.toneList.Tones)
             {
                 if (!Librarian_Groups.Contains(tone[0]))
@@ -1474,7 +1493,7 @@ namespace INTEGRA_7_Xamarin
                     Librarian_Groups.Add(tone[0]);
                 }
             }
-            allowListViewUpdates = true;
+            handleControlEvents = true;
             Librarian_lvGroups.SelectedItem = "SuperNATURAL Acoustic Tone";
         }
 
@@ -1482,7 +1501,7 @@ namespace INTEGRA_7_Xamarin
         {
             //t.Trace("private void PopulateCategories (" + "String" + group + ", " + ")");
             String lastCategory = "";
-            allowListViewUpdates = false;
+            handleControlEvents = false;
             Librarian_Categories.Clear();
             foreach (List<String> line in commonState.toneList.Tones.OrderBy(o => o[1]))
             {
@@ -1492,7 +1511,7 @@ namespace INTEGRA_7_Xamarin
                     lastCategory = line[1];
                 }
             }
-            allowListViewUpdates = true;
+            handleControlEvents = true;
             Librarian_lvCategories.ItemsSource = Librarian_Categories;
             Librarian_lvCategories.SelectedItem = Librarian_Categories[0];
         }
@@ -1829,7 +1848,7 @@ namespace INTEGRA_7_Xamarin
             //t.Trace("private void SetKeyText (" + "Int32" + Key + ", " + "String" + Text + ", " + ")");
             Int32 tempKeyNumber; // Derived from tone and lowKey, but then transformed to indicate actual key button.
             // keyIndexes to find key buttons. If < 200 use as index in whiteKeys, else subtract 200 and use to index blackKeys
-            Int32[] keyIndexes = new Int32[] { 21, 214, 20, 213, 19, 18, 212, 17, 211, 16, 210, 15, 14, 209, 13, 208, 12, 11, 207, 10, 206, 9, 205, 8, 7, 203, 6, 204, 5, 4, 202, 3, 201, 2, 200, 1, 0};
+            Int32[] keyIndexes = new Int32[] { 21, 214, 20, 213, 19, 18, 212, 17, 211, 16, 210, 15, 14, 209, 13, 208, 12, 11, 207, 10, 206, 9, 205, 8, 7, 203, 6, 204, 5, 4, 202, 3, 201, 2, 200, 1, 0 };
             tempKeyNumber = Key;// - lowKey;
             if (keyIndexes[tempKeyNumber] < 200)
             {

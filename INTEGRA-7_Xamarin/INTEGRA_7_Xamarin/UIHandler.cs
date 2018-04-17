@@ -18,6 +18,7 @@ namespace INTEGRA_7_Xamarin
     {
         private HBTrace t = new HBTrace("UIHandler public sealed partial class MainPage : Page");
         Boolean handleControlEvents = true;            // Some control events re-creates the control, and that will cause a loop. Use handleControlEvents to prevent that.
+        Boolean previousHandleControlEvents = true;
 
         public enum _appType
         {
