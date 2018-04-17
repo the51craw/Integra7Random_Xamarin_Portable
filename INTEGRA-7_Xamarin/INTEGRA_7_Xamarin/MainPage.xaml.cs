@@ -49,6 +49,10 @@ namespace INTEGRA_7_Xamarin
 
         public void SaveLocalValue(String Key, Object Value)
         {
+            if (!String.IsNullOrEmpty((String)Application.Current.Properties[Key]))
+            {
+                Application.Current.Properties.Remove(Key);
+            }
             Application.Current.Properties.Add(new KeyValuePair<String, Object>(Key, Value));
         }
 
