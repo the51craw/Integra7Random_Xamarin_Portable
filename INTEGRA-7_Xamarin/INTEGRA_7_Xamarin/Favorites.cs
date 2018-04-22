@@ -47,7 +47,7 @@ namespace INTEGRA_7_Xamarin
             /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             // Favorites
             // --------------------------------------------------------------------------------------------
-            // | Grouplist          | Tonelist                                     | Foldername editor    |
+            // | Folderlist         | Tonelist                                     | Foldername editor    |
             // |--------------------|----------------------------------------------|----------------------|
             // |                    |                                              | Add folder button    |
             // |                    |                                              |----------------------|
@@ -79,7 +79,7 @@ namespace INTEGRA_7_Xamarin
 
             // Create all controls ------------------------------------------------------------------------
             Favorites_lblFolders = new Button();
-            Favorites_lblFolders.Text = "Groups";
+            Favorites_lblFolders.Text = "Folders";
             Favorites_lblFolders.IsEnabled = false;
 
             Favorites_lvFolderList = new ListView();
@@ -95,6 +95,7 @@ namespace INTEGRA_7_Xamarin
             Favorites_lvFavoriteList.ItemsSource = Favorites_ocFavoriteList;
 
             Favorites_edNewFolderName = new Editor();
+            Favorites_edNewFolderName.BackgroundColor = colorSettings.Background;
 
             Favorites_btnAddFolder = new Button();
             Favorites_btnAddFolder.Text = "Add folder";
@@ -103,6 +104,7 @@ namespace INTEGRA_7_Xamarin
             Favorites_btnDeleteFolder.Text = "Delete selected folder";
 
             Favorites_lvHelp1 = new TextBlock();
+            Favorites_lvHelp1.BackgroundColor = colorSettings.Background;
 
             Favorites_lvHelp2 = new ListView();
 
@@ -308,9 +310,17 @@ namespace INTEGRA_7_Xamarin
         private void Favorites_btnAddFolder_Clicked(object sender, EventArgs e)
         {
             //t.Trace("private void btnNewFolder_Click (" + "object" + sender + ", " + "RoutedEventArgs" + e + ", " + ")");
-            commonState.favoritesList.folders.Add(new FavoritesFolder(Favorites_edNewFolderName.Text.Trim()));
-            Favorites_edNewFolderName.Text = "";
-            UpdateFoldersList();
+            if (String.IsNullOrEmpty(Favorites_edNewFolderName.Text)
+                || Favorites_ocFolderList.Contains(Favorites_edNewFolderName.Text))
+            {
+                ShowMessage("Please type a unique name for the new folder in the input box above.");
+            }
+            else
+            {
+                commonState.favoritesList.folders.Add(new FavoritesFolder(Favorites_edNewFolderName.Text.Trim()));
+                Favorites_edNewFolderName.Text = "";
+                UpdateFoldersList();
+            }
         }
 
         private void Favorites_edNewFolderName_TextChanged(object sender, TextChangedEventArgs e)

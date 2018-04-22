@@ -29,6 +29,11 @@
     <SccLocalPath>SAK</SccLocalPath>
     <SccAuxPath>SAK</SccAuxPath>
     <SccProvider>SAK</SccProvider>
+    <AndroidKeyStore>true</AndroidKeyStore>
+    <AndroidSigningKeyStore>C:\Users\hbe\AppData\Local\Xamarin\Mono for Android\Keystore\mrMartin\mrMartin.keystore</AndroidSigningKeyStore>
+    <AndroidSigningStorePass>Cake_8192s</AndroidSigningStorePass>
+    <AndroidSigningKeyAlias>mrMartin</AndroidSigningKeyAlias>
+    <AndroidSigningKeyPass>Cake_8192s</AndroidSigningKeyPass>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -161,6 +166,7 @@
   <ItemGroup>
     <Compile Include="MainActivity.cs" />
     <Compile Include="MIDI.cs" />
+    <Compile Include="MyFileIO.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="USB.cs" />
   </ItemGroup>

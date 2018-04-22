@@ -237,5 +237,10 @@ namespace INTEGRA_7_Xamarin
                 }
             }
         }
+
+        private async void ShowMessage(String message)
+        {
+            await mainPage.DisplayAlert("INTEGRA_7 Librarian", message, "Ok");
+        }
     }
 }
