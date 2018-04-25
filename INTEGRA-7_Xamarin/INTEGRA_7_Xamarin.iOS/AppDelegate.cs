@@ -42,7 +42,7 @@ namespace INTEGRA_7_Xamarin.iOS
             // Get INTEGRA_7_Xamarin.MainPage:
             mainPage = INTEGRA_7_Xamarin.MainPage.GetMainPage();
             UIHandler.appType = UIHandler._appType.IOS;
-            mainPage.uIHandler.DrawPages();
+            mainPage.uIHandler.DrawLibrarianPage();
 			
             // We need invisible ComboBoxes to hold settings from the
             // corresponding Pickers in the Xamarin code.
@@ -50,7 +50,7 @@ namespace INTEGRA_7_Xamarin.iOS
             InputSelector = mainPage.uIHandler.Librarian_midiInputDevice;
             //midi = new MIDI(this, OutputSelector, InputSelector, Dispatcher, 0, 0);
             //midi.Init("INTEGRA-7");
-			
+            mainPage.uIHandler.ShowLibrarianPage();
             return base.FinishedLaunching(app, options);
         }
     }

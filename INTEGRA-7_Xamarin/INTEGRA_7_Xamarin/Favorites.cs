@@ -839,24 +839,26 @@ namespace INTEGRA_7_Xamarin
         {
             //if (handleControlEvents)
             {
-            //    t.Trace("private void UpdateFavoritesList(folderIndex = " + folderIndex.ToString() + ")");
-            //    if (folderIndex > -1 && folderIndex < commonState.favoritesList.folders.Count())
-            //    {
-            // Finde the folder by name:
-            FavoritesFolder favoritesFolder = null;
-            for (Int32 i = 0; i < commonState.favoritesList.folders.Count() && favoritesFolder == null; i++)
-            {
-                if (commonState.favoritesList.folders[i].Name == folderName)
+                //    t.Trace("private void UpdateFavoritesList(folderIndex = " + folderIndex.ToString() + ")");
+                //    if (folderIndex > -1 && folderIndex < commonState.favoritesList.folders.Count())
+                //    {
+                // Finde the folder by name:
+                FavoritesFolder favoritesFolder = null;
+                for (Int32 i = 0; i < commonState.favoritesList.folders.Count() && favoritesFolder == null; i++)
                 {
-                    favoritesFolder = commonState.favoritesList.folders[i];
+                    if (commonState.favoritesList.folders[i].Name == folderName)
+                    {
+                        favoritesFolder = commonState.favoritesList.folders[i];
+                    }
                 }
-            }
+                if (favoritesFolder != null)
+                {
                     Favorites_ocFavoriteList.Clear();
                     foreach (Tone fav in commonState.favoritesList.folders[commonState.favoritesList.folders.IndexOf(favoritesFolder)].FavoritesTones)
                     {
                         Favorites_ocFavoriteList.Add(fav);
                     }
-            //    }
+                }
             }
         }
 
