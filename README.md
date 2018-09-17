@@ -14,7 +14,7 @@ portable project.
 UI is handled in the file UIHandler.cs in the portable project, where
 all controls are dynamically created. The original program was split
 up in a few pages, and xaml code was used in some pages, but it has
-an enging for creating UI controls, so that one is beeing adapted to
+an engine for creating UI controls, so that one is beeing adapted to
 Xamarin and will be used for all user controls.
 
 Also, there will not be separate pages. The UI handler will simple
