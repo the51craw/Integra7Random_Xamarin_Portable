@@ -5,7 +5,7 @@ https://www.roland.com/global/products/integra-7/
 
 I have written this program for Windows 10 as a UWP solution.
 It is very useful, and I think many users of INTEGRA-7 would like it.
-However, most users of the INTEGRA-7 uses a MacBook or an iPad, so
+However, most users of the INTEGRA-7 uses a MacBook, an iPad, or even an Android tablet, so
 now my plan is to re-write it using the Xamarin platform.
 
 All that possibly can be implemented in common code goes into the
