@@ -18,15 +18,15 @@ an engine for creating UI controls, so that one is beeing adapted to
 Xamarin and will be used for all user controls.
 
 Also, there will not be separate pages. The UI handler will simple
-erase and re-draw the main page with different content.
+show the content of the main page with different controls, and create a page only at first usage. Each page is a StackLayout and the property IsVisible is used to show a page while hiding all the other pages.
 
-The only parts that needs to be in the native projects ar, as far
-as I have realized for now, Images and the MIDI handler.
+The only parts that needs to be in the native projects are, as far
+as I have realized for now, Images, file handling and the MIDI handler.
 
 Most images will be the same and can be copied or maybe referred to
 from all native projects, if possible.
 
-The MIDI code is very different. I can use the UWP code as is, but
+The MIDI code is very different. I can use the UWP MIDI code as is, but
 had to write a new code for the MacBook. It seems to work, but I suspect
 I will find bugs in the future. Hopefully the MacBook MIDI implementation
 will also work for the iPad. I do not have an iPad and have thus not yet
