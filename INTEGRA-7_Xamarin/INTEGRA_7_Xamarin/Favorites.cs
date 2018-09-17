@@ -497,26 +497,26 @@ namespace INTEGRA_7_Xamarin
 
         private void lvFolders_DoubleTapped(object sender/*, DoubleTappedRoutedEventArgs e*/)
         {
-        //    if (commonState.currentTone != null && lvFolders.SelectedIndex > -1)
-        //    {
-        //        t.Trace("private void lvFolders_DoubleTapped(" + ((ListView)sender).SelectedIndex.ToString() + ")");
-        //        ListViewItem item = (ListViewItem)lvFolders.ContainerFromItem(lvFolders.Items[lvFolders.SelectedIndex]);
-        //        if (favoritesAction == FavoritesAction.ADD && ((String)item.Content).StartsWith("*"))
-        //        {
-        //            commonState.favoritesList.folders[lvFolders.SelectedIndex].FavoritesTones.Add(commonState.currentTone);
-        //            item.Content = ((String)item.Content).TrimStart('*');
-        //            UpdateFavoritesList(lvFolders.SelectedIndex);
-        //            SaveToLocalSettings();
-        //        }
-        //        if (favoritesAction == FavoritesAction.REMOVE && ((String)item.Content).StartsWith("*"))
-        //        {
-        //            Tone tone = commonState.favoritesList.folders[lvFolders.SelectedIndex].ByToneName(commonState.currentTone.Name);
-        //            commonState.favoritesList.folders[lvFolders.SelectedIndex].FavoritesTones.Remove(tone);
-        //            item.Content = ((String)item.Content).TrimStart('*');
-        //            UpdateFavoritesList(lvFolders.SelectedIndex);
-        //            SaveToLocalSettings();
-        //        }
-        //    }
+            if (commonState.currentTone != null && Favorites_lvFolderList.SelectedItem != null)
+            {
+                //t.Trace("private void lvFolders_DoubleTapped(" + ((ListView)sender).SelectedIndex.ToString() + ")");
+                //ListViewItem item = (ListViewItem)Favorites_lvFolderList.ContainerFromItem(Favorites_lvFolderList.SelectedItem);
+                if (favoritesAction == FavoritesAction.ADD && ((String)Favorites_lvFolderList.SelectedItem).StartsWith("*"))
+                {
+                    commonState.favoritesList.folders[Favorites_ocFolderList.IndexOf(Favorites_lvFolderList.SelectedItem)].FavoritesTones.Add(commonState.currentTone);
+                    Favorites_lvFolderList.SelectedItem = ((String)Favorites_lvFolderList.SelectedItem).TrimStart('*');
+                    UpdateFavoritesList((String)Favorites_lvFolderList.SelectedItem);
+                    SaveToLocalSettings();
+                }
+                if (favoritesAction == FavoritesAction.REMOVE && ((String)Favorites_lvFolderList.SelectedItem).StartsWith("*"))
+                {
+                    Tone tone = commonState.favoritesList.folders[Favorites_ocFolderList.IndexOf(Favorites_lvFolderList.SelectedItem)].ByToneName(commonState.currentTone.Name);
+                    commonState.favoritesList.folders[Favorites_ocFolderList.IndexOf(Favorites_lvFolderList.SelectedItem)].FavoritesTones.Remove(tone);
+                    Favorites_lvFolderList.SelectedItem = ((String)Favorites_lvFolderList.SelectedItem).TrimStart('*');
+                    UpdateFavoritesList((String)Favorites_lvFolderList.SelectedItem);
+                    SaveToLocalSettings();
+                }
+            }
         }
 
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -849,7 +849,7 @@ namespace INTEGRA_7_Xamarin
                 FavoritesFolder favoritesFolder = null;
                 for (Int32 i = 0; i < commonState.favoritesList.folders.Count() && favoritesFolder == null; i++)
                 {
-                    if (commonState.favoritesList.folders[i].Name == folderName)
+                    if (commonState.favoritesList.folders[i].Name == folderName.TrimStart('*'))
                     {
                         favoritesFolder = commonState.favoritesList.folders[i];
                     }

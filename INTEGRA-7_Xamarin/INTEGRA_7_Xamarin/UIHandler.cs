@@ -155,14 +155,6 @@ namespace INTEGRA_7_Xamarin
             initDone = true;
         }
 
-        //public void Clear()
-        //{
-        //    while (mainStackLayout.Children.Count() > 0)
-        //    {
-        //        mainStackLayout.Children.RemoveAt(0);
-        //    }
-        //}
-
         /// <summary>
         /// Device-specific classes fills out rawData and then calls MidiInPort_MessageRecceived().
         /// </summary>
