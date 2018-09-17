@@ -259,7 +259,7 @@ namespace INTEGRA_7_Xamarin
             EXPXM_GM2_DRUM_KIT,
         }
 
-        public String command { get; set; }
+        //public String command { get; set; }
         public IMidi midi { get; set; }
         public Tone currentTone { get; set; }
         public ToneList toneList { get; set; }
@@ -279,7 +279,7 @@ namespace INTEGRA_7_Xamarin
 
         public CommonState()
         {
-            command = "";
+            //command = "";
             midi = null;
             currentTone = null;
             toneList = new ToneList();

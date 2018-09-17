@@ -218,7 +218,8 @@ namespace INTEGRA_7_Xamarin
                 Librarian_btnWhiteKeys[i].TextColor = Color.Black;
                 Librarian_btnWhiteKeys[i].Text = "";
                 Librarian_btnWhiteKeys[i].StyleId = i.ToString();
-                Librarian_btnWhiteKeys[i].Clicked += Librarian_btnWhiteKey_Clicked;
+                Librarian_btnWhiteKeys[i].Pressed += Librarian_btnWhiteKey_Pressed;
+                Librarian_btnWhiteKeys[i].Released += Librarian_btnWhiteKey_Released;
                 Librarian_btnWhiteKeys[i].BorderWidth = 0;
                 if (i == 0)
                 {
@@ -264,7 +265,8 @@ namespace INTEGRA_7_Xamarin
                 Librarian_btnBlackKeys[i].BackgroundColor = Color.Black;
                 Librarian_btnBlackKeys[i].TextColor = Color.White;
                 Librarian_btnBlackKeys[i].Margin = new Thickness(2, 0, 0, 0);
-                Librarian_btnBlackKeys[i].Clicked += Librarian_btnBlackKey_Clicked;
+                Librarian_btnBlackKeys[i].Pressed += Librarian_btnBlackKey_Pressed;
+                Librarian_btnBlackKeys[i].Released += Librarian_btnBlackKey_Released;
                 Librarian_btnBlackKeys[i].BorderWidth = 0;
             }
 
@@ -1206,13 +1208,15 @@ namespace INTEGRA_7_Xamarin
 
         private void Librarian_BtnEditTone_Clicked(object sender, EventArgs e)
         {
-            mainStackLayout.Children.RemoveAt(0);
+            //mainStackLayout.Children.RemoveAt(0);
+            LibrarianStackLayout.IsVisible = false;
             ShowToneEditorPage();
         }
 
         private void Librarian_btnEditStudioSet_Clicked(object sender, EventArgs e)
         {
-            mainStackLayout.Children.RemoveAt(0);
+            //mainStackLayout.Children.RemoveAt(0);
+            LibrarianStackLayout.IsVisible = false;
             ShowStudioSetEditorPage();
         }
 
@@ -1226,26 +1230,26 @@ namespace INTEGRA_7_Xamarin
 
         private void Librarian_btnMotionalSurround_Clicked(object sender, EventArgs e)
         {
-            mainStackLayout.Children.RemoveAt(0);
+            LibrarianStackLayout.IsVisible = false;
             ShowMotionalSurroundPage();
         }
 
         private void Librarian_btnFavorites_Clicked(object sender, EventArgs e)
         {
-            mainStackLayout.Children.RemoveAt(0);
-            ShowFavoritesPage(FavoriteAction.SHOW);
+            LibrarianStackLayout.IsVisible = false;
+            ShowFavoritesPage(FavoritesAction.SHOW);
         }
 
         private void Librarian_btnAddFavorite_Clicked(object sender, EventArgs e)
         {
-            mainStackLayout.Children.RemoveAt(0);
-            ShowFavoritesPage(FavoriteAction.ADD);
+            LibrarianStackLayout.IsVisible = false;
+            ShowFavoritesPage(FavoritesAction.ADD);
         }
 
         private void Librarian_btnRemoveFavorite_Clicked(object sender, EventArgs e)
         {
-            mainStackLayout.Children.RemoveAt(0);
-            ShowFavoritesPage(FavoriteAction.REMOVE);
+            LibrarianStackLayout.IsVisible = false;
+            ShowFavoritesPage(FavoritesAction.REMOVE);
         }
 
         private void Librarian_btnResetHangingNotes_Clicked(object sender, EventArgs e)
@@ -1258,10 +1262,14 @@ namespace INTEGRA_7_Xamarin
 
         private void Librarian_btnPlay_Clicked(object sender, EventArgs e)
         {
-            QueryUserTones();
+            byte[] address = new byte[] { 0x0f, 0x00, 0x20, 0x00 };
+            byte[] data = new byte[] { (byte)(commonState.midi.GetMidiOutPortChannel() + 1) };
+            byte[] package = commonState.midi.SystemExclusiveDT1Message(address, data);
+            commonState.midi.SendSystemExclusive(package);
+            Librarian_btnPlay.Text = "Stop";
         }
 
-        private void Librarian_btnWhiteKey_Clicked(object sender, EventArgs e)
+        private void Librarian_btnWhiteKey_Pressed(object sender, EventArgs e)
         {
             byte[] keyNumbers = new byte[] { 36, 35, 33, 31, 30, 28, 26, 24, 23, 21, 19, 17, 16, 14, 12, 11, 9, 7, 5, 4, 2, 0 };
             byte noteNumber = (byte)(keyNumbers[Int32.Parse(((Button)sender).StyleId)] + lowKey);
@@ -1281,7 +1289,47 @@ namespace INTEGRA_7_Xamarin
             }
         }
 
-        private void Librarian_btnBlackKey_Clicked(object sender, EventArgs e)
+        private void Librarian_btnWhiteKey_Released(object sender, EventArgs e)
+        {
+            byte[] keyNumbers = new byte[] { 36, 35, 33, 31, 30, 28, 26, 24, 23, 21, 19, 17, 16, 14, 12, 11, 9, 7, 5, 4, 2, 0 };
+            byte noteNumber = (byte)(keyNumbers[Int32.Parse(((Button)sender).StyleId)] + lowKey);
+            if (noteNumber == currentNote)
+            {
+                commonState.midi.NoteOff(commonState.CurrentPart, currentNote);
+                currentNote = 255;
+            }
+            else if (noteNumber < 128)
+            {
+                if (currentNote < 128)
+                {
+                    commonState.midi.NoteOff(commonState.CurrentPart, currentNote);
+                }
+                currentNote = noteNumber;
+                commonState.midi.NoteOn(commonState.CurrentPart, noteNumber, 64);
+            }
+        }
+
+        private void Librarian_btnBlackKey_Pressed(object sender, EventArgs e)
+        {
+            byte[] keyNumbers = new byte[] { 34, 32, 29, 27, 25, 22, 20, 18, 15, 13, 10, 8, 6, 3, 1 };
+            byte noteNumber = (byte)(keyNumbers[Int32.Parse(((Button)sender).StyleId)] + lowKey);
+            if (noteNumber == currentNote)
+            {
+                commonState.midi.NoteOff(commonState.CurrentPart, currentNote);
+                currentNote = 255;
+            }
+            else if (noteNumber < 128)
+            {
+                if (currentNote < 128)
+                {
+                    commonState.midi.NoteOff(commonState.CurrentPart, currentNote);
+                }
+                currentNote = noteNumber;
+                commonState.midi.NoteOn(commonState.CurrentPart, noteNumber, 64);
+            }
+        }
+
+        private void Librarian_btnBlackKey_Released(object sender, EventArgs e)
         {
             byte[] keyNumbers = new byte[] { 34, 32, 29, 27, 25, 22, 20, 18, 15, 13, 10, 8, 6, 3, 1 };
             byte noteNumber = (byte)(keyNumbers[Int32.Parse(((Button)sender).StyleId)] + lowKey);
@@ -1462,12 +1510,15 @@ namespace INTEGRA_7_Xamarin
 
         public void ShowLibrarianPage()
         {
-            if (Librarian_gridGroups == null)
+            if (!LibrarianIsCreated)
             {
                 DrawLibrarianPage();
+                mainStackLayout.Children.Add(LibrarianStackLayout);
+                LibrarianIsCreated = true;
             }
             page = _page.LIBRARIAN;
-            mainStackLayout.Children.Add(LibrarianStackLayout);
+            //mainStackLayout.Children.Add(LibrarianStackLayout);
+            LibrarianStackLayout.IsVisible = true;
             if (Librarian_Groups.Count == 0)
             {
                 PopulateGroups();

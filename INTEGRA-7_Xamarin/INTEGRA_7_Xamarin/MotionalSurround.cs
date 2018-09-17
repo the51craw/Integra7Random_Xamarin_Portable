@@ -37,17 +37,21 @@ namespace INTEGRA_7_Xamarin
 
         private void MotionalSurround_NotYetImplemented_Clicked(object sender, EventArgs e)
         {
-            mainStackLayout.Children.RemoveAt(0);
+            //mainStackLayout.Children.RemoveAt(0);
+            MotionalSurroundStackLayout.IsVisible = false;
             ShowLibrarianPage();
         }
 
         public void ShowMotionalSurroundPage()
         {
-            if (MotionalSurroundStackLayout == null)
+            if (!MotionalSurroundIsCreated)
             {
                 DrawMotionalSurroundPage();
+                mainStackLayout.Children.Add(MotionalSurroundStackLayout);
+                MotionalSurroundIsCreated = true;
             }
-            mainStackLayout.Children.Add(MotionalSurroundStackLayout);
+            //mainStackLayout.Children.Add(MotionalSurroundStackLayout);
+            MotionalSurroundStackLayout.IsVisible = true;
         }
     }
 }

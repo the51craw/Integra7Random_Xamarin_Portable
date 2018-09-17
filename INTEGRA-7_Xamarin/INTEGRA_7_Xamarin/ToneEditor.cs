@@ -101,7 +101,8 @@ namespace INTEGRA_7_Xamarin
 
             void ToneEdit_NotYetImplemented_Clicked(object sender, EventArgs e)
             {
-                mainStackLayout.Children.RemoveAt(0);
+                //mainStackLayout.Children.RemoveAt(0);
+                EditorStackLayout.IsVisible = false;
                 ShowLibrarianPage();
             }
 
@@ -121,11 +122,13 @@ namespace INTEGRA_7_Xamarin
 
         public void ShowToneEditorPage()
         {
-            if (EditorStackLayout == null)
+            if (!EditorIsCreated)
             {
                 DrawToneEditorPage();
+                mainStackLayout.Children.Add(EditorStackLayout);
+                EditorIsCreated = true;
             }
-            mainStackLayout.Children.Add(EditorStackLayout);
+            EditorStackLayout.IsVisible = true;
         }
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // Tone editor functions

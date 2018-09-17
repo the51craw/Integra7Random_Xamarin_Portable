@@ -37,17 +37,21 @@ namespace INTEGRA_7_Xamarin
 
         private void StudioSetEditor_NotYetImplemented_Clicked(object sender, EventArgs e)
         {
-            mainStackLayout.Children.RemoveAt(0);
+            //mainStackLayout.Children.RemoveAt(0);
+            StudioSetEditorStackLayout.IsVisible = false;
             ShowLibrarianPage();
         }
 
         public void ShowStudioSetEditorPage()
         {
-            if (StudioSetEditorStackLayout == null)
+            if (!StudioSetEditorIsCreated)
             {
                 DrawStudioSetEditorPage();
+                mainStackLayout.Children.Add(StudioSetEditorStackLayout);
+                StudioSetEditorIsCreated = true;
             }
-            mainStackLayout.Children.Add(StudioSetEditorStackLayout);
+            //mainStackLayout.Children.Add(StudioSetEditorStackLayout);
+            StudioSetEditorStackLayout.IsVisible = true;
         }
     }
  }

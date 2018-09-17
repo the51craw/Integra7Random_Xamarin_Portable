@@ -110,11 +110,17 @@ namespace INTEGRA_7_Xamarin
 
         INTEGRA_7_Xamarin.MainPage mainPage;
         public StackLayout mainStackLayout { get; set; }
-        StackLayout LibrarianStackLayout;
+        StackLayout LibrarianStackLayout = null;
         StackLayout EditorStackLayout = null;
         StackLayout FavoritesStackLayout = null;
         StackLayout StudioSetEditorStackLayout = null;
         StackLayout MotionalSurroundStackLayout = null;
+        Boolean LibrarianIsCreated = false;
+        Boolean EditorIsCreated = false;
+        Boolean FavoritesIsCreated = false;
+        Boolean StudioSetEditorIsCreated = false;
+        Boolean MotionalSurroundIsCreated = false;
+
 
         public static _appType appType;
         public static ColorSettings colorSettings { get; set; }
@@ -149,13 +155,13 @@ namespace INTEGRA_7_Xamarin
             initDone = true;
         }
 
-        public void Clear()
-        {
-            while (mainStackLayout.Children.Count() > 0)
-            {
-                mainStackLayout.Children.RemoveAt(0);
-            }
-        }
+        //public void Clear()
+        //{
+        //    while (mainStackLayout.Children.Count() > 0)
+        //    {
+        //        mainStackLayout.Children.RemoveAt(0);
+        //    }
+        //}
 
         /// <summary>
         /// Device-specific classes fills out rawData and then calls MidiInPort_MessageRecceived().
