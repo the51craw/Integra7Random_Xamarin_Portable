@@ -1031,7 +1031,7 @@ namespace INTEGRA_7_Xamarin
                                     commonState.player.WasPlaying = true;
                                 }
                             }
-                            //Librarian_lvGroups.SelectedItem = commonState.currentTone.Group;
+                            Librarian_lvGroups.SelectedItem = commonState.currentTone.Group;
                         }
                     }
                 }
@@ -1124,6 +1124,7 @@ namespace INTEGRA_7_Xamarin
         {
             if (initDone)
             {
+                commonState.CurrentPart = (byte)Librarian_midiOutputChannel.SelectedIndex;
             }
 
         }
@@ -1262,11 +1263,25 @@ namespace INTEGRA_7_Xamarin
 
         private void Librarian_btnPlay_Clicked(object sender, EventArgs e)
         {
-            byte[] address = new byte[] { 0x0f, 0x00, 0x20, 0x00 };
-            byte[] data = new byte[] { (byte)(commonState.midi.GetMidiOutPortChannel() + 1) };
-            byte[] package = commonState.midi.SystemExclusiveDT1Message(address, data);
-            commonState.midi.SendSystemExclusive(package);
-            Librarian_btnPlay.Text = "Stop";
+            if (Librarian_btnPlay.Text == "Stop")
+            {
+                byte[] address = new byte[] { 0x0f, 0x00, 0x20, 0x00 };
+                byte[] data = new byte[] { 0x00 };
+                byte[] package = commonState.midi.SystemExclusiveDT1Message(address, data);
+                commonState.midi.SendSystemExclusive(package);
+                for (byte i = 0; i < 16; i++)
+                {
+                    Librarian_btnPlay.Text = "Play";
+                }
+            }
+            else
+            {
+                byte[] address = new byte[] { 0x0f, 0x00, 0x20, 0x00 };
+                byte[] data = new byte[] { (byte)(commonState.CurrentPart + 1) };
+                byte[] package = commonState.midi.SystemExclusiveDT1Message(address, data);
+                commonState.midi.SendSystemExclusive(package);
+                Librarian_btnPlay.Text = "Stop";
+            }
         }
 
         private void Librarian_btnWhiteKey_Pressed(object sender, EventArgs e)

@@ -845,7 +845,7 @@ namespace INTEGRA_7_Xamarin
                 //    t.Trace("private void UpdateFavoritesList(folderIndex = " + folderIndex.ToString() + ")");
                 //    if (folderIndex > -1 && folderIndex < commonState.favoritesList.folders.Count())
                 //    {
-                // Finde the folder by name:
+                // Find the folder by name:
                 FavoritesFolder favoritesFolder = null;
                 for (Int32 i = 0; i < commonState.favoritesList.folders.Count() && favoritesFolder == null; i++)
                 {

@@ -15,6 +15,7 @@ using Windows.UI.Xaml.Navigation;
 using INTEGRA_7_Xamarin.UWP;
 using Xamarin.Forms;
 using INTEGRA_7_Xamarin;
+using System.ServiceModel.Dispatcher;
 
 [assembly: Xamarin.Forms.Dependency(typeof(GenericHandlerInterface))]
 
@@ -79,7 +80,7 @@ namespace INTEGRA_7_Xamarin.UWP
             MainPage_Portable.MainPage_Device = this;
 
             // Draw UI (function is in mainPage.uIHandler):
-            MainPage_Portable.uIHandler.DrawLibrarianPage();
+            MainPage_Portable.uIHandler.DrawLibrarianPage(); //Ska det inte vara ShowLibrarianPage???
 
             // We need invisible ComboBoxes to hold settings from the
             // corresponding Pickers in the Xamarin code.
