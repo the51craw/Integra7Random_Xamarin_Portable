@@ -15,7 +15,7 @@ using System.Collections.ObjectModel;
 
 namespace Integra7Random_Xamarin.UWP
 {
-    class MyFileIO : IMyFileIO, IGenericHandler
+    class MyFileIO : IGenericHandler
     {
         public Integra7Random_Xamarin.MainPage MainPage_Portable { get; set; }
 

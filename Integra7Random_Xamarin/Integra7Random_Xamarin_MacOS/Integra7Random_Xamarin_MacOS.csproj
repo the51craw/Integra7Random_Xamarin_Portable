@@ -8,7 +8,7 @@
     <ProjectTypeGuids>{A3F8F2AB-B479-4A4A-A458-A89E7DC349F1};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Exe</OutputType>
     <RootNamespace>Integra7Random_Xamarin_MacOS</RootNamespace>
-    <AssemblyName>INTEGRA-7 Librarian and Editor</AssemblyName>
+    <AssemblyName>Integra7Random_Xamarin_Portable</AssemblyName>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <TargetFrameworkIdentifier>Xamarin.Mac</TargetFrameworkIdentifier>
     <MonoMacResourcePrefix>Resources</MonoMacResourcePrefix>
@@ -37,6 +37,7 @@
     </MonoBundlingExtraArgs>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <LangVersion>Latest</LangVersion>
+    <AOTMode>None</AOTMode>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -59,6 +60,7 @@
     </XamMacArch>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <LangVersion>Latest</LangVersion>
+    <AOTMode>None</AOTMode>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -104,7 +106,6 @@
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
     <Compile Include="MIDI.cs" />
-    <Compile Include="MyFileIO.cs" />
     <Compile Include="ViewController.cs" />
     <Compile Include="ViewController.designer.cs">
       <DependentUpon>ViewController.cs</DependentUpon>

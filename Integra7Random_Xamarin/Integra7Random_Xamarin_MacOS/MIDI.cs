@@ -262,6 +262,11 @@ namespace Integra7Random_Xamarin_MacOS
             timer = new Timer(Timer_Tick, MessageReceived, 1, 1);
         }
 
+        public Boolean MidiIsReady()
+        {
+            return true; // Until we know how to verify it.
+        }
+
         public void OutputDeviceChanged(Picker DeviceSelector)
         {
             // In MacOS this is handled above, in midiClient.ObjectRemoved and ObjectAdded.
