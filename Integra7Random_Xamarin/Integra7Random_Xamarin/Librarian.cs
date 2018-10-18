@@ -133,6 +133,7 @@ namespace Integra7Random_Xamarin
         Int32 headingHeight;
         private Int32 lowKey = 36;
         private Int32 waitingForI7 = 100;
+        Int32 currentKey = -1;
 
         // Buttons for the keyboard:
         Button[] Librarian_btnWhiteKeys;
@@ -313,8 +314,15 @@ namespace Integra7Random_Xamarin
                 Librarian_btnWhiteKeys[i].TextColor = Color.Black;
                 Librarian_btnWhiteKeys[i].Text = "";
                 Librarian_btnWhiteKeys[i].StyleId = i.ToString();
-                Librarian_btnWhiteKeys[i].Pressed += Librarian_btnWhiteKey_Pressed;
-                Librarian_btnWhiteKeys[i].Released += Librarian_btnWhiteKey_Released;
+                if (appType == _appType.MacOS)
+                {
+                    Librarian_btnWhiteKeys[i].Clicked += Librarian_btnWhiteKey_Klick;
+                }
+                else
+                {
+                    Librarian_btnWhiteKeys[i].Pressed += Librarian_btnWhiteKey_Pressed;
+                    Librarian_btnWhiteKeys[i].Released += Librarian_btnWhiteKey_Released;
+                }
                 Librarian_btnWhiteKeys[i].BorderWidth = 0;
                 if (i == 0)
                 {
@@ -360,8 +368,15 @@ namespace Integra7Random_Xamarin
                 Librarian_btnBlackKeys[i].BackgroundColor = Color.Black;
                 Librarian_btnBlackKeys[i].TextColor = Color.White;
                 Librarian_btnBlackKeys[i].Margin = new Thickness(2, 0, 0, 0);
-                Librarian_btnBlackKeys[i].Pressed += Librarian_btnBlackKey_Pressed;
-                Librarian_btnBlackKeys[i].Released += Librarian_btnBlackKey_Released;
+                if (appType == _appType.MacOS)
+                {
+                    Librarian_btnBlackKeys[i].Clicked += Librarian_btnBlackKey_Klick;
+                }
+                else
+                {
+                    Librarian_btnBlackKeys[i].Pressed += Librarian_btnBlackKey_Pressed;
+                    Librarian_btnBlackKeys[i].Released += Librarian_btnBlackKey_Released;
+                }
                 Librarian_btnBlackKeys[i].BorderWidth = 0;
             }
 
@@ -880,6 +895,16 @@ namespace Integra7Random_Xamarin
             {
                 ClearKeyNames();
             }
+        }
+
+        private void Librarian_btnWhiteKey_Klick(object sender, EventArgs e)
+        {
+            Librarian_btnWhiteKey_Pressed(sender, e);
+        }
+
+        private void Librarian_btnBlackKey_Klick(object sender, EventArgs e)
+        {
+            Librarian_btnBlackKey_Pressed(sender, e);
         }
 
         private void Librarian_btnWhiteKey_Pressed(object sender, EventArgs e)

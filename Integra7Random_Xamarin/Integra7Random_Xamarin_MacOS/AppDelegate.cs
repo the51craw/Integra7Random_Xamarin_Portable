@@ -3,6 +3,7 @@ using Xamarin.Forms.Platform.MacOS;
 using AppKit;
 using Foundation;
 using Integra7Random_Xamarin_MacOS;
+using Integra7Random_Xamarin;
 //using CoreMidi;
 
 [assembly: Dependency(typeof(MIDI))]
@@ -35,6 +36,8 @@ namespace Integra7Random_Xamarin_MacOS
             // Insert code here to initialize your application
             Forms.Init();
             LoadApplication(new Integra7Random_Xamarin.App());
+
+            UIHandler.appType = UIHandler._appType.MacOS;
             MainPage_Portable = Integra7Random_Xamarin.MainPage.GetMainPage();
             MainPage_Portable.uIHandler.DrawLibrarianPage();
  
