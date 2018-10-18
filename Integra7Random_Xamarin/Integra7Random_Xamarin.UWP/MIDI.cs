@@ -282,6 +282,7 @@ namespace Integra7Random_Xamarin.UWP
             return MidiOutPortChannel;
         }
 
+
         public void SetMidiOutPortChannel(byte OutPortChannel)
         {
             MidiOutPortChannel = OutPortChannel;
