@@ -100,6 +100,9 @@ namespace Integra7Random_Xamarin
         ProgressBar Librarian_progressBar;
         DrumKeyAssignLists drumKeyAssignLists = new DrumKeyAssignLists();
         List<String> DrumKeyList;
+        byte[] whiteKeyNumbers = new byte[] { 36, 35, 33, 31, 30, 28, 26, 24, 23, 21, 19, 17, 16, 14, 12, 11, 9, 7, 5, 4, 2, 0 };
+        byte[] blackKeyNumbers = new byte[] { 34, 32, 29, 27, 25, 22, 20, 18, 15, 13, 10, 8, 6, 3, 1 };
+        Random random = new Random();
 
         // Librarian controls:
         public Picker Librarian_midiOutputDevice { get; set; }
@@ -899,18 +902,7 @@ namespace Integra7Random_Xamarin
 
         private void Librarian_btnWhiteKey_Klick(object sender, EventArgs e)
         {
-            Librarian_btnWhiteKey_Pressed(sender, e);
-        }
-
-        private void Librarian_btnBlackKey_Klick(object sender, EventArgs e)
-        {
-            Librarian_btnBlackKey_Pressed(sender, e);
-        }
-
-        private void Librarian_btnWhiteKey_Pressed(object sender, EventArgs e)
-        {
-            byte[] keyNumbers = new byte[] { 36, 35, 33, 31, 30, 28, 26, 24, 23, 21, 19, 17, 16, 14, 12, 11, 9, 7, 5, 4, 2, 0 };
-            byte noteNumber = (byte)(keyNumbers[Int32.Parse(((Button)sender).StyleId)] + lowKey);
+            byte noteNumber = (byte)(whiteKeyNumbers[Int32.Parse(((Button)sender).StyleId)] + lowKey);
             if (noteNumber == currentNote)
             {
                 commonState.midi.NoteOff(commonState.CurrentPart, currentNote);
@@ -927,10 +919,9 @@ namespace Integra7Random_Xamarin
             }
         }
 
-        private void Librarian_btnWhiteKey_Released(object sender, EventArgs e)
+        private void Librarian_btnBlackKey_Klick(object sender, EventArgs e)
         {
-            byte[] keyNumbers = new byte[] { 36, 35, 33, 31, 30, 28, 26, 24, 23, 21, 19, 17, 16, 14, 12, 11, 9, 7, 5, 4, 2, 0 };
-            byte noteNumber = (byte)(keyNumbers[Int32.Parse(((Button)sender).StyleId)] + lowKey);
+            byte noteNumber = (byte)(blackKeyNumbers[Int32.Parse(((Button)sender).StyleId)] + lowKey);
             if (noteNumber == currentNote)
             {
                 commonState.midi.NoteOff(commonState.CurrentPart, currentNote);
@@ -945,46 +936,50 @@ namespace Integra7Random_Xamarin
                 currentNote = noteNumber;
                 commonState.midi.NoteOn(commonState.CurrentPart, noteNumber, 64);
             }
+        }
+
+        private void Librarian_btnWhiteKey_Pressed(object sender, EventArgs e)
+        {
+            byte noteNumber = (byte)(whiteKeyNumbers[Int32.Parse(((Button)sender).StyleId)] + lowKey);
+            if (noteNumber != currentNote && currentNote < 128) // This will only happen if user has moved the pointer to another key without prior releasing it, and then press another key. Using this triggers supernatural legato behaviour.
+            {
+                commonState.midi.NoteOn(commonState.CurrentPart, noteNumber, 100);
+                commonState.midi.NoteOff(commonState.CurrentPart, currentNote);
+            }
+            else
+            {
+                commonState.midi.NoteOn(commonState.CurrentPart, noteNumber, 100);
+            }
+            currentNote = noteNumber;
+        }
+
+        private void Librarian_btnWhiteKey_Released(object sender, EventArgs e)
+        {
+            byte noteNumber = (byte)(whiteKeyNumbers[Int32.Parse(((Button)sender).StyleId)] + lowKey);
+            commonState.midi.NoteOff(commonState.CurrentPart, currentNote);
+            currentNote = 255;
         }
 
         private void Librarian_btnBlackKey_Pressed(object sender, EventArgs e)
         {
-            byte[] keyNumbers = new byte[] { 34, 32, 29, 27, 25, 22, 20, 18, 15, 13, 10, 8, 6, 3, 1 };
-            byte noteNumber = (byte)(keyNumbers[Int32.Parse(((Button)sender).StyleId)] + lowKey);
-            if (noteNumber == currentNote)
+            byte noteNumber = (byte)(blackKeyNumbers[Int32.Parse(((Button)sender).StyleId)] + lowKey);
+            if (noteNumber != currentNote && currentNote < 128) // This will only happen if user has moved the pointer to another key without prior releasing it, and then press another key. Using this triggers supernatural legato behaviour.
             {
+                commonState.midi.NoteOn(commonState.CurrentPart, noteNumber, 100);
                 commonState.midi.NoteOff(commonState.CurrentPart, currentNote);
-                currentNote = 255;
             }
-            else if (noteNumber < 128)
+            else
             {
-                if (currentNote < 128)
-                {
-                    commonState.midi.NoteOff(commonState.CurrentPart, currentNote);
-                }
-                currentNote = noteNumber;
-                commonState.midi.NoteOn(commonState.CurrentPart, noteNumber, 64);
+                commonState.midi.NoteOn(commonState.CurrentPart, noteNumber, 100);
             }
+            currentNote = noteNumber;
         }
 
         private void Librarian_btnBlackKey_Released(object sender, EventArgs e)
         {
-            byte[] keyNumbers = new byte[] { 34, 32, 29, 27, 25, 22, 20, 18, 15, 13, 10, 8, 6, 3, 1 };
-            byte noteNumber = (byte)(keyNumbers[Int32.Parse(((Button)sender).StyleId)] + lowKey);
-            if (noteNumber == currentNote)
-            {
-                commonState.midi.NoteOff(commonState.CurrentPart, currentNote);
-                currentNote = 255;
-            }
-            else if (noteNumber < 128)
-            {
-                if (currentNote < 128)
-                {
-                    commonState.midi.NoteOff(commonState.CurrentPart, currentNote);
-                }
-                currentNote = noteNumber;
-                commonState.midi.NoteOn(commonState.CurrentPart, noteNumber, 64);
-            }
+            byte noteNumber = (byte)(blackKeyNumbers[Int32.Parse(((Button)sender).StyleId)] + lowKey);
+            commonState.midi.NoteOff(commonState.CurrentPart, currentNote);
+            currentNote = 255;
         }
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1051,7 +1046,6 @@ namespace Integra7Random_Xamarin
             {
                 maxRandom += module.SlotCount;
             }
-            Random random = new Random();
             Int32 selection = random.Next(maxRandom);
             Int32 totalInstrumentCount = 0;
             foreach (Module module in modules)
